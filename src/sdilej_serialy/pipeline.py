@@ -8,7 +8,7 @@ import threading
 from datetime import timedelta
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from sdilej_to_prehrajto.models import Candidate
 from sdilej_to_prehrajto import prehrajto
@@ -151,7 +151,14 @@ def plan_sha(rows: list[dict]) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
-def build_plan(episodes: list[Episode], provider: EpisodeSourceProvider, state: EpisodeState, limit: int) -> list[dict]:
+def build_plan(
+    episodes: list[Episode],
+    provider: EpisodeSourceProvider,
+    state: EpisodeState,
+    limit: int,
+    *,
+    on_prepared: Callable[[dict], None] | None = None,
+) -> list[dict]:
     rows: list[dict] = []
     for episode in episodes:
         if state.uploaded(episode):
@@ -161,14 +168,15 @@ def build_plan(episodes: list[Episode], provider: EpisodeSourceProvider, state: 
             continue
         name = display_name(episode, candidate)
         state.prepared(episode, candidate, name)
-        rows.append(
-            {
-                "episode": episode.to_dict(),
-                "identity": episode.identity,
-                "selected": candidate.to_dict(),
-                "display_name": name,
-            }
-        )
+        row = {
+            "episode": episode.to_dict(),
+            "identity": episode.identity,
+            "selected": candidate.to_dict(),
+            "display_name": name,
+        }
+        rows.append(row)
+        if on_prepared:
+            on_prepared(row)
         if len(rows) >= limit:
             break
     return rows

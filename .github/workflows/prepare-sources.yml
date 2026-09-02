@@ -51,15 +51,17 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: sdilej-series export-catalog --series-limit '${{ inputs.series_limit || '40' }}' --episode-limit '${{ inputs.episode_limit || '1000' }}'
+      - name: Configure durable source checkpoints
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Verify stable Sdilej.cz sources for episode queue
         env:
           SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
           SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
-        run: sdilej-series prepare-queue --state state/source-scan.json --limit '${{ inputs.source_limit || '60' }}'
+        run: sdilej-series prepare-queue --persist-git-state --state state/source-scan.json --limit '${{ inputs.source_limit || '60' }}'
       - name: Persist producer queue without overwriting upload state
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
           git diff --cached --quiet || git commit -m 'chore: prepare series episode sources'
           for attempt in 1 2 3 4 5; do

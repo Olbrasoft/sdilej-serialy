@@ -8,14 +8,22 @@ from pathlib import Path
 
 
 class GitCheckpointPersister:
-    def __init__(self, root: Path):
+    def __init__(self, root: Path, extra_paths: tuple[Path, ...] = ()):
         self.root = root
+        self.extra_paths = extra_paths
         self.lock = threading.RLock()
 
     def __call__(self, path: Path) -> None:
-        relative = path.resolve().relative_to(self.root.resolve())
+        paths = (path, *self.extra_paths)
+        relative_paths = [
+            candidate.resolve().relative_to(self.root.resolve())
+            for candidate in paths
+            if candidate.exists()
+        ]
+        if not relative_paths:
+            return
         with self.lock:
-            self._run("add", "--", str(relative))
+            self._run("add", "--", *(str(relative) for relative in relative_paths))
             if self._run("diff", "--cached", "--quiet", check=False).returncode == 0:
                 return
             self._run("commit", "-m", "chore(sync): persist episode checkpoint")
@@ -23,7 +31,7 @@ class GitCheckpointPersister:
                 if self._run("push", "origin", "HEAD:main", check=False).returncode == 0:
                     return
                 self._run("fetch", "origin", "main")
-                if self._run("rebase", "origin/main", check=False).returncode == 0:
+                if self._run("rebase", "--autostash", "origin/main", check=False).returncode == 0:
                     continue
                 self._run("rebase", "--abort", check=False)
             raise RuntimeError("Upload checkpoint could not be pushed; refusing further transfer")

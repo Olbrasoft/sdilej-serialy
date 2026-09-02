@@ -67,9 +67,21 @@ def prepare_queue(args) -> int:
     manifest = SourceManifest(args.manifest)
     provider = EpisodeSourceProvider.authenticated(require_env("SDILEJ_EMAIL"), require_env("SDILEJ_PASSWORD"))
     candidates = [episode for episode in episodes if episode.identity not in manifest.rows]
-    rows = build_plan(candidates, provider, state, args.limit)
-    for row in rows:
+    persister = GitCheckpointPersister(ROOT, (args.manifest,)) if args.persist_git_state else None
+
+    def persist_prepared(row: dict) -> None:
         manifest.add(row)
+        manifest.save()
+        if persister:
+            persister(args.state)
+
+    rows = build_plan(
+        candidates,
+        provider,
+        state,
+        args.limit,
+        on_prepared=persist_prepared,
+    )
     manifest.save()
     print(f"prepared={len(rows)} queue_size={len(manifest.rows)} manifest={args.manifest}")
     return 0
@@ -129,6 +141,7 @@ def main() -> int:
     queue_cmd.add_argument("--state", type=Path, default=ROOT / "state" / "source-scan.json")
     queue_cmd.add_argument("--manifest", type=Path, default=ROOT / "manifests" / "selected-episodes.jsonl")
     queue_cmd.add_argument("--limit", type=int, default=20)
+    queue_cmd.add_argument("--persist-git-state", action="store_true")
     queue_cmd.set_defaults(func=prepare_queue)
     upload_cmd = commands.add_parser("upload")
     upload_cmd.add_argument("--plan", type=Path, default=ROOT / "plans" / "pilot-plan.json")
