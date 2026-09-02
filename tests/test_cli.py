@@ -35,3 +35,51 @@ def test_targeted_export_is_not_lost_to_top_series_limit(monkeypatch, tmp_path):
     )
 
     assert captured["rows"] == [rows[1]]
+
+
+def test_continuous_persists_its_report_for_the_next_poll(monkeypatch, tmp_path):
+    state_path = tmp_path / "state" / "episodes.json"
+    report_path = tmp_path / "reports" / "continuous.json"
+    persisted = []
+
+    class Persister:
+        def __init__(self, root, extra_paths):
+            assert root == tmp_path
+            assert extra_paths == (report_path,)
+
+        def __call__(self, path):
+            persisted.append(path)
+
+    class Manifest:
+        def __init__(self, _path):
+            pass
+
+        def pending(self, _uploaded, *, limit):
+            assert limit == 50
+            return []
+
+    monkeypatch.setenv("CONTINUOUS_ENABLED", "true")
+    monkeypatch.setattr(cli, "ROOT", tmp_path)
+    monkeypatch.setattr(cli, "GitCheckpointPersister", Persister)
+    monkeypatch.setattr(cli, "SourceManifest", Manifest)
+    monkeypatch.setattr(cli, "uploaded_identities", lambda _state: set())
+    monkeypatch.setattr(
+        cli,
+        "upload_continuously",
+        lambda *args, **kwargs: {"queued": 0, "uploaded_or_reconciled": 0},
+    )
+    monkeypatch.setattr(cli, "require_env", lambda name: name)
+
+    cli.continuous(
+        Namespace(
+            state=state_path,
+            manifest=tmp_path / "manifest.jsonl",
+            report=report_path,
+            persist_git_state=True,
+            limit=50,
+            workers=6,
+        )
+    )
+
+    assert report_path.exists()
+    assert persisted == [state_path]

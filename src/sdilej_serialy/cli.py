@@ -101,7 +101,8 @@ def upload(args) -> int:
 def continuous(args) -> int:
     if os.environ.get("CONTINUOUS_ENABLED") != "true":
         raise SystemExit("Continuous mode requires CONTINUOUS_ENABLED=true")
-    state = EpisodeState(args.state, on_save=GitCheckpointPersister(ROOT) if args.persist_git_state else None)
+    persister = GitCheckpointPersister(ROOT, (args.report,)) if args.persist_git_state else None
+    state = EpisodeState(args.state, on_save=persister)
     manifest = SourceManifest(args.manifest)
     rows = manifest.pending(uploaded_identities(state), limit=args.limit)
     result = upload_continuously(
@@ -115,6 +116,8 @@ def continuous(args) -> int:
     )
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    if persister:
+        persister(args.state)
     print("continuous=" + json.dumps(result, ensure_ascii=False))
     return 0
 

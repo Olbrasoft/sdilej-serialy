@@ -11,6 +11,10 @@ on:
         description: Maximum verified episodes per run
         required: false
         default: '50'
+      runtime_minutes:
+        description: How long to keep polling the verified source queue
+        required: false
+        default: '330'
   schedule:
     - cron: '23 * * * *'
 
@@ -42,11 +46,29 @@ jobs:
         env:
           CONTINUOUS_ENABLED: ${{ vars.CONTINUOUS_ENABLED }}
           UPLOAD_WORKERS: ${{ inputs.workers || '6' }}
+          SYNC_RUNTIME_MINUTES: ${{ inputs.runtime_minutes || '330' }}
           SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
           SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
           PREHRAJTO_EMAIL: ${{ secrets.PREHRAJTO_EMAIL }}
           PREHRAJTO_PASSWORD: ${{ secrets.PREHRAJTO_PASSWORD }}
-        run: sdilej-series continuous --persist-git-state --workers '${{ inputs.workers || '6' }}' --limit '${{ inputs.limit || '50' }}'
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$SYNC_RUNTIME_MINUTES" =~ ^[0-9]+$ ]]
+          (( SYNC_RUNTIME_MINUTES >= 1 && SYNC_RUNTIME_MINUTES <= 330 ))
+          sync_deadline_epoch=$(( $(date +%s) + SYNC_RUNTIME_MINUTES * 60 ))
+          while [ "$(date +%s)" -lt "$sync_deadline_epoch" ]; do
+            git pull --rebase origin main
+            sync_output=$(sdilej-series continuous \
+              --persist-git-state \
+              --workers '${{ inputs.workers || '6' }}' \
+              --limit '${{ inputs.limit || '50' }}' 2>&1 | tee /dev/stderr)
+            if grep -q '"queued": 0' <<<"$sync_output"; then
+              sleep 120
+            else
+              sleep 5
+            fi
+          done
       - name: Persist confirmed uploads and runtime report
         if: always()
         run: |
