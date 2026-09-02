@@ -1,0 +1,47 @@
+name: pilot-plan
+
+on:
+  workflow_dispatch:
+    inputs:
+      series_limit:
+        description: Number of top-rated series to export
+        required: true
+        default: '1'
+      episode_limit:
+        description: Maximum episode rows to export
+        required: true
+        default: '1'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sdilej-serialy-source-preparation
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install ".[whisper]"
+      - name: Export catalog through a read-only database transaction
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: sdilej-series export-catalog --series-limit '${{ inputs.series_limit }}' --episode-limit '${{ inputs.episode_limit }}'
+      - name: Find and verify Sdilej.cz sources
+        env:
+          SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
+          SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
+        run: sdilej-series prepare --limit '${{ inputs.episode_limit }}'
+      - name: Commit reviewed plan state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add backlog plans state
+          git diff --cached --quiet || git commit -m 'chore: prepare series pilot plan'
+          git push

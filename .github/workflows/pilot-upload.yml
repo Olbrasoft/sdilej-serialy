@@ -1,0 +1,41 @@
+name: pilot-upload
+
+on:
+  workflow_dispatch:
+    inputs:
+      approved_plan_sha:
+        description: SHA printed by pilot-plan after manual review
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sdilej-serialy-target-transfer
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install .
+      - name: Upload only the manually approved plan
+        env:
+          SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
+          SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
+          PREHRAJTO_EMAIL: ${{ secrets.PREHRAJTO_EMAIL }}
+          PREHRAJTO_PASSWORD: ${{ secrets.PREHRAJTO_PASSWORD }}
+        run: sdilej-series upload --approved-sha '${{ inputs.approved_plan_sha }}'
+      - name: Persist confirmed target uploads
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add state
+          git diff --cached --quiet || git commit -m 'chore: checkpoint series pilot upload'
+          git push

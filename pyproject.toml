@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sdilej-serialy"
+version = "0.1.0"
+description = "Read-only CR catalog to Sdilej.cz to Přehraj.to series episode pipeline"
+requires-python = ">=3.12"
+dependencies = [
+  "psycopg2-binary>=2.9",
+  "sdilej-to-prehrajto @ git+https://github.com/Olbrasoft/sdilej-to-prehrajto.git@33ea738f41252d24b00736770046a0ff1ea31b32",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8.0"]
+whisper = ["faster-whisper>=1.0"]
+
+[project.scripts]
+sdilej-series = "sdilej_serialy.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

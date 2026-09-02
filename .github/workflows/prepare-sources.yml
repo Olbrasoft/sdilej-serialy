@@ -1,0 +1,56 @@
+name: prepare-sources
+
+on:
+  workflow_dispatch:
+    inputs:
+      series_limit:
+        required: false
+        default: '40'
+      episode_limit:
+        required: false
+        default: '1000'
+      source_limit:
+        required: false
+        default: '60'
+  schedule:
+    - cron: '11 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sdilej-serialy-source-preparation
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install ".[whisper]"
+      - name: Export only the prioritized series and episode catalog
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: sdilej-series export-catalog --series-limit '${{ inputs.series_limit || '40' }}' --episode-limit '${{ inputs.episode_limit || '1000' }}'
+      - name: Verify stable Sdilej.cz sources for episode queue
+        env:
+          SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
+          SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
+        run: sdilej-series prepare-queue --state state/source-scan.json --limit '${{ inputs.source_limit || '60' }}'
+      - name: Persist producer queue without overwriting upload state
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add backlog manifests state
+          git diff --cached --quiet || git commit -m 'chore: prepare series episode sources'
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0
+            sleep $((attempt * 2))
+          done
+          exit 1

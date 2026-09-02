@@ -1,0 +1,57 @@
+name: continuous-sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      workers:
+        description: Parallel upload workers
+        required: false
+        default: '6'
+      limit:
+        description: Maximum verified episodes per run
+        required: false
+        default: '50'
+  schedule:
+    - cron: '23 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sdilej-serialy-target-transfer
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: vars.CONTINUOUS_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install .
+      - name: Upload verified episode queue with leased workers
+        env:
+          CONTINUOUS_ENABLED: ${{ vars.CONTINUOUS_ENABLED }}
+          UPLOAD_WORKERS: ${{ inputs.workers || '6' }}
+          SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
+          SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
+          PREHRAJTO_EMAIL: ${{ secrets.PREHRAJTO_EMAIL }}
+          PREHRAJTO_PASSWORD: ${{ secrets.PREHRAJTO_PASSWORD }}
+        run: sdilej-series continuous --workers '${{ inputs.workers || '6' }}' --limit '${{ inputs.limit || '50' }}'
+      - name: Persist confirmed uploads and runtime report
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add state reports
+          git diff --cached --quiet || git commit -m 'chore: checkpoint series uploads'
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0
+            sleep $((attempt * 2))
+          done
+          exit 1
