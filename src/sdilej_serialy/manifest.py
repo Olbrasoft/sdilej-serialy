@@ -31,6 +31,18 @@ class SourceManifest:
         self._validate(row)
         self.rows[str(row["identity"])] = row
 
+    def merge_jsonl(self, payload: str) -> int:
+        incoming: dict[str, dict] = {}
+        for line in payload.splitlines():
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            self._validate(row)
+            incoming[str(row["identity"])] = row
+        changed = sum(self.rows.get(identity) != row for identity, row in incoming.items())
+        self.rows.update(incoming)
+        return changed
+
     def save(self) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         payload = "".join(json.dumps(self.rows[key], ensure_ascii=False) + "\n" for key in sorted(self.rows))

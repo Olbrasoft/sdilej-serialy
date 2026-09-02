@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import concurrent.futures
-import queue
+import collections
+import threading
+import time
 import uuid
-from pathlib import Path
+from collections.abc import Callable
 
 from sdilej_to_prehrajto import prehrajto
 from sdilej_to_prehrajto.models import Candidate
@@ -27,13 +29,26 @@ def target_confirmed(session, video_id: str, display_name: str) -> bool:
     return prehrajto.uploaded_video_count(session) is not None and prehrajto.uploaded_video_confirmed(session, video_id, display_name)
 
 
-def upload_continuously(rows: list[dict], state: EpisodeState, *, workers: int, source_email: str, source_password: str, target_email: str, target_password: str) -> dict:
+def upload_continuously(
+    rows: list[dict],
+    state: EpisodeState,
+    *,
+    workers: int,
+    source_email: str,
+    source_password: str,
+    target_email: str,
+    target_password: str,
+    refill_rows: Callable[[], list[dict]] | None = None,
+    refill_interval_seconds: float = 15,
+) -> dict:
     if not 1 <= workers <= 6:
         raise ValueError("workers must be between 1 and 6")
     released = state.release_orphaned_claims()
-    pending: queue.Queue[dict] = queue.Queue()
-    for row in rows:
-        pending.put(row)
+    pending = collections.deque(rows)
+    known_identities = {str(row["identity"]) for row in rows}
+    queue_condition = threading.Condition()
+    in_flight = 0
+    refilling = False
 
     def login_pair(_index: int):
         provider = EpisodeSourceProvider.authenticated(source_email, source_password)
@@ -44,13 +59,55 @@ def upload_continuously(rows: list[dict], state: EpisodeState, *, workers: int, 
         before = prehrajto.uploaded_video_count(pairs[0][1])
         execution = uuid.uuid4().hex
 
+        def take_next_row() -> dict | None:
+            nonlocal in_flight, refilling
+            while True:
+                refill_leader = False
+                with queue_condition:
+                    if pending:
+                        in_flight += 1
+                        return pending.popleft()
+                    if refill_rows is None or in_flight == 0:
+                        return None
+                    if not refilling:
+                        refilling = True
+                        refill_leader = True
+                    else:
+                        queue_condition.wait()
+                        continue
+                if refill_leader:
+                    fresh_rows: list[dict] = []
+                    try:
+                        fresh_rows = refill_rows()
+                    except Exception as error:
+                        print(f"queue_refill_failed={type(error).__name__}", flush=True)
+                    added = 0
+                    with queue_condition:
+                        for row in fresh_rows:
+                            identity = str(row["identity"])
+                            if identity in known_identities:
+                                continue
+                            known_identities.add(identity)
+                            pending.append(row)
+                            added += 1
+                    if added:
+                        with queue_condition:
+                            refilling = False
+                            queue_condition.notify_all()
+                        print(f"queue_refilled={added}", flush=True)
+                    else:
+                        time.sleep(refill_interval_seconds)
+                        with queue_condition:
+                            refilling = False
+                            queue_condition.notify_all()
+
         def worker(index: int) -> int:
+            nonlocal in_flight
             provider, target = pairs[index]
             completed = 0
             while True:
-                try:
-                    row = pending.get_nowait()
-                except queue.Empty:
+                row = take_next_row()
+                if row is None:
                     return completed
                 try:
                     episode = Episode.from_dict(row["episode"])
@@ -86,8 +143,10 @@ def upload_continuously(rows: list[dict], state: EpisodeState, *, workers: int, 
                         state.failure(episode, error)
                     print(f"upload_failed identity={row.get('identity')} error={type(error).__name__}", flush=True)
                 finally:
-                    pending.task_done()
+                    with queue_condition:
+                        in_flight -= 1
+                        queue_condition.notify_all()
 
         completed = sum(executor.map(worker, range(workers)))
         after = prehrajto.uploaded_video_count(pairs[0][1])
-    return {"released_orphaned_claims": released, "queued": len(rows), "uploaded_or_reconciled": completed, "target_video_count_before": before, "target_video_count_after": after}
+    return {"released_orphaned_claims": released, "queued": len(known_identities), "uploaded_or_reconciled": completed, "target_video_count_before": before, "target_video_count_after": after}

@@ -105,6 +105,18 @@ def continuous(args) -> int:
     state = EpisodeState(args.state, on_save=persister)
     manifest = SourceManifest(args.manifest)
     rows = manifest.pending(uploaded_identities(state), limit=args.limit)
+
+    def refill_rows() -> list[dict]:
+        payload = (
+            persister.read_remote_file("manifests/selected-episodes.jsonl")
+            if persister
+            else args.manifest.read_text(encoding="utf-8")
+        )
+        merged = manifest.merge_jsonl(payload)
+        if merged:
+            print(f"verified_sources_refreshed={merged}", flush=True)
+        return manifest.pending(uploaded_identities(state), limit=args.limit)
+
     result = upload_continuously(
         rows,
         state,
@@ -113,6 +125,7 @@ def continuous(args) -> int:
         source_password=require_env("SDILEJ_PASSWORD"),
         target_email=require_env("PREHRAJTO_EMAIL"),
         target_password=require_env("PREHRAJTO_PASSWORD"),
+        refill_rows=refill_rows,
     )
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")

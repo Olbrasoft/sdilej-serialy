@@ -36,6 +36,14 @@ class GitCheckpointPersister:
                 self._run("rebase", "--abort", check=False)
             raise RuntimeError("Upload checkpoint could not be pushed; refusing further transfer")
 
+    def read_remote_file(self, relative_path: str) -> str:
+        if relative_path.startswith("/") or ".." in Path(relative_path).parts:
+            raise RuntimeError("Remote path must stay inside the repository")
+        with self.lock:
+            self._run("fetch", "origin", "main")
+            result = self._run("show", f"FETCH_HEAD:{relative_path}")
+            return result.stdout
+
     def _run(self, *args: str, check: bool = True):
         result = subprocess.run(["git", *args], cwd=self.root, text=True, capture_output=True, check=False)
         if check and result.returncode:
