@@ -14,7 +14,7 @@ from .models import Episode
 from .pipeline import EpisodeState, build_plan, plan_sha, upload_plan
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(os.environ.get("GITHUB_WORKSPACE", Path(__file__).resolve().parents[2])).resolve()
 
 
 def require_env(name: str) -> str:
