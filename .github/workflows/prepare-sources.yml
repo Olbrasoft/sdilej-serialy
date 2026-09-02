@@ -34,6 +34,15 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install ".[whisper]"
+      - name: Open an encrypted read-only database tunnel
+        env:
+          CR_VPS_SSH_KEY: ${{ secrets.CR_VPS_SSH_KEY }}
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$CR_VPS_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p 2222 46.225.101.253 >> ~/.ssh/known_hosts
+          ssh -f -N -L 127.0.0.1:15432:127.0.0.1:5432 -p 2222 root@46.225.101.253
       - name: Export only the prioritized series and episode catalog
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

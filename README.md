@@ -6,6 +6,10 @@ a jejich epizod. Pro každou epizodu vyhledá zdroj na Sdílej.cz, ověří shod
 kvalitativní třídy a přímo jej přenese do Přehraj.to. Video se na runner
 neukládá.
 
+Před změnou pipeline si přečti [provozní poznatky z filmového přenosu](docs/OPERATIONAL_LESSONS.md).
+Shrnují skutečné selhávací scénáře, pravidla obnovy přenosu a odlišnosti pro
+seriálové epizody.
+
 ## Bezpečnostní hranice
 
 - Databázové připojení se vždy otevře jako `readonly`; program navíc ověří
