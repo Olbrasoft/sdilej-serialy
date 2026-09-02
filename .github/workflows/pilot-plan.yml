@@ -11,6 +11,10 @@ on:
         description: Maximum episode rows to export
         required: true
         default: '1'
+      series_id:
+        description: Optional CR series ID for a known pilot series
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -41,7 +45,11 @@ jobs:
       - name: Export catalog through a read-only database transaction
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: sdilej-series export-catalog --series-limit '${{ inputs.series_limit }}' --episode-limit '${{ inputs.episode_limit }}'
+          SERIES_ID: ${{ inputs.series_id }}
+        run: |
+          args=(--series-limit '${{ inputs.series_limit }}' --episode-limit '${{ inputs.episode_limit }}')
+          [ -z "$SERIES_ID" ] || args+=(--series-id "$SERIES_ID")
+          sdilej-series export-catalog "${args[@]}"
       - name: Find and verify Sdilej.cz sources
         env:
           SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
