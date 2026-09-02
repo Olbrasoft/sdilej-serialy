@@ -40,6 +40,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install media inspection dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes ffmpeg
       - run: pip install ".[whisper]"
       - name: Open an encrypted read-only database tunnel
         env:

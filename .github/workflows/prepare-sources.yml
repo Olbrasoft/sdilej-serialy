@@ -33,6 +33,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install media inspection dependency
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes ffmpeg
       - run: pip install ".[whisper]"
       - name: Open an encrypted read-only database tunnel
         env:
@@ -56,7 +60,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A backlog manifests state
+          git add -A
           git diff --cached --quiet || git commit -m 'chore: prepare series episode sources'
           for attempt in 1 2 3 4 5; do
             git pull --rebase origin main && git push && exit 0
