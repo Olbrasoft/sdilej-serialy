@@ -82,7 +82,7 @@ def test_discovery_stops_after_smallest_verified_czech_source(monkeypatch):
     assert verified == ["small"]
 
 
-def test_discovery_defers_after_an_unresolved_smaller_source(monkeypatch):
+def test_discovery_stops_on_czech_after_an_unresolved_smaller_source(monkeypatch):
     unresolved = candidate("unresolved", height=1080, size_bytes=100_000_000, language=LanguageTier.UNKNOWN)
     czech = candidate("czech", height=1080, size_bytes=200_000_000, language=LanguageTier.CZECH_AUDIO)
 
@@ -93,4 +93,4 @@ def test_discovery_defers_after_an_unresolved_smaller_source(monkeypatch):
 
     provider = provider_with(monkeypatch, [czech, unresolved], verify)
 
-    assert provider.discover(episode()) is None
+    assert provider.discover(episode()) is czech

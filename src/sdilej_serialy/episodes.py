@@ -189,9 +189,10 @@ class EpisodeSourceProvider:
                     resolved.append(detail)
                     # Candidates in this resolution tier are ordered by size.
                     # Once Czech audio succeeds, no later source in the tier
-                    # can be a smaller Czech candidate. Keep scanning only if
-                    # an earlier source could not be verified safely.
-                    if detail.language_tier == LanguageTier.CZECH_AUDIO and not unresolved:
+                    # can be a smaller Czech candidate. A previously broken
+                    # candidate must not force more language probes after Czech
+                    # audio has already been positively verified.
+                    if detail.language_tier == LanguageTier.CZECH_AUDIO:
                         return rank_candidates(resolved)[0]
             # Do not silently downgrade while a higher-quality candidate could
             # not be verified; retry that episode in a later preparation pass.
