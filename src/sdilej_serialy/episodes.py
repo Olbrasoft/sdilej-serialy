@@ -49,7 +49,11 @@ def has_exact_code(value: str, episode: Episode) -> bool:
 
 
 def episode_match(episode: Episode, candidate_title: str) -> tuple[MatchTier, dict]:
-    code_matches = has_exact_code(candidate_title, episode)
+    codes = {
+        (int(match.group("season") or match.group("sx")), int(match.group("episode") or match.group("ex")))
+        for match in EPISODE_CODE_RE.finditer(candidate_title)
+    }
+    code_matches = (episode.season, episode.number) in codes
     aliases = [title for title in (episode.series_title, episode.series_original_title) if title]
     normalized_candidate = normalize(candidate_title)
     title_matches = [normalize(alias) in normalized_candidate for alias in aliases if len(normalize(alias)) >= 3]
@@ -58,10 +62,13 @@ def episode_match(episode: Episode, candidate_title: str) -> tuple[MatchTier, di
         "episode_code_match": code_matches,
         "series_alias_match": any(title_matches),
     }
+    evidence["episode_codes_found"] = [f"S{season:02d}E{number:02d}" for season, number in sorted(codes)]
+    if len(codes) > 1:
+        evidence["reason"] = "multiple_episode_codes"
+        return MatchTier.REJECT, evidence
     if code_matches and any(title_matches):
         return MatchTier.STRONG, evidence
-    if code_matches:
-        return MatchTier.SOLID, evidence
+    evidence["reason"] = "missing_series_or_episode_identity"
     return MatchTier.REJECT, evidence
 
 

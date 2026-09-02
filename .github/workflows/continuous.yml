@@ -34,6 +34,10 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install .
+      - name: Configure durable upload checkpoints
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Upload verified episode queue with leased workers
         env:
           CONTINUOUS_ENABLED: ${{ vars.CONTINUOUS_ENABLED }}
@@ -42,7 +46,7 @@ jobs:
           SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
           PREHRAJTO_EMAIL: ${{ secrets.PREHRAJTO_EMAIL }}
           PREHRAJTO_PASSWORD: ${{ secrets.PREHRAJTO_PASSWORD }}
-        run: sdilej-series continuous --workers '${{ inputs.workers || '6' }}' --limit '${{ inputs.limit || '50' }}'
+        run: sdilej-series continuous --persist-git-state --workers '${{ inputs.workers || '6' }}' --limit '${{ inputs.limit || '50' }}'
       - name: Persist confirmed uploads and runtime report
         if: always()
         run: |

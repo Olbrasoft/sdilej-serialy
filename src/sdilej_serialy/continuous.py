@@ -23,6 +23,10 @@ def uploaded_identities(state: EpisodeState) -> set[str]:
     }
 
 
+def target_confirmed(session, video_id: str, display_name: str) -> bool:
+    return prehrajto.uploaded_video_count(session) is not None and prehrajto.uploaded_video_confirmed(session, video_id, display_name)
+
+
 def upload_continuously(rows: list[dict], state: EpisodeState, *, workers: int, source_email: str, source_password: str, target_email: str, target_password: str) -> dict:
     if not 1 <= workers <= 6:
         raise ValueError("workers must be between 1 and 6")
@@ -55,6 +59,8 @@ def upload_continuously(rows: list[dict], state: EpisodeState, *, workers: int, 
                     candidate = Candidate.from_dict(row["selected"])
                     existing = prehrajto.uploaded_video_id_by_name(target, row["display_name"])
                     if existing:
+                        if not target_confirmed(target, existing, row["display_name"]):
+                            raise RuntimeError("Existing target name was not confirmed by listing and statistics")
                         state.success(episode, existing, row["display_name"])
                         completed += 1
                         continue
@@ -67,12 +73,17 @@ def upload_continuously(rows: list[dict], state: EpisodeState, *, workers: int, 
                         state.save()
 
                     result = prehrajto.relay_upload(target, provider.session, refreshed, row["display_name"], episode.description, on_prepared=prepared)
-                    if not prehrajto.uploaded_video_confirmed(target, result.video_id, row["display_name"]):
-                        raise RuntimeError("Target listing did not confirm the uploaded episode")
+                    if not target_confirmed(target, result.video_id, row["display_name"]):
+                        raise RuntimeError("Target listing and statistics did not confirm the uploaded episode")
                     state.success(episode, result.video_id, row["display_name"])
                     completed += 1
                 except Exception as error:
-                    state.failure(episode, error)
+                    reconciled = prehrajto.uploaded_video_id_by_name(target, row["display_name"])
+                    if reconciled and target_confirmed(target, reconciled, row["display_name"]):
+                        state.success(episode, reconciled, row["display_name"])
+                        completed += 1
+                    else:
+                        state.failure(episode, error)
                     print(f"upload_failed identity={row.get('identity')} error={type(error).__name__}", flush=True)
                 finally:
                     pending.task_done()

@@ -21,3 +21,14 @@ def test_requires_series_identity_for_strong_match():
     tier, evidence = episode_match(episode(), "Teorie velkého třesku S01E01 CZ")
     assert tier.value == "strong"
     assert evidence["series_alias_match"]
+
+
+def test_rejects_a_candidate_with_multiple_episode_codes():
+    tier, evidence = episode_match(episode(), "Teorie velkého třesku S01E01 S01E02 CZ")
+    assert tier.value == "reject"
+    assert evidence["reason"] == "multiple_episode_codes"
+
+
+def test_rejects_an_episode_code_without_a_series_identity():
+    tier, _evidence = episode_match(episode(), "Completely different show S01E01 CZ")
+    assert tier.value == "reject"

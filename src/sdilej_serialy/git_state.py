@@ -1,0 +1,35 @@
+"""Fail-closed GitHub Actions checkpoints for the upload state file."""
+
+from __future__ import annotations
+
+import subprocess
+import threading
+from pathlib import Path
+
+
+class GitCheckpointPersister:
+    def __init__(self, root: Path):
+        self.root = root
+        self.lock = threading.RLock()
+
+    def __call__(self, path: Path) -> None:
+        relative = path.resolve().relative_to(self.root.resolve())
+        with self.lock:
+            self._run("add", "--", str(relative))
+            if self._run("diff", "--cached", "--quiet", check=False).returncode == 0:
+                return
+            self._run("commit", "-m", "chore(sync): persist episode checkpoint")
+            for attempt in range(5):
+                if self._run("push", "origin", "HEAD:main", check=False).returncode == 0:
+                    return
+                self._run("fetch", "origin", "main")
+                if self._run("rebase", "origin/main", check=False).returncode == 0:
+                    continue
+                self._run("rebase", "--abort", check=False)
+            raise RuntimeError("Upload checkpoint could not be pushed; refusing further transfer")
+
+    def _run(self, *args: str, check: bool = True):
+        result = subprocess.run(["git", *args], cwd=self.root, text=True, capture_output=True, check=False)
+        if check and result.returncode:
+            raise RuntimeError(f"git {args[0]} failed")
+        return result

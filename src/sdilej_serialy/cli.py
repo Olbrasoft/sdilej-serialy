@@ -8,6 +8,7 @@ from pathlib import Path
 from .catalog import fetch_episode_rows, load_jsonl, prepare_episodes, readonly_connection, write_jsonl_gzip
 from .continuous import upload_continuously, uploaded_identities
 from .episodes import EpisodeSourceProvider
+from .git_state import GitCheckpointPersister
 from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import EpisodeState, build_plan, plan_sha, upload_plan
@@ -80,7 +81,7 @@ def upload(args) -> int:
 def continuous(args) -> int:
     if os.environ.get("CONTINUOUS_ENABLED") != "true":
         raise SystemExit("Continuous mode requires CONTINUOUS_ENABLED=true")
-    state = EpisodeState(args.state)
+    state = EpisodeState(args.state, on_save=GitCheckpointPersister(ROOT) if args.persist_git_state else None)
     manifest = SourceManifest(args.manifest)
     rows = manifest.pending(uploaded_identities(state), limit=args.limit)
     result = upload_continuously(
@@ -129,6 +130,7 @@ def main() -> int:
     continuous_cmd.add_argument("--report", type=Path, default=ROOT / "reports" / "continuous.json")
     continuous_cmd.add_argument("--limit", type=int, default=50)
     continuous_cmd.add_argument("--workers", type=int, default=int(os.environ.get("UPLOAD_WORKERS", "6")))
+    continuous_cmd.add_argument("--persist-git-state", action="store_true")
     continuous_cmd.set_defaults(func=continuous)
     args = parser.parse_args()
     return args.func(args)

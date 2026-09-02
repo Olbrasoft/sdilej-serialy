@@ -15,6 +15,12 @@ def test_second_worker_cannot_take_live_lease(tmp_path):
     assert not state.claim(episode(), "worker-b")
 
 
+def test_expired_lease_can_be_safely_reclaimed(tmp_path):
+    state = EpisodeState(tmp_path / "episodes.json")
+    state.row(episode())["claim"] = {"lease_expires_at": (datetime.now(UTC) - timedelta(minutes=1)).isoformat()}
+    assert state.claim(episode(), "replacement-worker")
+
+
 def test_manifest_rejects_ephemeral_authenticated_urls(tmp_path):
     manifest = SourceManifest(tmp_path / "sources.jsonl")
     row = {"identity": "3:1:2", "selected": {"url": "https://sdilej.cz/1/file.mkv", "download_url": "https://secret"}}
