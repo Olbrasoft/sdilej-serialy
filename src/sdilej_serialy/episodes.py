@@ -172,7 +172,14 @@ class EpisodeSourceProvider:
         resolved: list[Candidate] = []
         for resolution in sorted(by_resolution, reverse=True):
             unresolved = False
-            for candidate in sorted(by_resolution[resolution], key=lambda item: (item.size_bytes or 0, item.source_id)):
+            for candidate in sorted(
+                by_resolution[resolution],
+                key=lambda item: (
+                    item.size_bytes is None or item.size_bytes <= 0,
+                    item.size_bytes or 0,
+                    item.source_id,
+                ),
+            ):
                 detail = None
                 verification_completed = False
                 for _attempt in range(2):

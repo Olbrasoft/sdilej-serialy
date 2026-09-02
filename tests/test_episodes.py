@@ -38,7 +38,7 @@ def test_rejects_an_episode_code_without_a_series_identity():
     assert tier.value == "reject"
 
 
-def candidate(source_id: str, *, height: int, size_bytes: int, language: LanguageTier) -> Candidate:
+def candidate(source_id: str, *, height: int, size_bytes: int | None, language: LanguageTier) -> Candidate:
     return Candidate(
         source_id=source_id,
         url=f"https://sdilej.cz/{source_id}/test.mkv",
@@ -80,6 +80,21 @@ def test_discovery_stops_after_smallest_verified_czech_source(monkeypatch):
 
     assert provider.discover(episode()) is smaller
     assert verified == ["small"]
+
+
+def test_discovery_checks_known_smallest_size_before_unknown_size(monkeypatch):
+    known = candidate("known", height=1080, size_bytes=100_000_000, language=LanguageTier.CZECH_AUDIO)
+    unknown = candidate("unknown", height=1080, size_bytes=None, language=LanguageTier.CZECH_AUDIO)
+    verified = []
+
+    def verify(_episode, item):
+        verified.append(item.source_id)
+        return item
+
+    provider = provider_with(monkeypatch, [unknown, known], verify)
+
+    assert provider.discover(episode()) is known
+    assert verified == ["known"]
 
 
 def test_discovery_stops_on_czech_after_an_unresolved_smaller_source(monkeypatch):
