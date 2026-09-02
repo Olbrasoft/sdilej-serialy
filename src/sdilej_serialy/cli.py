@@ -31,14 +31,16 @@ def export_catalog(args) -> int:
         connection.rollback()
     finally:
         connection.close()
-    if args.series_limit:
-        rows = [row for row in rows if row["series_priority_rank"] <= args.series_limit]
+    # A targeted pilot must not first be discarded by the general top-series
+    # limit.  Apply its identity filters before the optional broad ranking cap.
     if args.series_id:
         rows = [row for row in rows if row["series_id"] == args.series_id]
     if args.season is not None:
         rows = [row for row in rows if row["season"] == args.season]
     if args.episode is not None:
         rows = [row for row in rows if row["episode"] == args.episode]
+    if args.series_limit and not args.series_id:
+        rows = [row for row in rows if row["series_priority_rank"] <= args.series_limit]
     if args.episode_limit:
         rows = rows[: args.episode_limit]
     write_jsonl_gzip(args.out, rows)
