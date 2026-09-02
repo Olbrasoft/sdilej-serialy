@@ -71,6 +71,8 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A backlog plans state
+          # `prepare` may legitimately produce only a reviewed plan and no
+          # runtime state directory.  Stage all tracked output safely.
+          git add -A
           git diff --cached --quiet || git commit -m 'chore: prepare series pilot plan'
           git push
