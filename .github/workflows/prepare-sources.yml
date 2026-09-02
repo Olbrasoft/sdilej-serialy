@@ -26,6 +26,8 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     timeout-minutes: 330
+    env:
+      HF_HOME: /tmp/huggingface
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,6 +35,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: ${{ env.HF_HOME }}
+          key: whisper-small-${{ runner.os }}-v1
       - name: Install media inspection dependency
         run: |
           sudo apt-get update
