@@ -120,12 +120,16 @@ def prepare_queue(args) -> int:
     rows: list[dict] = []
     while True:
         known = manifest.identities()
+        previously_inspected = state.tracked_identities()
         with inspected_lock:
             candidates = [
                 episode
                 for episode in episodes
                 if episode.identity not in known and episode.identity not in inspected
             ]
+        # Continue into untouched backlog territory first. Previously inspected
+        # gaps remain retryable, but must not starve new episodes on every run.
+        candidates.sort(key=lambda episode: episode.identity in previously_inspected)
         if candidates:
             rows.extend(prepare_batch(candidates))
         if deadline is None or time.monotonic() >= deadline:
@@ -136,6 +140,7 @@ def prepare_queue(args) -> int:
             with inspected_lock:
                 inspected.clear()
             time.sleep(min(5.0, max(0.0, deadline - time.monotonic())))
+    state.save()
     manifest.save()
     print(f"prepared={len(rows)} queue_size={len(manifest.identities())} manifest={args.manifest}")
     return 0

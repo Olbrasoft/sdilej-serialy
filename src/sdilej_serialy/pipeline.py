@@ -61,6 +61,10 @@ class EpisodeState:
         with self._lock:
             return bool(self.row(episode).get("upload", {}).get("target_video_id"))
 
+    def tracked_identities(self) -> set[str]:
+        with self._lock:
+            return set(self.data["episodes"])
+
     def save(self) -> None:
         with self._lock:
             self.data["updated_at"] = now_iso()

@@ -3,6 +3,7 @@ from argparse import Namespace
 from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
 from sdilej_serialy import cli
 from sdilej_serialy.models import Episode
+from sdilej_serialy.pipeline import EpisodeState
 
 
 class ReadOnlyConnection:
@@ -144,3 +145,50 @@ def test_prepare_queue_uses_disjoint_parallel_source_workers(monkeypatch, tmp_pa
     assert sorted(inspected) == sorted(item.identity for item in episodes)
     assert len(inspected) == len(set(inspected))
     assert len(manifest_path.read_text(encoding="utf-8").splitlines()) == 4
+
+
+def test_prepare_queue_prioritizes_never_inspected_episodes(monkeypatch, tmp_path):
+    retried = Episode(episode_id=1, series_id=3, series_title="Test", series_original_title=None, season=1, number=1)
+    fresh = Episode(episode_id=2, series_id=3, series_title="Test", series_original_title=None, season=1, number=2)
+    state_path = tmp_path / "source-scan.json"
+    state = EpisodeState(state_path)
+    state.row(retried)
+    state.save()
+    inspected = []
+
+    class Provider:
+        def discover(self, episode):
+            inspected.append(episode.identity)
+            return Candidate(
+                source_id=f"source-{episode.number}",
+                url=f"https://sdilej.cz/{episode.number}/test.mkv",
+                title=f"Test {episode.code}",
+                filename=f"Test.{episode.code}.mkv",
+                size_bytes=100,
+                duration_sec=100,
+                width=1920,
+                height=1080,
+                audio_language="cs",
+                language_probability=0.99,
+                language_tier=LanguageTier.CZECH_AUDIO,
+                match_tier=MatchTier.STRONG,
+            )
+
+    monkeypatch.setenv("SDILEJ_EMAIL", "source@example.test")
+    monkeypatch.setenv("SDILEJ_PASSWORD", "test")
+    monkeypatch.setattr(cli, "load_jsonl", lambda _path: [retried.to_dict(), fresh.to_dict()])
+    monkeypatch.setattr(cli.EpisodeSourceProvider, "authenticated", lambda *_args: Provider())
+
+    cli.prepare_queue(
+        Namespace(
+            backlog=tmp_path / "episodes.jsonl.gz",
+            state=state_path,
+            manifest=tmp_path / "selected-episodes.jsonl",
+            limit=1,
+            workers=1,
+            runtime_minutes=0,
+            persist_git_state=False,
+        )
+    )
+
+    assert inspected == [fresh.identity]
