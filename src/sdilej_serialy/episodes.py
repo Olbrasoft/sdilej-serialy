@@ -169,25 +169,36 @@ class EpisodeSourceProvider:
         by_resolution: dict[int, list[Candidate]] = {}
         for candidate in candidates:
             by_resolution.setdefault(resolution_rank(candidate.width, candidate.height), []).append(candidate)
+        resolved: list[Candidate] = []
         for resolution in sorted(by_resolution, reverse=True):
             unresolved = False
-            verified: list[Candidate] = []
             for candidate in sorted(by_resolution[resolution], key=lambda item: (item.size_bytes or 0, item.source_id)):
-                try:
-                    detail = self._verify(episode, candidate)
-                except (SdilejError, LanguageDetectionError, requests.RequestException):
+                detail = None
+                verification_completed = False
+                for _attempt in range(2):
+                    try:
+                        detail = self._verify(episode, candidate)
+                        verification_completed = True
+                        break
+                    except (SdilejError, LanguageDetectionError, requests.RequestException):
+                        continue
+                if not verification_completed:
                     unresolved = True
                     continue
                 if detail:
-                    verified.append(detail)
+                    resolved.append(detail)
+                    # Candidates in this resolution tier are ordered by size.
+                    # Once Czech audio succeeds, no later source in the tier
+                    # can be a smaller Czech candidate. Keep scanning only if
+                    # an earlier source could not be verified safely.
+                    if detail.language_tier == LanguageTier.CZECH_AUDIO and not unresolved:
+                        return rank_candidates(resolved)[0]
             # Do not silently downgrade while a higher-quality candidate could
             # not be verified; retry that episode in a later preparation pass.
             if unresolved:
                 return None
-            ranked = rank_candidates(verified)
-            if ranked:
-                return ranked[0]
-        return None
+        ranked = rank_candidates(resolved)
+        return ranked[0] if ranked else None
 
     def refresh(self, candidate: Candidate, *, session: requests.Session) -> Candidate:
         return parse_detail_html(self._get(candidate.url, session=session).text, candidate)
