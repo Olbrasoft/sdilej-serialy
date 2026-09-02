@@ -24,6 +24,22 @@ seriálové epizody.
 - `pilot-upload` vyžaduje SHA vytvořeného plánu. Kontinuální upload není
   součástí prvního nasazení.
 
+## Přenositelný manifest nalezených zdrojů
+
+Producent průběžně verzovaně ukládá každý ověřený zdroj do
+[`manifests/selected-episodes.jsonl`](manifests/selected-episodes.jsonl). Jeden
+řádek JSON odpovídá jedné epizodě a obsahuje její stabilní `identity`, metadata
+epizody, vybranou kvalitu a jazyk, cílový `display_name` a `selected.url`.
+Hodnota `selected.url` je detail videa na Sdílej.cz, ze kterého si uploader při
+každém přenosu znovu získá aktuální autorizovanou adresu streamu. Dočasné CDN,
+download ani sample URL se do manifestu nikdy nezapisují.
+
+Manifest je nezávislý na cílovém účtu a záznam se po úspěšném uploadu nemaže,
+takže jej lze použít v jiné session nebo pro jiný povolený cíl bez opakovaného
+vyhledávání zdroje. Stav uploadů a atomické rezervace workerů jsou záměrně
+oddělené v `state/episodes.json`; při použití jiného cíle je proto potřeba použít
+samostatný stavový soubor.
+
 ## První bezpečné spuštění
 
 1. Nastav secrets uvedené výše. `DATABASE_URL` musí ukazovat na produkční CR
