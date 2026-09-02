@@ -15,6 +15,14 @@ on:
         description: Optional CR series ID for a known pilot series
         required: false
         default: ''
+      season:
+        description: Optional season number for a targeted pilot
+        required: false
+        default: ''
+      episode:
+        description: Optional episode number for a targeted pilot
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -46,9 +54,13 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SERIES_ID: ${{ inputs.series_id }}
+          SEASON: ${{ inputs.season }}
+          EPISODE: ${{ inputs.episode }}
         run: |
           args=(--series-limit '${{ inputs.series_limit }}' --episode-limit '${{ inputs.episode_limit }}')
           [ -z "$SERIES_ID" ] || args+=(--series-id "$SERIES_ID")
+          [ -z "$SEASON" ] || args+=(--season "$SEASON")
+          [ -z "$EPISODE" ] || args+=(--episode "$EPISODE")
           sdilej-series export-catalog "${args[@]}"
       - name: Find and verify Sdilej.cz sources
         env:

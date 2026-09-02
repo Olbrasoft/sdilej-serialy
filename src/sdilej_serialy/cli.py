@@ -35,6 +35,10 @@ def export_catalog(args) -> int:
         rows = [row for row in rows if row["series_priority_rank"] <= args.series_limit]
     if args.series_id:
         rows = [row for row in rows if row["series_id"] == args.series_id]
+    if args.season is not None:
+        rows = [row for row in rows if row["season"] == args.season]
+    if args.episode is not None:
+        rows = [row for row in rows if row["episode"] == args.episode]
     if args.episode_limit:
         rows = rows[: args.episode_limit]
     write_jsonl_gzip(args.out, rows)
@@ -108,6 +112,8 @@ def main() -> int:
     export.add_argument("--out", type=Path, default=ROOT / "backlog" / "series-episodes.jsonl.gz")
     export.add_argument("--series-limit", type=int)
     export.add_argument("--series-id", type=int)
+    export.add_argument("--season", type=int)
+    export.add_argument("--episode", type=int)
     export.add_argument("--episode-limit", type=int)
     export.set_defaults(func=export_catalog)
     prepare_cmd = commands.add_parser("prepare")
