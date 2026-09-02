@@ -1,6 +1,8 @@
 from argparse import Namespace
 
+from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
 from sdilej_serialy import cli
+from sdilej_serialy.models import Episode
 
 
 class ReadOnlyConnection:
@@ -83,3 +85,62 @@ def test_continuous_persists_its_report_for_the_next_poll(monkeypatch, tmp_path)
 
     assert report_path.exists()
     assert persisted == [state_path]
+
+
+def test_prepare_queue_uses_disjoint_parallel_source_workers(monkeypatch, tmp_path):
+    episodes = [
+        Episode(
+            episode_id=number,
+            series_id=3,
+            series_title="Test",
+            series_original_title=None,
+            season=1,
+            number=number,
+        )
+        for number in range(1, 5)
+    ]
+    inspected = []
+
+    class Provider:
+        def discover(self, episode):
+            inspected.append(episode.identity)
+            return Candidate(
+                source_id=f"source-{episode.number}",
+                url=f"https://sdilej.cz/{episode.number}/test.mkv",
+                title=f"Test {episode.code}",
+                filename=f"Test.{episode.code}.mkv",
+                size_bytes=100,
+                duration_sec=100,
+                width=1920,
+                height=1080,
+                audio_language="cs",
+                language_probability=0.99,
+                language_tier=LanguageTier.CZECH_AUDIO,
+                match_tier=MatchTier.STRONG,
+            )
+
+    monkeypatch.setenv("SDILEJ_EMAIL", "source@example.test")
+    monkeypatch.setenv("SDILEJ_PASSWORD", "test")
+    monkeypatch.setattr(cli, "load_jsonl", lambda _path: [item.to_dict() for item in episodes])
+    monkeypatch.setattr(
+        cli.EpisodeSourceProvider,
+        "authenticated",
+        lambda *_args: Provider(),
+    )
+    manifest_path = tmp_path / "selected-episodes.jsonl"
+
+    cli.prepare_queue(
+        Namespace(
+            backlog=tmp_path / "episodes.jsonl.gz",
+            state=tmp_path / "source-scan.json",
+            manifest=manifest_path,
+            limit=4,
+            workers=2,
+            runtime_minutes=0,
+            persist_git_state=False,
+        )
+    )
+
+    assert sorted(inspected) == sorted(item.identity for item in episodes)
+    assert len(inspected) == len(set(inspected))
+    assert len(manifest_path.read_text(encoding="utf-8").splitlines()) == 4

@@ -25,7 +25,7 @@ concurrency:
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    timeout-minutes: 330
+    timeout-minutes: 350
     env:
       HF_HOME: /tmp/huggingface
     steps:
@@ -66,7 +66,13 @@ jobs:
         env:
           SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
           SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
-        run: sdilej-series prepare-queue --persist-git-state --state state/source-scan.json --limit '${{ inputs.source_limit || '60' }}'
+        run: >-
+          sdilej-series prepare-queue
+          --persist-git-state
+          --state state/source-scan.json
+          --limit '${{ inputs.source_limit || '60' }}'
+          --workers 2
+          --runtime-minutes 330
       - name: Persist producer queue without overwriting upload state
         run: |
           git add -A

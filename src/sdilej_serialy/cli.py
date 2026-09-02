@@ -3,6 +3,9 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import threading
+import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from .catalog import fetch_episode_rows, load_jsonl, prepare_episodes, readonly_connection, write_jsonl_gzip
@@ -65,9 +68,22 @@ def prepare_queue(args) -> int:
     episodes = [Episode.from_dict(row) for row in load_jsonl(args.backlog)]
     state = EpisodeState(args.state)
     manifest = SourceManifest(args.manifest)
-    provider = EpisodeSourceProvider.authenticated(require_env("SDILEJ_EMAIL"), require_env("SDILEJ_PASSWORD"))
-    candidates = [episode for episode in episodes if episode.identity not in manifest.rows]
+    source_email = require_env("SDILEJ_EMAIL")
+    source_password = require_env("SDILEJ_PASSWORD")
+    if args.limit < 1:
+        raise ValueError("--limit must be at least 1")
+    if not 1 <= args.workers <= 2:
+        raise ValueError("--workers must be between 1 and 2")
+    if not 0 <= args.runtime_minutes <= 330:
+        raise ValueError("--runtime-minutes must be between 0 and 330")
+    providers = [
+        EpisodeSourceProvider.authenticated(source_email, source_password)
+        for _ in range(args.workers)
+    ]
     persister = GitCheckpointPersister(ROOT, (args.manifest,)) if args.persist_git_state else None
+    inspected: set[str] = set()
+    inspected_lock = threading.Lock()
+    deadline = time.monotonic() + args.runtime_minutes * 60 if args.runtime_minutes else None
 
     def persist_prepared(row: dict) -> None:
         manifest.add(row)
@@ -75,15 +91,53 @@ def prepare_queue(args) -> int:
         if persister:
             persister(args.state)
 
-    rows = build_plan(
-        candidates,
-        provider,
-        state,
-        args.limit,
-        on_prepared=persist_prepared,
-    )
+    def mark_inspected(episode: Episode) -> None:
+        with inspected_lock:
+            inspected.add(episode.identity)
+
+    def prepare_batch(candidates: list[Episode]) -> list[dict]:
+        worker_count = min(len(providers), args.limit, len(candidates))
+        base_limit, extra = divmod(args.limit, worker_count)
+
+        def prepare_worker(index: int) -> list[dict]:
+            worker_limit = base_limit + (1 if index < extra else 0)
+            return build_plan(
+                candidates[index::worker_count],
+                providers[index],
+                state,
+                worker_limit,
+                on_prepared=persist_prepared,
+                on_inspected=mark_inspected,
+                deadline_monotonic=deadline,
+            )
+
+        if worker_count == 1:
+            return prepare_worker(0)
+        with ThreadPoolExecutor(max_workers=worker_count) as executor:
+            batches = executor.map(prepare_worker, range(worker_count))
+            return [row for batch in batches for row in batch]
+
+    rows: list[dict] = []
+    while True:
+        known = manifest.identities()
+        with inspected_lock:
+            candidates = [
+                episode
+                for episode in episodes
+                if episode.identity not in known and episode.identity not in inspected
+            ]
+        if candidates:
+            rows.extend(prepare_batch(candidates))
+        if deadline is None or time.monotonic() >= deadline:
+            break
+        if not candidates:
+            # Every missing episode was inspected during this run. Retry the
+            # unresolved set after a short pause instead of spinning hot.
+            with inspected_lock:
+                inspected.clear()
+            time.sleep(min(5.0, max(0.0, deadline - time.monotonic())))
     manifest.save()
-    print(f"prepared={len(rows)} queue_size={len(manifest.rows)} manifest={args.manifest}")
+    print(f"prepared={len(rows)} queue_size={len(manifest.identities())} manifest={args.manifest}")
     return 0
 
 
@@ -157,6 +211,8 @@ def main() -> int:
     queue_cmd.add_argument("--state", type=Path, default=ROOT / "state" / "source-scan.json")
     queue_cmd.add_argument("--manifest", type=Path, default=ROOT / "manifests" / "selected-episodes.jsonl")
     queue_cmd.add_argument("--limit", type=int, default=20)
+    queue_cmd.add_argument("--workers", type=int, default=1)
+    queue_cmd.add_argument("--runtime-minutes", type=int, default=0)
     queue_cmd.add_argument("--persist-git-state", action="store_true")
     queue_cmd.set_defaults(func=prepare_queue)
     upload_cmd = commands.add_parser("upload")

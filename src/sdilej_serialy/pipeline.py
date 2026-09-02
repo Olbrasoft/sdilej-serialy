@@ -5,6 +5,7 @@ import json
 import os
 import tempfile
 import threading
+import time
 from datetime import timedelta
 from datetime import UTC, datetime
 from pathlib import Path
@@ -102,38 +103,41 @@ class EpisodeState:
             return released
 
     def prepared(self, episode: Episode, candidate: Candidate, name: str) -> None:
-        self.row(episode)["source"] = {
-            "source_id": candidate.source_id,
-            "source_url": candidate.url,
-            "source_title": candidate.title,
-            "source_filename": candidate.filename,
-            "size_bytes": candidate.size_bytes,
-            "duration_sec": candidate.duration_sec,
-            "width": candidate.width,
-            "height": candidate.height,
-            "audio_language": candidate.audio_language,
-            "language_probability": candidate.language_probability,
-            "language_tier": candidate.language_tier.name.lower(),
-            "match_evidence": candidate.match_evidence,
-            "display_name": name,
-            "prepared_at": now_iso(),
-        }
-        self.save()
+        with self._lock:
+            self.row(episode)["source"] = {
+                "source_id": candidate.source_id,
+                "source_url": candidate.url,
+                "source_title": candidate.title,
+                "source_filename": candidate.filename,
+                "size_bytes": candidate.size_bytes,
+                "duration_sec": candidate.duration_sec,
+                "width": candidate.width,
+                "height": candidate.height,
+                "audio_language": candidate.audio_language,
+                "language_probability": candidate.language_probability,
+                "language_tier": candidate.language_tier.name.lower(),
+                "match_evidence": candidate.match_evidence,
+                "display_name": name,
+                "prepared_at": now_iso(),
+            }
+            self.save()
 
     def success(self, episode: Episode, video_id: str, name: str) -> None:
-        row = self.row(episode)
-        row["upload"] = {"target_video_id": str(video_id), "display_name": name, "uploaded_at": now_iso()}
-        row.pop("prepared_target", None)
-        row.pop("claim", None)
-        self.save()
+        with self._lock:
+            row = self.row(episode)
+            row["upload"] = {"target_video_id": str(video_id), "display_name": name, "uploaded_at": now_iso()}
+            row.pop("prepared_target", None)
+            row.pop("claim", None)
+            self.save()
 
     def failure(self, episode: Episode, error: Exception) -> None:
-        row = self.row(episode)
-        row.setdefault("attempts", []).append({"at": now_iso(), "error": type(error).__name__})
-        row["attempts"] = row["attempts"][-3:]
-        row.pop("prepared_target", None)
-        row.pop("claim", None)
-        self.save()
+        with self._lock:
+            row = self.row(episode)
+            row.setdefault("attempts", []).append({"at": now_iso(), "error": type(error).__name__})
+            row["attempts"] = row["attempts"][-3:]
+            row.pop("prepared_target", None)
+            row.pop("claim", None)
+            self.save()
 
 
 def plan_sha(rows: list[dict]) -> str:
@@ -158,12 +162,18 @@ def build_plan(
     limit: int,
     *,
     on_prepared: Callable[[dict], None] | None = None,
+    on_inspected: Callable[[Episode], None] | None = None,
+    deadline_monotonic: float | None = None,
 ) -> list[dict]:
     rows: list[dict] = []
     for episode in episodes:
+        if deadline_monotonic is not None and time.monotonic() >= deadline_monotonic:
+            break
         if state.uploaded(episode):
             continue
         candidate = provider.discover(episode)
+        if on_inspected:
+            on_inspected(episode)
         if candidate is None:
             continue
         name = display_name(episode, candidate)
