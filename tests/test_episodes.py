@@ -38,6 +38,39 @@ def test_rejects_an_episode_code_without_a_series_identity():
     assert tier.value == "reject"
 
 
+def test_rejects_a_sequel_with_the_same_base_series_title():
+    planet_earth = Episode(
+        episode_id=1,
+        series_id=998,
+        series_title="Zázračná planeta",
+        series_original_title="Planet Earth",
+        season=1,
+        number=6,
+    )
+
+    tier, evidence = episode_match(planet_earth, "Planet Earth II 2016 S01E06 1080p CZ")
+
+    assert tier == MatchTier.REJECT
+    assert evidence["unmatched_series_prefix"] == "ii"
+
+
+def test_accepts_both_series_aliases_and_release_year_before_episode_code():
+    tier, evidence = episode_match(
+        Episode(
+            episode_id=1,
+            series_id=26,
+            series_title="Perníkový táta",
+            series_original_title="Breaking Bad",
+            season=5,
+            number=11,
+        ),
+        "Pernikovy tata Breaking Bad 2012 S05E11 CZ",
+    )
+
+    assert tier == MatchTier.STRONG
+    assert evidence["unmatched_series_prefix"] == ""
+
+
 def candidate(source_id: str, *, height: int, size_bytes: int | None, language: LanguageTier) -> Candidate:
     return Candidate(
         source_id=source_id,

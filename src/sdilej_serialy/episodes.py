@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 import time
+import unicodedata
 from dataclasses import replace
 
 import requests
@@ -35,8 +36,36 @@ NOISE_RE = re.compile(r"\b(?:1080p|720p|2160p|4k|bluray|webrip|web[ ._-]?dl|hdtv
 
 
 def normalize(value: str) -> str:
+    value = "".join(
+        character
+        for character in unicodedata.normalize("NFKD", value)
+        if not unicodedata.combining(character)
+    )
     value = NOISE_RE.sub(" ", value.casefold())
     return re.sub(r"\s+", " ", re.sub(r"[^\w]+", " ", value)).strip()
+
+
+def series_identity_match(episode: Episode, candidate_title: str, code_start: int) -> tuple[bool, str]:
+    """Require the pre-episode prefix to consist only of known series aliases.
+
+    This prevents a base title such as ``Planet Earth`` from matching the
+    distinct sequel ``Planet Earth II`` while still accepting a filename that
+    contains both Czech and original aliases plus a release year.
+    """
+    remaining = normalize(candidate_title[:code_start])
+    remaining = re.sub(r"\b(?:19|20)\d{2}\b", " ", remaining)
+    matched = False
+    aliases = sorted(
+        {normalize(title) for title in (episode.series_title, episode.series_original_title) if title},
+        key=len,
+        reverse=True,
+    )
+    for alias in aliases:
+        pattern = rf"(?<!\w){re.escape(alias)}(?!\w)"
+        remaining, count = re.subn(pattern, " ", remaining)
+        matched = matched or bool(count)
+    remaining = re.sub(r"\s+", " ", remaining).strip()
+    return matched and not remaining, remaining
 
 
 def has_exact_code(value: str, episode: Episode) -> bool:
@@ -49,24 +78,28 @@ def has_exact_code(value: str, episode: Episode) -> bool:
 
 
 def episode_match(episode: Episode, candidate_title: str) -> tuple[MatchTier, dict]:
+    code_matches_found = list(EPISODE_CODE_RE.finditer(candidate_title))
     codes = {
         (int(match.group("season") or match.group("sx")), int(match.group("episode") or match.group("ex")))
-        for match in EPISODE_CODE_RE.finditer(candidate_title)
+        for match in code_matches_found
     }
     code_matches = (episode.season, episode.number) in codes
-    aliases = [title for title in (episode.series_title, episode.series_original_title) if title]
-    normalized_candidate = normalize(candidate_title)
-    title_matches = [normalize(alias) in normalized_candidate for alias in aliases if len(normalize(alias)) >= 3]
+    title_matches, unmatched_prefix = series_identity_match(
+        episode,
+        candidate_title,
+        code_matches_found[0].start() if code_matches_found else len(candidate_title),
+    )
     evidence = {
         "expected_episode": episode.code,
         "episode_code_match": code_matches,
-        "series_alias_match": any(title_matches),
+        "series_alias_match": title_matches,
+        "unmatched_series_prefix": unmatched_prefix,
     }
     evidence["episode_codes_found"] = [f"S{season:02d}E{number:02d}" for season, number in sorted(codes)]
     if len(codes) > 1:
         evidence["reason"] = "multiple_episode_codes"
         return MatchTier.REJECT, evidence
-    if code_matches and any(title_matches):
+    if code_matches and title_matches:
         return MatchTier.STRONG, evidence
     evidence["reason"] = "missing_series_or_episode_identity"
     return MatchTier.REJECT, evidence
