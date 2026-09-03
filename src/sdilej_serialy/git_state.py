@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import subprocess
 import threading
+import time
 from pathlib import Path
 
 
@@ -27,11 +28,17 @@ class GitCheckpointPersister:
             if self._run("diff", "--cached", "--quiet", check=False).returncode == 0:
                 return
             self._run("commit", "-m", "chore(sync): persist episode checkpoint")
-            for attempt in range(5):
+            # The producer and uploader intentionally checkpoint different
+            # files on the same branch.  A six-worker upload burst can advance
+            # main several times between fetch/rebase/push, so five immediate
+            # retries are not enough even though there is no content conflict.
+            # Keep rebasing until that short burst settles.
+            for attempt in range(40):
                 if self._run("push", "origin", "HEAD:main", check=False).returncode == 0:
                     return
                 self._run("fetch", "origin", "main")
                 if self._run("rebase", "--autostash", "origin/main", check=False).returncode == 0:
+                    time.sleep(min(0.25 * (attempt + 1), 3.0))
                     continue
                 self._run("rebase", "--abort", check=False)
             raise RuntimeError("Upload checkpoint could not be pushed; refusing further transfer")
