@@ -111,6 +111,20 @@ def test_discovery_stops_on_czech_after_an_unresolved_smaller_source(monkeypatch
     assert provider.discover(episode()) is czech
 
 
+def test_unresolved_higher_resolution_does_not_block_czech_lower_resolution(monkeypatch):
+    unresolved = candidate("unresolved", height=1080, size_bytes=100_000_000, language=LanguageTier.UNKNOWN)
+    czech = candidate("czech", height=720, size_bytes=100_000_000, language=LanguageTier.CZECH_AUDIO)
+
+    def verify(_episode, item):
+        if item is unresolved:
+            raise LanguageDetectionError("temporary failure")
+        return item
+
+    provider = provider_with(monkeypatch, [unresolved, czech], verify)
+
+    assert provider.discover(episode()) is czech
+
+
 def test_discovery_timeout_skips_a_problematic_episode(monkeypatch):
     provider = EpisodeSourceProvider(
         requests.Session(),

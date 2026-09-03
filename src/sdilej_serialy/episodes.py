@@ -186,7 +186,6 @@ class EpisodeSourceProvider:
         for resolution in sorted(by_resolution, reverse=True):
             if time.monotonic() >= deadline:
                 return None
-            unresolved = False
             for candidate in sorted(
                 by_resolution[resolution],
                 key=lambda item: (
@@ -209,7 +208,6 @@ class EpisodeSourceProvider:
                     except (SdilejError, LanguageDetectionError, requests.RequestException):
                         continue
                 if not verification_completed:
-                    unresolved = True
                     continue
                 if detail:
                     resolved.append(detail)
@@ -220,10 +218,6 @@ class EpisodeSourceProvider:
                     # audio has already been positively verified.
                     if detail.language_tier == LanguageTier.CZECH_AUDIO:
                         return rank_candidates(resolved)[0]
-            # Do not silently downgrade while a higher-quality candidate could
-            # not be verified; retry that episode in a later preparation pass.
-            if unresolved:
-                return None
         ranked = rank_candidates(resolved)
         return ranked[0] if ranked else None
 
