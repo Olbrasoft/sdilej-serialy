@@ -20,3 +20,19 @@ def test_episode_rows_are_ranked_by_series_score_then_episode_order():
     assert [row["episode_id"] for row in rows] == [1, 2, 3]
     assert [row["series_priority_rank"] for row in rows] == [1, 1, 2]
     assert rows[0]["episode_code"] == "S01E01"
+
+
+def test_duplicate_episode_numbers_only_consume_one_backlog_slot():
+    rows = prepare_episodes(
+        [
+            {"series_id": 1, "series_title": "First", "episode_id": 12, "season": 1, "episode": 1, "imdb_rating": 9.0, "imdb_votes": 5_000},
+            {"series_id": 1, "series_title": "First", "episode_id": 11, "season": 1, "episode": 1, "imdb_rating": 9.0, "imdb_votes": 5_000},
+            {"series_id": 2, "series_title": "Second", "episode_id": 20, "season": 1, "episode": 1, "tmdb_rating": 8.0, "tmdb_vote_count": 1_000},
+        ]
+    )
+
+    assert [(row["series_id"], row["season"], row["episode"]) for row in rows] == [
+        (1, 1, 1),
+        (2, 1, 1),
+    ]
+    assert rows[0]["episode_id"] == 11

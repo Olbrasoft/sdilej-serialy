@@ -82,8 +82,21 @@ def rating_details(row: dict[str, Any]) -> tuple[str | None, float | None, int, 
 
 
 def prepare_episodes(rows: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
-    prepared: list[dict[str, Any]] = []
+    # The production catalog can contain multiple database records for the
+    # same canonical episode number.  The queue and checkpoints intentionally
+    # identify an episode by series/season/number, so exporting those duplicate
+    # rows only consumes the episode limit and repeatedly schedules the same
+    # work.  Keep the lowest database id, which is also the stable first row of
+    # the read-only query.
+    unique_rows: dict[tuple[int, int, int], dict[str, Any]] = {}
     for row in rows:
+        identity = (int(row["series_id"]), int(row["season"]), int(row["episode"]))
+        current = unique_rows.get(identity)
+        if current is None or int(row["episode_id"]) < int(current["episode_id"]):
+            unique_rows[identity] = row
+
+    prepared: list[dict[str, Any]] = []
+    for row in unique_rows.values():
         source, rating, votes, score = rating_details(row)
         prepared.append(
             {
