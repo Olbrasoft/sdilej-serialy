@@ -92,10 +92,18 @@ class EpisodeSourceProvider:
     upload and are intentionally excluded from persisted records.
     """
 
-    def __init__(self, session: requests.Session, *, detector=None, request_gap_seconds: float = 2.0):
+    def __init__(
+        self,
+        session: requests.Session,
+        *,
+        detector=None,
+        request_gap_seconds: float = 2.0,
+        discovery_timeout_seconds: float = 300,
+    ):
         self.session = session
         self.detector = detector or WhisperLanguageDetector()
         self.request_gap_seconds = request_gap_seconds
+        self.discovery_timeout_seconds = discovery_timeout_seconds
         self._last_request = 0.0
 
     @classmethod
@@ -165,12 +173,19 @@ class EpisodeSourceProvider:
         )
 
     def discover(self, episode: Episode) -> Candidate | None:
+        deadline = time.monotonic() + self.discovery_timeout_seconds
+        if time.monotonic() >= deadline:
+            return None
         candidates = self.search(episode)
+        if time.monotonic() >= deadline:
+            return None
         by_resolution: dict[int, list[Candidate]] = {}
         for candidate in candidates:
             by_resolution.setdefault(resolution_rank(candidate.width, candidate.height), []).append(candidate)
         resolved: list[Candidate] = []
         for resolution in sorted(by_resolution, reverse=True):
+            if time.monotonic() >= deadline:
+                return None
             unresolved = False
             for candidate in sorted(
                 by_resolution[resolution],
@@ -180,9 +195,13 @@ class EpisodeSourceProvider:
                     item.source_id,
                 ),
             ):
+                if time.monotonic() >= deadline:
+                    return None
                 detail = None
                 verification_completed = False
                 for _attempt in range(2):
+                    if time.monotonic() >= deadline:
+                        return None
                     try:
                         detail = self._verify(episode, candidate)
                         verification_completed = True

@@ -109,3 +109,19 @@ def test_discovery_stops_on_czech_after_an_unresolved_smaller_source(monkeypatch
     provider = provider_with(monkeypatch, [czech, unresolved], verify)
 
     assert provider.discover(episode()) is czech
+
+
+def test_discovery_timeout_skips_a_problematic_episode(monkeypatch):
+    provider = EpisodeSourceProvider(
+        requests.Session(),
+        detector=object(),
+        request_gap_seconds=0,
+        discovery_timeout_seconds=0,
+    )
+    monkeypatch.setattr(
+        provider,
+        "search",
+        lambda _episode: (_ for _ in ()).throw(AssertionError("search must not start after deadline")),
+    )
+
+    assert provider.discover(episode()) is None
