@@ -77,6 +77,15 @@ def has_exact_code(value: str, episode: Episode) -> bool:
     return False
 
 
+def runtime_acceptable(episode: Episode, duration_sec: int | None) -> bool:
+    """Reject a same-title remake whose episode duration is clearly different."""
+    if not episode.runtime_min or not duration_sec:
+        return True
+    expected = episode.runtime_min * 60
+    tolerance = max(8 * 60, int(expected * 0.35))
+    return abs(duration_sec - expected) <= tolerance
+
+
 def episode_match(episode: Episode, candidate_title: str) -> tuple[MatchTier, dict]:
     code_matches_found = list(EPISODE_CODE_RE.finditer(candidate_title))
     codes = {
@@ -184,6 +193,8 @@ class EpisodeSourceProvider:
             height=int(media.get("height") or detail.height),
             duration_sec=int(media.get("duration_sec") or detail.duration_sec or 0),
         )
+        if not runtime_acceptable(episode, detail.duration_sec):
+            return None
         tier, evidence = episode_match(episode, detail.title)
         if tier not in (MatchTier.STRONG, MatchTier.SOLID) or not quality_acceptable(detail):
             return None

@@ -1,6 +1,6 @@
 import requests
 
-from sdilej_serialy.episodes import EpisodeSourceProvider, episode_match, has_exact_code
+from sdilej_serialy.episodes import EpisodeSourceProvider, episode_match, has_exact_code, runtime_acceptable
 from sdilej_serialy.models import Episode
 from sdilej_to_prehrajto.language import LanguageDetectionError
 from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
@@ -13,6 +13,21 @@ def episode() -> Episode:
 def test_accepts_both_episode_notations():
     assert has_exact_code("The Big Bang Theory S01E01 CZ", episode())
     assert has_exact_code("The Big Bang Theory 1x1 CZ", episode())
+
+
+def test_runtime_rejects_same_title_remake_episode():
+    animated_episode = Episode(
+        episode_id=1,
+        series_id=748,
+        series_title="Avatar: Legenda o Aangovi",
+        series_original_title="Avatar: The Last Airbender",
+        season=1,
+        number=5,
+        runtime_min=25,
+    )
+
+    assert runtime_acceptable(animated_episode, 1_520)
+    assert not runtime_acceptable(animated_episode, 3_101)
 
 
 def test_rejects_other_episode_of_same_series():
