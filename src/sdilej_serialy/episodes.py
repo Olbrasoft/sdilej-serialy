@@ -220,7 +220,20 @@ class EpisodeSourceProvider:
         deadline = time.monotonic() + self.discovery_timeout_seconds
         if time.monotonic() >= deadline:
             return None
-        candidates = self.search(episode)
+        candidates = None
+        for _attempt in range(2):
+            if time.monotonic() >= deadline:
+                return None
+            try:
+                candidates = self.search(episode)
+                break
+            except (SdilejError, requests.RequestException):
+                continue
+        if candidates is None:
+            # A transient search timeout must only defer this episode. Raising
+            # here would terminate both producer workers and strand the upload
+            # queue until the next scheduled Actions run.
+            return None
         if time.monotonic() >= deadline:
             return None
         by_resolution: dict[int, list[Candidate]] = {}

@@ -4,6 +4,7 @@ from sdilej_serialy.episodes import EpisodeSourceProvider, episode_match, has_ex
 from sdilej_serialy.models import Episode
 from sdilej_to_prehrajto.language import LanguageDetectionError
 from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
+from sdilej_to_prehrajto.sdilej import SdilejError
 
 
 def episode() -> Episode:
@@ -187,3 +188,37 @@ def test_discovery_timeout_skips_a_problematic_episode(monkeypatch):
     )
 
     assert provider.discover(episode()) is None
+
+
+def test_discovery_retries_a_transient_search_timeout(monkeypatch):
+    expected = candidate("working", height=1080, size_bytes=100_000_000, language=LanguageTier.CZECH_AUDIO)
+    provider = EpisodeSourceProvider(requests.Session(), detector=object(), request_gap_seconds=0)
+    attempts = 0
+
+    def search(_episode):
+        nonlocal attempts
+        attempts += 1
+        if attempts == 1:
+            raise SdilejError("temporary timeout")
+        return [expected]
+
+    monkeypatch.setattr(provider, "search", search)
+    monkeypatch.setattr(provider, "_verify", lambda _episode, item: item)
+
+    assert provider.discover(episode()) is expected
+    assert attempts == 2
+
+
+def test_discovery_defers_episode_after_repeated_search_timeouts(monkeypatch):
+    provider = EpisodeSourceProvider(requests.Session(), detector=object(), request_gap_seconds=0)
+    attempts = 0
+
+    def search(_episode):
+        nonlocal attempts
+        attempts += 1
+        raise SdilejError("temporary timeout")
+
+    monkeypatch.setattr(provider, "search", search)
+
+    assert provider.discover(episode()) is None
+    assert attempts == 2
