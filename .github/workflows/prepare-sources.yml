@@ -5,10 +5,10 @@ on:
     inputs:
       series_limit:
         required: false
-        default: '100'
+        default: '500'
       episode_limit:
         required: false
-        default: '10000'
+        default: '50000'
       source_limit:
         required: false
         default: '60'
@@ -57,7 +57,7 @@ jobs:
       - name: Export only the prioritized series and episode catalog
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: sdilej-series export-catalog --series-limit '${{ inputs.series_limit || '100' }}' --episode-limit '${{ inputs.episode_limit || '10000' }}'
+        run: sdilej-series export-catalog --series-limit '${{ inputs.series_limit || '500' }}' --episode-limit '${{ inputs.episode_limit || '50000' }}'
       - name: Configure durable source checkpoints
         run: |
           git config user.name 'github-actions[bot]'
