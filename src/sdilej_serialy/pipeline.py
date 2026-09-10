@@ -16,6 +16,7 @@ from sdilej_to_prehrajto import prehrajto
 
 from .episodes import EpisodeSourceProvider, display_name
 from .models import Episode
+from .target import existing_episode
 
 
 TARGET_EMAIL = "share.series@email.cz"
@@ -139,7 +140,7 @@ class EpisodeState:
             row = self.row(episode)
             row.setdefault("attempts", []).append({"at": now_iso(), "error": type(error).__name__})
             row["attempts"] = row["attempts"][-3:]
-            row.pop("prepared_target", None)
+            # An uncertain target must never be replaced by another upload.
             row.pop("claim", None)
             self.save()
 
@@ -215,11 +216,15 @@ def upload_plan(rows: list[dict], state: EpisodeState, source_email: str, source
             continue
         candidate = Candidate.from_dict(row["selected"])
         try:
-            known = prehrajto.uploaded_video_id_by_name(target, row["display_name"])
+            known = existing_episode(target, row["display_name"])
             if known:
                 state.success(episode, known, row["display_name"])
                 uploaded += 1
                 continue
+            if state.row(episode).get("prepared_target"):
+                raise RuntimeError("Existing upload requires reconciliation")
+            state.row(episode)["prepared_target"] = {"creation_intent": True}
+            state.save()
             refreshed = source_provider.refresh(candidate, session=source_provider.session)
             if refreshed.source_id != candidate.source_id or refreshed.url != candidate.url:
                 raise RuntimeError("Source identity changed before upload")

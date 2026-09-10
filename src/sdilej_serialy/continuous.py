@@ -15,6 +15,7 @@ from sdilej_to_prehrajto.models import Candidate
 from .episodes import EpisodeSourceProvider
 from .models import Episode
 from .pipeline import EpisodeState, target_session
+from .target import existing_episode
 
 
 def uploaded_identities(state: EpisodeState) -> set[str]:
@@ -114,13 +115,13 @@ def upload_continuously(
                     if not state.claim(episode, f"{execution}-worker-{index}"):
                         continue
                     candidate = Candidate.from_dict(row["selected"])
-                    existing = prehrajto.uploaded_video_id_by_name(target, row["display_name"])
+                    existing = existing_episode(target, row["display_name"])
                     if existing:
-                        if not target_confirmed(target, existing, row["display_name"]):
-                            raise RuntimeError("Existing target name was not confirmed by listing and statistics")
                         state.success(episode, existing, row["display_name"])
                         completed += 1
                         continue
+                    if state.row(episode).get("prepared_target"):
+                        raise RuntimeError("Existing upload requires reconciliation")
                     refreshed = provider.refresh(candidate, session=provider.session)
                     if (refreshed.source_id, refreshed.url) != (candidate.source_id, candidate.url):
                         raise RuntimeError("Verified source identity changed before upload")
@@ -129,14 +130,19 @@ def upload_continuously(
                         state.row(episode)["prepared_target"] = {"target_video_id": video_id, "size_bytes": size}
                         state.save()
 
+                    state.row(episode)["prepared_target"] = {"creation_intent": True}
+                    state.save()
                     result = prehrajto.relay_upload(target, provider.session, refreshed, row["display_name"], episode.description, on_prepared=prepared)
                     if not target_confirmed(target, result.video_id, row["display_name"]):
                         raise RuntimeError("Target listing and statistics did not confirm the uploaded episode")
                     state.success(episode, result.video_id, row["display_name"])
                     completed += 1
                 except Exception as error:
-                    reconciled = prehrajto.uploaded_video_id_by_name(target, row["display_name"])
-                    if reconciled and target_confirmed(target, reconciled, row["display_name"]):
+                    try:
+                        reconciled = existing_episode(target, row["display_name"])
+                    except Exception:
+                        reconciled = None
+                    if reconciled:
                         state.success(episode, reconciled, row["display_name"])
                         completed += 1
                     else:

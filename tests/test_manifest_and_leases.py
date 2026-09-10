@@ -136,6 +136,7 @@ def test_idle_worker_refills_new_unique_episode_while_upload_is_running(monkeypa
     monkeypatch.setattr(continuous, "target_session", lambda *_args: object())
     monkeypatch.setattr(continuous.prehrajto, "uploaded_video_count", lambda _session: 0)
     monkeypatch.setattr(continuous.prehrajto, "uploaded_video_id_by_name", lambda *_args: None)
+    monkeypatch.setattr(continuous, "existing_episode", lambda *_args: None)
     monkeypatch.setattr(continuous.prehrajto, "uploaded_video_confirmed", lambda *_args: True)
 
     def relay(_target, _source, candidate, display_name, _description, *, on_prepared):
