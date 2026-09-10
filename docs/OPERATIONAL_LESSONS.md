@@ -170,3 +170,17 @@ order. An unresolved original or better/smaller language candidate defers the
 episode instead of silently downgrading it. Audio channel count has no ranking
 bonus. A fresh policy stamp certifies this search, not perpetual freshness if
 new sources are added to Sdilej later.
+
+Live acceptance check on 2026-09-10 using the complete v4 discovery path:
+
+| Episode | Selected source | Original dimensions | Bytes | Czech confidence |
+| --- | --- | --- | --- | --- |
+| Planet Earth II S01E02 | 10974880 | 1920x1080 | 3921950283 | 0.9928 |
+| Planet Earth II S01E05 | 10974787 | 1920x1080 | 3903602574 | 0.9885 |
+| Avatar S01E09 | 33102532 | 900x720 | 260460752 | 0.9721 |
+| Avatar S01E10 | 30690905 | 900x720 | 368734344 | 0.9732 |
+
+The Avatar S01E09 result beats Czech source 30690903 (374145804 bytes,
+900x720); its 1440x1080 alternative 34337296 was verified as English.
+These are source-selection checks, not assertions that existing target
+uploads were replaced. Existing uploads remain untouched.
