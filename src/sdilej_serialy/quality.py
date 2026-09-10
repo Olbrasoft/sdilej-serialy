@@ -11,7 +11,7 @@ def above_sd(row):
 
 
 def upload_eligible(row):
-    return (row.get('quality_policy') == QUALITY_POLICY and above_sd(row)
+    return (row.get('quality_policy') == QUALITY_POLICY
             and row.get('selected', {}).get('language_tier') == 'czech_audio')
 
 

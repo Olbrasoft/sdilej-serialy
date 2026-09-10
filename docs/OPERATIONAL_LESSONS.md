@@ -147,8 +147,9 @@ the 2.75 Mbps floor without accepting substantially lower-bitrate Full HD files.
 ## Pending-source revalidation
 
 Every newly prepared manifest row carries `quality_policy=original-media-v3`.
-The uploader rejects older policy versions, foreign audio, and (temporarily)
-SD sources. The producer prioritizes rechecking every stale pending selection,
+The uploader rejects older policy versions and foreign audio. A freshly
+reviewed SD source is eligible when no better acceptable Czech source was
+found. The producer prioritizes rechecking every stale pending selection,
 including 1080p: a search preview can hide a 4K original. Existing upload
 records, claims, and prepared targets are not cleared. Historical source
 selections remain recoverable through Git, rather than deleting queue history.

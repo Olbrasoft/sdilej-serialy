@@ -10,11 +10,11 @@ from sdilej_serialy.manifest import SourceManifest
 from sdilej_serialy.quality import QUALITY_POLICY
 
 
-def test_sd_is_filtered_before_batch_limit(tmp_path):
+def test_reviewed_sd_is_eligible_when_no_better_czech_source_exists(tmp_path):
     manifest=SourceManifest(tmp_path/'manifest')
     for key,width,height in [('sd',854,480),('hd',1920,1080)]:
         manifest.add(dict(identity=key,quality_policy=QUALITY_POLICY,selected=dict(url='https://sdilej.cz/1/video',width=width,height=height,language_tier='czech_audio')))
-    assert [r['identity'] for r in manifest.pending(set(),limit=1)] == ['hd']
+    assert [r['identity'] for r in manifest.pending(set(),limit=1)] == ['sd']
 
 
 def test_stale_hd_and_foreign_sources_are_not_uploadable(tmp_path):
