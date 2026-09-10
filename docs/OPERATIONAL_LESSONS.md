@@ -143,3 +143,19 @@ written into the manifest.
 Series bitrate floors have a one-percent tolerance at the boundary. This accepts
 the verified 1920x1080 Czech source 33882527 at approximately 2.732 Mbps against
 the 2.75 Mbps floor without accepting substantially lower-bitrate Full HD files.
+
+## Pending-source revalidation
+
+Every newly prepared manifest row carries `quality_policy=original-media-v3`.
+The uploader rejects older policy versions, foreign audio, and (temporarily)
+SD sources. The producer prioritizes rechecking every stale pending selection,
+including 1080p: a search preview can hide a 4K original. Existing upload
+records, claims, and prepared targets are not cleared. Historical source
+selections remain recoverable through Git, rather than deleting queue history.
+
+Inspect original resolution and exact byte size for all matching candidates
+before ranking. Check Czech audio in descending resolution and ascending size
+order. An unresolved original or better/smaller language candidate defers the
+episode instead of silently downgrading it. Audio channel count has no ranking
+bonus. A fresh policy stamp certifies this search, not perpetual freshness if
+new sources are added to Sdilej later.
