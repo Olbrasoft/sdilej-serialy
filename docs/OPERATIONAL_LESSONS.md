@@ -110,3 +110,22 @@ Před změnou pipeline si ověř:
 - Nezvyšovat počet workerů bez kontroly, kolik přenosů cílová služba skutečně
   přijímá.
 - Nespouštět souběžně dva upload runy proti stejnému účtu.
+
+## Duplicate prevention after the September 10 incident
+
+- The target sanitizes punctuation, including ellipses. A full display-name
+  lookup can miss an existing upload. Search by series title and episode code,
+  and extract the ID from the same listing row as the heading.
+- A target that is still processing already occupies its episode identity.
+  Presence is not proof of playable media, but must prevent another upload.
+- Persist creation intent before calling the relay and retain prepared target
+  IDs on every failure. An uncertain result requires reconciliation; never
+  clear it merely to make a retry create another video.
+- Catalog IDs are not sufficient to prevent duplicate uploads: reserve the
+  normalized series-title/season/episode key atomically across catalog aliases.
+- Same localized titles can also describe distinct series. For destructive
+  cleanup, check source evidence when subtitles or catalog identities differ;
+  leave ambiguous pairs untouched.
+- Before cleanup, stop scheduled uploads, save the complete inventory and
+  an explicit retained ID for each group, and verify that retained IDs never
+  occur in the deletion set. Recheck each group after deletion.
