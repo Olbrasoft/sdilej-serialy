@@ -52,3 +52,14 @@ def test_retry_never_creates_second_target_when_listing_is_delayed(tmp_path, mon
         continuous.upload_continuously([row], EpisodeState(path), workers=1,
             source_email='s', source_password='x', target_email='t', target_password='x')
     assert created == ['123']
+
+
+def test_different_database_ids_cannot_upload_same_named_episode(tmp_path):
+    a = Episode(1, 2, 'Series', None, 3, 6)
+    b = Episode(2, 99, 'Series', None, 3, 6)
+    state = EpisodeState(tmp_path / 'state.json')
+    assert state.claim(a, 'one')
+    assert not state.claim(b, 'two')
+    state.success(a, '123', 'Series S03E06 - Subtitle')
+    assert not state.claim(b, 'two')
+    assert state.row(b)['upload']['target_video_id'] == '123'

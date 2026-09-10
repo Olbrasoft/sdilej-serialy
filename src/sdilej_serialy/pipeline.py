@@ -16,7 +16,7 @@ from sdilej_to_prehrajto import prehrajto
 
 from .episodes import EpisodeSourceProvider, display_name
 from .models import Episode
-from .target import existing_episode
+from .target import existing_episode, episode_key
 
 
 TARGET_EMAIL = "share.series@email.cz"
@@ -76,6 +76,20 @@ class EpisodeState:
     def claim(self, episode: Episode, worker_id: str, *, lease_hours: int = 6) -> bool:
         with self._lock:
             row = self.row(episode)
+            key = episode_key(f"{episode.series_title} {episode.code}")
+            row["episode_key"] = key
+            for identity, other in self.data["episodes"].items():
+                if identity == episode.identity:
+                    continue
+                other_key = other.get("episode_key") or episode_key(other.get("upload", {}).get("display_name", ""))
+                if other_key != key:
+                    continue
+                if other.get("upload", {}).get("target_video_id"):
+                    row["upload"] = dict(other["upload"])
+                    self.save()
+                    return False
+                if other.get("claim") or other.get("prepared_target"):
+                    return False
             if row.get("upload", {}).get("target_video_id"):
                 return False
             existing = row.get("claim") or {}
@@ -212,7 +226,7 @@ def upload_plan(rows: list[dict], state: EpisodeState, source_email: str, source
     uploaded = 0
     for row in rows:
         episode = Episode.from_dict(row["episode"])
-        if state.uploaded(episode):
+        if not state.claim(episode, "pilot"):
             continue
         candidate = Candidate.from_dict(row["selected"])
         try:
