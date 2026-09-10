@@ -112,6 +112,7 @@ def test_idle_worker_refills_new_unique_episode_while_upload_is_running(monkeypa
             match_tier=MatchTier.STRONG,
         )
         return {
+            "quality_policy": __import__('sdilej_serialy.quality', fromlist=['QUALITY_POLICY']).QUALITY_POLICY,
             "episode": item.to_dict(),
             "identity": item.identity,
             "selected": selected.to_dict(),

@@ -31,9 +31,12 @@ def test_uncertain_target_survives_failure_restart_and_orphan_release(tmp_path, 
 
 def test_retry_never_creates_second_target_when_listing_is_delayed(tmp_path, monkeypatch):
     item = Episode(1, 2, 'Series', None, 3, 6)
-    candidate = Candidate(source_id='1', url='https://sdilej.cz/1/video', title='Series S03E06')
+    candidate = Candidate(source_id='1', url='https://sdilej.cz/1/video', title='Series S03E06', width=1920, height=1080)
     row = dict(identity=item.identity, episode=item.to_dict(), selected=candidate.to_dict(),
                display_name='Series S03E06 - Title')
+    from sdilej_serialy.quality import QUALITY_POLICY
+    row['quality_policy'] = QUALITY_POLICY
+    row['selected']['language_tier'] = 'czech_audio'
     provider = SimpleNamespace(session=object(), refresh=lambda c, **kw: c)
     monkeypatch.setattr(continuous.EpisodeSourceProvider, 'authenticated', lambda *a: provider)
     monkeypatch.setattr(continuous, 'target_session', lambda *a: object())

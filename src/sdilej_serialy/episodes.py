@@ -182,10 +182,12 @@ class EpisodeSourceProvider:
                     candidates.setdefault(candidate.source_id, candidate)
         return list(candidates.values())
 
-    def _verify(self, episode: Episode, candidate: Candidate) -> Candidate | None:
+    def _inspect(self, episode: Episode, candidate: Candidate) -> Candidate | None:
         detail = parse_detail_html(self._get(candidate.url).text, candidate)
         detail = resolve_original(self.session, detail)
         media = probe_media(detail.download_url)
+        if not all(media.get(key) for key in ('width', 'height', 'duration_sec')) or not detail.size_bytes:
+            raise SdilejError('Original media metadata is incomplete')
         detail = replace(
             detail,
             video_codec=media.get("video_codec") or detail.video_codec,
@@ -198,6 +200,13 @@ class EpisodeSourceProvider:
         tier, evidence = episode_match(episode, detail.title)
         if tier not in (MatchTier.STRONG, MatchTier.SOLID) or not quality_acceptable(detail):
             return None
+        return replace(detail, match_tier=tier, match_evidence=evidence)
+
+    def _verify(self, episode: Episode, candidate: Candidate) -> Candidate | None:
+        detail = self._inspect(episode, candidate)
+        return self._verify_language(episode, detail) if detail else None
+
+    def _verify_language(self, episode: Episode, detail: Candidate) -> Candidate:
         language, probability = self.detector.detect(detail.sample_url)
         hint = audio_language_hint(detail.filename)
         if hint and language_tier(language) != language_tier(hint):
@@ -208,8 +217,6 @@ class EpisodeSourceProvider:
             raise LanguageDetectionError("Whisper language confidence is too low")
         return replace(
             detail,
-            match_tier=tier,
-            match_evidence=evidence,
             audio_language=language,
             language_probability=probability,
             language_evidence="whisper_remote_sample",
@@ -238,7 +245,19 @@ class EpisodeSourceProvider:
             return None
         by_resolution: dict[int, list[Candidate]] = {}
         for candidate in candidates:
-            by_resolution.setdefault(resolution_rank(candidate.width, candidate.height), []).append(candidate)
+            # Search metadata can describe a low-resolution preview of a 4K
+            # original. Inspect every original before choosing a resolution.
+            for attempt in range(2):
+                if time.monotonic() >= deadline:
+                    return None
+                try:
+                    detail = self._inspect(episode, candidate)
+                    break
+                except (SdilejError, requests.RequestException):
+                    if attempt == 1:
+                        return None
+            if detail:
+                by_resolution.setdefault(resolution_rank(detail.width, detail.height), []).append(detail)
         resolved: list[Candidate] = []
         for resolution in sorted(by_resolution, reverse=True):
             if time.monotonic() >= deadline:
@@ -259,20 +278,20 @@ class EpisodeSourceProvider:
                     if time.monotonic() >= deadline:
                         return None
                     try:
-                        detail = self._verify(episode, candidate)
+                        detail = self._verify_language(episode, candidate)
                         verification_completed = True
                         break
                     except (SdilejError, LanguageDetectionError, requests.RequestException):
                         continue
                 if not verification_completed:
-                    continue
+                    # An unresolved better/smaller source is not evidence that
+                    # a lower-quality/larger Czech source is the best choice.
+                    return None
                 if detail:
                     resolved.append(detail)
                     # Candidates in this resolution tier are ordered by size.
-                    # Once Czech audio succeeds, no later source in the tier
-                    # can be a smaller Czech candidate. A previously broken
-                    # candidate must not force more language probes after Czech
-                    # audio has already been positively verified.
+                    # All originals were inspected first, and every preceding
+                    # candidate was conclusively checked before reaching here.
                     if detail.language_tier == LanguageTier.CZECH_AUDIO:
                         return rank_candidates(resolved)[0]
         ranked = rank_candidates(resolved)

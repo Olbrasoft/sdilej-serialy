@@ -17,6 +17,7 @@ from sdilej_to_prehrajto import prehrajto
 from .episodes import EpisodeSourceProvider, display_name
 from .models import Episode
 from .target import existing_episode, episode_key
+from .quality import QUALITY_POLICY, upload_eligible
 
 
 TARGET_EMAIL = "share.series@email.cz"
@@ -202,6 +203,7 @@ def build_plan(
             "identity": episode.identity,
             "selected": candidate.to_dict(),
             "display_name": name,
+            "quality_policy": QUALITY_POLICY,
         }
         rows.append(row)
         if on_prepared:
@@ -226,6 +228,8 @@ def upload_plan(rows: list[dict], state: EpisodeState, source_email: str, source
     uploaded = 0
     for row in rows:
         episode = Episode.from_dict(row["episode"])
+        if not upload_eligible(row):
+            continue
         if not state.claim(episode, "pilot"):
             continue
         candidate = Candidate.from_dict(row["selected"])

@@ -15,6 +15,8 @@ from .git_state import GitCheckpointPersister
 from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import EpisodeState, build_plan, plan_sha, upload_plan
+from .quality import QUALITY_POLICY
+from .target import episode_key
 
 
 ROOT = Path(os.environ.get("GITHUB_WORKSPACE", Path(__file__).resolve().parents[2])).resolve()
@@ -120,16 +122,26 @@ def prepare_queue(args) -> int:
     rows: list[dict] = []
     while True:
         known = manifest.identities()
+        upload_path = ROOT / 'state' / 'episodes.json'
+        uploads = json.loads(upload_path.read_text())['episodes'] if upload_path.exists() else {}
+        occupied_keys = {episode_key(r.get('upload', {}).get('display_name', ''))
+                         for r in uploads.values() if r.get('upload')}
+        recheck = {identity for identity, row in manifest.rows.items()
+                   if row.get('quality_policy') != QUALITY_POLICY
+                   and not any(uploads.get(identity, {}).get(k) for k in ('upload', 'claim', 'prepared_target'))
+                   and episode_key(row.get('display_name', '')) not in occupied_keys}
         previously_inspected = state.tracked_identities()
         with inspected_lock:
             candidates = [
                 episode
                 for episode in episodes
-                if episode.identity not in known and episode.identity not in inspected
+                if (episode.identity not in known or episode.identity in recheck) and episode.identity not in inspected
             ]
         # Continue into untouched backlog territory first. Previously inspected
         # gaps remain retryable, but must not starve new episodes on every run.
-        candidates.sort(key=lambda episode: episode.identity in previously_inspected)
+        candidates.sort(key=lambda episode: (episode.identity not in recheck, episode.identity in previously_inspected))
+        if recheck:
+            print(f'sources_pending_review={len(recheck)}', flush=True)
         if candidates:
             rows.extend(prepare_batch(candidates))
         if deadline is None or time.monotonic() >= deadline:

@@ -7,6 +7,7 @@ import threading
 from pathlib import Path
 
 from .pipeline import atomic_json
+from .quality import upload_eligible
 
 
 class SourceManifest:
@@ -57,7 +58,7 @@ class SourceManifest:
 
     def pending(self, uploaded: set[str], *, limit: int) -> list[dict]:
         with self._lock:
-            return [row for key, row in self.rows.items() if key not in uploaded][:limit]
+            return [row for key, row in self.rows.items() if key not in uploaded and upload_eligible(row)][:limit]
 
     def identities(self) -> set[str]:
         with self._lock:

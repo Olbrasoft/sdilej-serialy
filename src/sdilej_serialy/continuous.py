@@ -16,6 +16,7 @@ from .episodes import EpisodeSourceProvider
 from .models import Episode
 from .pipeline import EpisodeState, target_session
 from .target import existing_episode
+from .quality import upload_eligible
 
 
 def uploaded_identities(state: EpisodeState) -> set[str]:
@@ -111,6 +112,9 @@ def upload_continuously(
                 if row is None:
                     return completed
                 try:
+                    if not upload_eligible(row):
+                        print(f"upload_deferred=quality_review identity={row['identity']}", flush=True)
+                        continue
                     episode = Episode.from_dict(row["episode"])
                     if not state.claim(episode, f"{execution}-worker-{index}"):
                         continue

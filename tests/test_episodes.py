@@ -104,7 +104,8 @@ def candidate(source_id: str, *, height: int, size_bytes: int | None, language: 
 def provider_with(monkeypatch, candidates, verify):
     provider = EpisodeSourceProvider(requests.Session(), detector=object(), request_gap_seconds=0)
     monkeypatch.setattr(provider, "search", lambda _episode: candidates)
-    monkeypatch.setattr(provider, "_verify", verify)
+    monkeypatch.setattr(provider, "_inspect", lambda _episode, item: item)
+    monkeypatch.setattr(provider, "_verify_language", verify)
     return provider
 
 
@@ -131,6 +132,35 @@ def test_discovery_stops_after_smallest_verified_czech_source(monkeypatch):
     assert verified == ["small"]
 
 
+def test_original_4k_is_not_hidden_by_720p_preview(monkeypatch):
+    from dataclasses import replace
+    preview = candidate('4k', height=720, size_bytes=100_000_000, language=LanguageTier.CZECH_AUDIO)
+    full_hd = candidate('hd', height=1080, size_bytes=200_000_000, language=LanguageTier.CZECH_AUDIO)
+    original = replace(preview, width=3840, height=2160, size_bytes=400_000_000)
+    provider = provider_with(monkeypatch, [full_hd, preview], lambda _episode, item: item)
+    monkeypatch.setattr(provider, '_inspect', lambda _episode, item: original if item is preview else item)
+    assert provider.discover(episode()) is original
+
+
+def test_original_sizes_determine_order_not_preview_sizes(monkeypatch):
+    from dataclasses import replace
+    first = candidate('first', height=1080, size_bytes=100_000_000, language=LanguageTier.CZECH_AUDIO)
+    second = candidate('second', height=1080, size_bytes=200_000_000, language=LanguageTier.CZECH_AUDIO)
+    larger_original = replace(first, size_bytes=500_000_000)
+    provider = provider_with(monkeypatch, [first, second], lambda _episode, item: item)
+    monkeypatch.setattr(provider, '_inspect', lambda _episode, item: larger_original if item is first else item)
+    assert provider.discover(episode()) is second
+
+
+def test_unresolved_original_metadata_defers_selection(monkeypatch):
+    item = candidate('unknown', height=720, size_bytes=100_000_000, language=LanguageTier.CZECH_AUDIO)
+    provider = provider_with(monkeypatch, [item], lambda _episode, item: item)
+    def inspect(*args):
+        raise SdilejError('temporary failure')
+    monkeypatch.setattr(provider, '_inspect', inspect)
+    assert provider.discover(episode()) is None
+
+
 def test_discovery_checks_known_smallest_size_before_unknown_size(monkeypatch):
     known = candidate("known", height=1080, size_bytes=100_000_000, language=LanguageTier.CZECH_AUDIO)
     unknown = candidate("unknown", height=1080, size_bytes=None, language=LanguageTier.CZECH_AUDIO)
@@ -146,7 +176,7 @@ def test_discovery_checks_known_smallest_size_before_unknown_size(monkeypatch):
     assert verified == ["known"]
 
 
-def test_discovery_stops_on_czech_after_an_unresolved_smaller_source(monkeypatch):
+def test_discovery_defers_after_an_unresolved_smaller_source(monkeypatch):
     unresolved = candidate("unresolved", height=1080, size_bytes=100_000_000, language=LanguageTier.UNKNOWN)
     czech = candidate("czech", height=1080, size_bytes=200_000_000, language=LanguageTier.CZECH_AUDIO)
 
@@ -157,10 +187,10 @@ def test_discovery_stops_on_czech_after_an_unresolved_smaller_source(monkeypatch
 
     provider = provider_with(monkeypatch, [czech, unresolved], verify)
 
-    assert provider.discover(episode()) is czech
+    assert provider.discover(episode()) is None
 
 
-def test_unresolved_higher_resolution_does_not_block_czech_lower_resolution(monkeypatch):
+def test_unresolved_higher_resolution_defers_lower_resolution(monkeypatch):
     unresolved = candidate("unresolved", height=1080, size_bytes=100_000_000, language=LanguageTier.UNKNOWN)
     czech = candidate("czech", height=720, size_bytes=100_000_000, language=LanguageTier.CZECH_AUDIO)
 
@@ -171,7 +201,7 @@ def test_unresolved_higher_resolution_does_not_block_czech_lower_resolution(monk
 
     provider = provider_with(monkeypatch, [unresolved, czech], verify)
 
-    assert provider.discover(episode()) is czech
+    assert provider.discover(episode()) is None
 
 
 def test_discovery_timeout_skips_a_problematic_episode(monkeypatch):
@@ -203,7 +233,8 @@ def test_discovery_retries_a_transient_search_timeout(monkeypatch):
         return [expected]
 
     monkeypatch.setattr(provider, "search", search)
-    monkeypatch.setattr(provider, "_verify", lambda _episode, item: item)
+    monkeypatch.setattr(provider, "_inspect", lambda _episode, item: item)
+    monkeypatch.setattr(provider, "_verify_language", lambda _episode, item: item)
 
     assert provider.discover(episode()) is expected
     assert attempts == 2
