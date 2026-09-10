@@ -117,6 +117,15 @@ def test_discovery_prefers_czech_audio_over_higher_resolution(monkeypatch):
     assert provider.discover(episode()) is czech_720p
 
 
+def test_czech_sd_is_selected_when_hd_has_only_foreign_audio(monkeypatch):
+    from dataclasses import replace
+    foreign = candidate('hd', height=1080, size_bytes=100_000_000, language=LanguageTier.FOREIGN_AUDIO)
+    sd = replace(candidate('sd', height=480, size_bytes=50_000_000,
+                           language=LanguageTier.CZECH_AUDIO), width=854)
+    provider = provider_with(monkeypatch, [foreign, sd], lambda _episode, item: item)
+    assert provider.discover(episode()) is sd
+
+
 def test_discovery_stops_after_smallest_verified_czech_source(monkeypatch):
     smaller = candidate("small", height=1080, size_bytes=100_000_000, language=LanguageTier.CZECH_AUDIO)
     larger = candidate("large", height=1080, size_bytes=200_000_000, language=LanguageTier.CZECH_AUDIO)
