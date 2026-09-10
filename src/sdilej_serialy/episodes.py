@@ -12,8 +12,6 @@ from sdilej_to_prehrajto.language import LanguageDetectionError, WhisperLanguage
 from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
 from sdilej_to_prehrajto.ranking import (
     language_tier,
-    quality_acceptable,
-    rank_candidates,
     resolution_label,
     resolution_rank,
 )
@@ -22,13 +20,14 @@ from sdilej_to_prehrajto.sdilej import (
     SdilejError,
     audio_language_hint,
     login,
-    parse_detail_html,
     parse_search_html,
     probe_media,
     slugify,
 )
 
 from .models import Episode
+from .source_detail import parse_detail_html, resolve_original
+from .quality import quality_acceptable, rank_candidates
 
 
 EPISODE_CODE_RE = re.compile(r"\bS(?P<season>\d{1,2})E(?P<episode>\d{1,3})\b|\b(?P<sx>\d{1,2})x(?P<ex>\d{1,3})\b", re.I)
@@ -185,6 +184,7 @@ class EpisodeSourceProvider:
 
     def _verify(self, episode: Episode, candidate: Candidate) -> Candidate | None:
         detail = parse_detail_html(self._get(candidate.url).text, candidate)
+        detail = resolve_original(self.session, detail)
         media = probe_media(detail.download_url)
         detail = replace(
             detail,

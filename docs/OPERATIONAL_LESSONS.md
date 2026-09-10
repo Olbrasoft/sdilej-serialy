@@ -129,3 +129,17 @@ Před změnou pipeline si ověř:
 - Before cleanup, stop scheduled uploads, save the complete inventory and
   an explicit retained ID for each group, and verify that retained IDs never
   occur in the deletion set. Recheck each group after deletion.
+
+## Original media verification
+
+Read the fast-download button from the authenticated detail page. Resolve its
+redirects with the source account session and use the returned original-media
+URL for both ffprobe and Whisper. Do not infer CDN hostnames or require a
+preview-player URL: previews can have a lower resolution than the original.
+Read the total byte size from Content-Range (not the one-byte response length)
+when probing with a range request. Signed URLs remain transient and are never
+written into the manifest.
+
+Series bitrate floors have a one-percent tolerance at the boundary. This accepts
+the verified 1920x1080 Czech source 33882527 at approximately 2.732 Mbps against
+the 2.75 Mbps floor without accepting substantially lower-bitrate Full HD files.
