@@ -140,13 +140,23 @@ Read the total byte size from Content-Range (not the one-byte response length)
 when probing with a range request. Signed URLs remain transient and are never
 written into the manifest.
 
-Series bitrate floors have a one-percent tolerance at the boundary. This accepts
-the verified 1920x1080 Czech source 33882527 at approximately 2.732 Mbps against
-the 2.75 Mbps floor without accepting substantially lower-bitrate Full HD files.
+Do not apply fixed bitrate floors to series. They incorrectly rejected compact
+Czech animation at 900x720 and selected larger SD originals instead. Require
+positive original dimensions, duration, and byte size, plus episode/runtime and
+audio verification. Rank Czech originals by resolution tier descending and
+exact file size ascending, regardless of codec or audio channel count.
+
+Search both exact episode queries and bare Czech/original series titles, follow
+result pagination, and reapply strict identity matching to each result. Known
+alternative release numbering belongs in `numbering.py`, with negative tests
+for neighboring episodes, bundles, and other series. Planet Earth II releases
+use both II-02 and franchise S2E02 for catalog S01E02; an explicit subtitle and
+sequel identity are required for that mapping. Never infer a season from an
+unqualified bare number in an arbitrary series.
 
 ## Pending-source revalidation
 
-Every newly prepared manifest row carries `quality_policy=original-media-v3`.
+Every newly prepared manifest row carries `quality_policy=original-media-v4`.
 The uploader rejects older policy versions and foreign audio. A freshly
 reviewed SD source is eligible when no better acceptable Czech source was
 found. The producer prioritizes rechecking every stale pending selection,

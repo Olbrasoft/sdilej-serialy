@@ -6,8 +6,10 @@ import re
 import time
 import unicodedata
 from dataclasses import replace
+from urllib.parse import urljoin, urlsplit
 
 import requests
+from bs4 import BeautifulSoup
 from sdilej_to_prehrajto.language import LanguageDetectionError, WhisperLanguageDetector
 from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
 from sdilej_to_prehrajto.ranking import (
@@ -28,6 +30,7 @@ from sdilej_to_prehrajto.sdilej import (
 from .models import Episode
 from .source_detail import parse_detail_html, resolve_original
 from .quality import quality_acceptable, rank_candidates
+from .numbering import mapped_episode_title
 
 
 EPISODE_CODE_RE = re.compile(r"\bS(?P<season>\d{1,2})E(?P<episode>\d{1,3})\b|\b(?P<sx>\d{1,2})x(?P<ex>\d{1,3})\b", re.I)
@@ -86,6 +89,12 @@ def runtime_acceptable(episode: Episode, duration_sec: int | None) -> bool:
 
 
 def episode_match(episode: Episode, candidate_title: str) -> tuple[MatchTier, dict]:
+    mapped = (mapped_episode_title(episode, candidate_title, normalize)
+              if len(list(EPISODE_CODE_RE.finditer(candidate_title))) <= 1 else None)
+    if mapped:
+        tier, evidence = episode_match(episode, mapped)
+        evidence['numbering_alias'] = candidate_title
+        return tier, evidence
     code_matches_found = list(EPISODE_CODE_RE.finditer(candidate_title))
     codes = {
         (int(match.group("season") or match.group("sx")), int(match.group("episode") or match.group("ex")))
@@ -169,17 +178,32 @@ class EpisodeSourceProvider:
 
     def search(self, episode: Episode) -> list[Candidate]:
         candidates: dict[str, Candidate] = {}
+        deadline = time.monotonic() + self.discovery_timeout_seconds
         for title in dict.fromkeys((episode.series_title, episode.series_original_title)):
             if not title:
                 continue
-            query = f"{title} {episode.code}"
-            url = f"{BASE_URL}/{slugify(query)}/s/-6"
-            for candidate in parse_search_html(self._get(url).text, query=query):
-                tier, evidence = episode_match(episode, candidate.title)
-                candidate.match_tier = tier
-                candidate.match_evidence = evidence
-                if tier in (MatchTier.STRONG, MatchTier.SOLID):
-                    candidates.setdefault(candidate.source_id, candidate)
+            # Also search the series title alone: exact-code queries miss
+            # release numbering aliases. Identity checks still apply to every
+            # result, including the original detail title during inspection.
+            for query in (f'{title} {episode.code}', title):
+                url = f"{BASE_URL}/{slugify(query)}/s/-6"
+                seen_pages = set()
+                while url:
+                    if url in seen_pages or len(seen_pages) >= 100 or time.monotonic() >= deadline:
+                        raise SdilejError('Search pagination did not complete')
+                    seen_pages.add(url)
+                    html = self._get(url).text
+                    for candidate in parse_search_html(html, query=query):
+                        tier, evidence = episode_match(episode, candidate.title)
+                        candidate.match_tier = tier
+                        candidate.match_evidence = evidence
+                        if tier in (MatchTier.STRONG, MatchTier.SOLID):
+                            candidates.setdefault(candidate.source_id, candidate)
+                    soup = BeautifulSoup(html, 'html.parser')
+                    next_page = soup.select_one('a[rel~="next"][href]')
+                    url = urljoin(url, next_page['href']) if next_page else None
+                    if url and urlsplit(url).netloc != urlsplit(BASE_URL).netloc:
+                        raise SdilejError('Unexpected search pagination host')
         return list(candidates.values())
 
     def _inspect(self, episode: Episode, candidate: Candidate) -> Candidate | None:

@@ -1,8 +1,8 @@
-"""Series quality floors with a one-percent boundary tolerance."""
+"""Rank verified originals by language, resolution, then file size."""
 from sdilej_to_prehrajto.models import LanguageTier, MatchTier
-from sdilej_to_prehrajto.ranking import minimum_bitrate_mbps, resolution_rank
+from sdilej_to_prehrajto.ranking import resolution_rank
 
-QUALITY_POLICY = 'original-media-v3'
+QUALITY_POLICY = 'original-media-v4'
 
 
 def above_sd(row):
@@ -16,8 +16,11 @@ def upload_eligible(row):
 
 
 def quality_acceptable(candidate):
-    bitrate = candidate.average_bitrate_mbps
-    return bitrate is not None and bitrate >= minimum_bitrate_mbps(candidate) * 0.99
+    # A fixed bitrate floor penalizes animation and efficient encodes, and
+    # contradicts the requested smallest-file preference within a resolution.
+    return (candidate.width > 0 and candidate.height > 0
+            and bool(candidate.duration_sec and candidate.duration_sec > 0)
+            and bool(candidate.size_bytes and candidate.size_bytes > 0))
 
 
 def rank_candidates(candidates):
