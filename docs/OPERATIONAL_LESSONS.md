@@ -206,6 +206,12 @@ wait. Preserve oldest-attempt order within each series and the first-seen
 series priority, but inspect one episode per series before returning for its
 next episode. This changes scheduling only, not source quality acceptance.
 
+Live rotation acceptance: after deployment, the remote producer selected
+Ceska soda S01E08, source 33114381 (1280x720, 968972009 bytes, Czech confidence
+0.9641). The regular uploader completed target 29352541 at 2026-09-13
+16:00:59 UTC. Statistics increased from 13723 to 13724 and the exact episode
+search returned one target. The target initially remained processing.
+
 Low-confidence language detection must trigger dispersed audio samples even
 when the filename has no language hint or agrees with the weak result.
 Previously only filename/language conflicts triggered consensus; repeating
