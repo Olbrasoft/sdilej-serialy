@@ -233,7 +233,7 @@ class EpisodeSourceProvider:
     def _verify_language(self, episode: Episode, detail: Candidate) -> Candidate:
         language, probability = self.detector.detect(detail.sample_url)
         hint = audio_language_hint(detail.filename)
-        if hint and language_tier(language) != language_tier(hint):
+        if probability < 0.65 or (hint and language_tier(language) != language_tier(hint)):
             consensus = getattr(self.detector, "detect_consensus", None)
             if consensus:
                 language, probability = consensus(detail.sample_url, detail.duration_sec, initial=(language, probability), preferred_language=hint)

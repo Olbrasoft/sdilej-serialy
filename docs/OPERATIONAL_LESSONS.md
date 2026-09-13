@@ -198,3 +198,10 @@ attempts finish, plus at normal shutdown. Alternate new backlog and stale
 reviews, ordering each group by oldest actual attempt. Empty legacy rows do
 not count as attempts. Do not weaken quality policy or clear target records
 to compensate for an empty queue.
+
+Low-confidence language detection must trigger dispersed audio samples even
+when the filename has no language hint or agrees with the weak result.
+Previously only filename/language conflicts triggered consensus; repeating
+the same inconclusive opening sample permanently blocked otherwise valid
+Full HD sources such as Volejte Saulovi S02E09 (29526629). Keep the 0.65
+confidence gate after consensus; do not fix this by silently selecting SD.
