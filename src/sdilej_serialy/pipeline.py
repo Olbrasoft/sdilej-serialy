@@ -61,7 +61,12 @@ class EpisodeState:
 
     def uploaded(self, episode: Episode) -> bool:
         with self._lock:
-            return bool(self.row(episode).get("upload", {}).get("target_video_id"))
+            return bool(self.data['episodes'].get(episode.identity, {}).get("upload", {}).get("target_video_id"))
+
+    def inspected(self, episode: Episode) -> None:
+        with self._lock:
+            self.row(episode)['last_inspected_at'] = now_iso()
+            self.save()
 
     def tracked_identities(self) -> set[str]:
         with self._lock:

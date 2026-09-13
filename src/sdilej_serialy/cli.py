@@ -86,6 +86,7 @@ def prepare_queue(args) -> int:
     inspected: set[str] = set()
     inspected_lock = threading.Lock()
     deadline = time.monotonic() + args.runtime_minutes * 60 if args.runtime_minutes else None
+    last_scan_checkpoint = time.monotonic()
 
     def persist_prepared(row: dict) -> None:
         manifest.add(row)
@@ -94,8 +95,14 @@ def prepare_queue(args) -> int:
             persister(args.state)
 
     def mark_inspected(episode: Episode) -> None:
+        nonlocal last_scan_checkpoint
         with inspected_lock:
             inspected.add(episode.identity)
+            state.inspected(episode)
+            print(f'source_inspected={episode.identity}', flush=True)
+            if persister and time.monotonic() - last_scan_checkpoint >= 60:
+                persister(args.state)
+                last_scan_checkpoint = time.monotonic()
 
     def prepare_batch(candidates: list[Episode]) -> list[dict]:
         worker_count = min(len(providers), args.limit, len(candidates))
@@ -130,16 +137,13 @@ def prepare_queue(args) -> int:
                    if row.get('quality_policy') != QUALITY_POLICY
                    and not any(uploads.get(identity, {}).get(k) for k in ('upload', 'claim', 'prepared_target'))
                    and episode_key(row.get('display_name', '')) not in occupied_keys}
-        previously_inspected = state.tracked_identities()
         with inspected_lock:
             candidates = [
                 episode
                 for episode in episodes
                 if (episode.identity not in known or episode.identity in recheck) and episode.identity not in inspected
             ]
-        # Continue into untouched backlog territory first. Previously inspected
-        # gaps remain retryable, but must not starve new episodes on every run.
-        candidates.sort(key=lambda episode: (episode.identity not in recheck, episode.identity in previously_inspected))
+        candidates = fair_source_order(candidates, recheck, state.data['episodes'])
         if recheck:
             print(f'sources_pending_review={len(recheck)}', flush=True)
         if candidates:
@@ -154,8 +158,30 @@ def prepare_queue(args) -> int:
             time.sleep(min(5.0, max(0.0, deadline - time.monotonic())))
     state.save()
     manifest.save()
+    if persister:
+        persister(args.state)
     print(f"prepared={len(rows)} queue_size={len(manifest.identities())} manifest={args.manifest}")
     return 0
+
+
+def fair_source_order(episodes, recheck, scan_rows):
+    """Alternate fresh backlog and stale reviews, oldest actual attempt first.
+
+    Empty legacy state rows are not proof that discovery ever ran. Persisted
+    attempt timestamps prevent the same failures monopolizing every restart.
+    """
+    def attempted(episode):
+        row = scan_rows.get(episode.identity, {})
+        return row.get('last_inspected_at') or row.get('source', {}).get('prepared_at', '')
+    fresh = sorted((e for e in episodes if e.identity not in recheck), key=attempted)
+    stale = sorted((e for e in episodes if e.identity in recheck), key=attempted)
+    result = []
+    for index in range(max(len(fresh), len(stale))):
+        if index < len(fresh):
+            result.append(fresh[index])
+        if index < len(stale):
+            result.append(stale[index])
+    return result
 
 
 def upload(args) -> int:

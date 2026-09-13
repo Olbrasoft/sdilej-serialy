@@ -152,7 +152,7 @@ def test_prepare_queue_prioritizes_never_inspected_episodes(monkeypatch, tmp_pat
     fresh = Episode(episode_id=2, series_id=3, series_title="Test", series_original_title=None, season=1, number=2)
     state_path = tmp_path / "source-scan.json"
     state = EpisodeState(state_path)
-    state.row(retried)
+    state.inspected(retried)
     state.save()
     inspected = []
 
