@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import subprocess
 import time
 import unicodedata
 from dataclasses import replace
@@ -305,7 +306,7 @@ class EpisodeSourceProvider:
                         detail = self._verify_language(episode, candidate)
                         verification_completed = True
                         break
-                    except (SdilejError, LanguageDetectionError, requests.RequestException):
+                    except (SdilejError, LanguageDetectionError, requests.RequestException, subprocess.TimeoutExpired):
                         continue
                 if not verification_completed:
                     # An unresolved better/smaller source is not evidence that

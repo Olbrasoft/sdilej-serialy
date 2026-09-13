@@ -30,3 +30,15 @@ def test_weak_consensus_does_not_relax_language_requirement():
     with pytest.raises(LanguageDetectionError):
         provider._verify_language(Episode(1,1,'Series',None,1,1),Candidate(
             source_id='1',url='x',title='Series S01E01',filename='Series.mkv'))
+
+
+def test_audio_timeout_defers_episode_without_crashing_producer(monkeypatch):
+    import subprocess
+    item=Candidate(source_id='1',url='x',title='Series S01E01',width=1920,height=1080,size_bytes=100)
+    provider=EpisodeSourceProvider(requests.Session(),detector=object())
+    monkeypatch.setattr(provider,'search',lambda e:[item])
+    monkeypatch.setattr(provider,'_inspect',lambda e,c:c)
+    def verify(*args):
+        raise subprocess.TimeoutExpired('ffmpeg',120)
+    monkeypatch.setattr(provider,'_verify_language',verify)
+    assert provider.discover(Episode(1,1,'Series',None,1,1)) is None
