@@ -6,6 +6,7 @@ import os
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
+from collections import deque
 from pathlib import Path
 
 from .catalog import fetch_episode_rows, load_jsonl, prepare_episodes, readonly_connection, write_jsonl_gzip
@@ -173,8 +174,24 @@ def fair_source_order(episodes, recheck, scan_rows):
     def attempted(episode):
         row = scan_rows.get(episode.identity, {})
         return row.get('last_inspected_at') or row.get('source', {}).get('prepared_at', '')
-    fresh = sorted((e for e in episodes if e.identity not in recheck), key=attempted)
-    stale = sorted((e for e in episodes if e.identity in recheck), key=attempted)
+    def rotate_series(items):
+        # A long foreign-only or slow series must not occupy both workers
+        # for hours. Keep oldest-attempt/catalog order within each series,
+        # but give every other series a turn before its next episode.
+        groups = {}
+        for item in sorted(items, key=attempted):
+            groups.setdefault(item.series_id, deque()).append(item)
+        active = deque(groups.values())
+        result = []
+        while active:
+            group = active.popleft()
+            result.append(group.popleft())
+            if group:
+                active.append(group)
+        return result
+
+    fresh = rotate_series(e for e in episodes if e.identity not in recheck)
+    stale = rotate_series(e for e in episodes if e.identity in recheck)
     result = []
     for index in range(max(len(fresh), len(stale))):
         if index < len(fresh):

@@ -36,6 +36,26 @@ def test_empty_legacy_rows_are_not_attempts():
     assert [e.number for e in ordered] == [1,2]
 
 
+def test_long_series_cannot_monopolize_source_workers():
+    from dataclasses import replace
+    first = [episode(n) for n in range(1,51)]
+    second = replace(episode(1), series_id=2)
+    third = replace(episode(1), series_id=3)
+    ordered = fair_source_order(first + [second, third], set(), {})
+    assert [e.series_id for e in ordered[:4]] == [1,2,3,1]
+    assert len(ordered) == 52
+    assert len({e.identity for e in ordered}) == 52
+    assert [e.number for e in ordered if e.series_id == 1] == list(range(1,51))
+
+
+def test_series_rotation_preserves_retry_age_within_series():
+    from dataclasses import replace
+    other = replace(episode(1), series_id=2)
+    rows = {episode(1).identity: {'last_inspected_at':'2026-09-13T00:00:00+00:00'}}
+    ordered = fair_source_order([episode(1),episode(2),other], set(), rows)
+    assert [e.identity for e in ordered] == [episode(2).identity,other.identity,episode(1).identity]
+
+
 def test_queue_checkpoints_an_unsuccessful_search(tmp_path, monkeypatch):
     from argparse import Namespace
     from types import SimpleNamespace
