@@ -184,3 +184,17 @@ The Avatar S01E09 result beats Czech source 30690903 (374145804 bytes,
 900x720); its 1440x1080 alternative 34337296 was verified as English.
 These are source-selection checks, not assertions that existing target
 uploads were replaced. Existing uploads remain untouched.
+
+## Source queue starvation recovery (2026-09-13)
+
+The upload queue was empty at 13616 target videos while the producer repeatedly
+spent hours on 140 stale source selections. Failed searches only updated an
+in-memory set, and read-only upload checks created empty scan rows for the
+entire catalog. These rows incorrectly looked like prior discovery attempts.
+
+Persist `last_inspected_at` after every completed discovery, even without a
+selected source. Publish scan checkpoints at least once per minute when
+attempts finish, plus at normal shutdown. Alternate new backlog and stale
+reviews, ordering each group by oldest actual attempt. Empty legacy rows do
+not count as attempts. Do not weaken quality policy or clear target records
+to compensate for an empty queue.

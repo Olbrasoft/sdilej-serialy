@@ -34,3 +34,22 @@ def test_old_reviews_do_not_starve_new_backlog():
 def test_empty_legacy_rows_are_not_attempts():
     ordered = fair_source_order([episode(1),episode(2)], set(), {episode(1).identity:{}})
     assert [e.number for e in ordered] == [1,2]
+
+
+def test_queue_checkpoints_an_unsuccessful_search(tmp_path, monkeypatch):
+    from argparse import Namespace
+    from types import SimpleNamespace
+    from sdilej_serialy import cli
+    monkeypatch.setattr(cli, 'ROOT', tmp_path)
+    monkeypatch.setattr(cli, 'load_jsonl', lambda _: [episode(1).to_dict()])
+    monkeypatch.setattr(cli.EpisodeSourceProvider, 'authenticated',
+                        lambda *a: SimpleNamespace(discover=lambda e: None))
+    monkeypatch.setenv('SDILEJ_EMAIL', 'test')
+    monkeypatch.setenv('SDILEJ_PASSWORD', 'test')
+    state_path = tmp_path/'scan.json'
+    cli.prepare_queue(Namespace(backlog=tmp_path/'backlog',state=state_path,
+                                manifest=tmp_path/'manifest',limit=1,workers=1,
+                                runtime_minutes=0,persist_git_state=False))
+    restored = EpisodeState(state_path)
+    assert restored.row(episode(1))['last_inspected_at']
+    assert 'source' not in restored.row(episode(1))
