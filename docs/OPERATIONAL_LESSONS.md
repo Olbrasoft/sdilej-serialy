@@ -205,3 +205,12 @@ Previously only filename/language conflicts triggered consensus; repeating
 the same inconclusive opening sample permanently blocked otherwise valid
 Full HD sources such as Volejte Saulovi S02E09 (29526629). Keep the 0.65
 confidence gate after consensus; do not fix this by silently selecting SD.
+
+End-to-end recovery confirmed on 2026-09-13: target statistics rose from
+13616 to 13618. Kazatel S01E08 (source 6305001, 1916x1076, 592658023 bytes)
+completed as target 29343646 at 07:46:36 UTC. Volejte Saulovi S02E09 (source
+29526629, 1920x1080, 1177663893 bytes) completed as target 29343645 at 07:47:55
+UTC. The latter was enqueued after two successful local full-discovery checks;
+Kazatel came from the remote producer. Both exact-episode target searches
+returned one video. Transfer completion does not imply target transcoding has
+already finished; both initially appeared as processing.
