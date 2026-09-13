@@ -199,6 +199,13 @@ reviews, ordering each group by oldest actual attempt. Empty legacy rows do
 not count as attempts. Do not weaken quality policy or clear target records
 to compensate for an empty queue.
 
+Rotate series within both the fresh and review queues. Consecutive episodes
+from foreign-only or slow shows (observed with Presumed Innocent and Foundation)
+otherwise occupy discovery workers for tens of minutes while other series
+wait. Preserve oldest-attempt order within each series and the first-seen
+series priority, but inspect one episode per series before returning for its
+next episode. This changes scheduling only, not source quality acceptance.
+
 Low-confidence language detection must trigger dispersed audio samples even
 when the filename has no language hint or agrees with the weak result.
 Previously only filename/language conflicts triggered consensus; repeating
