@@ -212,6 +212,15 @@ Ceska soda S01E08, source 33114381 (1280x720, 968972009 bytes, Czech confidence
 16:00:59 UTC. Statistics increased from 13723 to 13724 and the exact episode
 search returned one target. The target initially remained processing.
 
+## Transient login failures (2026-09-17)
+
+Uploader run 35140713955 terminated when the Sdilej login page returned HTTP
+522. Both source and target login now retry transport timeouts, connection
+failures, HTTP 429, and HTTP 5xx up to three attempts with bounded backoff.
+Credential failures and other HTTP 4xx remain fail-fast. Retry logs contain
+only the error type/status, never credentials or response bodies. New workflow
+runs load the fix; do not cancel an active large transfer just to reload it.
+
 Low-confidence language detection must trigger dispersed audio samples even
 when the filename has no language hint or agrees with the weak result.
 Previously only filename/language conflicts triggered consensus; repeating
