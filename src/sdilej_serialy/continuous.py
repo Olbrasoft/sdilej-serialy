@@ -119,7 +119,8 @@ def upload_continuously(
                     if not state.claim(episode, f"{execution}-worker-{index}"):
                         continue
                     candidate = Candidate.from_dict(row["selected"])
-                    existing = existing_episode(target, row["display_name"])
+                    existing = existing_episode(target, row["display_name"],
+                                                state.row(episode).get('prepared_target', {}).get('target_video_id'))
                     if existing:
                         state.success(episode, existing, row["display_name"])
                         completed += 1
@@ -143,7 +144,8 @@ def upload_continuously(
                     completed += 1
                 except Exception as error:
                     try:
-                        reconciled = existing_episode(target, row["display_name"])
+                        reconciled = existing_episode(target, row["display_name"],
+                                                      state.row(episode).get('prepared_target', {}).get('target_video_id'))
                     except Exception:
                         reconciled = None
                     if reconciled:

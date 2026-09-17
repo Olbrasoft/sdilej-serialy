@@ -38,10 +38,26 @@ def listing_rows(html):
     return list(rows.values())
 
 
-def existing_episode(session, name):
+def existing_episode(session, name, known_id=None):
     match = re.match(r'^(.*?\s+S\d+E\d+)', name, re.I)
     if not match:
         raise RuntimeError('Missing episode code in target name')
+    if known_id is not None:
+        if not str(known_id).isdigit():
+            raise RuntimeError('Invalid persisted target ID')
+        # Videos moved out of the current listing can still be resolved by
+        # their durable target ID. This GET only reads the folder-edit page;
+        # it never submits changes. Require the matching episode heading.
+        detail = session.get(prehrajto.BASE_URL + '/profil/uprava-slozky-videa',
+                             params={'videoId': str(known_id)}, timeout=30)
+        if detail.status_code != 404:
+            detail.raise_for_status()
+            soup = BeautifulSoup(detail.text, 'html.parser')
+            heading = soup.select_one('h1')
+            if heading and 'Změna složky videa' in heading.get_text(' ', strip=True):
+                if any(episode_key(h.get_text(' ', strip=True)) == episode_key(name)
+                       for h in soup.select('h2')):
+                    return str(known_id)
     response = session.get(prehrajto.BASE_URL + '/profil/nahrana-videa',
                            params={'searchPhrase': match[1]}, timeout=30)
     response.raise_for_status()

@@ -240,7 +240,8 @@ def upload_plan(rows: list[dict], state: EpisodeState, source_email: str, source
             continue
         candidate = Candidate.from_dict(row["selected"])
         try:
-            known = existing_episode(target, row["display_name"])
+            known = existing_episode(target, row["display_name"],
+                                     state.row(episode).get('prepared_target', {}).get('target_video_id'))
             if known:
                 state.success(episode, known, row["display_name"])
                 uploaded += 1
