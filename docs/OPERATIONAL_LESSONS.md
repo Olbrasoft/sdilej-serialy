@@ -221,6 +221,13 @@ Credential failures and other HTTP 4xx remain fail-fast. Retry logs contain
 only the error type/status, never credentials or response bodies. New workflow
 runs load the fix; do not cancel an active large transfer just to reload it.
 
+The listing search can also omit a previously created target that is still
+accessible by its stored ID. Verify the authenticated, read-only folder-edit
+page for that exact ID and require a matching episode heading before marking
+it reconciled. Never submit the folder form. Live checks recovered existing
+IDs 29440536, 29439959, and 29444515 without creating another video. A missing
+or mismatched detail must retain the existing duplicate-prevention guard.
+
 Low-confidence language detection must trigger dispersed audio samples even
 when the filename has no language hint or agrees with the weak result.
 Previously only filename/language conflicts triggered consensus; repeating
