@@ -32,6 +32,7 @@ from .models import Episode
 from .source_detail import parse_detail_html, resolve_original
 from .quality import quality_acceptable, rank_candidates
 from .numbering import mapped_episode_title
+from .auth import login_with_retry
 
 
 EPISODE_CODE_RE = re.compile(r"\bS(?P<season>\d{1,2})E(?P<episode>\d{1,3})\b|\b(?P<sx>\d{1,2})x(?P<ex>\d{1,3})\b", re.I)
@@ -159,7 +160,7 @@ class EpisodeSourceProvider:
 
     @classmethod
     def authenticated(cls, email: str, password: str, **kwargs) -> "EpisodeSourceProvider":
-        return cls(login(email, password), **kwargs)
+        return cls(login_with_retry(login, email, password), **kwargs)
 
     def _get(self, url: str, *, session: requests.Session | None = None) -> requests.Response:
         active_session = session or self.session

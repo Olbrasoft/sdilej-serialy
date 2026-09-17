@@ -224,7 +224,8 @@ def target_session(email: str, password: str):
     # The uploader is shared with the film pipeline. Its account guard is set
     # for this process only; secrets stay external to the repository.
     prehrajto.EXPECTED_EMAIL = TARGET_EMAIL
-    return prehrajto.login(email, password)
+    from .auth import login_with_retry
+    return login_with_retry(prehrajto.login, email, password)
 
 
 def upload_plan(rows: list[dict], state: EpisodeState, source_email: str, source_password: str, target_email: str, target_password: str) -> int:
