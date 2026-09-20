@@ -243,3 +243,20 @@ UTC. The latter was enqueued after two successful local full-discovery checks;
 Kazatel came from the remote producer. Both exact-episode target searches
 returned one video. Transfer completion does not imply target transcoding has
 already finished; both initially appeared as processing.
+
+## Sanitized series names and failed-episode retry storms (2026-09-20)
+
+The uploader repeatedly retried The End of the F***ing World S01E01 about
+every 25 seconds despite retaining target ID 29415647. The authenticated
+folder detail existed, but the target had replaced asterisks with whitespace
+(`The End of the F ing World`). A feedback modal could also supply the first
+H1 before the actual folder-edit heading. Normalize asterisks in episode keys
+and listing queries, and inspect all H1 headings when identifying the detail
+page. Continue requiring the same series, season, and episode. A live read-only
+check after the fix recovered the original ID without creating another video.
+
+Exclude failures from queue selection and claims for fifteen minutes after
+their last recorded attempt, including across process restarts. Apply this
+filter before the queue limit and on refills so failed rows cannot starve new
+episodes. Never clear a prepared target to make a retry possible. The source
+quality policy and all existing uploads remain unchanged.
