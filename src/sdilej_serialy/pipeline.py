@@ -72,6 +72,17 @@ class EpisodeState:
         with self._lock:
             return set(self.data["episodes"])
 
+    def retry_deferred_identities(self) -> set[str]:
+        """Keep failed episodes out of queue slots for fifteen minutes, across restarts."""
+        cutoff = datetime.now(UTC) - timedelta(minutes=15)
+        with self._lock:
+            return {
+                identity for identity, row in self.data['episodes'].items()
+                if row.get('attempts')
+                and datetime.fromisoformat(row['attempts'][-1]['at']) > cutoff
+                and not row.get('upload')
+            }
+
     def save(self) -> None:
         with self._lock:
             self.data["updated_at"] = now_iso()
@@ -81,6 +92,8 @@ class EpisodeState:
 
     def claim(self, episode: Episode, worker_id: str, *, lease_hours: int = 6) -> bool:
         with self._lock:
+            if episode.identity in self.retry_deferred_identities():
+                return False
             row = self.row(episode)
             key = episode_key(f"{episode.series_title} {episode.code}")
             row["episode_key"] = key

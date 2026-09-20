@@ -10,7 +10,8 @@ def episode_key(name):
     match = re.match(r'^(.*?)\s+S(\d+)E(\d+)(?=\D|$)', name, re.I)
     if not match:
         return None
-    title = ' '.join(unicodedata.normalize('NFKC', match[1]).casefold().split())
+    # The target replaces filename asterisks with whitespace on upload.
+    title = ' '.join(re.sub(r'\*+', ' ', unicodedata.normalize('NFKC', match[1])).casefold().split())
     return f'{title}:s{int(match[2])}:e{int(match[3])}'
 
 
@@ -53,13 +54,13 @@ def existing_episode(session, name, known_id=None):
         if detail.status_code != 404:
             detail.raise_for_status()
             soup = BeautifulSoup(detail.text, 'html.parser')
-            heading = soup.select_one('h1')
-            if heading and 'Změna složky videa' in heading.get_text(' ', strip=True):
+            if any('Změna složky videa' in heading.get_text(' ', strip=True)
+                   for heading in soup.select('h1')):
                 if any(episode_key(h.get_text(' ', strip=True)) == episode_key(name)
                        for h in soup.select('h2')):
                     return str(known_id)
     response = session.get(prehrajto.BASE_URL + '/profil/nahrana-videa',
-                           params={'searchPhrase': match[1]}, timeout=30)
+                           params={'searchPhrase': re.sub(r'\*+', ' ', match[1])}, timeout=30)
     response.raise_for_status()
     if 'uploadedVideoListing' not in response.text:
         raise RuntimeError('Target listing unavailable; refusing new upload')

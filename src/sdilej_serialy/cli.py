@@ -218,7 +218,7 @@ def continuous(args) -> int:
     persister = GitCheckpointPersister(ROOT, (args.report,)) if args.persist_git_state else None
     state = EpisodeState(args.state, on_save=persister)
     manifest = SourceManifest(args.manifest)
-    rows = manifest.pending(uploaded_identities(state), limit=args.limit)
+    rows = manifest.pending(uploaded_identities(state) | state.retry_deferred_identities(), limit=args.limit)
 
     def refill_rows() -> list[dict]:
         payload = (
@@ -229,7 +229,7 @@ def continuous(args) -> int:
         merged = manifest.merge_jsonl(payload)
         if merged:
             print(f"verified_sources_refreshed={merged}", flush=True)
-        return manifest.pending(uploaded_identities(state), limit=args.limit)
+        return manifest.pending(uploaded_identities(state) | state.retry_deferred_identities(), limit=args.limit)
 
     result = upload_continuously(
         rows,
