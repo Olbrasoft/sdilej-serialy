@@ -260,3 +260,13 @@ their last recorded attempt, including across process restarts. Apply this
 filter before the queue limit and on refills so failed rows cannot starve new
 episodes. Never clear a prepared target to make a retry possible. The source
 quality policy and all existing uploads remain unchanged.
+
+Live acceptance: statistics increased from 16999 to 17001. Modern Family
+S04E12 completed transfer as target 29551122 at 07:22:58 UTC; Vikings S06E15
+appeared as target 29551121. Exact-episode searches returned one video each.
+An independent authenticated source search and original-media/audio inspection
+confirmed the Modern Family choice: source 34975440, Czech, 1896x1080,
+317266816 bytes, versus Czech SD source 30412274, 720x404, 491605709 bytes.
+No higher-resolution candidate was found by that search. Both target listings
+initially displayed processing, which is separate from transfer completion.
+All 97 local tests and the GitHub test workflow passed.
