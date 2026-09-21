@@ -283,3 +283,13 @@ Keep one-shot discovery semantics and all language/quality checks unchanged.
 The regression test verifies rescheduling even when an entire batch yields no
 source. All 98 tests and CI passed. Only discovery was restarted to deploy;
 the uploader was left running.
+
+Live acceptance: statistics rose from 17597 to 17599. Modern Family S05E03
+(29577369) completed at 07:17:30 UTC and Regular Show S05E06 (29577368) at
+07:18:28 UTC, without recorded transfer errors. Both exact target searches
+returned one video. Independent original-media/audio inspection selected the
+same Czech Modern Family source 34975474 (1902x1080, 428974647 bytes), above
+Czech SD source 30412322 (856x480, 263122354 bytes). A separate full discovery
+for The Wonder Years S03E22 confirmed its existing Czech SD choice 26792333
+(768x576, 315820032 bytes); no better Czech candidate was selected. Existing
+target videos were not modified or deleted.
