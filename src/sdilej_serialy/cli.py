@@ -148,6 +148,12 @@ def prepare_queue(args) -> int:
         if recheck:
             print(f'sources_pending_review={len(recheck)}', flush=True)
         if candidates:
+            # A continuous batch must be bounded by inspections, not only by
+            # successful discoveries. Otherwise sparse/foreign-only series
+            # can occupy a worker for hours while subsequent available
+            # episodes wait for the next scheduling round.
+            if deadline is not None:
+                candidates = candidates[:args.limit]
             rows.extend(prepare_batch(candidates))
         if deadline is None or time.monotonic() >= deadline:
             break

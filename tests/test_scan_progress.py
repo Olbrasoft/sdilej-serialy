@@ -73,3 +73,30 @@ def test_queue_checkpoints_an_unsuccessful_search(tmp_path, monkeypatch):
     restored = EpisodeState(state_path)
     assert restored.row(episode(1))['last_inspected_at']
     assert 'source' not in restored.row(episode(1))
+
+
+def test_continuous_scan_reschedules_after_bounded_unsuccessful_batch(tmp_path, monkeypatch):
+    from argparse import Namespace
+    from types import SimpleNamespace
+    from sdilej_serialy import cli
+
+    episodes = [episode(n) for n in range(1, 5)]
+    monkeypatch.setattr(cli, 'ROOT', tmp_path)
+    monkeypatch.setattr(cli, 'load_jsonl', lambda _: [e.to_dict() for e in episodes])
+    monkeypatch.setattr(cli.EpisodeSourceProvider, 'authenticated', lambda *a: object())
+    monkeypatch.setattr(cli, 'require_env', lambda _: 'test')
+    ticks = iter([0, 0, 1, 61])
+    monkeypatch.setattr(cli, 'time', SimpleNamespace(monotonic=lambda: next(ticks)))
+    batches = []
+
+    def inspect(candidates, provider, state, limit, **kwargs):
+        batches.append([e.number for e in candidates])
+        for e in candidates:
+            kwargs['on_inspected'](e)
+        return []
+
+    monkeypatch.setattr(cli, 'build_plan', inspect)
+    cli.prepare_queue(Namespace(backlog=tmp_path/'backlog', state=tmp_path/'scan.json',
+                                manifest=tmp_path/'manifest', limit=2, workers=1,
+                                runtime_minutes=1, persist_git_state=False))
+    assert batches == [[1, 2], [3, 4]]
