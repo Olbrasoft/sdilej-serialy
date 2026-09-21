@@ -270,3 +270,16 @@ confirmed the Modern Family choice: source 34975440, Czech, 1896x1080,
 No higher-resolution candidate was found by that search. Both target listings
 initially displayed processing, which is separate from transfer completion.
 All 97 local tests and the GitHub test workflow passed.
+
+## Bound continuous discovery rounds (2026-09-21)
+
+At 17597 target videos, the verified upload queue was empty while discovery
+continued through unsuccessful series. `build_plan` limits successful results,
+not inspections; passing the entire backlog to a batch lets sparse series keep
+a worker in that batch for hours before scheduling subsequent available
+episodes. In continuous mode, pass at most `--limit` candidates to each round,
+then recompute the fair ordering using published sources and inspected IDs.
+Keep one-shot discovery semantics and all language/quality checks unchanged.
+The regression test verifies rescheduling even when an entire batch yields no
+source. All 98 tests and CI passed. Only discovery was restarted to deploy;
+the uploader was left running.
