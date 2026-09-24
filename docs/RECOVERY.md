@@ -65,3 +65,8 @@ Authenticated exact-episode checks found one target each. The pilot gate was
 persisted at 08:39:37 UTC. The original `state/episodes.json` still matched the
 archived historical SHA-256. Full recovery and scheduled continuation were
 then enabled; ordinary discovery and ordinary upload remain disabled.
+
+Full run 35976594549 started with six workers. The next live check showed eight
+target entries: two completed pilot uploads plus six in-flight transfers, with
+no recorded recovery failures. The six included two saved 4K Czech sources for
+1670. Target allocation/statistics alone are not reported as transfer completion.
