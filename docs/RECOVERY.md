@@ -54,3 +54,14 @@ still refers to the deleted account.
 
 The September 24 plan includes 8,413 current-policy Czech episodes. It preserves
 10,767 exceptions (8,938 legacy Czech and 1,829 non-Czech/Slovak) separately.
+
+## September 24 acceptance
+
+All 115 local tests and CI run 35976223148 passed. Pilot run 35976412625
+completed successfully: the replacement account count rose from 0 to 2.
+Star Trek: The Next Generation S04E07 completed at 08:39:11 UTC as target
+29663921; That '70s Show S01E23 completed at 08:39:32 UTC as target 29663929.
+Authenticated exact-episode checks found one target each. The pilot gate was
+persisted at 08:39:37 UTC. The original `state/episodes.json` still matched the
+archived historical SHA-256. Full recovery and scheduled continuation were
+then enabled; ordinary discovery and ordinary upload remain disabled.
