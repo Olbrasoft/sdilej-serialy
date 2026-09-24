@@ -42,6 +42,7 @@ def upload_continuously(
     target_password: str,
     refill_rows: Callable[[], list[dict]] | None = None,
     refill_interval_seconds: float = 15,
+    require_original_size: bool = False,
 ) -> dict:
     if not 1 <= workers <= 6:
         raise ValueError("workers must be between 1 and 6")
@@ -122,6 +123,8 @@ def upload_continuously(
                     existing = existing_episode(target, row["display_name"],
                                                 state.row(episode).get('prepared_target', {}).get('target_video_id'))
                     if existing:
+                        if require_original_size and state.row(episode).get('prepared_target'):
+                            raise RuntimeError('Recovery transfer is uncertain; retain target for review')
                         state.success(episode, existing, row["display_name"])
                         completed += 1
                         continue
@@ -130,6 +133,11 @@ def upload_continuously(
                     refreshed = provider.refresh(candidate, session=provider.session)
                     if (refreshed.source_id, refreshed.url) != (candidate.source_id, candidate.url):
                         raise RuntimeError("Verified source identity changed before upload")
+                    if require_original_size:
+                        from .source_detail import resolve_original
+                        refreshed = resolve_original(provider.session, refreshed)
+                        if not candidate.size_bytes or refreshed.size_bytes != candidate.size_bytes:
+                            raise RuntimeError('Recovery original size changed; source requires review')
 
                     def prepared(video_id: str, size: int) -> None:
                         state.row(episode)["prepared_target"] = {"target_video_id": video_id, "size_bytes": size}
@@ -144,8 +152,12 @@ def upload_continuously(
                     completed += 1
                 except Exception as error:
                     try:
-                        reconciled = existing_episode(target, row["display_name"],
-                                                      state.row(episode).get('prepared_target', {}).get('target_video_id'))
+                        # A newly allocated target can appear in the listing
+                        # before its bytes arrive. Strict replay must not call
+                        # that a successful transfer after an exception.
+                        reconciled = None if require_original_size else existing_episode(
+                            target, row["display_name"],
+                            state.row(episode).get('prepared_target', {}).get('target_video_id'))
                     except Exception:
                         reconciled = None
                     if reconciled:

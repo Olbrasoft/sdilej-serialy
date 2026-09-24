@@ -1,0 +1,86 @@
+name: recovery-sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      generation:
+        description: Immutable recovery generation
+        required: true
+        default: 'account-2026-09-24'
+      mode:
+        type: choice
+        options: [pilot, full]
+        default: pilot
+        required: true
+  schedule:
+    - cron: '43 * * * *'
+
+permissions:
+  contents: write
+
+# The ordinary uploader and recovery must never run simultaneously.
+concurrency:
+  group: sdilej-serialy-target-transfer
+  cancel-in-progress: false
+
+jobs:
+  restore:
+    if: vars.RECOVERY_ENABLED == 'true' && (github.event_name == 'workflow_dispatch' || vars.RECOVERY_FULL_ENABLED == 'true')
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      RECOVERY_ENABLED: ${{ vars.RECOVERY_ENABLED }}
+      RECOVERY_GENERATION: ${{ inputs.generation || vars.RECOVERY_GENERATION }}
+      RECOVERY_MODE: ${{ inputs.mode || 'full' }}
+      SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
+      SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
+      PREHRAJTO_EMAIL: ${{ secrets.PREHRAJTO_EMAIL }}
+      PREHRAJTO_PASSWORD: ${{ secrets.PREHRAJTO_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install .
+      - name: Configure durable recovery checkpoints
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      - name: Restore only frozen verified sources
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$RECOVERY_GENERATION" =~ ^[a-z0-9][a-z0-9-]{0,63}$ ]]
+          if [[ "$RECOVERY_MODE" == pilot ]]; then
+            sdilej-series restore --generation "$RECOVERY_GENERATION" --mode pilot --workers 1 --limit 2 --persist-git-state
+            sdilej-series verify-recovery --generation "$RECOVERY_GENERATION" --persist-git-state
+            exit 0
+          fi
+          [[ "$RECOVERY_MODE" == full ]]
+          recovery_deadline=$(( $(date +%s) + 330 * 60 ))
+          while [ "$(date +%s)" -lt "$recovery_deadline" ]; do
+            git pull --rebase origin main
+            sdilej-series restore --generation "$RECOVERY_GENERATION" --mode full --workers 6 --limit 50 --persist-git-state
+            if python -c 'import json,os,sys; r=json.load(open("recovery/"+os.environ["RECOVERY_GENERATION"]+"/report.json")); sys.exit(r["remaining"] != 0)'; then
+              exit 0
+            fi
+            sleep 30
+          done
+      - name: Preserve recovery progress on interruption
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$RECOVERY_GENERATION" =~ ^[a-z0-9][a-z0-9-]{0,63}$ ]]
+          git add -- "recovery/$RECOVERY_GENERATION/state.json"
+          if [ -f "recovery/$RECOVERY_GENERATION/report.json" ]; then
+            git add -- "recovery/$RECOVERY_GENERATION/report.json"
+          fi
+          git diff --cached --quiet || git commit -m 'chore: persist recovery progress'
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0
+            sleep $((attempt * 2))
+          done
+          exit 1

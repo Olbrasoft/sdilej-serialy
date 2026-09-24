@@ -3,6 +3,8 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
+import subprocess
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
@@ -228,7 +230,7 @@ def continuous(args) -> int:
 
     def refill_rows() -> list[dict]:
         payload = (
-            persister.read_remote_file("manifests/selected-episodes.jsonl")
+            persister.read_remote_file(str(args.manifest.resolve().relative_to(ROOT.resolve())))
             if persister
             else args.manifest.read_text(encoding="utf-8")
         )
@@ -252,6 +254,96 @@ def continuous(args) -> int:
     if persister:
         persister(args.state)
     print("continuous=" + json.dumps(result, ensure_ascii=False))
+    return 0
+
+
+def prepare_restore(args) -> int:
+    from .recovery import prepare_recovery
+    commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    plan = prepare_recovery(ROOT, args.generation, args.history, args.manifest, commit)
+    print(json.dumps(plan))
+    return 0
+
+
+def restore(args) -> int:
+    from sdilej_to_prehrajto import prehrajto
+    from .recovery import load_recovery
+    from .pipeline import atomic_json, now_iso, target_session
+
+    if os.environ.get('RECOVERY_ENABLED') != 'true':
+        raise SystemExit('Recovery requires RECOVERY_ENABLED=true')
+    if args.limit < 1 or not 1 <= args.workers <= 6:
+        raise ValueError('Invalid recovery limit or worker count')
+    directory, plan, manifest = load_recovery(ROOT, args.generation)
+    report_path = directory / 'report.json'
+    persister = GitCheckpointPersister(ROOT, (report_path,)) if args.persist_git_state else None
+    state = EpisodeState(directory / 'state.json', on_save=persister)
+    if args.mode == 'full' and not state.data.get('pilot_verified_at'):
+        raise RuntimeError('A completed recovery pilot is required before full replay')
+    target = target_session(require_env('PREHRAJTO_EMAIL'), require_env('PREHRAJTO_PASSWORD'))
+    count = prehrajto.uploaded_video_count(target)
+    if count is None:
+        raise RuntimeError('Cannot verify target account statistics')
+    if not state.data.get('target_initialized_at'):
+        if count != 0 or state.data['episodes']:
+            raise RuntimeError('Initial recovery must start with an empty account and new state')
+        state.data['target_initialized_at'] = now_iso()
+        state.save()
+    elif count == 0 and any(r.get('upload') or r.get('prepared_target') for r in state.data['episodes'].values()):
+        raise RuntimeError('Target appears empty again; refusing to mix account generations')
+    rows = manifest.pending(uploaded_identities(state) | state.retry_deferred_identities(),
+                            limit=plan['selected_count'] if args.mode == 'pilot' else args.limit)
+    if args.mode == 'pilot':
+        rows = sorted(rows, key=lambda r: (r['selected'].get('height', 0) < 1080,
+                                          r['selected']['size_bytes'], r['identity']))[:args.limit]
+    result = upload_continuously(
+        rows, state, workers=args.workers,
+        source_email=require_env('SDILEJ_EMAIL'), source_password=require_env('SDILEJ_PASSWORD'),
+        target_email=require_env('PREHRAJTO_EMAIL'), target_password=require_env('PREHRAJTO_PASSWORD'),
+        require_original_size=True,
+    ) if rows else {'queued': 0, 'uploaded_or_reconciled': 0}
+    completed = uploaded_identities(state)
+    result.update(generation=args.generation, total=plan['selected_count'],
+                  completed=len(completed), remaining=plan['selected_count'] - len(completed))
+    atomic_json(report_path, result)
+    if persister:
+        persister(state.path)
+    print('recovery=' + json.dumps(result))
+    return 0
+
+
+def verify_recovery(args) -> int:
+    from sdilej_to_prehrajto import prehrajto
+    from .pipeline import now_iso, target_session
+    from .recovery import load_recovery
+    from .target import listing_rows
+
+    directory, plan, manifest = load_recovery(ROOT, args.generation)
+    persister = GitCheckpointPersister(ROOT) if args.persist_git_state else None
+    state = EpisodeState(directory / 'state.json', on_save=persister)
+    uploads = [r['upload'] for r in state.data['episodes'].values() if r.get('upload')]
+    if len(uploads) < 2 or any(r.get('claim') or r.get('prepared_target') for r in state.data['episodes'].values()):
+        raise RuntimeError('Pilot requires two completed uploads and no uncertain transfers')
+    target = target_session(require_env('PREHRAJTO_EMAIL'), require_env('PREHRAJTO_PASSWORD'))
+    count = prehrajto.uploaded_video_count(target)
+    if count is None or count < len(uploads):
+        raise RuntimeError('Target statistics do not confirm pilot uploads')
+    for upload in uploads:
+        # The pilot contains only a few videos: every matching target must be
+        # unique, including videos still undergoing target-side transcoding.
+        query = re.match(r'^(.*?\s+S\d+E\d+)', upload['display_name'])[1]
+        query = re.sub(r'\*+', ' ', query)
+        response = target.get(prehrajto.BASE_URL + '/profil/nahrana-videa',
+                              params={'searchPhrase': query}, timeout=30)
+        response.raise_for_status()
+        matches = [r for r in listing_rows(response.text)
+                   if r['key'] == episode_key(upload['display_name'])]
+        if len(matches) != 1 or matches[0]['id'] != upload['target_video_id']:
+            raise RuntimeError('Pilot target missing or duplicated')
+    state.data['pilot_verified_at'] = now_iso()
+    state.data['pilot_target_count'] = count
+    state.save()
+    print(f'pilot_verified={len(uploads)} target_count={count} generation={args.generation}')
     return 0
 
 
@@ -294,6 +386,22 @@ def main() -> int:
     continuous_cmd.add_argument("--workers", type=int, default=int(os.environ.get("UPLOAD_WORKERS", "6")))
     continuous_cmd.add_argument("--persist-git-state", action="store_true")
     continuous_cmd.set_defaults(func=continuous)
+    restore_plan_cmd = commands.add_parser('prepare-recovery')
+    restore_plan_cmd.add_argument('--generation', required=True)
+    restore_plan_cmd.add_argument('--history', type=Path, default=ROOT / 'state' / 'episodes.json')
+    restore_plan_cmd.add_argument('--manifest', type=Path, default=ROOT / 'manifests' / 'selected-episodes.jsonl')
+    restore_plan_cmd.set_defaults(func=prepare_restore)
+    restore_cmd = commands.add_parser('restore')
+    restore_cmd.add_argument('--generation', required=True)
+    restore_cmd.add_argument('--mode', choices=('pilot', 'full'), default='pilot')
+    restore_cmd.add_argument('--workers', type=int, default=1)
+    restore_cmd.add_argument('--limit', type=int, default=2)
+    restore_cmd.add_argument('--persist-git-state', action='store_true')
+    restore_cmd.set_defaults(func=restore)
+    verify_cmd = commands.add_parser('verify-recovery')
+    verify_cmd.add_argument('--generation', required=True)
+    verify_cmd.add_argument('--persist-git-state', action='store_true')
+    verify_cmd.set_defaults(func=verify_recovery)
     args = parser.parse_args()
     return args.func(args)
 
