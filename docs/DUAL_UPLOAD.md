@@ -48,3 +48,28 @@ changing repository variables does not interrupt an existing process.
 
 Previous recovery snapshots and uploaded history are preserved but not consulted
 for the new queue. No production database writes or reads are needed for setup.
+
+## September 25 acceptance
+
+Generation `pair-2026-09-25` contains 8,435 unique eligible episodes. The cached
+catalog has no IMDb rating for 91 selected episodes; these are sorted last.
+All 135 local tests and CI run 36145688884 passed. Pilot run 36145094610 finished
+successfully, with both account statistics increasing from zero to two and all
+four cross-account uniqueness checks passing at 14:23:33 UTC.
+
+| Account | Episode | Confirmed target |
+| --- | --- | --- |
+| A | Zázračná planeta S01E02 — Hory | 29706198 |
+| B | Zázračná planeta S01E09 — Mělká moře | 29706195 |
+| A | Zázračná planeta II S01E02 — Hory | 29706196 |
+| B | Zázračná planeta II S01E03 — Džungle | 29706200 |
+
+All four saved originals are Czech 1920×1080. The two "Hory" entries belong to
+different series. Sources 9823060 and 10974880 have different runtimes (49:59 and
+49:12); visual inspection at 90 seconds showed a volcanic landscape in the first
+and a snow leopard in the second. Both second episodes are officially named
+"Mountains": [Planet Earth](https://www.bbcearth.com/shows/planet-earth) and
+[Planet Earth II](https://www.bbcearth.com/shows/planet-earth-ii).
+
+The old continuous, pilot-upload, source-discovery and single-account recovery
+workflows remain disabled. Only the new dual workflow may continue this queue.

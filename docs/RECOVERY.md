@@ -1,5 +1,9 @@
 # Restoring an empty replacement account
 
+This is the legacy single-account workflow. It is disabled as of September 25,
+2026 and must not be enabled for the current account pair. See
+[DUAL_UPLOAD.md](DUAL_UPLOAD.md) for the independent ranked shared queue.
+
 Recovery reuses selected Sdilej originals. It never calls search, discovery or
 language detection. It refreshes the authenticated fast-download URL and checks
 the original byte length against the saved selection before creating a target.
