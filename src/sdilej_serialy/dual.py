@@ -15,6 +15,7 @@ from sdilej_to_prehrajto.models import Candidate
 from .catalog import load_jsonl
 from .continuous import upload_continuously, uploaded_identities
 from .git_state import GitCheckpointPersister
+from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import EpisodeState, atomic_json, now_iso, target_session
 from .quality import QUALITY_POLICY, rank_candidates, upload_eligible
@@ -39,6 +40,7 @@ def ranked_sources(sources, catalog):
     ratings = {int(r['series_id']): r for r in catalog}
     groups = defaultdict(list)
     for row in sources:
+        SourceManifest._validate(row)
         if not upload_eligible(row):
             continue
         selected = row['selected']

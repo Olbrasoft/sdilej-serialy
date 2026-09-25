@@ -4,6 +4,13 @@ on:
   pull_request:
   push:
     branches: [main]
+    paths-ignore:
+      - 'state/**'
+      - 'reports/**'
+      - 'recovery/**'
+      - 'dual/**'
+      - 'manifests/**'
+      - 'backlog/**'
 
 jobs:
   test:

@@ -72,6 +72,13 @@ def test_one_source_cannot_feed_different_episodes():
         dual.ranked_sources(rows, [])
 
 
+def test_authenticated_download_urls_never_enter_frozen_queue():
+    row = source()
+    row['selected']['download_url'] = 'https://example.test/private-download'
+    with pytest.raises(ValueError, match='Authenticated source URLs'):
+        dual.ranked_sources([row], [])
+
+
 @pytest.mark.parametrize('tamper', ['manifest', 'account', 'state_owner'])
 def test_frozen_manifest_and_accounts_cannot_change(tmp_path, monkeypatch, tamper):
     directory, plan, rows = setup_plan(tmp_path, monkeypatch)
