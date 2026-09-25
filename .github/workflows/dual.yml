@@ -1,0 +1,81 @@
+name: dual-sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        type: choice
+        options: [pilot, full]
+        default: pilot
+        required: true
+  schedule:
+    - cron: '13 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sdilej-serialy-target-transfer
+  cancel-in-progress: false
+
+jobs:
+  upload:
+    if: vars.DUAL_ENABLED == 'true' && (github.event_name == 'workflow_dispatch' || vars.DUAL_FULL_ENABLED == 'true')
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    env:
+      DUAL_ENABLED: ${{ vars.DUAL_ENABLED }}
+      DUAL_GENERATION: ${{ vars.DUAL_GENERATION }}
+      DUAL_MODE: ${{ inputs.mode || 'full' }}
+      SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
+      SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
+      PREHRAJTO_A_EMAIL: ${{ secrets.PREHRAJTO_A_EMAIL }}
+      PREHRAJTO_A_PASSWORD: ${{ secrets.PREHRAJTO_A_PASSWORD }}
+      PREHRAJTO_B_EMAIL: ${{ secrets.PREHRAJTO_B_EMAIL }}
+      PREHRAJTO_B_PASSWORD: ${{ secrets.PREHRAJTO_B_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install .
+      - name: Configure durable checkpoints
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      - name: Upload a shared queue with two workers per account
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$DUAL_GENERATION" =~ ^[a-z0-9][a-z0-9-]{0,63}$ ]]
+          [[ "$DUAL_MODE" == pilot || "$DUAL_MODE" == full ]]
+          if [[ "$DUAL_MODE" == pilot ]]; then
+            python -m sdilej_serialy.dual run --generation "$DUAL_GENERATION" --mode pilot --persist-git-state
+            exit 0
+          fi
+          dual_deadline=$(( $(date +%s) + 300 * 60 ))
+          while [ "$(date +%s)" -lt "$dual_deadline" ]; do
+            git pull --rebase origin main
+            python -m sdilej_serialy.dual run --generation "$DUAL_GENERATION" --mode full --persist-git-state
+            if python -c 'import json,os,sys; r=json.load(open("dual/"+os.environ["DUAL_GENERATION"]+"/report.json")); sys.exit(r["remaining"] != 0)'; then
+              exit 0
+            fi
+            sleep 60
+          done
+      - name: Preserve progress after interruption
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$DUAL_GENERATION" =~ ^[a-z0-9][a-z0-9-]{0,63}$ ]]
+          git add -- "dual/$DUAL_GENERATION/state.json"
+          if [ -f "dual/$DUAL_GENERATION/report.json" ]; then
+            git add -- "dual/$DUAL_GENERATION/report.json"
+          fi
+          git diff --cached --quiet || git commit -m 'chore: persist dual upload progress'
+          for attempt in 1 2 3 4 5; do
+            git pull --rebase origin main && git push && exit 0
+            sleep $((attempt * 2))
+          done

@@ -21,6 +21,7 @@ from .quality import QUALITY_POLICY, upload_eligible
 
 
 TARGET_EMAIL = "share.series@email.cz"
+_TARGET_LOGIN_LOCK = threading.RLock()
 
 
 def now_iso() -> str:
@@ -231,14 +232,21 @@ def build_plan(
     return rows
 
 
-def target_session(email: str, password: str):
-    if email.strip().casefold() != TARGET_EMAIL:
-        raise RuntimeError(f"Refusing target account other than {TARGET_EMAIL}")
+def target_session(email: str, password: str, *, expected_email: str = TARGET_EMAIL):
+    if email.strip().casefold() != expected_email.strip().casefold():
+        raise RuntimeError(f"Refusing target account other than {expected_email}")
     # The uploader is shared with the film pipeline. Its account guard is set
     # for this process only; secrets stay external to the repository.
-    prehrajto.EXPECTED_EMAIL = TARGET_EMAIL
     from .auth import login_with_retry
-    return login_with_retry(prehrajto.login, email, password)
+    # The dependency uses a module-level account guard. Serialize logins and
+    # restore it before another account logs in; sessions themselves are separate.
+    with _TARGET_LOGIN_LOCK:
+        previous = prehrajto.EXPECTED_EMAIL
+        try:
+            prehrajto.EXPECTED_EMAIL = expected_email.strip().casefold()
+            return login_with_retry(prehrajto.login, email, password)
+        finally:
+            prehrajto.EXPECTED_EMAIL = previous
 
 
 def upload_plan(rows: list[dict], state: EpisodeState, source_email: str, source_password: str, target_email: str, target_password: str) -> int:

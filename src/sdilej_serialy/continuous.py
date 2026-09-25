@@ -43,6 +43,8 @@ def upload_continuously(
     refill_rows: Callable[[], list[dict]] | None = None,
     refill_interval_seconds: float = 15,
     require_original_size: bool = False,
+    target_login: Callable[[], object] | None = None,
+    stop_event: threading.Event | None = None,
 ) -> dict:
     if not 1 <= workers <= 6:
         raise ValueError("workers must be between 1 and 6")
@@ -55,7 +57,7 @@ def upload_continuously(
 
     def login_pair(_index: int):
         provider = EpisodeSourceProvider.authenticated(source_email, source_password)
-        return provider, target_session(target_email, target_password)
+        return provider, (target_login() if target_login else target_session(target_email, target_password))
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
         pairs = list(executor.map(login_pair, range(workers)))
@@ -67,6 +69,8 @@ def upload_continuously(
             while True:
                 refill_leader = False
                 with queue_condition:
+                    if stop_event is not None and stop_event.is_set():
+                        return None
                     if pending:
                         in_flight += 1
                         return pending.popleft()
@@ -151,6 +155,8 @@ def upload_continuously(
                     state.success(episode, result.video_id, row["display_name"])
                     completed += 1
                 except Exception as error:
+                    if stop_event is not None:
+                        stop_event.set()
                     try:
                         # A newly allocated target can appear in the listing
                         # before its bytes arrive. Strict replay must not call
