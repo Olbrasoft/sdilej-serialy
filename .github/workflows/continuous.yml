@@ -6,7 +6,7 @@ on:
       workers:
         description: Parallel upload workers
         required: false
-        default: '6'
+        default: '1'
       limit:
         description: Maximum verified episodes per run
         required: false
@@ -45,7 +45,7 @@ jobs:
       - name: Upload verified episode queue with leased workers
         env:
           CONTINUOUS_ENABLED: ${{ vars.CONTINUOUS_ENABLED }}
-          UPLOAD_WORKERS: ${{ inputs.workers || '6' }}
+          UPLOAD_WORKERS: ${{ inputs.workers || '1' }}
           SYNC_RUNTIME_MINUTES: ${{ inputs.runtime_minutes || '330' }}
           SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
           SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
@@ -61,7 +61,7 @@ jobs:
             git pull --rebase origin main
             sync_output=$(sdilej-series continuous \
               --persist-git-state \
-              --workers '${{ inputs.workers || '6' }}' \
+              --workers '${{ inputs.workers || '1' }}' \
               --limit '${{ inputs.limit || '50' }}' 2>&1 | tee /dev/stderr)
             if grep -q '"queued": 0' <<<"$sync_output"; then
               sleep 120

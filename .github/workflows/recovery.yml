@@ -62,7 +62,7 @@ jobs:
           recovery_deadline=$(( $(date +%s) + 330 * 60 ))
           while [ "$(date +%s)" -lt "$recovery_deadline" ]; do
             git pull --rebase origin main
-            sdilej-series restore --generation "$RECOVERY_GENERATION" --mode full --workers 6 --limit 50 --persist-git-state
+            sdilej-series restore --generation "$RECOVERY_GENERATION" --mode full --workers 1 --limit 50 --persist-git-state
             if python -c 'import json,os,sys; r=json.load(open("recovery/"+os.environ["RECOVERY_GENERATION"]+"/report.json")); sys.exit(r["remaining"] != 0)'; then
               exit 0
             fi

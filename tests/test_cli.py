@@ -1,9 +1,21 @@
 from argparse import Namespace
+import sys
 
 from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
 from sdilej_serialy import cli
 from sdilej_serialy.models import Episode
 from sdilej_serialy.pipeline import EpisodeState
+
+
+def test_upload_commands_default_to_one_worker(monkeypatch):
+    monkeypatch.delenv("UPLOAD_WORKERS", raising=False)
+    captured = []
+    monkeypatch.setattr(cli, "continuous", lambda args: captured.append(args.workers) or 0)
+    monkeypatch.setattr(cli, "restore", lambda args: captured.append(args.workers) or 0)
+    for arguments in (["continuous"], ["restore", "--generation", "test", "--mode", "full"]):
+        monkeypatch.setattr(sys, "argv", ["sdilej-series", *arguments])
+        assert cli.main() == 0
+    assert captured == [1, 1]
 
 
 class ReadOnlyConnection:

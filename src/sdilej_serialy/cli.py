@@ -383,7 +383,7 @@ def main() -> int:
     continuous_cmd.add_argument("--manifest", type=Path, default=ROOT / "manifests" / "selected-episodes.jsonl")
     continuous_cmd.add_argument("--report", type=Path, default=ROOT / "reports" / "continuous.json")
     continuous_cmd.add_argument("--limit", type=int, default=50)
-    continuous_cmd.add_argument("--workers", type=int, default=int(os.environ.get("UPLOAD_WORKERS", "6")))
+    continuous_cmd.add_argument("--workers", type=int, default=int(os.environ.get("UPLOAD_WORKERS", "1")))
     continuous_cmd.add_argument("--persist-git-state", action="store_true")
     continuous_cmd.set_defaults(func=continuous)
     restore_plan_cmd = commands.add_parser('prepare-recovery')
