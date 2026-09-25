@@ -13,7 +13,7 @@ from sdilej_to_prehrajto import prehrajto
 from sdilej_to_prehrajto.models import Candidate
 
 from .catalog import load_jsonl
-from .continuous import upload_continuously, uploaded_identities
+from .continuous import SourceUnavailable, upload_continuously, uploaded_identities
 from .git_state import GitCheckpointPersister
 from .manifest import SourceManifest
 from .models import Episode
@@ -233,7 +233,11 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
                     source_email=source_email, source_password=source_password,
                     target_email=email, target_password=password, require_original_size=True,
                     target_login=lambda: target_session(email, password, expected_email=email), stop_event=stop,
-                    select_source=upgrade_feed.select)
+                    select_source=upgrade_feed.select, recover_source_errors=True)
+            except SourceUnavailable:
+                # No target was allocated in this account worker. The other
+                # account may continue; the next batch retries source login.
+                return {'source_unavailable': True}
             except Exception:
                 stop.set()
                 raise
@@ -244,7 +248,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
                 results[alias] = future.result()
         if stop.is_set():
             raise RuntimeError('A transfer failed; both account queues have been stopped')
-        if mode == 'pilot':
+        if mode == 'pilot' and all(state.uploaded(Episode.from_dict(r['episode'])) for r in rows[:4]):
             verify_pilot(rows, state, sessions)
     except Exception as error:
         # Persist a circuit breaker so the next schedule cannot retry a disabled
@@ -259,6 +263,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
                       completed_by_account={a: completed[a] for a in ACCOUNTS},
                       remaining=len(rows) - sum(completed.values()), accounts=results,
                       halted=bool(state.data.get('halted_at')), updated_at=now_iso())
+        report['retry_deferred'] = len(state.retry_deferred_identities())
         atomic_json(report_path, report)
         if persister:
             persister(state.path)

@@ -58,6 +58,9 @@ jobs:
           dual_deadline=$(( $(date +%s) + 300 * 60 ))
           while [ "$(date +%s)" -lt "$dual_deadline" ]; do
             git pull --rebase origin main
+            # Pulling the repository does not update an installed wheel.
+            # Reload fixes and source-upgrade support between safe batches.
+            pip install --no-deps .
             python -m sdilej_serialy.dual run --generation "$DUAL_GENERATION" --mode full --persist-git-state
             if python -c 'import json,os,sys; r=json.load(open("dual/"+os.environ["DUAL_GENERATION"]+"/report.json")); sys.exit(r["remaining"] != 0)'; then
               exit 0

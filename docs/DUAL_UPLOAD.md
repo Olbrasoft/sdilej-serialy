@@ -41,11 +41,23 @@ secrets are the only source of credentials.
    Batches contain at most 25 episodes per account, with a 60-second pause between
    batches and a 300-minute polling budget. Later schedules resume the same state.
 
-Any transfer failure stops new claims on both accounts while existing transfers
-finish. A durable `halted_at` circuit breaker prevents automatic retries across
-scheduled runs. Prepared or uncertain target IDs are retained and never replaced
-automatically. Investigate and reconcile the exact target before clearing a halt;
-never remove prepared targets or reset a generation to retry it blindly.
+Source refresh and original-link failures before target allocation are retried
+three times with bounded backoff. If still unavailable, only that episode is
+deferred for fifteen minutes (persisted across restarts), and both queues continue.
+The next batch includes it again after the delay; account assignment never changes.
+A source-login outage defers that account's batch without setting a permanent
+halt. The other account can continue and the workflow retries in its next batch.
+
+Failures after target creation, changed source identity/size, target-account errors,
+and checkpoint failures still stop new claims while existing transfers finish.
+A durable `halted_at` circuit breaker prevents unsafe retries across scheduled
+runs. Prepared or uncertain target IDs are retained and never replaced automatically.
+Investigate and reconcile the exact target before clearing a halt; never remove
+prepared targets or reset a generation to retry it blindly.
+
+The workflow reinstalls the pulled project before every batch. Merely pulling Git
+does not update Python's installed package, so reinstalling is required to activate
+source upgrades and recovery fixes without interrupting transfers.
 
 Disable `DUAL_FULL_ENABLED` and `DUAL_ENABLED`, and disable the `dual-sync` workflow
 to prevent new runs. An already-running job must also finish or be cancelled;

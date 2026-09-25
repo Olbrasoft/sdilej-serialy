@@ -9,14 +9,39 @@ import time
 import uuid
 from collections.abc import Callable
 
+import requests
 from sdilej_to_prehrajto import prehrajto
 from sdilej_to_prehrajto.models import Candidate
+from sdilej_to_prehrajto.sdilej import SdilejError
 
 from .episodes import EpisodeSourceProvider
 from .models import Episode
 from .pipeline import EpisodeState, target_session
 from .target import existing_episode
 from .quality import upload_eligible
+
+
+class SourceUnavailable(RuntimeError):
+    """A source-only operation failed before any target allocation."""
+
+
+def prepare_source(provider, candidate, require_original_size):
+    for attempt in range(3):
+        try:
+            refreshed = provider.refresh(candidate, session=provider.session)
+            if (refreshed.source_id, refreshed.url) != (candidate.source_id, candidate.url):
+                raise RuntimeError('Verified source identity changed before upload')
+            if require_original_size:
+                from .source_detail import resolve_original
+                refreshed = resolve_original(provider.session, refreshed)
+                if not candidate.size_bytes or refreshed.size_bytes != candidate.size_bytes:
+                    raise RuntimeError('Recovery original size changed; source requires review')
+            return refreshed
+        except (SdilejError, requests.RequestException) as error:
+            if attempt == 2:
+                raise SourceUnavailable('Source preparation failed before target allocation') from error
+            print(f'source_retry={attempt + 1} error={type(error).__name__}', flush=True)
+            time.sleep(2 ** (attempt + 1))
 
 
 def uploaded_identities(state: EpisodeState) -> set[str]:
@@ -46,6 +71,7 @@ def upload_continuously(
     target_login: Callable[[], object] | None = None,
     stop_event: threading.Event | None = None,
     select_source: Callable[[dict], dict] | None = None,
+    recover_source_errors: bool = False,
 ) -> dict:
     if not 1 <= workers <= 6:
         raise ValueError("workers must be between 1 and 6")
@@ -57,7 +83,12 @@ def upload_continuously(
     refilling = False
 
     def login_pair(_index: int):
-        provider = EpisodeSourceProvider.authenticated(source_email, source_password)
+        try:
+            provider = EpisodeSourceProvider.authenticated(source_email, source_password)
+        except (SdilejError, requests.RequestException) as error:
+            if recover_source_errors:
+                raise SourceUnavailable('Source login unavailable') from error
+            raise
         return provider, (target_login() if target_login else target_session(target_email, target_password))
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
@@ -141,14 +172,7 @@ def upload_continuously(
                         row = select_source(row)
                         candidate = Candidate.from_dict(row['selected'])
                         state.prepared(episode, candidate, row['display_name'])
-                    refreshed = provider.refresh(candidate, session=provider.session)
-                    if (refreshed.source_id, refreshed.url) != (candidate.source_id, candidate.url):
-                        raise RuntimeError("Verified source identity changed before upload")
-                    if require_original_size:
-                        from .source_detail import resolve_original
-                        refreshed = resolve_original(provider.session, refreshed)
-                        if not candidate.size_bytes or refreshed.size_bytes != candidate.size_bytes:
-                            raise RuntimeError('Recovery original size changed; source requires review')
+                    refreshed = prepare_source(provider, candidate, require_original_size)
 
                     def prepared(video_id: str, size: int) -> None:
                         state.row(episode)["prepared_target"] = {"target_video_id": video_id, "size_bytes": size}
@@ -162,7 +186,9 @@ def upload_continuously(
                     state.success(episode, result.video_id, row["display_name"])
                     completed += 1
                 except Exception as error:
-                    if stop_event is not None:
+                    source_deferred = (recover_source_errors and isinstance(error, SourceUnavailable)
+                                       and not state.row(episode).get('prepared_target'))
+                    if stop_event is not None and not source_deferred:
                         stop_event.set()
                     try:
                         # A newly allocated target can appear in the listing
@@ -178,7 +204,8 @@ def upload_continuously(
                         completed += 1
                     else:
                         state.failure(episode, error)
-                    print(f"upload_failed identity={row.get('identity')} error={type(error).__name__}", flush=True)
+                    outcome = 'source_deferred' if source_deferred else 'upload_failed'
+                    print(f"{outcome} identity={row.get('identity')} error={type(error).__name__}", flush=True)
                 finally:
                     with queue_condition:
                         in_flight -= 1
