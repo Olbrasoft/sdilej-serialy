@@ -188,6 +188,11 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
     persister = GitCheckpointPersister(root, (report_path,)) if persist else None
     state = SharedState(directory / 'state.json', {r['identity']: r['target_account'] for r in rows},
                         on_save=persister)
+    from .source_audit import UpgradeFeed, UPGRADES_PATH
+    upgrade_path = root / UPGRADES_PATH
+    read_upgrades = (lambda: persister.read_remote_file(UPGRADES_PATH)) if persister else (
+        lambda: upgrade_path.read_text() if upgrade_path.exists() else '')
+    upgrade_feed = UpgradeFeed(read_upgrades)
     if state.data.get('halted_at'):
         raise RuntimeError('Dual queue halted after an error; manual review is required')
     if mode == 'full' and not state.data.get('pilot_verified_at'):
@@ -227,7 +232,8 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
                 return upload_continuously(batches[alias], state, workers=2,
                     source_email=source_email, source_password=source_password,
                     target_email=email, target_password=password, require_original_size=True,
-                    target_login=lambda: target_session(email, password, expected_email=email), stop_event=stop)
+                    target_login=lambda: target_session(email, password, expected_email=email), stop_event=stop,
+                    select_source=upgrade_feed.select)
             except Exception:
                 stop.set()
                 raise

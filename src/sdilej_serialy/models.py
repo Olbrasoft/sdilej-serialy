@@ -35,7 +35,7 @@ class Episode:
             series_original_title=row.get("series_original_title"),
             season=int(row["season"]),
             number=int(row["episode"]),
-            title=row.get("episode_title") or row.get("episode_name"),
+            title=row.get("episode_title") or row.get("episode_name") or row.get("title"),
             runtime_min=row.get("runtime_min") or row.get("runtime"),
             description=row.get("description") or row.get("series_description") or "",
             priority_rank=row.get("priority_rank"),

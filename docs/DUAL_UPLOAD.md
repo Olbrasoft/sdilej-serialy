@@ -6,6 +6,11 @@ deduplicates semantic episodes, and keeps the best resolution / smallest file
 within that resolution. No source search or language detection runs during replay.
 Authenticated original download URLs are refreshed; original size must still match.
 
+The separate [low-resolution audit](SOURCE_AUDIT.md) can publish verified source
+upgrades. Before a new SD/720p transfer, the uploader reads this overlay while
+preserving the frozen episode identity, order and target-account assignment.
+Already uploaded or allocated targets are never replaced.
+
 Ranking uses the local catalog's IMDb rating descending, then IMDb vote count,
 series ID, season and episode. Unknown ratings follow rated series. Only episodes
 with a saved eligible source participate; missing episodes are not discovered.

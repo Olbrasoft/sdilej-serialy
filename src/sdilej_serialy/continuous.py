@@ -45,6 +45,7 @@ def upload_continuously(
     require_original_size: bool = False,
     target_login: Callable[[], object] | None = None,
     stop_event: threading.Event | None = None,
+    select_source: Callable[[dict], dict] | None = None,
 ) -> dict:
     if not 1 <= workers <= 6:
         raise ValueError("workers must be between 1 and 6")
@@ -134,6 +135,12 @@ def upload_continuously(
                         continue
                     if state.row(episode).get("prepared_target"):
                         raise RuntimeError("Existing upload requires reconciliation")
+                    if select_source:
+                        # Resolve an upgrade only after the global episode claim,
+                        # and never change a source with an allocated target.
+                        row = select_source(row)
+                        candidate = Candidate.from_dict(row['selected'])
+                        state.prepared(episode, candidate, row['display_name'])
                     refreshed = provider.refresh(candidate, session=provider.session)
                     if (refreshed.source_id, refreshed.url) != (candidate.source_id, candidate.url):
                         raise RuntimeError("Verified source identity changed before upload")
