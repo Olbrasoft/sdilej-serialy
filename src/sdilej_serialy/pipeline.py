@@ -74,13 +74,20 @@ class EpisodeState:
             return set(self.data["episodes"])
 
     def retry_deferred_identities(self) -> set[str]:
-        """Keep failed episodes out of queue slots for fifteen minutes, across restarts."""
-        cutoff = datetime.now(UTC) - timedelta(minutes=15)
+        """Persisted backoff: 15 minutes, up to 60 for repeated unavailable sources."""
+        now = datetime.now(UTC)
+        def retry_minutes(row):
+            consecutive = 0
+            for attempt in reversed(row.get('attempts', [])):
+                if attempt['error'] != 'SourceUnavailable':
+                    break
+                consecutive += 1
+            return 15 * 2 ** min(max(consecutive - 1, 0), 2)
         with self._lock:
             return {
                 identity for identity, row in self.data['episodes'].items()
                 if row.get('attempts')
-                and datetime.fromisoformat(row['attempts'][-1]['at']) > cutoff
+                and datetime.fromisoformat(row['attempts'][-1]['at']) > now - timedelta(minutes=retry_minutes(row))
                 and not row.get('upload')
             }
 

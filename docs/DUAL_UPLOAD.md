@@ -44,6 +44,8 @@ secrets are the only source of credentials.
 Source refresh and original-link failures before target allocation are retried
 three times with bounded backoff. If still unavailable, only that episode is
 deferred for fifteen minutes (persisted across restarts), and both queues continue.
+Consecutive source failures increase that delay to thirty and then sixty minutes,
+so a block of unavailable files does not repeatedly consume all queue slots.
 The next batch includes it again after the delay; account assignment never changes.
 A source-login outage defers that account's batch without setting a permanent
 halt. The other account can continue and the workflow retries in its next batch.

@@ -32,6 +32,31 @@ def test_success_is_not_deferred_by_old_failure(tmp_path):
     assert state.retry_deferred_identities() == set()
 
 
+def test_repeated_source_outage_backs_off_to_one_hour_across_restarts(tmp_path):
+    from sdilej_serialy.continuous import SourceUnavailable
+    episode = Episode(1, 1, 'Series', None, 1, 1)
+    state = EpisodeState(tmp_path / 'state.json')
+    for _ in range(3):
+        state.failure(episode, SourceUnavailable())
+    state.row(episode)['attempts'][-1]['at'] = (datetime.now(UTC) - timedelta(minutes=16)).isoformat()
+    state.save()
+    restored = EpisodeState(state.path)
+    assert episode.identity in restored.retry_deferred_identities()
+    restored.row(episode)['attempts'][-1]['at'] = (datetime.now(UTC) - timedelta(minutes=61)).isoformat()
+    assert not restored.retry_deferred_identities()
+
+
+def test_different_failure_does_not_inherit_source_backoff(tmp_path):
+    from sdilej_serialy.continuous import SourceUnavailable
+    episode = Episode(1, 1, 'Series', None, 1, 1)
+    state = EpisodeState(tmp_path / 'state.json')
+    for _ in range(3):
+        state.failure(episode, SourceUnavailable())
+    state.failure(episode, TimeoutError())
+    state.row(episode)['attempts'][-1]['at'] = (datetime.now(UTC) - timedelta(minutes=16)).isoformat()
+    assert not state.retry_deferred_identities()
+
+
 def test_deferred_episode_does_not_consume_queue_limit(tmp_path, monkeypatch):
     from argparse import Namespace
     from sdilej_serialy import cli
