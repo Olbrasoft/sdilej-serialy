@@ -166,6 +166,7 @@ class EpisodeState:
             row = self.row(episode)
             row["upload"] = {"target_video_id": str(video_id), "display_name": name, "uploaded_at": now_iso()}
             row.pop("prepared_target", None)
+            row.pop("transfer_receipt", None)
             row.pop("claim", None)
             self.save()
 
@@ -244,7 +245,8 @@ def target_session(email: str, password: str, *, expected_email: str = TARGET_EM
         previous = prehrajto.EXPECTED_EMAIL
         try:
             prehrajto.EXPECTED_EMAIL = expected_email.strip().casefold()
-            return login_with_retry(prehrajto.login, email, password)
+            from .resilience import retry_target_reads
+            return retry_target_reads(login_with_retry(prehrajto.login, email, password))
         finally:
             prehrajto.EXPECTED_EMAIL = previous
 

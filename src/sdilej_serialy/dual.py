@@ -21,6 +21,7 @@ from .pipeline import EpisodeState, atomic_json, now_iso, target_session
 from .quality import QUALITY_POLICY, rank_candidates, upload_eligible
 from .recovery import digest
 from .target import episode_key, listing_rows
+from .resilience import error_evidence, transient_http
 
 ACCOUNTS = ('a', 'b')
 
@@ -203,6 +204,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
         raise RuntimeError('Source credentials are required')
     sessions = {}
     stop = threading.Event()
+    transient_pause = threading.Event()
     results = {}
     try:
         for alias, (email, password) in creds.items():
@@ -233,13 +235,17 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
                     source_email=source_email, source_password=source_password,
                     target_email=email, target_password=password, require_original_size=True,
                     target_login=lambda: target_session(email, password, expected_email=email), stop_event=stop,
-                    select_source=upgrade_feed.select, recover_source_errors=True)
+                    select_source=upgrade_feed.select, recover_source_errors=True,
+                    recover_target_errors=True, transient_pause=transient_pause)
             except SourceUnavailable:
                 # No target was allocated in this account worker. The other
                 # account may continue; the next batch retries source login.
                 return {'source_unavailable': True}
-            except Exception:
-                stop.set()
+            except Exception as error:
+                if transient_http(error):
+                    transient_pause.set()
+                else:
+                    stop.set()
                 raise
 
         with ThreadPoolExecutor(max_workers=2) as executor:
@@ -251,12 +257,17 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
         if mode == 'pilot' and all(state.uploaded(Episode.from_dict(r['episode'])) for r in rows[:4]):
             verify_pilot(rows, state, sessions)
     except Exception as error:
-        # Persist a circuit breaker so the next schedule cannot retry a disabled
-        # account or blindly replace an uncertain transfer. Never log secrets.
-        state.data['halted_at'] = now_iso()
-        state.data['halt_reason'] = type(error).__name__
-        state.save()
-        raise
+        if transient_http(error) and not stop.is_set():
+            transient_pause.set()
+            state.data['last_transient_error'] = dict(at=now_iso(), **error_evidence(error))
+            state.save()
+            print(f'target_batch_deferred error={error_evidence(error)}', flush=True)
+        else:
+            # Credential/account, integrity and checkpoint failures remain fatal.
+            state.data['halted_at'] = now_iso()
+            state.data['halt_reason'] = type(error).__name__
+            state.save()
+            raise
     finally:
         completed = Counter(r['target_account'] for r in state.data['episodes'].values() if r.get('upload'))
         report = dict(generation=generation, total=len(rows), completed=sum(completed.values()),
@@ -264,6 +275,8 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
                       remaining=len(rows) - sum(completed.values()), accounts=results,
                       halted=bool(state.data.get('halted_at')), updated_at=now_iso())
         report['retry_deferred'] = len(state.retry_deferred_identities())
+        report['transient_pause'] = transient_pause.is_set()
+        report['pending_confirmation'] = sum(bool(r.get('prepared_target')) for r in state.data['episodes'].values())
         atomic_json(report_path, report)
         if persister:
             persister(state.path)

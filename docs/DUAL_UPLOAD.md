@@ -48,12 +48,25 @@ The next batch includes it again after the delay; account assignment never chang
 A source-login outage defers that account's batch without setting a permanent
 halt. The other account can continue and the workflow retries in its next batch.
 
-Failures after target creation, changed source identity/size, target-account errors,
-and checkpoint failures still stop new claims while existing transfers finish.
-A durable `halted_at` circuit breaker prevents unsafe retries across scheduled
-runs. Prepared or uncertain target IDs are retained and never replaced automatically.
-Investigate and reconcile the exact target before clearing a halt; never remove
-prepared targets or reset a generation to retry it blindly.
+Target GET/HEAD requests retry transient HTTP 408/429/5xx responses. Allocation,
+upload and rename POSTs are never automatically retried by the HTTP adapter.
+An exhausted transient target error pauses new claims for the current batch,
+without a permanent halt. Existing transfers settle and the next batch checks
+account availability again. An unavailable final statistics page cannot turn
+already confirmed uploads into failures.
+
+Before processing the upload response, the uploader checkpoints a transfer receipt
+only when the target returned HTTP 200/201 and every expected source byte was read.
+After an interruption, that receipt plus matching target listing/statistics can
+confirm the same saved video ID without another POST. Allocated targets without
+such evidence remain pending review and are never replaced, even if they appear
+in the listing. They no longer block unrelated episodes. The report includes
+`pending_confirmation`, `retry_deferred` and `transient_pause`.
+
+Changed source identity/size, account/permission errors and checkpoint failures
+still stop new claims. A durable `halted_at` circuit breaker prevents unsafe retries
+of those conditions. Never remove prepared targets or reset a generation to retry
+an uncertain transfer blindly.
 
 The workflow reinstalls the pulled project before every batch. Merely pulling Git
 does not update Python's installed package, so reinstalling is required to activate

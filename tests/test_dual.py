@@ -246,7 +246,8 @@ def test_real_workers_never_exceed_two_per_account(tmp_path, monkeypatch):
     lock = threading.Lock()
     barrier = threading.Barrier(4)
     calls = []
-    def relay(target, source, candidate, name, description, on_prepared):
+    def relay(target, source, candidate, name, description, on_prepared, upload_requester):
+        assert callable(upload_requester)
         alias = target.alias
         with lock:
             active[alias] += 1

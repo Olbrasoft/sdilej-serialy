@@ -19,6 +19,8 @@ from .models import Episode
 from .pipeline import EpisodeState, target_session
 from .target import existing_episode
 from .quality import upload_eligible
+from .resilience import (TargetPending, error_evidence, receipt_matches,
+                         receipt_requester, transient_http)
 
 
 class SourceUnavailable(RuntimeError):
@@ -72,6 +74,8 @@ def upload_continuously(
     stop_event: threading.Event | None = None,
     select_source: Callable[[dict], dict] | None = None,
     recover_source_errors: bool = False,
+    recover_target_errors: bool = False,
+    transient_pause: threading.Event | None = None,
 ) -> dict:
     if not 1 <= workers <= 6:
         raise ValueError("workers must be between 1 and 6")
@@ -102,6 +106,8 @@ def upload_continuously(
                 refill_leader = False
                 with queue_condition:
                     if stop_event is not None and stop_event.is_set():
+                        return None
+                    if transient_pause is not None and transient_pause.is_set():
                         return None
                     if pending:
                         in_flight += 1
@@ -156,6 +162,16 @@ def upload_continuously(
                     if not state.claim(episode, f"{execution}-worker-{index}"):
                         continue
                     candidate = Candidate.from_dict(row["selected"])
+                    if recover_target_errors and state.row(episode).get('prepared_target'):
+                        record = state.row(episode)
+                        if receipt_matches(record):
+                            target_id = record['prepared_target']['target_video_id']
+                            name = record.get('source', {}).get('display_name', row['display_name'])
+                            if target_confirmed(target, target_id, name):
+                                state.success(episode, target_id, name)
+                                completed += 1
+                                continue
+                        raise TargetPending('Allocated target requires confirmation; no new upload')
                     existing = existing_episode(target, row["display_name"],
                                                 state.row(episode).get('prepared_target', {}).get('target_video_id'))
                     if existing:
@@ -180,7 +196,9 @@ def upload_continuously(
 
                     state.row(episode)["prepared_target"] = {"creation_intent": True}
                     state.save()
-                    result = prehrajto.relay_upload(target, provider.session, refreshed, row["display_name"], episode.description, on_prepared=prepared)
+                    options = {'upload_requester': receipt_requester(state, episode)} if recover_target_errors else {}
+                    result = prehrajto.relay_upload(target, provider.session, refreshed, row["display_name"], episode.description,
+                                                   on_prepared=prepared, **options)
                     if not target_confirmed(target, result.video_id, row["display_name"]):
                         raise RuntimeError("Target listing and statistics did not confirm the uploaded episode")
                     state.success(episode, result.video_id, row["display_name"])
@@ -188,7 +206,12 @@ def upload_continuously(
                 except Exception as error:
                     source_deferred = (recover_source_errors and isinstance(error, SourceUnavailable)
                                        and not state.row(episode).get('prepared_target'))
-                    if stop_event is not None and not source_deferred:
+                    target_deferred = recover_target_errors and not source_deferred and (transient_http(error)
+                        or isinstance(error, TargetPending)
+                        or isinstance(error, prehrajto.PrehrajtoError) and bool(state.row(episode).get('prepared_target')))
+                    if target_deferred and transient_http(error) and transient_pause is not None:
+                        transient_pause.set()
+                    if stop_event is not None and not (source_deferred or target_deferred):
                         stop_event.set()
                     try:
                         # A newly allocated target can appear in the listing
@@ -204,13 +227,21 @@ def upload_continuously(
                         completed += 1
                     else:
                         state.failure(episode, error)
-                    outcome = 'source_deferred' if source_deferred else 'upload_failed'
-                    print(f"{outcome} identity={row.get('identity')} error={type(error).__name__}", flush=True)
+                    outcome = 'source_deferred' if source_deferred else 'target_deferred' if target_deferred else 'upload_failed'
+                    print(f"{outcome} identity={row.get('identity')} error={error_evidence(error)}", flush=True)
                 finally:
                     with queue_condition:
                         in_flight -= 1
                         queue_condition.notify_all()
 
         completed = sum(executor.map(worker, range(workers)))
-        after = prehrajto.uploaded_video_count(pairs[0][1])
+        try:
+            after = prehrajto.uploaded_video_count(pairs[0][1])
+        except Exception as error:
+            if not recover_target_errors or not transient_http(error):
+                raise
+            after = None
+            if transient_pause is not None:
+                transient_pause.set()
+            print(f'target_statistics_deferred error={error_evidence(error)}', flush=True)
     return {"released_orphaned_claims": released, "queued": len(known_identities), "uploaded_or_reconciled": completed, "target_video_count_before": before, "target_video_count_after": after}
