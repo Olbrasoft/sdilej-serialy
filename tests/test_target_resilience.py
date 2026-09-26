@@ -169,3 +169,15 @@ def test_preflight_permission_failure_still_halts(tmp_path, monkeypatch):
     with pytest.raises(requests.HTTPError):
         dual.run(tmp_path, 'test', 'pilot')
     assert pipeline.EpisodeState(directory / 'state.json').data['halted_at']
+
+
+def test_request_liveness_clears_even_after_transport_failure(tmp_path, monkeypatch):
+    state = pipeline.EpisodeState(tmp_path / 'state.json')
+    request = resilience.receipt_requester(state, Episode.from_dict(source()['episode']))
+    def failed_post(*args, **kwargs):
+        assert not request.finished.is_set()
+        raise requests.Timeout()
+    monkeypatch.setattr(resilience.requests, 'post', failed_post)
+    with pytest.raises(requests.Timeout):
+        request('https://upload.invalid/')
+    assert request.finished.is_set()

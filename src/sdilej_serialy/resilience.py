@@ -1,5 +1,6 @@
 """Read-only HTTP retries and durable evidence for uncertain target transfers."""
 import requests
+from threading import Event
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
@@ -46,23 +47,30 @@ def retry_target_reads(session):
 
 
 def receipt_requester(state, episode):
+    finished = Event()
+    finished.set()
     def request(url, **kwargs):
-        response = requests.post(url, **kwargs)
-        encoder = kwargs['data']
-        reader = encoder.fields[0][1][1]
-        if response.status_code in (200, 201) and reader.position == reader.total:
-            with state._lock:
-                record = state.row(episode)
-                prepared = record.get('prepared_target') or {}
-                if prepared.get('target_video_id') and prepared.get('size_bytes') == reader.total:
-                    record['transfer_receipt'] = {
-                        'target_video_id': prepared['target_video_id'],
-                        'size_bytes': reader.total,
-                        'source_bytes_read': reader.position,
-                        'http_status': response.status_code,
-                    }
-                    state.save()
-        return response
+        finished.clear()
+        try:
+            response = requests.post(url, **kwargs)
+            encoder = kwargs['data']
+            reader = encoder.fields[0][1][1]
+            if response.status_code in (200, 201) and reader.position == reader.total:
+                with state._lock:
+                    record = state.row(episode)
+                    prepared = record.get('prepared_target') or {}
+                    if prepared.get('target_video_id') and prepared.get('size_bytes') == reader.total:
+                        record['transfer_receipt'] = {
+                            'target_video_id': prepared['target_video_id'],
+                            'size_bytes': reader.total,
+                            'source_bytes_read': reader.position,
+                            'http_status': response.status_code,
+                        }
+                        state.save()
+            return response
+        finally:
+            finished.set()
+    request.finished = finished
     return request
 
 

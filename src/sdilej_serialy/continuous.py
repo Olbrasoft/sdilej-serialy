@@ -154,6 +154,7 @@ def upload_continuously(
                 row = take_next_row()
                 if row is None:
                     return completed
+                upload_request = None
                 try:
                     if not upload_eligible(row):
                         print(f"upload_deferred=quality_review identity={row['identity']}", flush=True)
@@ -196,7 +197,8 @@ def upload_continuously(
 
                     state.row(episode)["prepared_target"] = {"creation_intent": True}
                     state.save()
-                    options = {'upload_requester': receipt_requester(state, episode)} if recover_target_errors else {}
+                    upload_request = receipt_requester(state, episode) if recover_target_errors else None
+                    options = {'upload_requester': upload_request} if upload_request else {}
                     result = prehrajto.relay_upload(target, provider.session, refreshed, row["display_name"], episode.description,
                                                    on_prepared=prepared, **options)
                     if not target_confirmed(target, result.video_id, row["display_name"]):
@@ -204,6 +206,13 @@ def upload_continuously(
                     state.success(episode, result.video_id, row["display_name"])
                     completed += 1
                 except Exception as error:
+                    if upload_request and not upload_request.finished.is_set():
+                        # The relay monitor can fail before its HTTP thread ends.
+                        # Do not let a new batch exceed the two-transfer limit.
+                        if transient_pause is not None:
+                            transient_pause.set()
+                        print(f'waiting_for_transfer_exit identity={row["identity"]}', flush=True)
+                        upload_request.finished.wait()
                     source_deferred = (recover_source_errors and isinstance(error, SourceUnavailable)
                                        and not state.row(episode).get('prepared_target'))
                     target_deferred = recover_target_errors and not source_deferred and (transient_http(error)
