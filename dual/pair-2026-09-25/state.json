@@ -10939,7 +10939,13 @@
           "at": "2026-09-25T19:18:04.305579+00:00",
           "error": "SourceUnavailable"
         }
-      ]
+      ],
+      "claim": {
+        "worker_id": "f3b4df34813c47c5a0bd1b7adcafb0b2-worker-0",
+        "run_id": "36234587111",
+        "claimed_at": "2026-09-26T10:03:26.367691+00:00",
+        "lease_expires_at": "2026-09-26T16:03:26.367704+00:00"
+      }
     },
     "673:4:10": {
       "target_account": "b",
@@ -14996,7 +15002,7 @@
     }
   },
   "initialized_at": "2026-09-25T14:05:15.686917+00:00",
-  "updated_at": "2026-09-25T19:26:10.525866+00:00",
+  "updated_at": "2026-09-26T10:03:26.367712+00:00",
   "pilot_verified_at": "2026-09-25T14:23:33.839342+00:00",
   "pilot_counts": {
     "a": 2,
@@ -15022,10 +15028,19 @@
       "previous_halted_at": "2026-09-25T19:26:10.525844+00:00",
       "reason": "Target statistics HTTP 504; both uncertain videos verified complete without replay",
       "verified_targets": {
-        "632:0:1": {"target_video_id": "29711953", "duration_sec": 3340},
-        "1154:2:1": {"target_video_id": "29711950", "duration_sec": 3969}
+        "632:0:1": {
+          "target_video_id": "29711953",
+          "duration_sec": 3340
+        },
+        "1154:2:1": {
+          "target_video_id": "29711950",
+          "duration_sec": 3969
+        }
       },
-      "live_account_counts": {"a": 197, "b": 196},
+      "live_account_counts": {
+        "a": 197,
+        "b": 196
+      },
       "unique_on_correct_accounts": true,
       "processed_1920x1080_and_full_duration_verified": true,
       "final_video_frames_decoded": true,
