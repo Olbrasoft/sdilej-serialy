@@ -36,9 +36,10 @@ class GitCheckpointPersister:
             for attempt in range(40):
                 if self._run("push", "origin", "HEAD:main", check=False).returncode == 0:
                     return
+                # Back off before fetching, never let a rebased HEAD go stale.
+                time.sleep(min(0.25 * (attempt + 1), 3.0))
                 self._run("fetch", "origin", "main")
                 if self._run("rebase", "--autostash", "origin/main", check=False).returncode == 0:
-                    time.sleep(min(0.25 * (attempt + 1), 3.0))
                     continue
                 self._run("rebase", "--abort", check=False)
             raise RuntimeError("Upload checkpoint could not be pushed; refusing further transfer")

@@ -113,8 +113,22 @@ def load(root, generation):
             or state.get('manifest_sha256') != plan['manifest_sha256']):
         raise ValueError('Dual generation or snapshot mismatch')
     rows = [json.loads(line) for line in payload.splitlines() if line.strip()]
+    if len(rows) != plan['selected_count']:
+        raise ValueError('Frozen queue length changed')
+    additions_path = directory / 'additions.jsonl'
+    if additions_path.exists():
+        additions = load_jsonl(additions_path)
+        for row in additions:
+            SourceManifest._validate(row)
+            if (row.get('generation') != generation
+                    or row.get('base_manifest_sha256') != plan['manifest_sha256']
+                    or row['identity'] != Episode.from_dict(row['episode']).identity
+                    or row['selected'].get('audio_language') != 'cs'
+                    or (row['selected'].get('language_probability') or 0) < .65):
+                raise ValueError('Invalid prepared addition')
+        rows.extend(additions)
     mapping = {r['identity']: r for r in rows}
-    if (len(rows) != plan['selected_count'] or len(mapping) != len(rows)
+    if (len(mapping) != len(rows)
             or len({episode_key(r['display_name']) for r in rows}) != len(rows)
             or len({r['selected']['source_id'] for r in rows}) != len(rows)
             or any(not upload_eligible(r) or r['target_account'] != ACCOUNTS[i % 2]

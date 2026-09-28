@@ -1,0 +1,53 @@
+name: prepare-source-reserve
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '29 */2 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sdilej-serialy-source-preparation
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    if: vars.SOURCE_PREPARATION_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    env:
+      HF_HOME: /tmp/huggingface
+      SOURCE_PREPARATION_ENABLED: ${{ vars.SOURCE_PREPARATION_ENABLED }}
+      DUAL_GENERATION: ${{ vars.DUAL_GENERATION }}
+      SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
+      SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: ${{ env.HF_HOME }}
+          key: whisper-small-${{ runner.os }}-v1
+      - name: Install original-media and Czech audio inspection tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes ffmpeg
+          pip install ".[whisper]"
+      - name: Configure durable preparation checkpoints
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      - name: Prepare new originals from cached catalog and append reserve
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$DUAL_GENERATION" =~ ^[a-z0-9][a-z0-9-]{0,63}$ ]]
+          python -m sdilej_serialy.replenish --generation "$DUAL_GENERATION" \
+            --limit 500 --runtime-minutes 110 --persist-git-state

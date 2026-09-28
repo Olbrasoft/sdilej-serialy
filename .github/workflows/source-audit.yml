@@ -31,6 +31,7 @@ jobs:
       DUAL_GENERATION: ${{ vars.DUAL_GENERATION }}
       AUDIT_IDENTITY: ${{ inputs.identity }}
       AUDIT_FORCE: ${{ inputs.force }}
+      SOURCE_PREPARATION_ENABLED: ${{ vars.SOURCE_PREPARATION_ENABLED }}
       SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
       SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
       HF_HOME: /tmp/huggingface
@@ -60,7 +61,9 @@ jobs:
         run: |
           set -euo pipefail
           [[ "$DUAL_GENERATION" =~ ^[a-z0-9][a-z0-9-]{0,63}$ ]]
-          audit_options=(--generation "$DUAL_GENERATION" --persist-git-state --limit 500 --runtime-minutes 300)
+          audit_runtime=300
+          if [[ "$SOURCE_PREPARATION_ENABLED" == true ]]; then audit_runtime=60; fi
+          audit_options=(--generation "$DUAL_GENERATION" --persist-git-state --limit 500 --runtime-minutes "$audit_runtime")
           if [[ -n "$AUDIT_IDENTITY" ]]; then
             [[ "$AUDIT_IDENTITY" =~ ^[0-9]+:[0-9]+:[0-9]+$ ]]
             audit_options+=(--identity "$AUDIT_IDENTITY")

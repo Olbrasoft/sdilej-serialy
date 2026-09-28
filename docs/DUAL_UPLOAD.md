@@ -11,6 +11,11 @@ upgrades. Before a new SD/720p transfer, the uploader reads this overlay while
 preserving the frozen episode identity, order and target-account assignment.
 Already uploaded or allocated targets are never replaced.
 
+The [source reserve producer](SOURCE_RESERVE.md) appends newly verified episodes
+in a separate `additions.jsonl`, without modifying the frozen base or its hash.
+The uploader loads the combined queue at each normal batch boundary, preserving
+all original ranks and owners and deduplicating across both files.
+
 Ranking uses the local catalog's IMDb rating descending, then IMDb vote count,
 series ID, season and episode. Unknown ratings follow rated series. Only episodes
 with a saved eligible source participate; missing episodes are not discovered.

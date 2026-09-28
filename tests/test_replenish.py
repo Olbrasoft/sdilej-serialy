@@ -1,0 +1,136 @@
+import json
+from dataclasses import replace
+from types import SimpleNamespace
+from pathlib import Path
+
+import pytest
+from sdilej_to_prehrajto.models import Candidate, LanguageTier
+
+from sdilej_serialy import dual, replenish, pipeline
+from sdilej_serialy.catalog import write_jsonl_gzip, load_jsonl
+from sdilej_serialy.manifest import SourceManifest
+from sdilej_serialy.models import Episode
+from test_dual import setup_plan, source, stub_live
+
+
+def setup(tmp_path, monkeypatch):
+    directory, plan, rows = setup_plan(tmp_path, monkeypatch, count=4)
+    catalog = [dict(r['episode'], imdb_rating=9.0, imdb_votes=100) for r in rows]
+    for n in (5, 6):
+        catalog.append(dict(source(number=n)['episode'], imdb_rating=9.0, imdb_votes=100))
+    write_jsonl_gzip(tmp_path / 'backlog/series-episodes.jsonl.gz', catalog)
+    manifest = SourceManifest(tmp_path / 'manifests/selected-episodes.jsonl')
+    for r in rows:
+        manifest.add(r)
+    manifest.save()
+    return directory, plan, rows
+
+
+def discover(episode):
+    candidate = Candidate.from_dict(source(number=episode.number)['selected'])
+    return replace(candidate, title=f'{episode.series_title} {episode.code}')
+
+
+def test_preparation_appends_unique_owned_rows_preserving_frozen_queue_and_history(tmp_path, monkeypatch):
+    directory, plan, rows = setup(tmp_path, monkeypatch)
+    snapshot = {name: (directory / name).read_bytes() for name in ('manifest.jsonl', 'plan.json', 'state.json')}
+    calls = []
+    def provider(episode):
+        calls.append(episode.identity)
+        return discover(episode)
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)
+    assert result['prepared_this_run'] == 2
+    for name, payload in snapshot.items():
+        assert (directory / name).read_bytes() == payload
+    _, _, extended = dual.load(tmp_path, 'test')
+    assert extended[:4] == rows
+    assert [r['queue_rank'] for r in extended[4:]] == [5, 6]
+    assert [r['target_account'] for r in extended[4:]] == ['a', 'b']
+    assert calls == ['1:1:5', '1:1:6']
+    previous = (directory / 'additions.jsonl').read_bytes()
+    again = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)
+    assert again['attempted_this_run'] == 0
+    assert (directory / 'additions.jsonl').read_bytes() == previous
+
+
+@pytest.mark.parametrize('mode', ['foreign', 'inconclusive', 'wrong_episode', 'low_confidence', 'source_reuse'])
+def test_unverified_or_reused_sources_are_not_added_and_retry_is_delayed(tmp_path, monkeypatch, mode):
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    def provider(episode):
+        candidate = discover(episode)
+        if mode == 'inconclusive': return None
+        if mode == 'foreign': return replace(candidate, language_tier=LanguageTier.FOREIGN_AUDIO, audio_language='en')
+        if mode == 'wrong_episode': return replace(candidate, title='Series 1 S99E99')
+        if mode == 'low_confidence': return replace(candidate, language_probability=.3)
+        return replace(candidate, source_id='101')
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)
+    assert result['prepared_this_run'] == 0
+    assert not (directory / 'additions.jsonl').exists()
+    assert replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)['attempted_this_run'] == 0
+
+
+def test_existing_verified_source_is_reused_without_discovery(tmp_path, monkeypatch):
+    setup(tmp_path, monkeypatch)
+    manifest = SourceManifest(tmp_path / 'manifests/selected-episodes.jsonl')
+    row = source(number=5)
+    row['selected'] = discover(Episode.from_dict(row['episode'])).to_dict()
+    manifest.add(row)
+    manifest.save()
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=lambda _: pytest.fail('Unexpected search')),
+                               limit=1, runtime_minutes=0)
+    assert result['prepared_this_run'] == 1
+
+
+@pytest.mark.parametrize('field,value', [('identity', '1:1:1'), ('target_account', 'b'), ('queue_rank', 2),
+    ('generation', 'another'), ('base_manifest_sha256', 'wrong')])
+def test_invalid_append_is_rejected_by_uploader(tmp_path, monkeypatch, field, value):
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=discover), limit=1, runtime_minutes=0)
+    path = directory / 'additions.jsonl'
+    row = load_jsonl(path)[0]
+    row[field] = value
+    path.write_text(json.dumps(row) + '\n')
+    with pytest.raises(ValueError):
+        dual.load(tmp_path, 'test')
+
+
+def test_catalog_prefers_imdb_then_season_episode():
+    common = dict(imdb_votes=100, season=1)
+    rows = [dict(common, series_id=1, episode=2, imdb_rating=8),
+            dict(common, series_id=2, episode=1, imdb_rating=9),
+            dict(common, series_id=1, episode=1, imdb_rating=8)]
+    assert [(r['series_id'],r['episode']) for r in sorted(rows,key=replenish.catalog_order)] == [(2,1),(1,1),(1,2)]
+
+
+def test_uploader_reads_additions_and_does_not_replay_existing_episodes(tmp_path, monkeypatch):
+    directory, _, rows = setup(tmp_path, monkeypatch)
+    videos, sessions = stub_live(monkeypatch)
+    state = pipeline.EpisodeState(directory / 'state.json')
+    state.data.update(initialized_at=pipeline.now_iso(), pilot_verified_at=pipeline.now_iso())
+    for r in rows:
+        ep = Episode.from_dict(r['episode'])
+        state.row(ep)['target_account'] = r['target_account']
+        state.success(ep, r['selected']['source_id'], r['display_name'])
+        videos[r['target_account']][r['selected']['source_id']] = r['display_name']
+    replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=discover), runtime_minutes=0)
+    seen=[]
+    def upload(batch, state, **kwargs):
+        for r in batch:
+            assert r['identity'] in ('1:1:5','1:1:6')
+            ep=Episode.from_dict(r['episode'])
+            assert state.claim(ep, 'test')
+            state.success(ep,r['selected']['source_id'],r['display_name'])
+            videos[r['target_account']][r['selected']['source_id']]=r['display_name']
+            seen.append(r['identity'])
+        return {}
+    monkeypatch.setattr(dual,'upload_continuously',upload)
+    report=dual.run(tmp_path,'test','full')
+    assert report['completed']==6 and report['remaining']==0
+    dual.run(tmp_path,'test','full')
+    assert sorted(seen)==['1:1:5','1:1:6']
+
+
+def test_preparation_workflow_has_no_production_db_or_target_credentials():
+    text = Path('.github/workflows/prepare-reserve.yml').read_text()
+    assert 'DATABASE_URL' not in text and 'CR_VPS' not in text and 'PREHRAJTO_' not in text
+    assert 'sdilej-serialy-source-preparation' in text
