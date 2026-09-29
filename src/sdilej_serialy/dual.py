@@ -21,7 +21,7 @@ from .pipeline import EpisodeState, atomic_json, now_iso, target_session
 from .quality import QUALITY_POLICY, rank_candidates, upload_eligible
 from .recovery import digest
 from .target import episode_key, listing_rows
-from .resilience import error_evidence, transient_http
+from .resilience import error_evidence, receipt_matches, transient_http
 
 ACCOUNTS = ('a', 'b')
 
@@ -238,6 +238,12 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
                 if count < confirmed:
                     raise RuntimeError('Target lost confirmed videos; refusing automatic replay')
         blocked = uploaded_identities(state) | state.retry_deferred_identities()
+        # These allocations require manual evidence, not another upload attempt.
+        # Reclaiming them every batch cannot resolve anything and can consume all
+        # 25 slots ahead of fresh episodes. Keep them reserved and reported;
+        # valid complete-transfer receipts still enter automatic reconciliation.
+        blocked.update(identity for identity, record in state.data['episodes'].items()
+                       if record.get('prepared_target') and not receipt_matches(record))
         selected = rows[:4] if mode == 'pilot' else rows
         batches = {a: [r for r in selected if r['target_account'] == a and r['identity'] not in blocked]
                       [:limit_per_account] for a in ACCOUNTS}

@@ -209,6 +209,33 @@ def test_failed_transfer_halts_both_accounts_and_all_future_runs(tmp_path, monke
         dual.run(tmp_path, 'test', 'pilot')
 
 
+@pytest.mark.parametrize('complete_receipt', [False, True])
+def test_pending_allocations_cannot_starve_fresh_batch_slots(tmp_path, monkeypatch, complete_receipt):
+    directory, _, rows = setup_plan(tmp_path, monkeypatch)
+    stub_live(monkeypatch)
+    state = pipeline.EpisodeState(directory / 'state.json')
+    state.data.update(initialized_at=pipeline.now_iso(), pilot_verified_at=pipeline.now_iso())
+    for row in rows[:2]:
+        record = state.row(Episode.from_dict(row['episode']))
+        record.update(target_account=row['target_account'],
+                      prepared_target={'target_video_id': row['selected']['source_id'], 'size_bytes': 100})
+        if complete_receipt:
+            record['transfer_receipt'] = dict(target_video_id=row['selected']['source_id'],
+                                             size_bytes=100, source_bytes_read=100, http_status=201)
+    state.save()
+    selected = []
+    def upload(batch, state, **kwargs):
+        selected.extend(row['identity'] for row in batch)
+        return {}
+    monkeypatch.setattr(dual, 'upload_continuously', upload)
+    report = dual.run(tmp_path, 'test', 'full', limit_per_account=1)
+    expected = rows[:2] if complete_receipt else rows[2:4]
+    assert set(selected) == {r['identity'] for r in expected}
+    assert report['pending_confirmation'] == 2
+    assert not report['halted']
+    assert pipeline.EpisodeState(state.path).data['episodes'] == state.data['episodes']
+
+
 def test_cross_account_duplicate_rejects_pilot(tmp_path, monkeypatch):
     directory, _, rows = setup_plan(tmp_path, monkeypatch)
     videos, sessions = stub_live(monkeypatch)

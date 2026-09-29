@@ -69,6 +69,10 @@ confirm the same saved video ID without another POST. Allocated targets without
 such evidence remain pending review and are never replaced, even if they appear
 in the listing. They no longer block unrelated episodes. The report includes
 `pending_confirmation`, `retry_deferred` and `transient_pause`.
+Unproven allocations are excluded before applying the per-account batch limit;
+otherwise repeatedly claiming them can crowd out fresh episodes. Their reservation
+and pending count remain intact. Allocations with a valid full-transfer receipt
+remain eligible for automatic confirmation of the same target ID.
 
 Source preparation and quality-audit checkpoints leave a 15-second quiet window
 after each successful push so frequent unavailable-source reviews cannot starve
