@@ -8,6 +8,7 @@ import requests
 
 from sdilej_serialy import continuous, dual, pipeline, resilience
 from sdilej_serialy.models import Episode
+from sdilej_serialy.git_state import CheckpointError
 from test_dual import setup_plan, stub_live, source
 from test_source_retry import stub_transfer
 
@@ -181,3 +182,52 @@ def test_request_liveness_clears_even_after_transport_failure(tmp_path, monkeypa
     with pytest.raises(requests.Timeout):
         request('https://upload.invalid/')
     assert request.finished.is_set()
+
+
+def test_allocation_checkpoint_recovers_without_replay_or_permanent_halt(tmp_path, monkeypatch):
+    stub_transfer(monkeypatch, lambda c, **kw: c)
+    rows = [source(number=1), source(number=2)]
+    failed = []
+    def persist(path):
+        if state.row(episode).get('prepared_target', {}).get('target_video_id') and not failed:
+            failed.append(True)
+            raise CheckpointError('Busy remote branch')
+    state = pipeline.EpisodeState(tmp_path / 'state.json', on_save=persist)
+    episode = Episode.from_dict(rows[0]['episode'])
+    calls = []
+    def relay(*args, on_prepared, **kwargs):
+        calls.append(1)
+        on_prepared('555', 100)
+        pytest.fail('Transfer must not start without durable target ID')
+    monkeypatch.setattr(continuous.prehrajto, 'relay_upload', relay)
+    stop, pause = Event(), Event()
+    run_transfer(rows, state, stop, pause)
+    assert len(calls) == 1 and pause.is_set() and not stop.is_set()
+    restored = pipeline.EpisodeState(state.path)
+    pending = restored.row(episode)
+    assert pending['prepared_target']['target_video_id'] == '555'
+    assert not pending.get('claim') and not pending.get('upload')
+    pending['attempts'][-1]['at'] = (datetime.now(UTC) - timedelta(minutes=16)).isoformat()
+    monkeypatch.setattr(continuous.prehrajto, 'relay_upload', lambda *a, **k: pytest.fail('Duplicate'))
+    run_transfer(rows[:1], restored, Event(), Event())
+    assert restored.row(episode)['prepared_target']['target_video_id'] == '555'
+
+
+def test_checkpoint_recovery_failure_propagates_without_next_transfer(tmp_path, monkeypatch):
+    stub_transfer(monkeypatch, lambda c, **kw: c)
+    def persist(path):
+        raise CheckpointError('Storage unavailable')
+    state = pipeline.EpisodeState(tmp_path / 'state.json', on_save=persist)
+    monkeypatch.setattr(continuous.prehrajto, 'relay_upload', lambda *a, **k: pytest.fail('Unsafe transfer'))
+    with pytest.raises(CheckpointError):
+        run_transfer([source(number=1), source(number=2)], state, Event(), Event())
+
+
+def test_error_evidence_records_locations_without_secret_messages():
+    try:
+        raise CheckpointError('https://private.invalid/?password=sensitive-value')
+    except CheckpointError as error:
+        evidence = resilience.error_evidence(error)
+    assert evidence['frames'][-1]['function'] == 'test_error_evidence_records_locations_without_secret_messages'
+    assert 'sensitive-value' not in str(evidence)
+    assert 'https:' not in str(evidence)

@@ -53,7 +53,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
     source_ids = {r['selected']['source_id'] for r in queue}
     manifest = SourceManifest(manifest_path)
     additions = load_jsonl(additions_path) if additions_path.exists() else []
-    persister = GitCheckpointPersister(root, (manifest_path, additions_path, report_path)) if persist else None
+    persister = GitCheckpointPersister(root, (manifest_path, additions_path, report_path),
+                                     min_interval_seconds=15) if persist else None
     deadline = time.monotonic() + runtime_minutes * 60 if runtime_minutes else float('inf')
     attempted = published = 0
     for metadata in catalog:

@@ -151,7 +151,8 @@ def audit(root, provider, *, identities=None, limit=20, runtime_minutes=0, persi
     rows.sort(key=lambda r: (queue_order.get(r['identity'], float('inf')),
                              r['episode'].get('priority_rank') or 10**9, r['identity']))
     deadline = time.monotonic() + runtime_minutes * 60 if runtime_minutes else float('inf')
-    persister = GitCheckpointPersister(root, (manifest_path, upgrades_path, report_path)) if persist else None
+    persister = GitCheckpointPersister(root, (manifest_path, upgrades_path, report_path),
+                                     min_interval_seconds=15) if persist else None
     reviewed = changed = 0
     for row in rows[:limit]:
         if time.monotonic() >= deadline:

@@ -70,7 +70,15 @@ such evidence remain pending review and are never replaced, even if they appear
 in the listing. They no longer block unrelated episodes. The report includes
 `pending_confirmation`, `retry_deferred` and `transient_pause`.
 
-Changed source identity/size, account/permission errors and checkpoint failures
+Source preparation and quality-audit checkpoints leave a 15-second quiet window
+after each successful push so frequent unavailable-source reviews cannot starve
+the uploaders' safety-critical checkpoints on the same branch. Upload checkpoints
+are never delayed. Even a clean Git index must push any unpublished local commit.
+A checkpoint error pauses new claims and attempts to publish the shared state
+again; only a successful durable save permits the next batch. Allocated IDs and
+creation intents remain reserved, without repeating the upload.
+
+Changed source identity/size, account/permission errors and unrecovered checkpoint failures
 still stop new claims. A durable `halted_at` circuit breaker prevents unsafe retries
 of those conditions. Never remove prepared targets or reset a generation to retry
 an uncertain transfer blindly.

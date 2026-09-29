@@ -19,6 +19,7 @@ from .models import Episode
 from .pipeline import EpisodeState, target_session
 from .target import existing_episode
 from .quality import upload_eligible
+from .git_state import CheckpointError
 from .resilience import (TargetPending, error_evidence, receipt_matches,
                          receipt_requester, transient_http)
 
@@ -213,6 +214,15 @@ def upload_continuously(
                             transient_pause.set()
                         print(f'waiting_for_transfer_exit identity={row["identity"]}', flush=True)
                         upload_request.finished.wait()
+                    if recover_target_errors and isinstance(error, CheckpointError):
+                        # Halt new claims until the entire shared state (including
+                        # the allocation intent/ID) is successfully pushed. If this
+                        # retry also fails, propagate to the fatal circuit breaker.
+                        if transient_pause is not None:
+                            transient_pause.set()
+                        state.failure(episode, error)
+                        print(f'checkpoint_recovered identity={row["identity"]} error={error_evidence(error)}', flush=True)
+                        continue
                     source_deferred = (recover_source_errors and isinstance(error, SourceUnavailable)
                                        and not state.row(episode).get('prepared_target'))
                     target_deferred = recover_target_errors and not source_deferred and (transient_http(error)

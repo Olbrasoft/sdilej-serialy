@@ -149042,8 +149042,25 @@
       "processed_1920x1080_and_full_duration_verified": true,
       "final_video_frames_decoded": true,
       "new_uploads_created": 0
+    },
+    {
+      "reviewed_at": "2026-09-29T06:43:00+00:00",
+      "previous_halted_at": "2026-09-28T20:29:38.403671+00:00",
+      "previous_halt_reason": "RuntimeError",
+      "reason": "Checkpoint push starvation during rapid source-reserve writes; throttle source writers and require durable recovery before continuing",
+      "evidence": "Allocated-ID checkpoint created at 20:26:09 was published after source-only commits through 20:29:30; no relay progress or receipt for this target. Original log omitted the inner RuntimeError stack.",
+      "retained_pending_identity": "2384:6:3",
+      "retained_pending_target_id": "29821206",
+      "all_episode_records_unchanged": true,
+      "live_account_counts": {
+        "a": 2169,
+        "b": 2221
+      },
+      "confirmed_counts": {
+        "a": 2131,
+        "b": 2187
+      },
+      "new_uploads_created": 0
     }
-  ],
-  "halted_at": "2026-09-28T20:29:38.403671+00:00",
-  "halt_reason": "RuntimeError"
+  ]
 }

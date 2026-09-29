@@ -1,5 +1,7 @@
 """Read-only HTTP retries and durable evidence for uncertain target transfers."""
 import requests
+import traceback
+from pathlib import Path
 from threading import Event
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
@@ -31,6 +33,11 @@ def error_evidence(error):
     status = getattr(getattr(error, 'response', None), 'status_code', None)
     if isinstance(status, int):
         evidence['http_status'] = status
+    if error.__traceback__ is not None:
+        # Stack locations are useful for diagnosis without disclosing exception
+        # messages, source lines, signed URLs or local variables.
+        evidence['frames'] = [dict(file=Path(f.filename).name, function=f.name, line=f.lineno)
+                              for f in traceback.extract_tb(error.__traceback__)[-5:]]
     return evidence
 
 

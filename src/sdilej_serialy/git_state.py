@@ -8,11 +8,17 @@ import time
 from pathlib import Path
 
 
+class CheckpointError(RuntimeError):
+    """A checkpoint was not confirmed remotely; no new transfer is safe yet."""
+
+
 class GitCheckpointPersister:
-    def __init__(self, root: Path, extra_paths: tuple[Path, ...] = ()):
+    def __init__(self, root: Path, extra_paths: tuple[Path, ...] = (), *, min_interval_seconds=0):
         self.root = root
         self.extra_paths = extra_paths
         self.lock = threading.RLock()
+        self.min_interval_seconds = min_interval_seconds
+        self.last_pushed_at = None
 
     def __call__(self, path: Path) -> None:
         paths = (path, *self.extra_paths)
@@ -24,10 +30,18 @@ class GitCheckpointPersister:
         if not relative_paths:
             return
         with self.lock:
+            # Source-only jobs can review unavailable episodes in milliseconds.
+            # Leave a quiet window for safety-critical upload checkpoints, while
+            # still durably publishing every source review before returning.
+            if self.last_pushed_at is not None:
+                delay = self.min_interval_seconds - (time.monotonic() - self.last_pushed_at)
+                if delay > 0:
+                    time.sleep(delay)
             self._run("add", "--", *(str(relative) for relative in relative_paths))
-            if self._run("diff", "--cached", "--quiet", check=False).returncode == 0:
-                return
-            self._run("commit", "-m", "chore(sync): persist episode checkpoint")
+            if self._run("diff", "--cached", "--quiet", check=False).returncode != 0:
+                self._run("commit", "-m", "chore(sync): persist episode checkpoint")
+            # A previous call may have committed locally but exhausted its push
+            # retries. A clean index alone is NOT proof of a durable checkpoint.
             # The producer and uploader intentionally checkpoint different
             # files on the same branch.  A six-worker upload burst can advance
             # main several times between fetch/rebase/push, so five immediate
@@ -35,6 +49,7 @@ class GitCheckpointPersister:
             # Keep rebasing until that short burst settles.
             for attempt in range(40):
                 if self._run("push", "origin", "HEAD:main", check=False).returncode == 0:
+                    self.last_pushed_at = time.monotonic()
                     return
                 # Back off before fetching, never let a rebased HEAD go stale.
                 time.sleep(min(0.25 * (attempt + 1), 3.0))
@@ -42,7 +57,7 @@ class GitCheckpointPersister:
                 if self._run("rebase", "--autostash", "origin/main", check=False).returncode == 0:
                     continue
                 self._run("rebase", "--abort", check=False)
-            raise RuntimeError("Upload checkpoint could not be pushed; refusing further transfer")
+            raise CheckpointError("Upload checkpoint could not be pushed; refusing further transfer")
 
     def read_remote_file(self, relative_path: str) -> str:
         if relative_path.startswith("/") or ".." in Path(relative_path).parts:
@@ -55,5 +70,5 @@ class GitCheckpointPersister:
     def _run(self, *args: str, check: bool = True):
         result = subprocess.run(["git", *args], cwd=self.root, text=True, capture_output=True, check=False)
         if check and result.returncode:
-            raise RuntimeError(f"git {args[0]} failed")
+            raise CheckpointError(f"git {args[0]} failed")
         return result
