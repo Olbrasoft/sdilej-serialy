@@ -103,6 +103,20 @@ still stop new claims. A durable `halted_at` circuit breaker prevents unsafe ret
 of those conditions. Never remove prepared targets or reset a generation to retry
 an uncertain transfer blindly.
 
+Original-media header validation rejects text/JSON/XML documents, missing or
+malformed range totals and files below 1 MiB. A short error document returned as
+HTTP 200 must never become the preferred "smallest" episode or replace its saved
+size. These responses are source errors, retried and deferred before allocation;
+unrelated episodes continue. Real changes to a valid original's size still stop
+the queue for review.
+
+On September 30, the overlay for episode `1402:7:16` incorrectly held 18 bytes
+instead of 540,582,039 bytes. An authenticated original-link check confirmed the
+frozen manifest's original size and source ID `29096913`. The overlay, master
+catalog and unallocated source record were corrected; its audit was scheduled
+for review again. Only this reviewed halt was cleared. Uploaded history and the
+older uncertain allocation `29821206` were retained without replay.
+
 The workflow reinstalls the pulled project before every batch. Merely pulling Git
 does not update Python's installed package, so reinstalling is required to activate
 source upgrades and recovery fixes without interrupting transfers.

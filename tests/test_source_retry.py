@@ -80,6 +80,39 @@ def test_source_recovers_during_bounded_retry(monkeypatch):
     assert len(calls) == 3
 
 
+def test_short_original_error_body_defers_episode_without_stopping_queue(tmp_path, monkeypatch):
+    resolve = source_detail.resolve_original
+    rows = [source(number=1), source(number=2)]
+    for row in rows:
+        row['selected']['size_bytes'] = 540582039
+    bad_id = rows[0]['selected']['source_id']
+    stub_transfer(monkeypatch, lambda c, **kwargs: c)
+    closed = []
+    def original(_, candidate):
+        response = SimpleNamespace(status_code=200,
+            headers={'Content-Length': '18' if candidate.source_id == bad_id else '540582039'},
+            url='https://cdn.example/original', raise_for_status=lambda: None,
+            close=lambda: closed.append(candidate.source_id))
+        return resolve(SimpleNamespace(get=lambda *a, **k: response), candidate)
+    monkeypatch.setattr(source_detail, 'resolve_original', original)
+    uploads = []
+    def relay(target, source_session, candidate, name, description, on_prepared):
+        uploads.append(candidate.source_id)
+        on_prepared(candidate.source_id, candidate.size_bytes)
+        return SimpleNamespace(video_id=candidate.source_id)
+    monkeypatch.setattr(continuous.prehrajto, 'relay_upload', relay)
+    state = pipeline.EpisodeState(tmp_path / 'state.json')
+    stop = threading.Event()
+    result = transfer(rows, state, stop)
+    assert not stop.is_set()
+    assert result['uploaded_or_reconciled'] == 1
+    assert uploads == [rows[1]['selected']['source_id']]
+    assert closed.count(bad_id) == 3
+    bad = state.data['episodes'][rows[0]['identity']]
+    assert 'prepared_target' not in bad and 'upload' not in bad
+    assert bad['attempts'][-1]['error'] == 'SourceUnavailable'
+
+
 @pytest.mark.parametrize('error', [SdilejError('connection lost'), requests.Timeout()])
 def test_failure_after_target_allocation_still_stops_without_duplicate(tmp_path, monkeypatch, error):
     rows = [source(number=1), source(number=2)]

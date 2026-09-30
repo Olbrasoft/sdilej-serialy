@@ -42,3 +42,43 @@ def test_redirect_uses_original_size_not_preview_or_range_length():
     assert result.size_bytes == 865831506
     assert result.sample_url == result.download_url == response.url
     assert closed
+
+
+@pytest.mark.parametrize('status,headers', [
+    (200, {'Content-Length': '18'}),
+    (200, {'Content-Length': '0'}),
+    (200, {}),
+    (200, {'Content-Length': 'invalid'}),
+    (200, {'Content-Length': '865831506', 'Content-Type': 'text/html; charset=UTF-8'}),
+    (200, {'Content-Length': '865831506', 'Content-Type': 'application/json'}),
+    (206, {'Content-Range': 'bytes 0-0/18', 'Content-Length': '1'}),
+    (206, {'Content-Length': '865831506'}),
+    (206, {'Content-Range': 'bytes 0-0/*'}),
+    (206, {'Content-Range': 'bytes 2-2/865831506'}),
+    (204, {'Content-Length': '865831506'}),
+])
+def test_invalid_original_response_never_overwrites_verified_size(status, headers):
+    from types import SimpleNamespace
+    from sdilej_serialy.source_detail import resolve_original
+    closed = []
+    response = SimpleNamespace(status_code=status, headers=headers,
+        url='https://cdn.example/original', raise_for_status=lambda: None,
+        close=lambda: closed.append(True))
+    candidate = Candidate(source_id='1', url='https://sdilej.cz/1/video', title='Series',
+                          size_bytes=865831506, download_url='https://sdilej.cz/download')
+    with pytest.raises(SdilejError):
+        resolve_original(SimpleNamespace(get=lambda *a, **kw: response), candidate)
+    assert candidate.size_bytes == 865831506
+    assert closed == [True]
+
+
+def test_original_server_can_ignore_range_and_return_full_media():
+    from types import SimpleNamespace
+    from sdilej_serialy.source_detail import resolve_original
+    response = SimpleNamespace(status_code=200,
+        headers={'Content-Length': '865831506', 'Content-Type': 'application/octet-stream'},
+        url='https://cdn.example/original', raise_for_status=lambda: None, close=lambda: None)
+    candidate = Candidate(source_id='1', url='https://sdilej.cz/1/video', title='Series',
+                          download_url='https://sdilej.cz/download')
+    result = resolve_original(SimpleNamespace(get=lambda *a, **kw: response), candidate)
+    assert result.size_bytes == 865831506

@@ -1,10 +1,15 @@
 """Read the original media URL from an authenticated detail page."""
 import mimetypes
+import re
 from dataclasses import replace
 from urllib.parse import urljoin, urlparse
 
 from bs4 import BeautifulSoup
 from sdilej_to_prehrajto import sdilej
+
+
+# Episode originals cannot be tiny error/login documents returned with HTTP 200.
+MIN_ORIGINAL_BYTES = 1024 * 1024
 
 
 def parse_detail_html(html_text, candidate):
@@ -35,15 +40,24 @@ def resolve_original(session, candidate):
     }, stream=True, timeout=(30, 45))
     try:
         response.raise_for_status()
+        content_type = response.headers.get('Content-Type', '').split(';', 1)[0].strip().lower()
+        if (content_type.startswith('text/') or content_type in ('application/json',
+                'application/xml', 'application/xhtml+xml')):
+            raise sdilej.SdilejError('Original media endpoint returned a document instead of media')
         size = None
-        total = response.headers.get('Content-Range', '').rsplit('/', 1)[-1]
-        if response.status_code == 206 and total.isdigit():
-            size = int(total)
+        content_range = re.fullmatch(r'bytes 0-0/(\d+)', response.headers.get('Content-Range', ''))
+        if response.status_code == 206 and content_range:
+            size = int(content_range.group(1))
         elif response.status_code == 200:
             length = response.headers.get('Content-Length', '')
             if length.isdigit():
                 size = int(length)
+        if size is None or size < MIN_ORIGINAL_BYTES:
+            # Do not replace verified metadata with a short error body, or fall
+            # back to rounded detail-page sizes when original length is unknown.
+            # SdilejError is retried/deferred before any target is allocated.
+            raise sdilej.SdilejError('Original media size is missing or implausibly small')
         return replace(candidate, download_url=response.url, sample_url=response.url,
-                       size_bytes=size or candidate.size_bytes)
+                       size_bytes=size)
     finally:
         response.close()
