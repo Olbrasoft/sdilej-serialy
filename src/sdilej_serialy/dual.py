@@ -26,6 +26,23 @@ from .resilience import error_evidence, receipt_matches, transient_http
 ACCOUNTS = ('a', 'b')
 
 
+def account_batch(rows, state, blocked, alias, limit):
+    eligible = [r for r in rows if r['target_account'] == alias and r['identity'] not in blocked]
+    def unavailable_retry(row):
+        record = state.data['episodes'].get(row['identity'], {})
+        attempts = record.get('attempts', [])
+        return (not record.get('prepared_target') and bool(attempts)
+                and attempts[-1]['error'] == 'SourceUnavailable')
+    retries = [r for r in eligible if unavailable_retry(r)]
+    ready = [r for r in eligible if not unavailable_retry(r)]
+    if not ready or limit <= 2:
+        return eligible[:limit]
+    # Repeated missing sources must not occupy every slot while fresh uploads
+    # or receipted targets await processing. Keep owners and relative ranks.
+    selected = {r['identity'] for r in retries[:2] + ready[:limit - min(2, len(retries))]}
+    return [r for r in eligible if r['identity'] in selected]
+
+
 def account_digest(email):
     return digest(email.strip().casefold().encode())
 
@@ -245,8 +262,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
         blocked.update(identity for identity, record in state.data['episodes'].items()
                        if record.get('prepared_target') and not receipt_matches(record))
         selected = rows[:4] if mode == 'pilot' else rows
-        batches = {a: [r for r in selected if r['target_account'] == a and r['identity'] not in blocked]
-                      [:limit_per_account] for a in ACCOUNTS}
+        batches = {a: account_batch(selected, state, blocked, a, limit_per_account) for a in ACCOUNTS}
 
         def account_worker(alias):
             email, password = creds[alias]

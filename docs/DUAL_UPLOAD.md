@@ -52,6 +52,10 @@ deferred for fifteen minutes (persisted across restarts), and both queues contin
 Consecutive source failures increase that delay to thirty and then sixty minutes,
 so a block of unavailable files does not repeatedly consume all queue slots.
 The next batch includes it again after the delay; account assignment never changes.
+When other actionable episodes exist, a batch above two slots admits at most two
+previously unavailable source retries per account, reserving its remaining slots
+for fresh episodes or receipt-backed confirmations. Relative ranks and account
+owners remain unchanged. If only source retries remain, they may fill the batch.
 A source-login outage defers that account's batch without setting a permanent
 halt. The other account can continue and the workflow retries in its next batch.
 

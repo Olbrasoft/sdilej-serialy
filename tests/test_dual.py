@@ -48,6 +48,29 @@ def test_imdb_order_keeps_series_together_and_owners_alternate():
     assert result[-1]['imdb_rating'] is None
 
 
+def test_unavailable_retries_leave_batch_capacity_for_ready_episodes(tmp_path, monkeypatch):
+    directory, _, rows = setup_plan(tmp_path, monkeypatch, count=16)
+    state = pipeline.EpisodeState(directory / 'state.json')
+    for row in rows[:10]:
+        state.row(Episode.from_dict(row['episode']))['attempts'] = [dict(error='SourceUnavailable')]
+    for alias in dual.ACCOUNTS:
+        batch = dual.account_batch(rows, state, set(), alias, 5)
+        expected = [r for r in rows[:4] + rows[10:] if r['target_account'] == alias]
+        assert batch == expected
+        assert len(batch) == 5
+        assert all(r['target_account'] == alias for r in batch)
+
+
+def test_retry_only_queue_is_still_checked_and_blocked_rows_stay_excluded(tmp_path, monkeypatch):
+    directory, _, rows = setup_plan(tmp_path, monkeypatch, count=16)
+    state = pipeline.EpisodeState(directory / 'state.json')
+    for row in rows:
+        state.row(Episode.from_dict(row['episode']))['attempts'] = [dict(error='SourceUnavailable')]
+    blocked = {rows[0]['identity']}
+    batch = dual.account_batch(rows, state, blocked, 'a', 5)
+    assert batch == [r for r in rows if r['target_account'] == 'a' and r['identity'] not in blocked][:5]
+
+
 def test_only_current_verified_czech_sources_and_no_history_filter():
     rows = [source(number=i) for i in range(1, 6)]
     rows[1]['selected']['audio_language'] = 'sk'
