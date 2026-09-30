@@ -81,7 +81,7 @@ def run_transfer(rows, state, stop, pause):
 def test_allocated_504_pauses_without_halt_or_replay(tmp_path, monkeypatch):
     stub_transfer(monkeypatch, lambda c, **kw: c)
     rows = [source(number=1), source(number=2)]
-    def relay(*args, on_prepared, upload_requester):
+    def relay(*args, on_prepared, upload_requester, **kwargs):
         on_prepared('555', 100)
         raise http_error(504)
     monkeypatch.setattr(continuous.prehrajto, 'relay_upload', relay)
@@ -103,7 +103,7 @@ def test_uncertain_target_does_not_block_other_episodes(tmp_path, monkeypatch):
     rows = [source(number=1), source(number=2)]
     state = pipeline.EpisodeState(tmp_path / 'state.json')
     state.row(Episode.from_dict(rows[0]['episode']))['prepared_target'] = {'creation_intent': True}
-    def relay(target, provider, candidate, name, description, on_prepared, upload_requester):
+    def relay(target, provider, candidate, name, description, on_prepared, upload_requester, **kwargs):
         assert candidate.source_id == rows[1]['selected']['source_id']
         on_prepared('666', 100)
         return SimpleNamespace(video_id='666')
@@ -231,3 +231,34 @@ def test_error_evidence_records_locations_without_secret_messages():
     assert evidence['frames'][-1]['function'] == 'test_error_evidence_records_locations_without_secret_messages'
     assert 'sensitive-value' not in str(evidence)
     assert 'https:' not in str(evidence)
+
+
+@pytest.mark.parametrize('receipt,confirmed,success', [(True, True, True), (False, True, False), (True, False, False)])
+def test_listing_timeout_reconciles_only_full_receipt_and_matching_id(
+        tmp_path, monkeypatch, receipt, confirmed, success):
+    stub_transfer(monkeypatch, lambda c, **kw: c)
+    row = source()
+    episode = Episode.from_dict(row['episode'])
+    state = pipeline.EpisodeState(tmp_path / 'state.json')
+    monkeypatch.setattr(continuous, 'target_confirmed', lambda *a: confirmed)
+    calls = []
+    def relay(*args, on_prepared, upload_requester, confirmation_timeout_seconds):
+        assert confirmation_timeout_seconds == 0
+        calls.append(1)
+        on_prepared('555', 100)
+        if receipt:
+            state.row(episode)['transfer_receipt'] = dict(
+                target_video_id='555', size_bytes=100, source_bytes_read=100, http_status=201)
+            state.save()
+        raise continuous.prehrajto.PrehrajtoError('Video moved outside default listing')
+    monkeypatch.setattr(continuous.prehrajto, 'relay_upload', relay)
+    stop, pause = Event(), Event()
+    run_transfer([row], state, stop, pause)
+    assert calls == [1] and not stop.is_set()
+    restored = pipeline.EpisodeState(state.path).row(episode)
+    assert bool(restored.get('upload')) == success
+    if success:
+        assert restored['upload']['target_video_id'] == '555'
+        assert 'prepared_target' not in restored
+    else:
+        assert restored['prepared_target']['target_video_id'] == '555'

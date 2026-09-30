@@ -74,6 +74,14 @@ otherwise repeatedly claiming them can crowd out fresh episodes. Their reservati
 and pending count remain intact. Allocations with a valid full-transfer receipt
 remain eligible for automatic confirmation of the same target ID.
 
+Completion checks read the account's folder-edit page for the saved target ID and
+require the matching semantic episode heading plus available account statistics.
+The default uploaded-video search alone misses videos moved into other folders.
+For a fully accepted HTTP 200/201 transfer with an exact byte-count receipt, an
+SDK listing timeout therefore reconciles that same ID without another upload.
+The redundant SDK listing wait is disabled; the durable receipt and ID check are
+still required after an exception. Without a receipt, the reservation stays pending.
+
 Source preparation and quality-audit checkpoints leave a 15-second quiet window
 after each successful push so frequent unavailable-source reviews cannot starve
 the uploaders' safety-critical checkpoints on the same branch. Upload checkpoints

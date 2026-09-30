@@ -56,7 +56,11 @@ def uploaded_identities(state: EpisodeState) -> set[str]:
 
 
 def target_confirmed(session, video_id: str, display_name: str) -> bool:
-    return prehrajto.uploaded_video_count(session) is not None and prehrajto.uploaded_video_confirmed(session, video_id, display_name)
+    # The default listing searches only its current folder. A moved video can
+    # still be verified by its account-owned ID and semantic episode heading.
+    # Callers must also have a completed relay or a matching durable receipt.
+    return (prehrajto.uploaded_video_count(session) is not None
+            and existing_episode(session, display_name, video_id) == str(video_id))
 
 
 def upload_continuously(
@@ -199,7 +203,11 @@ def upload_continuously(
                     state.row(episode)["prepared_target"] = {"creation_intent": True}
                     state.save()
                     upload_request = receipt_requester(state, episode) if recover_target_errors else None
-                    options = {'upload_requester': upload_request} if upload_request else {}
+                    # The SDK's full-name listing check cannot find moved videos.
+                    # Do not spend five minutes repeating that check: on failure,
+                    # reconcile the accepted full transfer against the saved ID.
+                    options = {'upload_requester': upload_request,
+                               'confirmation_timeout_seconds': 0} if upload_request else {}
                     result = prehrajto.relay_upload(target, provider.session, refreshed, row["display_name"], episode.description,
                                                    on_prepared=prepared, **options)
                     if not target_confirmed(target, result.video_id, row["display_name"]):
@@ -236,9 +244,17 @@ def upload_continuously(
                         # A newly allocated target can appear in the listing
                         # before its bytes arrive. Strict replay must not call
                         # that a successful transfer after an exception.
-                        reconciled = None if require_original_size else existing_episode(
-                            target, row["display_name"],
-                            state.row(episode).get('prepared_target', {}).get('target_video_id'))
+                        reconciled = None
+                        record = state.row(episode)
+                        if require_original_size:
+                            if (recover_target_errors and isinstance(error, prehrajto.PrehrajtoError)
+                                    and receipt_matches(record)):
+                                saved_id = record['prepared_target']['target_video_id']
+                                if target_confirmed(target, saved_id, row['display_name']):
+                                    reconciled = saved_id
+                        else:
+                            reconciled = existing_episode(target, row["display_name"],
+                                record.get('prepared_target', {}).get('target_video_id'))
                     except Exception:
                         reconciled = None
                     if reconciled:
@@ -246,7 +262,8 @@ def upload_continuously(
                         completed += 1
                     else:
                         state.failure(episode, error)
-                    outcome = 'source_deferred' if source_deferred else 'target_deferred' if target_deferred else 'upload_failed'
+                    outcome = ('upload_reconciled' if reconciled else 'source_deferred' if source_deferred
+                               else 'target_deferred' if target_deferred else 'upload_failed')
                     print(f"{outcome} identity={row.get('identity')} error={error_evidence(error)}", flush=True)
                 finally:
                     with queue_condition:
