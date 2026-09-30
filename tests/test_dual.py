@@ -260,7 +260,7 @@ def test_local_process_lock(tmp_path, monkeypatch):
 
 
 def test_real_workers_never_exceed_two_per_account(tmp_path, monkeypatch):
-    from sdilej_serialy import source_detail
+    from sdilej_serialy import source_detail, resilience
     directory, _, rows = setup_plan(tmp_path, monkeypatch)
     videos, sessions = stub_live(monkeypatch)
     monkeypatch.setattr(continuous.EpisodeSourceProvider, 'authenticated', lambda *a: SimpleNamespace(
@@ -273,6 +273,7 @@ def test_real_workers_never_exceed_two_per_account(tmp_path, monkeypatch):
     lock = threading.Lock()
     barrier = threading.Barrier(4)
     calls = []
+    monkeypatch.setattr(resilience.requests, 'post', lambda *a, **k: SimpleNamespace(status_code=201))
     def relay(target, source, candidate, name, description, on_prepared, upload_requester, confirmation_timeout_seconds):
         assert callable(upload_requester)
         assert confirmation_timeout_seconds == 0
@@ -282,6 +283,9 @@ def test_real_workers_never_exceed_two_per_account(tmp_path, monkeypatch):
             peak[alias] = max(peak[alias], active[alias])
             calls.append((alias, candidate.source_id))
         on_prepared(candidate.source_id, candidate.size_bytes)
+        reader = SimpleNamespace(position=candidate.size_bytes, total=candidate.size_bytes)
+        encoder = SimpleNamespace(fields=[('files', ('file.mkv', reader, 'video/mp4'))])
+        upload_requester('https://upload.invalid/', data=encoder)
         barrier.wait(timeout=5)
         with lock:
             videos[alias][candidate.source_id] = name

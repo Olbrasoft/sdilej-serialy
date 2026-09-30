@@ -210,6 +210,13 @@ def upload_continuously(
                                'confirmation_timeout_seconds': 0} if upload_request else {}
                     result = prehrajto.relay_upload(target, provider.session, refreshed, row["display_name"], episode.description,
                                                    on_prepared=prepared, **options)
+                    if upload_request:
+                        # The SDK may return from its monitor while the POST is
+                        # still awaiting a response. Keep this worker occupied
+                        # and retain the allocation until acceptance is durable.
+                        upload_request.finished.wait()
+                        if not receipt_matches(state.row(episode)):
+                            raise TargetPending('Relay returned without a complete accepted-transfer receipt')
                     if not target_confirmed(target, result.video_id, row["display_name"]):
                         raise RuntimeError("Target listing and statistics did not confirm the uploaded episode")
                     state.success(episode, result.video_id, row["display_name"])

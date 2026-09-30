@@ -106,6 +106,8 @@ def test_uncertain_target_does_not_block_other_episodes(tmp_path, monkeypatch):
     def relay(target, provider, candidate, name, description, on_prepared, upload_requester, **kwargs):
         assert candidate.source_id == rows[1]['selected']['source_id']
         on_prepared('666', 100)
+        state.row(Episode.from_dict(rows[1]['episode']))['transfer_receipt'] = dict(
+            target_video_id='666', size_bytes=100, source_bytes_read=100, http_status=201)
         return SimpleNamespace(video_id='666')
     monkeypatch.setattr(continuous.prehrajto, 'relay_upload', relay)
     stop, pause = Event(), Event()
@@ -138,8 +140,13 @@ def test_statistics_504_after_success_does_not_lose_completed_upload(tmp_path, m
             raise http_error(504)
         return 0
     monkeypatch.setattr(continuous.prehrajto, 'uploaded_video_count', count)
-    monkeypatch.setattr(continuous.prehrajto, 'relay_upload', lambda *a, **k: SimpleNamespace(video_id='555'))
     state = pipeline.EpisodeState(tmp_path / 'state.json')
+    def relay(*args, on_prepared, **kwargs):
+        on_prepared('555', 100)
+        state.row(Episode.from_dict(source()['episode']))['transfer_receipt'] = dict(
+            target_video_id='555', size_bytes=100, source_bytes_read=100, http_status=201)
+        return SimpleNamespace(video_id='555')
+    monkeypatch.setattr(continuous.prehrajto, 'relay_upload', relay)
     stop, pause = Event(), Event()
     report = run_transfer([source()], state, stop, pause)
     assert report['target_video_count_after'] is None
@@ -262,3 +269,40 @@ def test_listing_timeout_reconciles_only_full_receipt_and_matching_id(
         assert 'prepared_target' not in restored
     else:
         assert restored['prepared_target']['target_video_id'] == '555'
+
+
+def test_early_relay_return_waits_for_durable_acceptance(tmp_path, monkeypatch):
+    stub_transfer(monkeypatch, lambda c, **kw: c)
+    row = source()
+    episode = Episode.from_dict(row['episode'])
+    state = pipeline.EpisodeState(tmp_path / 'state.json')
+    waited = []
+    def relay(*args, on_prepared, upload_requester, **kwargs):
+        on_prepared('555', 100)
+        def wait():
+            assert not state.uploaded(episode)
+            waited.append(True)
+            state.row(episode)['transfer_receipt'] = dict(
+                target_video_id='555', size_bytes=100, source_bytes_read=100, http_status=201)
+            state.save()
+        upload_requester.finished = SimpleNamespace(wait=wait, is_set=lambda: True)
+        return SimpleNamespace(video_id='555')
+    monkeypatch.setattr(continuous.prehrajto, 'relay_upload', relay)
+    run_transfer([row], state, Event(), Event())
+    assert waited == [True]
+    assert state.row(episode)['upload']['target_video_id'] == '555'
+
+
+def test_relay_success_without_accepted_receipt_stays_reserved(tmp_path, monkeypatch):
+    stub_transfer(monkeypatch, lambda c, **kw: c)
+    row = source()
+    state = pipeline.EpisodeState(tmp_path / 'state.json')
+    def relay(*args, on_prepared, **kwargs):
+        on_prepared('555', 100)
+        return SimpleNamespace(video_id='555')
+    monkeypatch.setattr(continuous.prehrajto, 'relay_upload', relay)
+    stop = Event()
+    run_transfer([row], state, stop, Event())
+    record = state.row(Episode.from_dict(row['episode']))
+    assert record['prepared_target']['target_video_id'] == '555'
+    assert not record.get('upload') and not stop.is_set()

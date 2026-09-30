@@ -81,6 +81,10 @@ For a fully accepted HTTP 200/201 transfer with an exact byte-count receipt, an
 SDK listing timeout therefore reconciles that same ID without another upload.
 The redundant SDK listing wait is disabled; the durable receipt and ID check are
 still required after an exception. Without a receipt, the reservation stays pending.
+The relay monitor can also return before its background POST has received a final
+response. Even on that apparent success, the worker waits for the POST to finish
+and for its durable exact-byte HTTP 200/201 receipt before recording completion
+or starting another transfer. This also preserves the two-transfer-per-account cap.
 
 Source preparation and quality-audit checkpoints leave a 15-second quiet window
 after each successful push so frequent unavailable-source reviews cannot starve
