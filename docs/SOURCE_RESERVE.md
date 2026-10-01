@@ -44,3 +44,8 @@ Unexpected type/import/attribute errors also persist sanitized stack locations
 and fail the preparation job. Revision 2 retries old `TypeError` records once
 without their 24-hour delay; other source cooldowns and all upload reservations
 are preserved. This does not relax Czech, resolution, size or duplicate checks.
+
+For end-to-end acceptance after a repair, the manual workflow accepts an optional
+`identity` (`series:season:episode`). It applies the same source verification,
+cooldown, ownership and duplicate guards and appends through the normal durable
+publisher. Scheduled/default runs still scan the full IMDb-ordered catalog.

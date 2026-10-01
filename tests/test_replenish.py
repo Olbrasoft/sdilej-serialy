@@ -154,6 +154,22 @@ def test_dependency_bug_records_are_retried_once_without_waiting_a_day(tmp_path,
     assert replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)['attempted_this_run'] == 0
 
 
+def test_targeted_acceptance_uses_normal_quality_and_duplicate_guards(tmp_path, monkeypatch):
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    calls = []
+    def provider(episode):
+        calls.append(episode.identity)
+        return discover(episode)
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider),
+                               identities=['1:1:6'], runtime_minutes=0)
+    assert calls == ['1:1:6'] and result['prepared_this_run'] == 1
+    assert load_jsonl(directory / 'additions.jsonl')[0]['queue_rank'] == 5
+    assert replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider),
+                             identities=['1:1:6'], runtime_minutes=0)['attempted_this_run'] == 0
+    with pytest.raises(ValueError, match='not in the cached catalog'):
+        replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), identities=['1:1:999'])
+
+
 def test_programming_failure_is_durable_and_fails_job_without_false_success(tmp_path, monkeypatch):
     setup(tmp_path, monkeypatch)
     def broken(episode):

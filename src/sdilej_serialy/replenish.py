@@ -39,7 +39,7 @@ def catalog_order(row):
             -(row.get('imdb_votes') or 0), row['series_id'], row['season'], row['episode'])
 
 
-def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persist=False):
+def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persist=False, identities=None):
     if limit < 1 or not 0 <= runtime_minutes <= 110:
         raise ValueError('Invalid preparation limits')
     directory, plan, queue = load(root, generation)
@@ -51,6 +51,11 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
     if state.get('schema_version') != 1:
         raise ValueError('Unsupported reserve preparation state')
     catalog = sorted(load_jsonl(root / 'backlog/series-episodes.jsonl.gz'), key=catalog_order)
+    selected_ids = set(identities or ())
+    if selected_ids:
+        if selected_ids - {Episode.from_dict(r).identity for r in catalog}:
+            raise ValueError('Requested preparation identity is not in the cached catalog')
+        catalog = [r for r in catalog if Episode.from_dict(r).identity in selected_ids]
     identities = {r['identity'] for r in queue}
     keys = {episode_key(r['display_name']) for r in queue}
     source_ids = {r['selected']['source_id'] for r in queue}
@@ -148,6 +153,7 @@ def main():
     parser.add_argument('--limit', type=int, default=500)
     parser.add_argument('--runtime-minutes', type=int, default=110)
     parser.add_argument('--persist-git-state', action='store_true')
+    parser.add_argument('--identity', action='append', help='Optional targeted recovery/acceptance check')
     args = parser.parse_args()
     if os.environ.get('SOURCE_PREPARATION_ENABLED') != 'true':
         raise SystemExit('Source preparation is disabled')
@@ -159,7 +165,8 @@ def main():
                                               discovery_timeout_seconds=900)
         try:
             print(json.dumps(prepare(root, args.generation, provider, limit=args.limit,
-                                    runtime_minutes=args.runtime_minutes, persist=args.persist_git_state)))
+                                    runtime_minutes=args.runtime_minutes, persist=args.persist_git_state,
+                                    identities=args.identity)))
         finally:
             provider.session.close()
 

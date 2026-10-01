@@ -2,6 +2,11 @@ name: prepare-source-reserve
 
 on:
   workflow_dispatch:
+    inputs:
+      identity:
+        description: Optional single series:season:episode recovery check
+        required: false
+        default: ''
   schedule:
     - cron: '29 */2 * * *'
 
@@ -21,6 +26,7 @@ jobs:
       HF_HOME: /tmp/huggingface
       SOURCE_PREPARATION_ENABLED: ${{ vars.SOURCE_PREPARATION_ENABLED }}
       DUAL_GENERATION: ${{ vars.DUAL_GENERATION }}
+      PREPARATION_IDENTITY: ${{ inputs.identity }}
       SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
       SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
     steps:
@@ -50,5 +56,9 @@ jobs:
         run: |
           set -euo pipefail
           [[ "$DUAL_GENERATION" =~ ^[a-z0-9][a-z0-9-]{0,63}$ ]]
-          python -m sdilej_serialy.replenish --generation "$DUAL_GENERATION" \
-            --limit 500 --runtime-minutes 110 --persist-git-state
+          preparation_options=(--generation "$DUAL_GENERATION" --limit 500 --runtime-minutes 110 --persist-git-state)
+          if [[ -n "$PREPARATION_IDENTITY" ]]; then
+            [[ "$PREPARATION_IDENTITY" =~ ^[0-9]+:[0-9]+:[0-9]+$ ]]
+            preparation_options+=(--identity "$PREPARATION_IDENTITY")
+          fi
+          python -m sdilej_serialy.replenish "${preparation_options[@]}"
