@@ -134,3 +134,40 @@ def test_preparation_workflow_has_no_production_db_or_target_credentials():
     text = Path('.github/workflows/prepare-reserve.yml').read_text()
     assert 'DATABASE_URL' not in text and 'CR_VPS' not in text and 'PREHRAJTO_' not in text
     assert 'sdilej-serialy-source-preparation' in text
+
+
+def test_dependency_bug_records_are_retried_once_without_waiting_a_day(tmp_path, monkeypatch):
+    from datetime import UTC, datetime, timedelta
+    setup(tmp_path, monkeypatch)
+    retry_after = (datetime.now(UTC) + timedelta(hours=23)).isoformat()
+    pipeline.atomic_json(tmp_path / 'state/reserve-preparation.json', {
+        'schema_version': 1, 'episodes': {
+            '1:1:5': dict(status='deferred', reason='TypeError', retry_after=retry_after),
+            '1:1:6': dict(status='deferred', reason='no_verified_czech_match', retry_after=retry_after)}})
+    calls = []
+    def provider(episode):
+        calls.append(episode.identity)
+        return discover(episode)
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)
+    assert result['prepared_this_run'] == 1
+    assert calls == ['1:1:5']
+    assert replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)['attempted_this_run'] == 0
+
+
+def test_programming_failure_is_durable_and_fails_job_without_false_success(tmp_path, monkeypatch):
+    setup(tmp_path, monkeypatch)
+    def broken(episode):
+        raise TypeError('Sensitive error details must not enter the report')
+    with pytest.raises(RuntimeError, match='code or dependency failure'):
+        replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=broken), runtime_minutes=0)
+    payload = (tmp_path / 'state/reserve-preparation.json').read_text()
+    assert 'Sensitive' not in payload
+    record = json.loads(payload)['episodes']['1:1:5']
+    assert record['reason'] == 'TypeError'
+    assert record['preparation_revision'] == replenish.PREPARATION_REVISION
+    assert record['error']['frames'][-1]['function'] == 'broken'
+    assert not (tmp_path / 'dual/test/additions.jsonl').exists()
+    # The migration bypass is one-time, not a repeated exception loop.
+    assert replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=discover), limit=1,
+                             runtime_minutes=0)['prepared_this_run'] == 1
+    assert load_jsonl(tmp_path / 'dual/test/additions.jsonl')[0]['identity'] == '1:1:6'

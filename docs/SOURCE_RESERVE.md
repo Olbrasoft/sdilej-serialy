@@ -35,3 +35,12 @@ episodes go at the end; existing work is not reordered or replayed.
 
 The legacy `prepare-sources` workflow remains disabled. Do not run it alongside
 this producer: it exports a different catalog and is not the reserve publisher.
+
+The Whisper extra pins faster-whisper 1.2.1 and PyAV below 19: PyAV 19 removed
+the `metadata_errors` argument used by that decoder. Both preparation workflows
+decode a generated WAV at startup, before any source search, so dependency
+incompatibilities fail visibly rather than deferring hundreds of episodes.
+Unexpected type/import/attribute errors also persist sanitized stack locations
+and fail the preparation job. Revision 2 retries old `TypeError` records once
+without their 24-hour delay; other source cooldowns and all upload reservations
+are preserved. This does not relax Czech, resolution, size or duplicate checks.

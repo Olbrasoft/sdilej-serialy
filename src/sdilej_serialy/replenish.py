@@ -20,6 +20,9 @@ from .pipeline import atomic_json, now_iso
 from .quality import QUALITY_POLICY, quality_acceptable
 from .source_audit import AuditProvider
 from .target import episode_key
+from .resilience import error_evidence
+
+PREPARATION_REVISION = 2
 
 
 def valid_czech(episode, candidate):
@@ -63,12 +66,18 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         if episode.identity in identities or key in keys:
             continue
         record = state['episodes'].get(episode.identity, {})
-        if record.get('retry_after') and datetime.fromisoformat(record['retry_after']) > datetime.now(UTC):
+        # Retry records affected by the pre-v2 audio dependency bug immediately,
+        # once. Other inconclusive sources keep their normal cooldown.
+        repaired_error = (record.get('reason') == 'TypeError'
+                          and record.get('preparation_revision', 1) < PREPARATION_REVISION)
+        if (not repaired_error and record.get('retry_after')
+                and datetime.fromisoformat(record['retry_after']) > datetime.now(UTC)):
             continue
         if attempted >= limit or time.monotonic() >= deadline:
             break
-        record = {'at': now_iso(), 'status': 'deferred'}
+        record = {'at': now_iso(), 'status': 'deferred', 'preparation_revision': PREPARATION_REVISION}
         replacement = None
+        fatal_error = False
         try:
             saved = manifest.rows.get(episode.identity)
             candidate = None
@@ -91,6 +100,10 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                 record['reason'] = 'no_verified_czech_match'
         except Exception as error:
             record['reason'] = type(error).__name__
+            record['error'] = error_evidence(error)
+            # Programming/dependency failures are not evidence of missing Czech
+            # media. Persist the diagnostic, then fail the job visibly.
+            fatal_error = isinstance(error, (TypeError, AttributeError, ImportError))
         # Checkpoint errors must stop publishing. Never swallow a failed push.
         if replacement is not None:
             manifest.add(replacement)
@@ -121,6 +134,9 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         if persister:
             persister(state_path)
         print(f"source_reserve identity={episode.identity} status={record['status']}", flush=True)
+        if fatal_error:
+            print(f"source_preparation_failed error={record['error']}", flush=True)
+            raise RuntimeError('Source preparation code or dependency failure; see safe error evidence')
     return dict(attempted_this_run=attempted, prepared_this_run=published, reserve_total=len(additions))
 
 

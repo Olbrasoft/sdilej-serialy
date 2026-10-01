@@ -14,7 +14,8 @@ dependencies = [
 
 [project.optional-dependencies]
 test = ["pytest>=8.0"]
-whisper = ["faster-whisper>=1.0"]
+# PyAV 19 removed av.open(metadata_errors), used by faster-whisper 1.2.1.
+whisper = ["faster-whisper==1.2.1", "av>=18.1,<19"]
 
 [project.scripts]
 sdilej-series = "sdilej_serialy.cli:main"
