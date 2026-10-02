@@ -4,7 +4,7 @@ from __future__ import annotations
 import json
 import os
 import time
-from collections import Counter
+from collections import Counter, deque
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
@@ -23,6 +23,7 @@ from .target import episode_key
 from .resilience import error_evidence
 
 PREPARATION_REVISION = 2
+MAX_SERIES_MISSES = 3
 
 
 def valid_czech(episode, candidate):
@@ -37,6 +38,28 @@ def valid_czech(episode, candidate):
 def catalog_order(row):
     return (row.get('imdb_rating') is None, -(row.get('imdb_rating') or 0),
             -(row.get('imdb_votes') or 0), row['series_id'], row['season'], row['episode'])
+
+
+def preparation_order(catalog, records, paused_series=None):
+    """Reserve search time for unseen episodes without abandoning due retries."""
+    fresh, retries = deque(), deque()
+    paused_series = paused_series if paused_series is not None else set()
+    for metadata in catalog:
+        record = records.get(Episode.from_dict(metadata).identity, {})
+        repaired_error = (record.get('reason') == 'TypeError'
+                          and record.get('preparation_revision', 1) < PREPARATION_REVISION)
+        (fresh if not record or repaired_error else retries).append(metadata)
+    # Inputs retain IMDb/season order within each lane. A daily retry of a long
+    # unavailable series must not consume every run before new series are seen.
+    while fresh or retries:
+        for lane, budget in ((fresh, 8), (retries, 2)):
+            emitted = 0
+            while lane and emitted < budget:
+                metadata = lane.popleft()
+                if metadata['series_id'] in paused_series:
+                    continue
+                emitted += 1
+                yield metadata
 
 
 def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persist=False, identities=None):
@@ -65,6 +88,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                                      min_interval_seconds=15) if persist else None
     deadline = time.monotonic() + runtime_minutes * 60 if runtime_minutes else float('inf')
     attempted = published = 0
+    eligible = []
     for metadata in catalog:
         episode = Episode.from_dict(metadata)
         key = episode_key(f'{episode.series_title} {episode.code}')
@@ -77,6 +101,14 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                           and record.get('preparation_revision', 1) < PREPARATION_REVISION)
         if (not repaired_error and record.get('retry_after')
                 and datetime.fromisoformat(record['retry_after']) > datetime.now(UTC)):
+            continue
+        eligible.append(metadata)
+    series_misses = Counter()
+    paused_series = set()
+    for metadata in preparation_order(eligible, state['episodes'], paused_series):
+        episode = Episode.from_dict(metadata)
+        key = episode_key(f'{episode.series_title} {episode.code}')
+        if episode.identity in identities or key in keys:
             continue
         if attempted >= limit or time.monotonic() >= deadline:
             break
@@ -126,14 +158,19 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             source_ids.add(candidate.source_id)
             record.update(status='prepared', source_id=candidate.source_id, queue_rank=rank)
             published += 1
+            series_misses[episode.series_id] = 0
         else:
             record['retry_after'] = (datetime.now(UTC) + timedelta(hours=24)).isoformat()
+            series_misses[episode.series_id] += 1
+            if not selected_ids and series_misses[episode.series_id] >= MAX_SERIES_MISSES:
+                paused_series.add(episode.series_id)
         state['episodes'][episode.identity] = record
         state['updated_at'] = now_iso()
         atomic_json(state_path, state)
         attempted += 1
         report = dict(generation=generation, attempted_this_run=attempted, prepared_this_run=published,
                       reserve_total=len(additions), queue_total=len(queue), updated_at=now_iso(),
+                      series_paused_this_run=len(paused_series),
                       statuses=dict(Counter(r['status'] for r in state['episodes'].values())))
         atomic_json(report_path, report)
         if persister:

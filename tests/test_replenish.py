@@ -102,6 +102,60 @@ def test_catalog_prefers_imdb_then_season_episode():
     assert [(r['series_id'],r['episode']) for r in sorted(rows,key=replenish.catalog_order)] == [(2,1),(1,1),(1,2)]
 
 
+def test_due_retries_cannot_monopolize_fresh_searches():
+    rows = [source(number=n)['episode'] for n in range(1, 25)]
+    records = {Episode.from_dict(r).identity: dict(status='deferred') for r in rows[:4]}
+    ordered = list(replenish.preparation_order(rows, records))
+    numbers = [r['episode'] for r in ordered]
+    assert numbers[:10] == list(range(5, 13)) + [1, 2]
+    assert numbers[10:20] == list(range(13, 21)) + [3, 4]
+    assert sorted(numbers) == list(range(1, 25))
+
+
+def test_paused_series_do_not_consume_the_fresh_lane_budget():
+    first = [source(number=n)['episode'] for n in range(1, 25)]
+    next_series = dict(source(number=25)['episode'], series_id=2)
+    paused = set()
+    ordered = replenish.preparation_order(first + [next_series], {}, paused)
+    assert next(ordered) == first[0]
+    paused.add(1)
+    assert list(ordered) == [next_series]
+
+
+def test_unavailable_series_yields_to_another_series_without_marking_unsearched_episodes(tmp_path, monkeypatch):
+    directory, _, rows = setup(tmp_path, monkeypatch)
+    catalog = [dict(source(number=n)['episode'], imdb_rating=9, imdb_votes=100) for n in range(1, 15)]
+    catalog.append(dict(source(number=15)['episode'], series_id=2, series_title='Other',
+                        series_original_title='Other', imdb_rating=8, imdb_votes=100))
+    write_jsonl_gzip(tmp_path / 'backlog/series-episodes.jsonl.gz', catalog)
+    calls = []
+    def provider(episode):
+        calls.append(episode.identity)
+        return None if episode.series_id == 1 else discover(episode)
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)
+    assert result['prepared_this_run'] == 1
+    assert calls == ['1:1:5', '1:1:6', '1:1:7', '2:1:15']
+    state = json.loads((tmp_path / 'state/reserve-preparation.json').read_text())
+    assert '1:1:8' not in state['episodes']
+    assert load_jsonl(directory / 'additions.jsonl')[0]['identity'] == '2:1:15'
+    # The next run tries the next unsearched episodes, not a permanent series ban.
+    calls.clear()
+    replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)
+    assert calls == ['1:1:8', '1:1:9', '1:1:10']
+
+
+def test_success_resets_series_miss_budget(tmp_path, monkeypatch):
+    setup(tmp_path, monkeypatch)
+    catalog = [dict(source(number=n)['episode'], imdb_rating=9, imdb_votes=100) for n in range(1, 11)]
+    write_jsonl_gzip(tmp_path / 'backlog/series-episodes.jsonl.gz', catalog)
+    calls = []
+    def provider(episode):
+        calls.append(episode.number)
+        return discover(episode) if episode.number in (7, 10) else None
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)
+    assert result['prepared_this_run'] == 2 and calls == list(range(5, 11))
+
+
 def test_uploader_reads_additions_and_does_not_replay_existing_episodes(tmp_path, monkeypatch):
     directory, _, rows = setup(tmp_path, monkeypatch)
     videos, sessions = stub_live(monkeypatch)

@@ -48,4 +48,13 @@ are preserved. This does not relax Czech, resolution, size or duplicate checks.
 For end-to-end acceptance after a repair, the manual workflow accepts an optional
 `identity` (`series:season:episode`). It applies the same source verification,
 cooldown, ownership and duplicate guards and appends through the normal durable
-publisher. Scheduled/default runs still scan the full IMDb-ordered catalog.
+publisher. Scheduled/default runs scan the full cached catalog.
+
+To avoid starving uploads when the reserve runs dry, search scheduling interleaves
+eight unseen episodes with two due retries, retaining IMDb/season order inside
+both groups. Old audio-bug records remain eligible for their one-time recovery.
+After three consecutive unsuccessful checks of one series, the remaining episodes
+of that series are skipped for this run only; no unsearched episode is marked
+missing or put on cooldown. A successful result resets the series counter.
+Explicit targeted checks bypass this per-series budget. The existing frozen
+upload order, owners, quality policy and all duplicate guards are unchanged.
