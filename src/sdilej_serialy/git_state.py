@@ -12,6 +12,19 @@ class CheckpointError(RuntimeError):
     """A checkpoint was not confirmed remotely; no new transfer is safe yet."""
 
 
+def persist_source_checkpoint(persister, path):
+    """Retry the same unpublished source snapshot; never advance discovery first."""
+    for attempt in range(3):
+        try:
+            persister(path)
+            return
+        except CheckpointError:
+            if attempt == 2:
+                raise
+            print(f'source_checkpoint_retry={attempt + 1}', flush=True)
+            time.sleep(15 * (attempt + 1))
+
+
 class GitCheckpointPersister:
     def __init__(self, root: Path, extra_paths: tuple[Path, ...] = (), *, min_interval_seconds=0):
         self.root = root
@@ -47,6 +60,7 @@ class GitCheckpointPersister:
             # main several times between fetch/rebase/push, so five immediate
             # retries are not enough even though there is no content conflict.
             # Keep rebasing until that short burst settles.
+            rebase_conflicts = 0
             for attempt in range(40):
                 if self._run("push", "origin", "HEAD:main", check=False).returncode == 0:
                     self.last_pushed_at = time.monotonic()
@@ -56,8 +70,10 @@ class GitCheckpointPersister:
                 self._run("fetch", "origin", "main")
                 if self._run("rebase", "--autostash", "origin/main", check=False).returncode == 0:
                     continue
+                rebase_conflicts += 1
                 self._run("rebase", "--abort", check=False)
-            raise CheckpointError("Upload checkpoint could not be pushed; refusing further transfer")
+            raise CheckpointError(f'Checkpoint could not be pushed after 40 attempts '
+                                  f'({rebase_conflicts} rebase conflicts); refusing further work')
 
     def read_remote_file(self, relative_path: str) -> str:
         if relative_path.startswith("/") or ".." in Path(relative_path).parts:

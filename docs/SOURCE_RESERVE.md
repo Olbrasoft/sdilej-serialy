@@ -58,3 +58,10 @@ of that series are skipped for this run only; no unsearched episode is marked
 missing or put on cooldown. A successful result resets the series counter.
 Explicit targeted checks bypass this per-series budget. The existing frozen
 upload order, owners, quality policy and all duplicate guards are unchanged.
+
+Source preparation and quality auditing retry a failed Git checkpoint up to three
+rounds, waiting 15 then 30 seconds between rounds. Each round retains the same
+unpublished commit/snapshot; discovery never advances before the checkpoint is
+durable. Exhausted retries still fail closed rather than report false success.
+Git failures report the retry count and number of rebase conflicts without
+printing authenticated remotes or credentials.

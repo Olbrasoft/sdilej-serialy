@@ -13,7 +13,7 @@ from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
 from .catalog import load_jsonl
 from .dual import ACCOUNTS, load
 from .episodes import display_name, episode_match, runtime_acceptable
-from .git_state import GitCheckpointPersister
+from .git_state import GitCheckpointPersister, persist_source_checkpoint
 from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import atomic_json, now_iso
@@ -174,7 +174,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                       statuses=dict(Counter(r['status'] for r in state['episodes'].values())))
         atomic_json(report_path, report)
         if persister:
-            persister(state_path)
+            persist_source_checkpoint(persister, state_path)
         print(f"source_reserve identity={episode.identity} status={record['status']}", flush=True)
         if fatal_error:
             print(f"source_preparation_failed error={record['error']}", flush=True)

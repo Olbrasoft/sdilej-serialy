@@ -1,4 +1,5 @@
 from pathlib import Path
+import subprocess
 from types import SimpleNamespace
 
 import pytest
@@ -82,3 +83,69 @@ def test_exhausted_push_never_returns_success_even_with_clean_index(monkeypatch,
     with pytest.raises(git_state.CheckpointError):
         persister(state)
     assert persister.last_pushed_at is None
+
+
+def test_source_checkpoint_retries_same_snapshot_before_returning(monkeypatch, tmp_path):
+    path = tmp_path / 'state.json'
+    path.write_text('{"prepared": 1}')
+    calls, sleeps = [], []
+    def persist(candidate):
+        calls.append((candidate, candidate.read_bytes()))
+        if len(calls) < 3:
+            raise git_state.CheckpointError('Remote branch advanced')
+    monkeypatch.setattr(git_state.time, 'sleep', sleeps.append)
+    git_state.persist_source_checkpoint(persist, path)
+    assert len(calls) == 3 and calls[0] == calls[1] == calls[2]
+    assert sleeps == [15, 30]
+
+
+def test_source_checkpoint_permanent_failure_remains_fatal(monkeypatch, tmp_path):
+    calls = []
+    def persist(path):
+        calls.append(path)
+        raise git_state.CheckpointError('Cannot save safely')
+    monkeypatch.setattr(git_state.time, 'sleep', lambda _: None)
+    with pytest.raises(git_state.CheckpointError):
+        git_state.persist_source_checkpoint(persist, tmp_path / 'state.json')
+    assert len(calls) == 3
+
+
+def test_source_checkpoint_round_recovery_with_real_git_preserves_other_writer(monkeypatch, tmp_path):
+    def git(root, *args):
+        return subprocess.run(['git', *args], cwd=root, text=True, capture_output=True, check=True).stdout.strip()
+    remote = tmp_path / 'remote.git'
+    git(tmp_path, 'init', '--bare', '--initial-branch=main', str(remote))
+    producer, uploader = tmp_path / 'producer', tmp_path / 'uploader'
+    git(tmp_path, 'clone', str(remote), str(producer))
+    git(producer, 'config', 'user.name', 'Test')
+    git(producer, 'config', 'user.email', 'test@example.invalid')
+    (producer / 'source.json').write_text('{"prepared": 0}')
+    (producer / 'upload.json').write_text('{"uploaded": 0}')
+    git(producer, 'add', '.')
+    git(producer, 'commit', '-m', 'initial')
+    git(producer, 'push', 'origin', 'main')
+    git(tmp_path, 'clone', str(remote), str(uploader))
+    git(uploader, 'config', 'user.name', 'Test')
+    git(uploader, 'config', 'user.email', 'test@example.invalid')
+    (uploader / 'upload.json').write_text('{"uploaded": 1}')
+    git(uploader, 'add', 'upload.json')
+    git(uploader, 'commit', '-m', 'other writer')
+    git(uploader, 'push', 'origin', 'main')
+    path = producer / 'source.json'
+    path.write_text('{"prepared": 1}')
+    persister = GitCheckpointPersister(producer)
+    original_run = persister._run
+    pushes = []
+    def run(*args, **kwargs):
+        if args[0] == 'push':
+            pushes.append(1)
+            if len(pushes) <= 40:
+                return SimpleNamespace(returncode=1, stdout='')
+        return original_run(*args, **kwargs)
+    monkeypatch.setattr(persister, '_run', run)
+    monkeypatch.setattr(git_state.time, 'sleep', lambda _: None)
+    git_state.persist_source_checkpoint(persister, path)
+    assert len(pushes) == 41
+    assert git(remote, 'show', 'main:source.json') == '{"prepared": 1}'
+    assert git(remote, 'show', 'main:upload.json') == '{"uploaded": 1}'
+    assert git(remote, 'rev-list', '--count', 'main') == '3'

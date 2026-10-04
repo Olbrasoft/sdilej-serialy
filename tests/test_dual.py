@@ -61,14 +61,16 @@ def test_unavailable_retries_leave_batch_capacity_for_ready_episodes(tmp_path, m
         assert all(r['target_account'] == alias for r in batch)
 
 
-def test_retry_only_queue_is_still_checked_and_blocked_rows_stay_excluded(tmp_path, monkeypatch):
+@pytest.mark.parametrize('limit', [2, 5, 25])
+def test_retry_only_queue_is_bounded_and_blocked_rows_stay_excluded(tmp_path, monkeypatch, limit):
     directory, _, rows = setup_plan(tmp_path, monkeypatch, count=16)
     state = pipeline.EpisodeState(directory / 'state.json')
     for row in rows:
         state.row(Episode.from_dict(row['episode']))['attempts'] = [dict(error='SourceUnavailable')]
     blocked = {rows[0]['identity']}
-    batch = dual.account_batch(rows, state, blocked, 'a', 5)
-    assert batch == [r for r in rows if r['target_account'] == 'a' and r['identity'] not in blocked][:5]
+    for alias in dual.ACCOUNTS:
+        batch = dual.account_batch(rows, state, blocked, alias, limit)
+        assert batch == [r for r in rows if r['target_account'] == alias and r['identity'] not in blocked][:2]
 
 
 def test_only_current_verified_czech_sources_and_no_history_filter():

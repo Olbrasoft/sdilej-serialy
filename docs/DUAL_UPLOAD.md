@@ -98,6 +98,12 @@ A checkpoint error pauses new claims and attempts to publish the shared state
 again; only a successful durable save permits the next batch. Allocated IDs and
 creation intents remain reserved, without repeating the upload.
 
+The two-unavailable-source-retry limit per account also applies when no fresh
+episodes remain. Filling a retry-only batch with 25 missing sources previously
+generated uninterrupted claim/failure checkpoints and starved the producer's
+Git pushes. Bounded retry batches now leave the normal inter-batch quiet period
+available to publish fresh sources. Fresh uploads retain their full batch budget.
+
 Changed source identity/size, account/permission errors and unrecovered checkpoint failures
 still stop new claims. A durable `halted_at` circuit breaker prevents unsafe retries
 of those conditions. Never remove prepared targets or reset a generation to retry

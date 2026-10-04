@@ -17,7 +17,7 @@ from sdilej_to_prehrajto.ranking import language_tier, resolution_rank
 
 from .catalog import load_jsonl
 from .episodes import EpisodeSourceProvider, display_name, episode_match, runtime_acceptable
-from .git_state import GitCheckpointPersister
+from .git_state import GitCheckpointPersister, persist_source_checkpoint
 from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import atomic_json, now_iso
@@ -205,7 +205,7 @@ def audit(root, provider, *, identities=None, limit=20, runtime_minutes=0, persi
                       reviewed_this_run=reviewed, upgraded_this_run=changed, updated_at=now_iso())
         atomic_json(report_path, report)
         if persister:
-            persister(state_path)
+            persist_source_checkpoint(persister, state_path)
         print(f"quality_audit identity={identity} status={record['status']}", flush=True)
     return dict(reviewed_this_run=reviewed, upgraded_this_run=changed,
                 reviewed_total=len(state['episodes']), due_at_start=len(rows))

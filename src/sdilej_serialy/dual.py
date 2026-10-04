@@ -35,7 +35,7 @@ def account_batch(rows, state, blocked, alias, limit):
                 and attempts[-1]['error'] == 'SourceUnavailable')
     retries = [r for r in eligible if unavailable_retry(r)]
     ready = [r for r in eligible if not unavailable_retry(r)]
-    if not ready or limit <= 2:
+    if limit <= 2:
         return eligible[:limit]
     # Repeated missing sources must not occupy every slot while fresh uploads
     # or receipted targets await processing. Keep owners and relative ranks.

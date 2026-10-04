@@ -81,6 +81,29 @@ def test_existing_verified_source_is_reused_without_discovery(tmp_path, monkeypa
     assert result['prepared_this_run'] == 1
 
 
+def test_publisher_does_not_advance_or_duplicate_sources_during_checkpoint_retry(tmp_path, monkeypatch):
+    from sdilej_serialy import git_state
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    searched, persisted = [], []
+    def provider(episode):
+        searched.append(episode.identity)
+        return discover(episode)
+    def persist(path):
+        persisted.append(path.read_bytes())
+        if len(persisted) <= 2:
+            assert searched == ['1:1:5']
+        if len(persisted) == 1:
+            raise git_state.CheckpointError('Busy remote')
+    monkeypatch.setattr(replenish, 'GitCheckpointPersister', lambda *a, **k: persist)
+    monkeypatch.setattr(git_state.time, 'sleep', lambda _: None)
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider),
+                               runtime_minutes=0, persist=True)
+    assert result['prepared_this_run'] == 2
+    assert persisted[0] == persisted[1] and len(persisted) == 3
+    assert searched == ['1:1:5', '1:1:6']
+    assert [r['identity'] for r in load_jsonl(directory / 'additions.jsonl')] == searched
+
+
 @pytest.mark.parametrize('field,value', [('identity', '1:1:1'), ('target_account', 'b'), ('queue_rank', 2),
     ('generation', 'another'), ('base_manifest_sha256', 'wrong')])
 def test_invalid_append_is_rejected_by_uploader(tmp_path, monkeypatch, field, value):
