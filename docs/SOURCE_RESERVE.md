@@ -65,3 +65,41 @@ unpublished commit/snapshot; discovery never advances before the checkpoint is
 durable. Exhausted retries still fail closed rather than report false success.
 Git failures report the retry count and number of rebase conflicts without
 printing authenticated remotes or credentials.
+
+## Historical source revalidation
+
+The saved manifest also contains thousands of previously selected Czech sources
+without the `original-media-v4` marker. These are not an empty reserve and must
+not be discarded merely because their validation metadata predates that policy.
+Preparation now prioritizes unreviewed saved Czech sources before broad discovery,
+preserving IMDb/season/episode order within two lanes: known 1080p-or-higher
+sources first, then SD/720p sources requiring complete quality discovery.
+
+For the HD lane, the authenticated saved detail URL is opened directly. The
+actual fast-download original is resolved, measured and probed again; series,
+episode and duration checks still apply. Czech speech is checked again, not
+inferred from the old language label. If several saved variants have the same
+semantic episode key, their original resolutions and byte lengths are inspected
+before choosing the highest-resolution Czech variant and the smallest file at
+that resolution. This is revalidation of known sources, not a claim that a new
+full-site search found no better 1080p/4K alternative. It follows the existing
+policy of searching again for SD/720p upgrades, not for already-HD selections.
+An original found to be SD/720p despite its historical HD label is deferred;
+the fast lane never silently publishes it without a full quality search.
+
+Only successful checks publish the current policy marker, a
+`saved-original-revalidation-v1` audit record, exact original metadata and an
+append-only queue assignment. Existing uploads, claims and the frozen plan are
+unchanged. Stable source IDs and semantic episode keys retain the usual duplicate
+guards. Historical rows absent from the cached catalog retain their saved episode
+metadata instead of disappearing from migration.
+
+Old search cooldowns are bypassed once for this new saved-source review. Failed
+checks retain their original manifest row and a 24-hour retry delay; later normal
+discovery can find alternatives. There is no slow full-search fallback inside
+the HD pass. A source-only worker and the existing shared Actions concurrency
+group serialize publication with other preparation/audit jobs. The uploader
+keeps two transfer workers per account and consumes each published result at its
+next batch reload. `saved_reviewed_this_run` and `saved_prepared_this_run` report
+direct HD checks separately from general preparation counts; `reserve_total`
+remains cumulative and is not the currently unused stock.

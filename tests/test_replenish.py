@@ -81,6 +81,87 @@ def test_existing_verified_source_is_reused_without_discovery(tmp_path, monkeypa
     assert result['prepared_this_run'] == 1
 
 
+def save_legacy(tmp_path, number=5, height=1080):
+    manifest = SourceManifest(tmp_path / 'manifests/selected-episodes.jsonl')
+    row = source(number=number, height=height)
+    row.pop('quality_policy')
+    row['selected']['title'] = f"Series 1 S01E{number:02d}"
+    manifest.add(row)
+    manifest.save()
+    return row
+
+
+def test_legacy_hd_precedes_new_search_and_preserves_frozen_state(tmp_path, monkeypatch):
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    saved = save_legacy(tmp_path, number=6)
+    before = {name: (directory / name).read_bytes() for name in ('manifest.jsonl', 'plan.json', 'state.json')}
+    calls = []
+    def verify(ep, candidates):
+        calls.append(ep.identity)
+        assert candidates[0].source_id == saved['selected']['source_id']
+        return replace(candidates[0], size_bytes=123456789)
+    p = SimpleNamespace(revalidate_saved=verify, discover=lambda _: pytest.fail('Legacy sources have priority'))
+    result = replenish.prepare(tmp_path, 'test', p, limit=1, runtime_minutes=0)
+    assert result['prepared_this_run'] == 1 and calls == ['1:1:6']
+    added = load_jsonl(directory / 'additions.jsonl')[0]
+    assert added['selected']['size_bytes'] == 123456789
+    assert added['quality_policy'] == replenish.QUALITY_POLICY
+    assert added['source_review']['policy'] == 'saved-original-revalidation-v1'
+    assert added['queue_rank'] == 5 and added['target_account'] == 'a'
+    for name, payload in before.items(): assert (directory / name).read_bytes() == payload
+    dual.load(tmp_path, 'test')
+
+
+@pytest.mark.parametrize('result_kind', ['missing', 'foreign', 'wrong_episode', 'duplicate_source'])
+def test_failed_saved_review_never_relables_or_enqueues_unverified_sources(tmp_path, monkeypatch, result_kind):
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    saved = save_legacy(tmp_path)
+    def verify(ep, candidates):
+        c = candidates[0]
+        if result_kind == 'missing': return None
+        if result_kind == 'foreign': return replace(c, audio_language='en', language_tier=LanguageTier.FOREIGN_AUDIO)
+        if result_kind == 'wrong_episode': return replace(c, title='Other S99E99')
+        return replace(c, source_id='101')
+    p = SimpleNamespace(revalidate_saved=verify, discover=lambda _: pytest.fail('No slow fallback in fast pass'))
+    result = replenish.prepare(tmp_path, 'test', p, limit=1, runtime_minutes=0)
+    assert result['prepared_this_run'] == 0
+    assert not (directory / 'additions.jsonl').exists()
+    assert SourceManifest(tmp_path / 'manifests/selected-episodes.jsonl').rows[saved['identity']] == saved
+
+
+def test_saved_review_bypasses_old_search_cooldown_once(tmp_path, monkeypatch):
+    from datetime import datetime, UTC, timedelta
+    setup(tmp_path, monkeypatch)
+    saved = save_legacy(tmp_path)
+    path = tmp_path / 'state/reserve-preparation.json'
+    pipeline.atomic_json(path, dict(schema_version=1, episodes={saved['identity']: dict(
+        status='deferred', retry_after=(datetime.now(UTC) + timedelta(hours=23)).isoformat())}))
+    p = SimpleNamespace(revalidate_saved=lambda *a: None, discover=lambda _: pytest.fail('No search'))
+    first = replenish.prepare(tmp_path, 'test', p, limit=1, runtime_minutes=0, identities=[saved['identity']])
+    second = replenish.prepare(tmp_path, 'test', p, limit=1, runtime_minutes=0, identities=[saved['identity']])
+    assert first['attempted_this_run'] == 1 and second['attempted_this_run'] == 0
+    assert json.loads(path.read_text())['episodes'][saved['identity']]['saved_review_revision'] == 1
+
+
+def test_legacy_low_resolution_uses_full_quality_search(tmp_path, monkeypatch):
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    save_legacy(tmp_path, height=720)
+    p = SimpleNamespace(revalidate_saved=lambda *a: pytest.fail('720p requires best-source search'), discover=discover)
+    result = replenish.prepare(tmp_path, 'test', p, limit=1, runtime_minutes=0)
+    assert result['prepared_this_run'] == 1
+    assert load_jsonl(directory / 'additions.jsonl')[0]['selected']['height'] == 1080
+
+
+def test_saved_episode_missing_from_cached_catalog_is_still_reviewed(tmp_path, monkeypatch):
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    saved = save_legacy(tmp_path, number=99)
+    p = SimpleNamespace(revalidate_saved=lambda ep, candidates: candidates[0],
+                        discover=lambda _: pytest.fail('Review saved metadata first'))
+    result = replenish.prepare(tmp_path, 'test', p, limit=1, runtime_minutes=0)
+    assert result['prepared_this_run'] == 1
+    assert load_jsonl(directory / 'additions.jsonl')[0]['identity'] == saved['identity']
+
+
 def test_publisher_does_not_advance_or_duplicate_sources_during_checkpoint_retry(tmp_path, monkeypatch):
     from sdilej_serialy import git_state
     directory, _, _ = setup(tmp_path, monkeypatch)

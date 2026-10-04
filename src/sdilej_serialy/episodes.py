@@ -269,6 +269,15 @@ class EpisodeSourceProvider:
             return None
         if time.monotonic() >= deadline:
             return None
+        return self._select_originals(episode, candidates, deadline)
+
+    def revalidate_saved(self, episode: Episode, candidates: list[Candidate]) -> Candidate | None:
+        """Recheck known HD originals without search; low-resolution sources need discovery."""
+        return self._select_originals(episode, candidates,
+                                      time.monotonic() + self.discovery_timeout_seconds,
+                                      minimum_resolution=3)
+
+    def _select_originals(self, episode, candidates, deadline, *, minimum_resolution=0):
         by_resolution: dict[int, list[Candidate]] = {}
         for candidate in candidates:
             # Search metadata can describe a low-resolution preview of a 4K
@@ -286,6 +295,8 @@ class EpisodeSourceProvider:
                 by_resolution.setdefault(resolution_rank(detail.width, detail.height), []).append(detail)
         resolved: list[Candidate] = []
         for resolution in sorted(by_resolution, reverse=True):
+            if resolution < minimum_resolution:
+                return None
             if time.monotonic() >= deadline:
                 return None
             for candidate in sorted(
