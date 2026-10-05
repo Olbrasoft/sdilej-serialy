@@ -419118,7 +419118,7 @@
     }
   },
   "initialized_at": "2026-09-25T14:05:15.686917+00:00",
-  "updated_at": "2026-10-05T21:14:25.650580+00:00",
+  "updated_at": "2026-10-05T21:18:19.478665+00:00",
   "pilot_verified_at": "2026-09-25T14:23:33.839342+00:00",
   "pilot_counts": {
     "a": 2,
@@ -419201,5 +419201,37 @@
       "retained_pending_target_id": "29821206",
       "new_uploads_created": 0
     }
-  ]
+  ],
+  "last_transient_error": {
+    "at": "2026-10-05T21:18:19.478044+00:00",
+    "type": "HTTPError",
+    "http_status": 504,
+    "frames": [
+      {
+        "file": "dual.py",
+        "function": "_run",
+        "line": 242
+      },
+      {
+        "file": "pipeline.py",
+        "function": "target_session",
+        "line": 256
+      },
+      {
+        "file": "auth.py",
+        "function": "login_with_retry",
+        "line": 9
+      },
+      {
+        "file": "prehrajto.py",
+        "function": "login",
+        "line": 46
+      },
+      {
+        "file": "models.py",
+        "function": "raise_for_status",
+        "line": 1167
+      }
+    ]
+  }
 }
