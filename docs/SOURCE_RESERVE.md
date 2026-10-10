@@ -53,6 +53,9 @@ files. Pre-v3 `no_verified_czech_match` records
 receive one new attempt without the old cooldown; a new failure restores the
 normal 24-hour delay. Source selection still measures originals and verifies
 Czech audio before publishing, regardless of the filename language label.
+A successful original-media probe proving that a file has no video stream
+rejects that candidate without blocking real videos. Failed probes and
+unresolved video metadata still defer selection rather than permit a downgrade.
 
 For end-to-end acceptance after a repair, the manual workflow accepts an optional
 `identity` (`series:season:episode`). It applies the same source verification,

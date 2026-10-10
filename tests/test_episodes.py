@@ -216,6 +216,27 @@ def test_unresolved_original_metadata_defers_selection(monkeypatch):
     assert provider.discover(episode()) is None
 
 
+@pytest.mark.parametrize('metadata', [
+    {'video_codec': None, 'width': 0, 'height': 0, 'duration_sec': 7759},
+    {},
+    {'video_codec': 'h264', 'width': 0, 'height': 0, 'duration_sec': 1500},
+])
+def test_inspection_rejects_confirmed_nonvideo_but_defers_probe_failures(monkeypatch, metadata):
+    from types import SimpleNamespace
+    from sdilej_serialy import episodes
+    item = candidate('audio', height=1080, size_bytes=186221873, language=LanguageTier.CZECH_AUDIO)
+    p = EpisodeSourceProvider(None, detector=object())
+    monkeypatch.setattr(p, '_get', lambda _: SimpleNamespace(text='detail'))
+    monkeypatch.setattr(episodes, 'parse_detail_html', lambda *args: item)
+    monkeypatch.setattr(episodes, 'resolve_original', lambda *args: item)
+    monkeypatch.setattr(episodes, 'probe_media', lambda *args: metadata)
+    if metadata.get('video_codec', 'missing') is None:
+        assert p._inspect(episode(), item) is None
+    else:
+        with pytest.raises(SdilejError, match='incomplete'):
+            p._inspect(episode(), item)
+
+
 def test_discovery_checks_known_smallest_size_before_unknown_size(monkeypatch):
     known = candidate("known", height=1080, size_bytes=100_000_000, language=LanguageTier.CZECH_AUDIO)
     unknown = candidate("unknown", height=1080, size_bytes=None, language=LanguageTier.CZECH_AUDIO)

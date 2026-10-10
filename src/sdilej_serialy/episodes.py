@@ -223,6 +223,13 @@ class EpisodeSourceProvider:
         detail = parse_detail_html(self._get(candidate.url).text, candidate)
         detail = resolve_original(self.session, detail)
         media = probe_media(detail.download_url)
+        # A successful ffprobe with no selected video stream returns explicit
+        # empty video fields (e.g. an AC3 file mislabeled .mkv). It cannot be an
+        # episode candidate. An empty result is a probe failure and stays fatal
+        # to selection; never downgrade around unresolved original metadata.
+        video_fields = ('video_codec', 'width', 'height')
+        if all(key in media for key in video_fields) and not any(media[key] for key in video_fields):
+            return None
         if not all(media.get(key) for key in ('width', 'height', 'duration_sec')) or not detail.size_bytes:
             raise SdilejError('Original media metadata is incomplete')
         detail = replace(
