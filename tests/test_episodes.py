@@ -28,6 +28,28 @@ def test_mash_underscore_release_matches_catalog_asterisks():
     ep = Episode(episode_id=22493, series_id=108, series_title='M*A*S*H',
                  series_original_title='M*A*S*H', season=2, number=23)
     assert episode_match(ep, 'M A S H_S02E23_Pošta volá.mkv')[0] == MatchTier.STRONG
+    assert episode_match(ep, 'MASH_S02E23_Pošta volá_1080p_CZdab.mkv')[0] == MatchTier.STRONG
+    assert episode_match(ep, 'Nash Bridges S02E23 CZ')[0] == MatchTier.REJECT
+    assert episode_match(ep, 'MASH S02E23-24 CZ')[0] == MatchTier.REJECT
+
+
+def test_mash_search_includes_compact_acronym(monkeypatch):
+    from types import SimpleNamespace
+    p = EpisodeSourceProvider(None, detector=object())
+    urls = []
+    def get(url):
+        urls.append(url)
+        return SimpleNamespace(text='')
+    monkeypatch.setattr(p, '_get', get)
+    ep = Episode(episode_id=22493, series_id=108, series_title='M*A*S*H',
+                 series_original_title='M*A*S*H', season=2, number=23)
+    assert p.search(ep) == []
+    assert any('/mash-s02e23/' in url for url in urls)
+
+
+@pytest.mark.parametrize('title', ['The Big Bang Theory S01E01-02', 'The Big Bang Theory S01E01+E02'])
+def test_episode_ranges_are_not_single_episodes(title):
+    assert episode_match(episode(), title)[0] == MatchTier.REJECT
 
 
 @pytest.mark.parametrize('code', ['XS01E01', 'S01E01X', 'S01E0100', '11x1', 'éS01E01'])

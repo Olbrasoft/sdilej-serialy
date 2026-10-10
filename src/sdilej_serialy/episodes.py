@@ -51,6 +51,15 @@ def normalize(value: str) -> str:
     return re.sub(r"\s+", " ", re.sub(r"[\W_]+", " ", value)).strip()
 
 
+def series_aliases(episode: Episode) -> tuple[str, ...]:
+    aliases = [title for title in (episode.series_title, episode.series_original_title) if title]
+    # The catalog spells the acronym with asterisks, while many releases and
+    # search results use a single word. Do not collapse arbitrary series words.
+    if any(normalize(title) == 'm a s h' for title in aliases):
+        aliases.append('MASH')
+    return tuple(dict.fromkeys(aliases))
+
+
 def series_identity_match(episode: Episode, candidate_title: str, code_start: int) -> tuple[bool, str]:
     """Require the pre-episode prefix to consist only of known series aliases.
 
@@ -62,7 +71,7 @@ def series_identity_match(episode: Episode, candidate_title: str, code_start: in
     remaining = re.sub(r"\b(?:19|20)\d{2}\b", " ", remaining)
     matched = False
     aliases = sorted(
-        {normalize(title) for title in (episode.series_title, episode.series_original_title) if title},
+        {normalize(title) for title in series_aliases(episode)},
         key=len,
         reverse=True,
     )
@@ -117,7 +126,7 @@ def episode_match(episode: Episode, candidate_title: str) -> tuple[MatchTier, di
         "unmatched_series_prefix": unmatched_prefix,
     }
     evidence["episode_codes_found"] = [f"S{season:02d}E{number:02d}" for season, number in sorted(codes)]
-    if len(codes) > 1:
+    if len(codes) > 1 or re.search(r'S\d{1,2}E\d{1,3}\s*[-+]\s*E?\d{1,3}(?!\d)', candidate_title, re.I):
         evidence["reason"] = "multiple_episode_codes"
         return MatchTier.REJECT, evidence
     if code_matches and title_matches:
@@ -183,7 +192,7 @@ class EpisodeSourceProvider:
     def search(self, episode: Episode) -> list[Candidate]:
         candidates: dict[str, Candidate] = {}
         deadline = time.monotonic() + self.discovery_timeout_seconds
-        for title in dict.fromkeys((episode.series_title, episode.series_original_title)):
+        for title in series_aliases(episode):
             if not title:
                 continue
             # Also search the series title alone: exact-code queries miss
