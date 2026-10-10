@@ -35,7 +35,9 @@ from .numbering import mapped_episode_title
 from .auth import login_with_retry
 
 
-EPISODE_CODE_RE = re.compile(r"\bS(?P<season>\d{1,2})E(?P<episode>\d{1,3})\b|\b(?P<sx>\d{1,2})x(?P<ex>\d{1,3})\b", re.I)
+# Underscores are filename separators, not letters adjoining an episode code.
+# Keep alphanumeric boundaries so embedded or truncated codes cannot match.
+EPISODE_CODE_RE = re.compile(r"(?<![^\W_])(?:S(?P<season>\d{1,2})E(?P<episode>\d{1,3})|(?P<sx>\d{1,2})x(?P<ex>\d{1,3}))(?![^\W_])", re.I)
 NOISE_RE = re.compile(r"\b(?:1080p|720p|2160p|4k|bluray|webrip|web[ ._-]?dl|hdtv|x26[45]|hevc|av1|cz|cs|sk|eng|dabing|titulky|mkv|mp4)\b", re.I)
 
 
@@ -45,8 +47,8 @@ def normalize(value: str) -> str:
         for character in unicodedata.normalize("NFKD", value)
         if not unicodedata.combining(character)
     )
-    value = NOISE_RE.sub(" ", value.casefold())
-    return re.sub(r"\s+", " ", re.sub(r"[^\w]+", " ", value)).strip()
+    value = NOISE_RE.sub(" ", value.casefold().replace('_', ' '))
+    return re.sub(r"\s+", " ", re.sub(r"[\W_]+", " ", value)).strip()
 
 
 def series_identity_match(episode: Episode, candidate_title: str, code_start: int) -> tuple[bool, str]:

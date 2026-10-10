@@ -45,6 +45,13 @@ and fail the preparation job. Revision 2 retries old `TypeError` records once
 without their 24-hour delay; other source cooldowns and all upload reservations
 are preserved. This does not relax Czech, resolution, size or duplicate checks.
 
+Revision 3 recognizes underscore-delimited episode codes and series words in
+release filenames. Alphanumeric boundaries, multi-episode rejection and exact
+series/sequel checks remain enforced. Pre-v3 `no_verified_czech_match` records
+receive one new attempt without the old cooldown; a new failure restores the
+normal 24-hour delay. Source selection still measures originals and verifies
+Czech audio before publishing, regardless of the filename language label.
+
 For end-to-end acceptance after a repair, the manual workflow accepts an optional
 `identity` (`series:season:episode`). It applies the same source verification,
 cooldown, ownership and duplicate guards and appends through the normal durable

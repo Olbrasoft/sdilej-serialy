@@ -301,7 +301,8 @@ def test_dependency_bug_records_are_retried_once_without_waiting_a_day(tmp_path,
     pipeline.atomic_json(tmp_path / 'state/reserve-preparation.json', {
         'schema_version': 1, 'episodes': {
             '1:1:5': dict(status='deferred', reason='TypeError', retry_after=retry_after),
-            '1:1:6': dict(status='deferred', reason='no_verified_czech_match', retry_after=retry_after)}})
+            '1:1:6': dict(status='deferred', reason='no_verified_czech_match',
+                          preparation_revision=replenish.PREPARATION_REVISION, retry_after=retry_after)}})
     calls = []
     def provider(episode):
         calls.append(episode.identity)
@@ -326,6 +327,23 @@ def test_targeted_acceptance_uses_normal_quality_and_duplicate_guards(tmp_path, 
                              identities=['1:1:6'], runtime_minutes=0)['attempted_this_run'] == 0
     with pytest.raises(ValueError, match='not in the cached catalog'):
         replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), identities=['1:1:999'])
+
+
+def test_pre_parser_fix_miss_is_retried_once_then_respects_cooldown(tmp_path, monkeypatch):
+    from datetime import UTC, datetime, timedelta
+    setup(tmp_path, monkeypatch)
+    path = tmp_path / 'state/reserve-preparation.json'
+    pipeline.atomic_json(path, {'schema_version': 1, 'episodes': {
+        '1:1:5': dict(status='deferred', reason='no_verified_czech_match',
+                     preparation_revision=2,
+                     retry_after=(datetime.now(UTC) + timedelta(hours=23)).isoformat())}})
+    calls = []
+    provider = SimpleNamespace(discover=lambda ep: calls.append(ep.identity))
+    kwargs = dict(identities=['1:1:5'], runtime_minutes=0)
+    assert replenish.prepare(tmp_path, 'test', provider, **kwargs)['attempted_this_run'] == 1
+    assert json.loads(path.read_text())['episodes']['1:1:5']['preparation_revision'] == 3
+    assert replenish.prepare(tmp_path, 'test', provider, **kwargs)['attempted_this_run'] == 0
+    assert calls == ['1:1:5']
 
 
 def test_programming_failure_is_durable_and_fails_job_without_false_success(tmp_path, monkeypatch):

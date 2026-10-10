@@ -22,9 +22,15 @@ from .source_audit import AuditProvider, low_resolution
 from .target import episode_key
 from .resilience import error_evidence
 
-PREPARATION_REVISION = 2
+PREPARATION_REVISION = 3
 SAVED_REVIEW_REVISION = 1
 MAX_SERIES_MISSES = 3
+
+
+def repaired_preparation(record):
+    revision = record.get('preparation_revision', 1)
+    return ((record.get('reason') == 'TypeError' and revision < 2)
+            or (record.get('reason') == 'no_verified_czech_match' and revision < 3))
 
 
 def legacy_czech(row):
@@ -75,8 +81,7 @@ def preparation_order(catalog, records, paused_series=None):
     paused_series = paused_series if paused_series is not None else set()
     for metadata in catalog:
         record = records.get(Episode.from_dict(metadata).identity, {})
-        repaired_error = (record.get('reason') == 'TypeError'
-                          and record.get('preparation_revision', 1) < PREPARATION_REVISION)
+        repaired_error = repaired_preparation(record)
         (fresh if not record or repaired_error else retries).append(metadata)
     # Inputs retain IMDb/season order within each lane. A daily retry of a long
     # unavailable series must not consume every run before new series are seen.
@@ -137,10 +142,9 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         if episode.identity in identities or key in keys:
             continue
         record = state['episodes'].get(episode.identity, {})
-        # Retry records affected by the pre-v2 audio dependency bug immediately,
-        # once. Other inconclusive sources keep their normal cooldown.
-        repaired_error = (record.get('reason') == 'TypeError'
-                          and record.get('preparation_revision', 1) < PREPARATION_REVISION)
+        # Retry pre-v2 audio errors and pre-v3 filename-identity misses once.
+        # New inconclusive sources keep their normal cooldown.
+        repaired_error = repaired_preparation(record)
         fresh_saved_review = needs_saved_review(manifest.rows.get(episode.identity), record)
         if (not repaired_error and not fresh_saved_review and record.get('retry_after')
                 and datetime.fromisoformat(record['retry_after']) > datetime.now(UTC)):

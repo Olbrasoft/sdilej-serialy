@@ -1,4 +1,5 @@
 import requests
+import pytest
 
 from sdilej_serialy.episodes import EpisodeSourceProvider, episode_match, has_exact_code, runtime_acceptable
 from sdilej_serialy.models import Episode
@@ -14,6 +15,29 @@ def episode() -> Episode:
 def test_accepts_both_episode_notations():
     assert has_exact_code("The Big Bang Theory S01E01 CZ", episode())
     assert has_exact_code("The Big Bang Theory 1x1 CZ", episode())
+
+
+@pytest.mark.parametrize('code', ['S01E01', '1x1'])
+def test_underscore_separated_episode_and_series_words(code):
+    title = f'The_Big_Bang_Theory_1080p_{code}_CZ.mkv'
+    assert has_exact_code(title, episode())
+    assert episode_match(episode(), title)[0] == MatchTier.STRONG
+
+
+def test_mash_underscore_release_matches_catalog_asterisks():
+    ep = Episode(episode_id=22493, series_id=108, series_title='M*A*S*H',
+                 series_original_title='M*A*S*H', season=2, number=23)
+    assert episode_match(ep, 'M A S H_S02E23_Pošta volá.mkv')[0] == MatchTier.STRONG
+
+
+@pytest.mark.parametrize('code', ['XS01E01', 'S01E01X', 'S01E0100', '11x1', 'éS01E01'])
+def test_episode_boundaries_do_not_match_embedded_or_other_codes(code):
+    assert not has_exact_code(f'The Big Bang Theory_{code}_CZ', episode())
+
+
+def test_underscore_multiepisode_and_sequel_are_still_rejected():
+    assert episode_match(episode(), 'The_Big_Bang_Theory_S01E01_S01E02_CZ')[0] == MatchTier.REJECT
+    assert episode_match(episode(), 'The_Big_Bang_Theory_II_S01E01_CZ')[0] == MatchTier.REJECT
 
 
 def test_runtime_rejects_same_title_remake_episode():
