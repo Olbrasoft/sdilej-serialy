@@ -24,7 +24,8 @@ def search_url(url):
     parts = urlsplit(url)
     return (parts.scheme == 'https' and parts.netloc == 'sdilej.cz'
             and '/s/-6' in parts.path and not parts.fragment
-            and all(k in ('page', 'p') and v.isdigit() for k, v in parse_qsl(parts.query)))
+            and all(k in ('page', 'p') and v.isdigit()
+                    for k, v in parse_qsl(parts.query, keep_blank_values=True)))
 
 
 def safe_value(namespace, value):

@@ -53,7 +53,8 @@ jobs:
           if [[ "$SOURCE_PREPARATION_ENABLED" != true || -n "$AUDIT_IDENTITY" ]]; then
             echo 'needed=true' >> "$GITHUB_OUTPUT"
           else
-            echo "needed=$(python -m sdilej_serialy.reserve --generation "$DUAL_GENERATION" --decision audit)" >> "$GITHUB_OUTPUT"
+            reserve_needed=$(python -m sdilej_serialy.reserve --generation "$DUAL_GENERATION" --decision audit)
+            echo "needed=$reserve_needed" >> "$GITHUB_OUTPUT"
           fi
       - uses: actions/cache@v4
         if: steps.reserve.outputs.needed == 'true'
