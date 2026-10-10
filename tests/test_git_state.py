@@ -59,6 +59,22 @@ def test_clean_index_still_pushes_unpublished_checkpoint(monkeypatch, tmp_path):
     assert 'push' in calls
 
 
+def test_optional_live_reserve_can_be_absent_but_remote_errors_remain_fatal(monkeypatch, tmp_path):
+    persister = GitCheckpointPersister(tmp_path)
+    calls = []
+    def run(*args, **kwargs):
+        calls.append(args[0])
+        return SimpleNamespace(returncode=0, stdout='')
+    monkeypatch.setattr(persister, '_run', run)
+    assert persister.read_remote_file('dual/test/additions.jsonl', missing_ok=True) == ''
+    assert calls == ['fetch', 'ls-tree']
+    def unavailable(*args, **kwargs):
+        raise git_state.CheckpointError('Remote unavailable')
+    monkeypatch.setattr(persister, '_run', unavailable)
+    with pytest.raises(git_state.CheckpointError):
+        persister.read_remote_file('dual/test/additions.jsonl', missing_ok=True)
+
+
 def test_source_checkpoints_leave_quiet_window(monkeypatch, tmp_path):
     state = tmp_path / 'state.json'
     state.write_text('{}')

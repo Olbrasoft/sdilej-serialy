@@ -23,6 +23,7 @@ from .models import Episode
 from .pipeline import atomic_json, now_iso
 from .quality import QUALITY_POLICY, quality_acceptable
 from .target import episode_key
+from .source_cache import RequestGate, SourceCache
 
 UPGRADES_PATH = 'manifests/quality-upgrades.jsonl'
 AUDIT_POLICY = 'sd-720-original-review-v1'
@@ -151,7 +152,9 @@ def audit(root, provider, *, identities=None, limit=20, runtime_minutes=0, persi
     rows.sort(key=lambda r: (queue_order.get(r['identity'], float('inf')),
                              r['episode'].get('priority_rank') or 10**9, r['identity']))
     deadline = time.monotonic() + runtime_minutes * 60 if runtime_minutes else float('inf')
-    persister = GitCheckpointPersister(root, (manifest_path, upgrades_path, report_path),
+    cache = getattr(provider, 'cache', None)
+    paths = (manifest_path, upgrades_path, report_path) + ((cache.path,) if cache else ())
+    persister = GitCheckpointPersister(root, paths,
                                      min_interval_seconds=15) if persist else None
     reviewed = changed = 0
     for row in rows[:limit]:
@@ -204,6 +207,8 @@ def audit(root, provider, *, identities=None, limit=20, runtime_minutes=0, persi
         report = dict(policy=AUDIT_POLICY, reviewed_total=len(state['episodes']), statuses=dict(summary),
                       reviewed_this_run=reviewed, upgraded_this_run=changed, updated_at=now_iso())
         atomic_json(report_path, report)
+        if cache:
+            cache.save()
         if persister:
             persist_source_checkpoint(persister, state_path)
         print(f"quality_audit identity={identity} status={record['status']}", flush=True)
@@ -227,10 +232,12 @@ def main():
     root = Path(os.environ.get('GITHUB_WORKSPACE', Path(__file__).resolve().parents[2])).resolve()
     directory = root / 'audit/low-resolution'
     directory.mkdir(parents=True, exist_ok=True)
-    with (directory / '.run.lock').open('a') as lock:
+    (root / 'state').mkdir(exist_ok=True)
+    with (root / 'state/.reserve-preparation.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         provider = AuditProvider.authenticated(os.environ['SDILEJ_EMAIL'], os.environ['SDILEJ_PASSWORD'],
-                                              discovery_timeout_seconds=900)
+            discovery_timeout_seconds=900, cache=SourceCache(root / 'state/source-evidence-cache.json'),
+            request_gate=RequestGate())
         try:
             result = audit(root, provider, identities=args.identity, limit=args.limit,
                            runtime_minutes=args.runtime_minutes, persist=args.persist_git_state,

@@ -33,7 +33,7 @@ def parse_detail_html(html_text, candidate):
                    download_url=fast_link, sample_url=fast_link)
 
 
-def resolve_original(session, candidate):
+def resolve_original(session, candidate, *, evidence=None):
     """Follow the actual download link with login cookies, reading headers only."""
     response = session.get(candidate.download_url, headers={
         'Range': 'bytes=0-0', 'Accept-Encoding': 'identity', 'Referer': candidate.url,
@@ -57,6 +57,10 @@ def resolve_original(session, candidate):
             # back to rounded detail-page sizes when original length is unknown.
             # SdilejError is retried/deferred before any target is allocated.
             raise sdilej.SdilejError('Original media size is missing or implausibly small')
+        if evidence is not None:
+            # Used only as input to a hashed cache key, never persisted verbatim.
+            evidence.update(etag=response.headers.get('ETag'),
+                            last_modified=response.headers.get('Last-Modified'))
         return replace(candidate, download_url=response.url, sample_url=response.url,
                        size_bytes=size)
     finally:

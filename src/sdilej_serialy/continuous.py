@@ -130,6 +130,15 @@ def upload_continuously(
                     try:
                         fresh_rows = refill_rows()
                     except Exception as error:
+                        if not transient_http(error):
+                            # A bad live queue/checkpoint is an integrity failure,
+                            # not an empty reserve. Wake peers and fail closed.
+                            if stop_event is not None:
+                                stop_event.set()
+                            with queue_condition:
+                                refilling = False
+                                queue_condition.notify_all()
+                            raise
                         print(f"queue_refill_failed={type(error).__name__}", flush=True)
                     added = 0
                     with queue_condition:

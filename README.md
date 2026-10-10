@@ -19,7 +19,9 @@ seriálové epizody.
   secrets `DATABASE_URL`, `SDILEJ_EMAIL`, `SDILEJ_PASSWORD`,
   `PREHRAJTO_EMAIL` a `PREHRAJTO_PASSWORD`.
 - Cílový účet je kontrolován proti `PREHRAJTO_EMAIL`; pro tento projekt musí
-  být nastaven na `share.series@email.cz`.
+  odpovídat povolenému plánu. Aktivní dvouúčtový provoz používá pouze
+  `pavel-spata@email.cz` a `zdenek-starek@post.cz`; původní jednoúčtové workflow
+  je vypnuté. Podrobnosti jsou v [popisu průběžné zásoby](docs/SOURCE_RESERVE.md).
 - Stabilní manifest nikdy neukládá dočasnou autorizovanou download URL.
 - `pilot-upload` vyžaduje SHA vytvořeného plánu. Kontinuální upload není
   součástí prvního nasazení.

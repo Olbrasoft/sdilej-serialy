@@ -75,11 +75,15 @@ class GitCheckpointPersister:
             raise CheckpointError(f'Checkpoint could not be pushed after 40 attempts '
                                   f'({rebase_conflicts} rebase conflicts); refusing further work')
 
-    def read_remote_file(self, relative_path: str) -> str:
+    def read_remote_file(self, relative_path: str, *, missing_ok=False) -> str:
         if relative_path.startswith("/") or ".." in Path(relative_path).parts:
             raise RuntimeError("Remote path must stay inside the repository")
         with self.lock:
             self._run("fetch", "origin", "main")
+            if missing_ok:
+                tree = self._run('ls-tree', '--name-only', 'FETCH_HEAD', '--', relative_path)
+                if not tree.stdout.strip():
+                    return ''
             result = self._run("show", f"FETCH_HEAD:{relative_path}")
             return result.stdout
 

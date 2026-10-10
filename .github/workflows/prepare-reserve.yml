@@ -8,7 +8,7 @@ on:
         required: false
         default: ''
   schedule:
-    - cron: '29 */2 * * *'
+    - cron: '9,39 * * * *'
 
 permissions:
   contents: write
@@ -27,6 +27,7 @@ jobs:
       SOURCE_PREPARATION_ENABLED: ${{ vars.SOURCE_PREPARATION_ENABLED }}
       DUAL_GENERATION: ${{ vars.DUAL_GENERATION }}
       PREPARATION_IDENTITY: ${{ inputs.identity }}
+      SOURCE_DISCOVERY_WORKERS: ${{ vars.SOURCE_DISCOVERY_WORKERS || '2' }}
       SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
       SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
     steps:
@@ -37,26 +38,42 @@ jobs:
         with:
           python-version: '3.12'
           cache: pip
+      - name: Check actual unused reserve before loading Whisper
+        id: reserve
+        shell: bash
+        run: |
+          set -euo pipefail
+          pip install .
+          [[ "$DUAL_GENERATION" =~ ^[a-z0-9][a-z0-9-]{0,63}$ ]]
+          if [[ -n "$PREPARATION_IDENTITY" ]]; then
+            echo 'needed=true' >> "$GITHUB_OUTPUT"
+          else
+            echo "needed=$(python -m sdilej_serialy.reserve --generation "$DUAL_GENERATION" --decision prepare)" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/cache@v4
+        if: steps.reserve.outputs.needed == 'true'
         with:
           path: ${{ env.HF_HOME }}
           key: whisper-small-${{ runner.os }}-v1
       - name: Install original-media and Czech audio inspection tools
+        if: steps.reserve.outputs.needed == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install --yes ffmpeg
           pip install ".[whisper]"
           python -m sdilej_serialy.audio_check
       - name: Configure durable preparation checkpoints
+        if: steps.reserve.outputs.needed == 'true'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Prepare new originals from cached catalog and append reserve
+        if: steps.reserve.outputs.needed == 'true'
         shell: bash
         run: |
           set -euo pipefail
           [[ "$DUAL_GENERATION" =~ ^[a-z0-9][a-z0-9-]{0,63}$ ]]
-          preparation_options=(--generation "$DUAL_GENERATION" --limit 500 --runtime-minutes 110 --persist-git-state)
+          preparation_options=(--generation "$DUAL_GENERATION" --limit 500 --runtime-minutes 110 --persist-git-state --workers "$SOURCE_DISCOVERY_WORKERS" --checkpoint-batch 5 --maintain-reserve)
           if [[ -n "$PREPARATION_IDENTITY" ]]; then
             [[ "$PREPARATION_IDENTITY" =~ ^[0-9]+:[0-9]+:[0-9]+$ ]]
             preparation_options+=(--identity "$PREPARATION_IDENTITY")

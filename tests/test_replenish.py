@@ -363,3 +363,122 @@ def test_programming_failure_is_durable_and_fails_job_without_false_success(tmp_
     assert replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=discover), limit=1,
                              runtime_minutes=0)['prepared_this_run'] == 1
     assert load_jsonl(tmp_path / 'dual/test/additions.jsonl')[0]['identity'] == '1:1:6'
+
+
+def parallel_provider(discover_fn):
+    return SimpleNamespace(fork_worker=lambda: SimpleNamespace(
+        discover=discover_fn, session=SimpleNamespace(close=lambda: None)))
+
+
+def test_two_source_workers_overlap_but_one_publisher_assigns_unique_ranks(tmp_path, monkeypatch):
+    import threading
+    import time
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    before = (directory / 'state.json').read_bytes()
+    barrier = threading.Barrier(2)
+    active, peak = [0], [0]
+    lock = threading.Lock()
+    def inspect(ep):
+        with lock:
+            active[0] += 1
+            peak[0] = max(peak[0], active[0])
+        barrier.wait(timeout=3)
+        time.sleep(.03 if ep.number == 5 else .001)
+        with lock:
+            active[0] -= 1
+        return discover(ep)
+    result = replenish.prepare(tmp_path, 'test', parallel_provider(inspect), workers=2, runtime_minutes=0)
+    assert result['prepared_this_run'] == 2 and peak[0] == 2
+    _, _, extended = dual.load(tmp_path, 'test')
+    assert [r['queue_rank'] for r in extended[4:]] == [5, 6]
+    assert [r['target_account'] for r in extended[4:]] == ['a', 'b']
+    assert {r['identity'] for r in extended[4:]} == {'1:1:5', '1:1:6'}
+    assert (directory / 'state.json').read_bytes() == before
+
+
+def test_parallel_aliases_cannot_publish_the_same_episode_twice(tmp_path, monkeypatch):
+    import threading
+    directory, _, rows = setup(tmp_path, monkeypatch)
+    ep = dict(source(number=5)['episode'], imdb_rating=9, imdb_votes=100)
+    alias = dict(ep, series_id=2, episode_id=999)
+    write_jsonl_gzip(tmp_path / 'backlog/series-episodes.jsonl.gz', [r['episode'] for r in rows] + [ep, alias])
+    barrier = threading.Barrier(2)
+    def inspect(episode):
+        barrier.wait(timeout=3)
+        return discover(episode)
+    result = replenish.prepare(tmp_path, 'test', parallel_provider(inspect), workers=2, runtime_minutes=0)
+    assert result['prepared_this_run'] == 1
+    assert len(load_jsonl(directory / 'additions.jsonl')) == 1
+    dual.load(tmp_path, 'test')
+
+
+def test_source_only_checkpoint_batches_results_and_restart_does_not_duplicate(tmp_path, monkeypatch):
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    snapshots = []
+    def persist(path):
+        snapshots.append(json.loads(path.read_text()))
+        assert len(dual.load(tmp_path, 'test')[2]) == 6
+    monkeypatch.setattr(replenish, 'GitCheckpointPersister', lambda *a, **k: persist)
+    kwargs = dict(runtime_minutes=0, persist=True, checkpoint_batch=5)
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=discover), **kwargs)
+    assert result['prepared_this_run'] == 2 and len(snapshots) == 1
+    assert len(snapshots[0]['episodes']) == 2
+    assert replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=discover), **kwargs)['attempted_this_run'] == 0
+    assert len(load_jsonl(directory / 'additions.jsonl')) == 2
+
+
+def test_transient_source_is_retried_soon_but_no_matches_keep_daily_cooldown(tmp_path, monkeypatch):
+    from datetime import UTC, datetime
+    setup(tmp_path, monkeypatch)
+    p = SimpleNamespace(last_outcome='transient_original', discover=lambda _: None)
+    replenish.prepare(tmp_path, 'test', p, runtime_minutes=0, limit=1)
+    state = json.loads((tmp_path / 'state/reserve-preparation.json').read_text())
+    retry = datetime.fromisoformat(state['episodes']['1:1:5']['retry_after'])
+    assert 14 * 60 < (retry - datetime.now(UTC)).total_seconds() <= 15 * 60
+    p.last_outcome = 'no_matches'
+    replenish.prepare(tmp_path, 'test', p, runtime_minutes=0, limit=1)
+    state = json.loads((tmp_path / 'state/reserve-preparation.json').read_text())
+    retry = datetime.fromisoformat(state['episodes']['1:1:6']['retry_after'])
+    assert 23 * 3600 < (retry - datetime.now(UTC)).total_seconds() <= 24 * 3600
+
+
+def test_watermarks_skip_healthy_stock_and_stop_at_target_without_touching_uploads(tmp_path, monkeypatch):
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    before = (directory / 'state.json').read_bytes()
+    p = SimpleNamespace(discover=lambda _: pytest.fail('Healthy reserve'))
+    result = replenish.prepare(tmp_path, 'test', p, maintain_reserve=True, low_water=3, target_stock=6)
+    assert result['skipped'] == 'healthy_reserve'
+    replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=discover), runtime_minutes=0,
+                      maintain_reserve=True, low_water=5, target_stock=6)
+    state = json.loads((tmp_path / 'state/reserve-preparation.json').read_text())
+    report = json.loads((tmp_path / 'reports/reserve-preparation.json').read_text())
+    assert not state['refilling'] and report['stock']['ready'] == 6
+    assert (directory / 'state.json').read_bytes() == before
+
+
+def test_live_refill_validates_additions_and_keeps_global_ownership_and_budget(tmp_path, monkeypatch):
+    directory, _, rows = setup(tmp_path, monkeypatch)
+    state = dual.SharedState(directory / 'state.json', {r['identity']: r['target_account'] for r in rows})
+    batches = {a: [r for r in rows if r['target_account'] == a] for a in dual.ACCOUNTS}
+    feed = dual.LiveReserve(tmp_path, 'test', rows, state, batches, 3)
+    replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=discover), runtime_minutes=0)
+    a, b = feed.take('a'), feed.take('b')
+    assert [r['identity'] for r in a] == ['1:1:5']
+    assert [r['identity'] for r in b] == ['1:1:6']
+    assert state.assignments['1:1:5'] == 'a' and state.assignments['1:1:6'] == 'b'
+    assert not feed.take('a') and not feed.take('b')
+    assert len(rows) == 6
+
+
+def test_live_refill_rejects_changed_existing_rows(tmp_path, monkeypatch):
+    directory, _, rows = setup(tmp_path, monkeypatch)
+    state = dual.SharedState(directory / 'state.json', {r['identity']: r['target_account'] for r in rows})
+    batches = {a: [] for a in dual.ACCOUNTS}
+    replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=discover), runtime_minutes=0)
+    rows[:] = dual.load(tmp_path, 'test')[2]
+    feed = dual.LiveReserve(tmp_path, 'test', rows, state, batches, 3)
+    entries = load_jsonl(directory / 'additions.jsonl')
+    entries[0]['selected']['size_bytes'] += 1
+    (directory / 'additions.jsonl').write_text(''.join(json.dumps(r) + '\n' for r in entries))
+    with pytest.raises(ValueError, match='changed existing'):
+        feed.take('a')

@@ -43,21 +43,37 @@ jobs:
         with:
           python-version: '3.12'
           cache: pip
+      - name: Give replenishment priority when the unused reserve is low
+        id: reserve
+        shell: bash
+        run: |
+          set -euo pipefail
+          pip install .
+          [[ "$DUAL_GENERATION" =~ ^[a-z0-9][a-z0-9-]{0,63}$ ]]
+          if [[ "$SOURCE_PREPARATION_ENABLED" != true || -n "$AUDIT_IDENTITY" ]]; then
+            echo 'needed=true' >> "$GITHUB_OUTPUT"
+          else
+            echo "needed=$(python -m sdilej_serialy.reserve --generation "$DUAL_GENERATION" --decision audit)" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/cache@v4
+        if: steps.reserve.outputs.needed == 'true'
         with:
           path: ${{ env.HF_HOME }}
           key: whisper-small-${{ runner.os }}-v1
       - name: Install original-media and language inspection tools
+        if: steps.reserve.outputs.needed == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install --yes ffmpeg
           pip install ".[whisper]"
           python -m sdilej_serialy.audio_check
       - name: Configure durable audit checkpoints
+        if: steps.reserve.outputs.needed == 'true'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Review saved SD and 720p originals with one source worker
+        if: steps.reserve.outputs.needed == 'true'
         shell: bash
         run: |
           set -euo pipefail

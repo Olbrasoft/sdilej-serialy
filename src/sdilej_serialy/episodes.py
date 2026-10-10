@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import re
+import json
 import subprocess
+import threading
 import time
 import unicodedata
 from dataclasses import replace
@@ -33,6 +35,7 @@ from .source_detail import parse_detail_html, resolve_original
 from .quality import quality_acceptable, rank_candidates
 from .numbering import mapped_episode_title
 from .auth import login_with_retry
+from .source_cache import media_key, stable_url, search_url
 
 
 # Underscores are filename separators, not letters adjoining an episode code.
@@ -162,12 +165,29 @@ class EpisodeSourceProvider:
         detector=None,
         request_gap_seconds: float = 2.0,
         discovery_timeout_seconds: float = 300,
+        cache=None,
+        request_gate=None,
+        audio_lock=None,
     ):
         self.session = session
         self.detector = detector or WhisperLanguageDetector()
         self.request_gap_seconds = request_gap_seconds
         self.discovery_timeout_seconds = discovery_timeout_seconds
         self._last_request = 0.0
+        self.cache = cache
+        self.request_gate = request_gate
+        self.audio_lock = audio_lock or threading.Lock()
+        self.last_outcome = None
+
+    def fork_worker(self):
+        """Independent cookies/connections, shared evidence and bounded audio CPU."""
+        session = requests.Session()
+        session.headers.update(self.session.headers)
+        session.cookies.update(self.session.cookies)
+        return type(self)(session, detector=self.detector, cache=self.cache,
+                          request_gate=self.request_gate, audio_lock=self.audio_lock,
+                          request_gap_seconds=self.request_gap_seconds,
+                          discovery_timeout_seconds=self.discovery_timeout_seconds)
 
     @classmethod
     def authenticated(cls, email: str, password: str, **kwargs) -> "EpisodeSourceProvider":
@@ -175,7 +195,9 @@ class EpisodeSourceProvider:
 
     def _get(self, url: str, *, session: requests.Session | None = None) -> requests.Response:
         active_session = session or self.session
-        if session is None:
+        if session is None and self.request_gate is not None:
+            self.request_gate.wait()
+        elif session is None:
             delay = self.request_gap_seconds - (time.monotonic() - self._last_request)
             if delay > 0:
                 time.sleep(delay)
@@ -205,24 +227,54 @@ class EpisodeSourceProvider:
                     if url in seen_pages or len(seen_pages) >= 100 or time.monotonic() >= deadline:
                         raise SdilejError('Search pagination did not complete')
                     seen_pages.add(url)
-                    html = self._get(url).text
-                    for candidate in parse_search_html(html, query=query):
+                    page = self._search_page(url, query)
+                    for row in page['candidates']:
+                        candidate = Candidate.from_dict(row)
                         tier, evidence = episode_match(episode, candidate.title)
                         candidate.match_tier = tier
                         candidate.match_evidence = evidence
                         if tier in (MatchTier.STRONG, MatchTier.SOLID):
                             candidates.setdefault(candidate.source_id, candidate)
-                    soup = BeautifulSoup(html, 'html.parser')
-                    next_page = soup.select_one('a[rel~="next"][href]')
-                    url = urljoin(url, next_page['href']) if next_page else None
+                    url = page['next']
                     if url and urlsplit(url).netloc != urlsplit(BASE_URL).netloc:
                         raise SdilejError('Unexpected search pagination host')
         return list(candidates.values())
 
+    def _search_page(self, url, query):
+        def fetch():
+            html = self._get(url).text
+            soup = BeautifulSoup(html, 'html.parser')
+            next_page = soup.select_one('a[rel~="next"][href]')
+            next_url = urljoin(url, next_page['href']) if next_page else None
+            if next_url and not search_url(next_url):
+                raise SdilejError('Unexpected search pagination address')
+            fields = ('source_id', 'url', 'title', 'size_bytes', 'duration_sec', 'width', 'height')
+            rows = [{key: getattr(candidate, key) for key in fields}
+                    for candidate in parse_search_html(html, query=query)]
+            return dict(candidates=rows, next=next_url)
+        if self.cache is None:
+            return fetch()
+        # Parsed public search records only: never HTML, cookies or fast links.
+        return self.cache.remember('search', url, fetch, ttl=6 * 3600,
+            cacheable=lambda page: all(stable_url(r['url']) for r in page['candidates']))
+
     def _inspect(self, episode: Episode, candidate: Candidate) -> Candidate | None:
         detail = parse_detail_html(self._get(candidate.url).text, candidate)
-        detail = resolve_original(self.session, detail)
-        media = probe_media(detail.download_url)
+        evidence = {}
+        if self.request_gate is not None:
+            self.request_gate.wait()
+        detail = (resolve_original(self.session, detail, evidence=evidence) if self.cache is not None
+                  else resolve_original(self.session, detail))
+        fingerprint = media_key(detail) + json.dumps(evidence, sort_keys=True)
+        def inspect():
+            media = probe_media(detail.download_url)
+            return {k: media[k] for k in ('video_codec', 'width', 'height', 'duration_sec') if k in media}
+        def complete(media):
+            return (all(media.get(k) for k in ('width', 'height', 'duration_sec'))
+                    or (all(k in media for k in ('video_codec', 'width', 'height'))
+                        and not any(media[k] for k in ('video_codec', 'width', 'height'))))
+        media = (self.cache.remember('media', fingerprint, inspect, cacheable=complete)
+                 if self.cache is not None else inspect())
         # A successful ffprobe with no selected video stream returns explicit
         # empty video fields (e.g. an AC3 file mislabeled .mkv). It cannot be an
         # episode candidate. An empty result is a probe failure and stays fatal
@@ -244,21 +296,31 @@ class EpisodeSourceProvider:
         tier, evidence = episode_match(episode, detail.title)
         if tier not in (MatchTier.STRONG, MatchTier.SOLID) or not quality_acceptable(detail):
             return None
-        return replace(detail, match_tier=tier, match_evidence=evidence)
+        result = replace(detail, match_tier=tier, match_evidence=evidence)
+        result._cache_fingerprint = fingerprint
+        return result
 
     def _verify(self, episode: Episode, candidate: Candidate) -> Candidate | None:
         detail = self._inspect(episode, candidate)
         return self._verify_language(episode, detail) if detail else None
 
     def _verify_language(self, episode: Episode, detail: Candidate) -> Candidate:
-        language, probability = self.detector.detect(detail.sample_url)
-        hint = audio_language_hint(detail.filename)
-        if probability < 0.65 or (hint and language_tier(language) != language_tier(hint)):
-            consensus = getattr(self.detector, "detect_consensus", None)
-            if consensus:
-                language, probability = consensus(detail.sample_url, detail.duration_sec, initial=(language, probability), preferred_language=hint)
-        if probability < 0.65:
-            raise LanguageDetectionError("Whisper language confidence is too low")
+        def detect():
+            # The shared lazy model and CPU transcriber must not be used by
+            # two threads simultaneously; search and ffprobe still overlap.
+            with self.audio_lock:
+                language, probability = self.detector.detect(detail.sample_url)
+                hint = audio_language_hint(detail.filename)
+                if probability < 0.65 or (hint and language_tier(language) != language_tier(hint)):
+                    consensus = getattr(self.detector, "detect_consensus", None)
+                    if consensus:
+                        language, probability = consensus(detail.sample_url, detail.duration_sec, initial=(language, probability), preferred_language=hint)
+                if probability < 0.65:
+                    raise LanguageDetectionError("Whisper language confidence is too low")
+                return dict(language=language, probability=probability)
+        key = 'whisper-small-consensus-v1:' + getattr(detail, '_cache_fingerprint', media_key(detail))
+        verified = self.cache.remember('audio', key, detect) if self.cache is not None else detect()
+        language, probability = verified['language'], verified['probability']
         return replace(
             detail,
             audio_language=language,
@@ -268,6 +330,7 @@ class EpisodeSourceProvider:
         )
 
     def discover(self, episode: Episode) -> Candidate | None:
+        self.last_outcome = 'transient_search'
         deadline = time.monotonic() + self.discovery_timeout_seconds
         if time.monotonic() >= deadline:
             return None
@@ -287,6 +350,9 @@ class EpisodeSourceProvider:
             return None
         if time.monotonic() >= deadline:
             return None
+        if not candidates:
+            self.last_outcome = 'no_matches'
+            return None
         return self._select_originals(episode, candidates, deadline)
 
     def revalidate_saved(self, episode: Episode, candidates: list[Candidate]) -> Candidate | None:
@@ -296,6 +362,7 @@ class EpisodeSourceProvider:
                                       minimum_resolution=3)
 
     def _select_originals(self, episode, candidates, deadline, *, minimum_resolution=0):
+        self.last_outcome = 'transient_original'
         by_resolution: dict[int, list[Candidate]] = {}
         for candidate in candidates:
             # Search metadata can describe a low-resolution preview of a 4K
@@ -312,6 +379,7 @@ class EpisodeSourceProvider:
             if detail:
                 by_resolution.setdefault(resolution_rank(detail.width, detail.height), []).append(detail)
         resolved: list[Candidate] = []
+        self.last_outcome = 'inconclusive_audio'
         for resolution in sorted(by_resolution, reverse=True):
             if resolution < minimum_resolution:
                 return None
@@ -348,8 +416,10 @@ class EpisodeSourceProvider:
                     # All originals were inspected first, and every preceding
                     # candidate was conclusively checked before reaching here.
                     if detail.language_tier == LanguageTier.CZECH_AUDIO:
+                        self.last_outcome = 'verified_czech'
                         return rank_candidates(resolved)[0]
         ranked = rank_candidates(resolved)
+        self.last_outcome = 'verified_non_czech' if ranked else 'no_acceptable_original'
         return ranked[0] if ranked else None
 
     def refresh(self, candidate: Candidate, *, session: requests.Session) -> Candidate:

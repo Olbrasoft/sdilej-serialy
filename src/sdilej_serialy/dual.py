@@ -5,6 +5,7 @@ import json
 import os
 import re
 import threading
+import time
 from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
@@ -117,7 +118,7 @@ def prepare(root, generation, manifest, catalog, emails):
     return plan
 
 
-def load(root, generation):
+def load(root, generation, *, additions_payload=None):
     directory = directory_for(root, generation)
     plan = json.loads((directory / 'plan.json').read_text())
     state = json.loads((directory / 'state.json').read_text())
@@ -133,8 +134,9 @@ def load(root, generation):
     if len(rows) != plan['selected_count']:
         raise ValueError('Frozen queue length changed')
     additions_path = directory / 'additions.jsonl'
-    if additions_path.exists():
-        additions = load_jsonl(additions_path)
+    if additions_payload is not None or additions_path.exists():
+        additions = ([json.loads(line) for line in additions_payload.splitlines() if line.strip()]
+                     if additions_payload is not None else load_jsonl(additions_path))
         for row in additions:
             SourceManifest._validate(row)
             if (row.get('generation') != generation
@@ -156,6 +158,43 @@ def load(root, generation):
         if record.get('target_account') != mapping[identity]['target_account']:
             raise ValueError('Persisted episode account changed')
     return directory, plan, rows
+
+
+class LiveReserve:
+    """Admit newly published rows without changing owners or the batch budget."""
+    def __init__(self, root, generation, rows, state, batches, limit, persister=None):
+        self.root, self.generation, self.rows, self.state = root, generation, rows, state
+        self.limit, self.persister = limit, persister
+        self.delivered = {a: {r['identity'] for r in batches[a]} for a in ACCOUNTS}
+        self.lock = threading.Lock()
+        self.last_read = float('-inf')
+
+    def take(self, alias):
+        with self.lock, self.state._lock:
+            if len(self.delivered[alias]) >= self.limit:
+                return []
+            if time.monotonic() - self.last_read >= 15:
+                path = directory_for(self.root, self.generation) / 'additions.jsonl'
+                relative = str(path.relative_to(self.root))
+                payload = (self.persister.read_remote_file(relative, missing_ok=True) if self.persister
+                           else path.read_text() if path.exists() else '')
+                _, _, latest = load(self.root, self.generation, additions_payload=payload)
+                if latest[:len(self.rows)] != self.rows:
+                    raise ValueError('Live reserve changed existing queue rows')
+                self.state.assignments.update({r['identity']: r['target_account'] for r in latest})
+                self.rows[:] = latest
+                self.last_read = time.monotonic()
+            blocked = uploaded_identities(self.state) | self.state.retry_deferred_identities() | self.delivered[alias]
+            # Retain uncertain allocations, and do not open a new retry lane
+            # beyond the two SourceUnavailable retries selected at batch start.
+            blocked.update(identity for identity, record in self.state.data['episodes'].items()
+                           if (record.get('prepared_target') and not receipt_matches(record))
+                           or (not record.get('prepared_target') and record.get('attempts')
+                               and record['attempts'][-1]['error'] == 'SourceUnavailable'))
+            chosen = account_batch(self.rows, self.state, blocked, alias,
+                                   self.limit - len(self.delivered[alias]))
+            self.delivered[alias].update(r['identity'] for r in chosen)
+            return chosen
 
 
 class SharedState(EpisodeState):
@@ -263,6 +302,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
                        if record.get('prepared_target') and not receipt_matches(record))
         selected = rows[:4] if mode == 'pilot' else rows
         batches = {a: account_batch(selected, state, blocked, a, limit_per_account) for a in ACCOUNTS}
+        reserve = LiveReserve(root, generation, rows, state, batches, limit_per_account, persister)
 
         def account_worker(alias):
             email, password = creds[alias]
@@ -272,7 +312,8 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
                     target_email=email, target_password=password, require_original_size=True,
                     target_login=lambda: target_session(email, password, expected_email=email), stop_event=stop,
                     select_source=upgrade_feed.select, recover_source_errors=True,
-                    recover_target_errors=True, transient_pause=transient_pause)
+                    recover_target_errors=True, transient_pause=transient_pause,
+                    **({'refill_rows': lambda: reserve.take(alias)} if mode == 'full' else {}))
             except SourceUnavailable:
                 # No target was allocated in this account worker. The other
                 # account may continue; the next batch retries source login.

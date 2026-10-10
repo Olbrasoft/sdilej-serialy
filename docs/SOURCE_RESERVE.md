@@ -3,10 +3,10 @@
 The `prepare-source-reserve` workflow reads the saved 2,000-series catalog in
 `backlog/series-episodes.jsonl.gz`; it does not access the production database or
 hold target-account credentials. It is gated by `SOURCE_PREPARATION_ENABLED=true`
-and runs manually or every two hours. A single source worker searches for up to
+and runs manually or every 30 minutes. Two source workers search for up to
 110 minutes per run, sharing the source-preparation concurrency group with the
-quality audit. While preparation is enabled, the audit yields after 60 minutes
-instead of occupying that group for five hours. Target uploading is independent.
+quality audit. A low reserve skips automatic audits before installing Whisper;
+explicit targeted audits remain available. Target uploading is independent.
 
 Missing semantic episodes are prioritized by IMDb rating, votes, series, season
 and episode. Already queued/uploaded/allocated episode identities and aliases are
@@ -14,22 +14,27 @@ not searched again. Existing current-policy verified Czech sources are reused;
 otherwise authenticated discovery inspects original fast-download media and
 verifies speech, resolution, duration and episode identity. The existing selection
 policy remains Czech first, highest original resolution, then smallest file.
-Only confirmed Czech matches enter this upload reserve. Inconclusive, foreign or
-failed discoveries retain existing data and are eligible for another attempt in
-24 hours; they never become proof that a Czech match does not exist.
+Only confirmed Czech matches enter this upload reserve. Search/original transport
+failures retry after 15, 30, then 60 minutes; inconclusive speech retries after an
+hour. Conclusively foreign, missing or rejected originals retain a daily cooldown.
+None of these outcomes is proof that a Czech match can never exist.
 
-Each verified result is atomically checkpointed in Git with:
+The sole publisher checkpoints source results together in Git after five completed
+checks or 60 seconds, and at normal shutdown. While workers are busy it also
+checkpoints reusable partial evidence. These source-only batches include:
 
 - `manifests/selected-episodes.jsonl`: reusable selected source.
 - `dual/<generation>/additions.jsonl`: append-only upload reserve.
 - `state/reserve-preparation.json`: durable per-episode preparation progress.
 - `reports/reserve-preparation.json`: prepared/deferred counts and reserve size.
+- `state/source-evidence-cache.json`: expiring parsed search, probe and speech evidence.
 
 The original frozen manifest, plan and upload state are not modified by the
 producer. Additions bind to the generation and original manifest digest, extend
 queue ranks consecutively and preserve alternating account ownership. The uploader
 validates the combined queue for duplicate identities, episode names and source
-IDs. At the next normal batch reload it sees new additions automatically. Existing
+IDs. Idle workers can also fetch validated additions during a running batch, with
+the original 25-row/account batch budget unchanged. Existing
 claims, target IDs and confirmed uploads retain their identity and owner. New
 episodes go at the end; existing work is not reordered or replayed.
 
@@ -73,8 +78,9 @@ upload order, owners, quality policy and all duplicate guards are unchanged.
 
 Source preparation and quality auditing retry a failed Git checkpoint up to three
 rounds, waiting 15 then 30 seconds between rounds. Each round retains the same
-unpublished commit/snapshot; discovery never advances before the checkpoint is
-durable. Exhausted retries still fail closed rather than report false success.
+unpublished commit/snapshot; the publisher does not dispatch more discovery or
+advance publication before the checkpoint is durable. Already running workers
+are read-only. Exhausted retries still fail closed rather than report false success.
 Git failures report the retry count and number of rebase conflicts without
 printing authenticated remotes or credentials.
 
@@ -107,11 +113,45 @@ guards. Historical rows absent from the cached catalog retain their saved episod
 metadata instead of disappearing from migration.
 
 Old search cooldowns are bypassed once for this new saved-source review. Failed
-checks retain their original manifest row and a 24-hour retry delay; later normal
+checks retain their original manifest row and the appropriate retry delay; later normal
 discovery can find alternatives. There is no slow full-search fallback inside
-the HD pass. A source-only worker and the existing shared Actions concurrency
+the HD pass. A single publisher and the existing shared Actions concurrency
 group serialize publication with other preparation/audit jobs. The uploader
 keeps two transfer workers per account and consumes each published result at its
-next batch reload. `saved_reviewed_this_run` and `saved_prepared_this_run` report
+next refill or batch reload. `saved_reviewed_this_run` and `saved_prepared_this_run` report
 direct HD checks separately from general preparation counts; `reserve_total`
 remains cumulative and is not the currently unused stock.
+
+## Parallel evidence and reserve control (2026-10-10)
+
+`SOURCE_DISCOVERY_WORKERS` defaults to two and accepts one through four. Each
+worker has its own requests session and cookies. A shared request gate preserves
+the site's two-second request spacing; one audio lock protects the lazy Whisper
+model and bounds CPU-heavy speech work. Search and original probing can overlap.
+Dispatch retains IMDb priority; a completed result is published without waiting
+for an unrelated slower episode. Only the publisher checks final uniqueness and
+assigns consecutive alternating account ranks.
+
+Parsed search pages expire after six hours. Original-media and conclusive audio
+evidence expire after 24 hours. Both Czech and foreign evidence can be reused,
+but failures and low-confidence speech cannot. Every original still gets a fresh
+authenticated detail and fast-download resolution before cache reuse. Changed
+source ID, stable URL, filename, exact byte count, detail metadata, ETag or
+Last-Modified invalidates the evidence. Only whitelisted parsed values are saved;
+HTML, cookies and signed download/sample URLs are excluded. A failed later
+candidate therefore does not force a restart of all successful earlier probes.
+The cache is bounded to 10,000 live entries and shared with quality auditing.
+
+`stock.ready` excludes uploaded, allocated, claimed and previously failed rows,
+including failures whose backoff has elapsed. Counts are split by account, and
+the report estimates stock hours from confirmed uploads over the previous day.
+Below 1,000 ready episodes preparation starts; `refilling` keeps it running until
+3,000 ready episodes are reached. These are targets, not a promise that Czech
+originals exist in the catalog. The report also exposes source-worker elapsed
+time, prepared/hour, cache hits/misses and search/probe/audio computation time.
+
+No source batching applies to target safety checkpoints. Claims, creation
+intent, target allocation and complete-transfer receipts still persist immediately.
+Existing uploads, uncertain allocations, the frozen queue and target concurrency
+(two per account, four total) remain unchanged. A live refill validates the whole
+combined queue and refuses any modification of its existing prefix.
