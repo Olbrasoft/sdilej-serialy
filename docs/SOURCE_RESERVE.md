@@ -9,8 +9,9 @@ quality audit. A low reserve skips automatic audits before installing Whisper;
 explicit targeted audits remain available. Target uploading is independent.
 
 Missing semantic episodes are prioritized by IMDb rating, votes, series, season
-and episode. Already queued/uploaded/allocated episode identities and aliases are
-not searched again. Existing current-policy verified Czech sources are reused;
+and episode. Already uploaded/allocated episode identities and aliases are
+not searched again. Queued identities are not appended again; failed originals
+use the source-only repair lane described below. Existing current-policy verified Czech sources are reused;
 otherwise authenticated discovery inspects original fast-download media and
 verifies speech, resolution, duration and episode identity. The existing selection
 policy remains Czech first, highest original resolution, then smallest file.
@@ -143,7 +144,8 @@ candidate therefore does not force a restart of all successful earlier probes.
 The cache is bounded to 10,000 live entries and shared with quality auditing.
 
 `stock.ready` excludes uploaded, allocated, claimed and previously failed rows,
-including failures whose backoff has elapsed. Counts are split by account, and
+including failures whose backoff has elapsed. A newly verified, not-yet-attempted
+source repair is ready without clearing the previous attempt history. Counts are split by account, and
 the report estimates stock hours from confirmed uploads over the previous day.
 Below 1,000 ready episodes preparation starts; `refilling` keeps it running until
 3,000 ready episodes are reached. These are targets, not a promise that Czech
@@ -160,3 +162,33 @@ An empty account also polls for new additions for up to five minutes rather than
 waiting for the other account's long transfer. The idle timer resets on new work;
 the owner's 25-row budget still ends the batch. This is bounded waiting, not an
 extra uploader or an increase in account concurrency.
+
+## Unavailable queued originals
+
+A queue can contain hundreds of `SourceUnavailable` rows while discovery skips
+them as already assigned. The reserve producer now interleaves two due repair
+checks with four normal preparation checks. Repairs only apply to source failures
+without a confirmed upload, target allocation or active claim. Discovery refreshes
+all search pages (bypassing both search caches), checks actual original media and
+verifies Czech speech using the normal best-resolution/smallest-file policy.
+It never blindly reuses the old current-policy selection. Inconclusive search,
+probe or language checks retain the old source and retry later.
+
+Successful repairs update the reusable source manifest and publish
+`dual/<generation>/source-repairs.jsonl`. This overlay binds each selection to
+the generation, frozen manifest digest and original row fingerprint. It preserves
+the existing identity, rank and account instead of adding another queue row.
+The publisher rereads current target state before publication; uploaded,
+allocated or active rows are left alone. Source IDs remain unique across the
+queue, repairs and new additions. Upload state/history is never edited by the
+producer. Preparation reports expose `repaired_this_run` and `repair_statuses`.
+
+The uploader validates the overlay, admits fresh repairs during idle refill and
+resolves a repair only after acquiring the global episode claim, before target
+allocation. A newly verified repair bypasses the old source's backoff once; its
+token is consumed durably before the first network attempt. Another failure
+therefore keeps the normal backoff rather than retrying without limit. Existing
+uncertain allocations still require receipt-based reconciliation and never change
+source or create a second target. A full discovery may select a lower resolution
+than the unavailable old file only when it is the best currently verified Czech
+original; an unresolved better candidate still defers the entire selection.
