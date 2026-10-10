@@ -24,6 +24,7 @@ from .resilience import error_evidence
 from .reserve import LOW_WATER, TARGET_STOCK, should_prepare, stock
 from .source_cache import RequestGate, SourceCache
 from .source_workers import inspected_results
+from .source_repair import SourceRepairFeed, fingerprint, repairable, repair_entry, repaired_row
 
 PREPARATION_REVISION = 3
 SAVED_REVIEW_REVISION = 1
@@ -105,14 +106,15 @@ def inspect_preparation(provider, task):
     episode = Episode.from_dict(metadata)
     started = time.monotonic()
     record = {'at': now_iso(), 'status': 'deferred', 'preparation_revision': PREPARATION_REVISION}
-    direct_review = needs_saved_review(saved, old_record) and not low_resolution(saved)
+    repairing_source = bool(old_record.get('repair_fingerprint'))
+    direct_review = not repairing_source and needs_saved_review(saved, old_record) and not low_resolution(saved)
     if legacy_czech(saved):
         record['saved_review_revision'] = SAVED_REVIEW_REVISION
-    record['method'] = 'saved_original' if direct_review else 'discovery'
+    record['method'] = 'source_repair' if repairing_source else 'saved_original' if direct_review else 'discovery'
     replacement, fatal_error = None, False
     try:
         candidate = None
-        if saved and saved.get('quality_policy') == QUALITY_POLICY:
+        if not repairing_source and saved and saved.get('quality_policy') == QUALITY_POLICY:
             existing = Candidate.from_dict(saved['selected'])
             if valid_czech(episode, existing):
                 candidate = existing
@@ -120,7 +122,8 @@ def inspect_preparation(provider, task):
         if direct_review:
             candidate = provider.revalidate_saved(episode, [Candidate.from_dict(r['selected']) for r in known])
         elif candidate is None:
-            candidate = provider.discover(episode)
+            discover = getattr(provider, 'discover_fresh', provider.discover) if repairing_source else provider.discover
+            candidate = discover(episode)
         if candidate is not None and valid_czech(episode, candidate):
             replacement = dict(identity=episode.identity, episode=episode.to_dict(),
                 selected=candidate.to_dict(), display_name=display_name(episode, candidate),
@@ -155,10 +158,15 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
     manifest_path = root / 'manifests/selected-episodes.jsonl'
     state_path = root / 'state/reserve-preparation.json'
     report_path = root / 'reports/reserve-preparation.json'
+    repairs_path = directory / 'source-repairs.jsonl'
     state = json.loads(state_path.read_text()) if state_path.exists() else {'schema_version': 1, 'episodes': {}}
     if state.get('schema_version') != 1:
         raise ValueError('Unsupported reserve preparation state')
-    initial_stock = stock(queue, json.loads((directory / 'state.json').read_text()))
+    state.setdefault('repairs', {})
+    repair_feed = SourceRepairFeed(plan, queue, lambda: repairs_path.read_text() if repairs_path.exists() else '')
+    repair_feed.refresh()
+    target_state = json.loads((directory / 'state.json').read_text())
+    initial_stock = stock(queue, target_state, fresh_sources=repair_feed.ready(target_state))
     if maintain_reserve and not identities and not should_prepare(initial_stock, state, low_water, target_stock):
         return dict(attempted_this_run=0, prepared_this_run=0, skipped='healthy_reserve', stock=initial_stock)
     if maintain_reserve:
@@ -187,11 +195,12 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             saved_groups[episode_key(saved['display_name'])][saved['selected']['source_id']] = saved
     additions = load_jsonl(additions_path) if additions_path.exists() else []
     cache = getattr(provider, 'cache', None)
-    checkpoint_paths = (manifest_path, additions_path, report_path) + ((cache.path,) if cache else ())
+    checkpoint_paths = (manifest_path, additions_path, repairs_path, report_path) + ((cache.path,) if cache else ())
     persister = GitCheckpointPersister(root, checkpoint_paths, min_interval_seconds=15) if persist else None
     started = time.monotonic()
     deadline = time.monotonic() + runtime_minutes * 60 if runtime_minutes else float('inf')
     attempted = published = 0
+    repaired = 0
     saved_reviewed = saved_published = 0
     eligible = []
     for metadata in catalog:
@@ -212,6 +221,20 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
     paused_series = set()
     pending_checkpoint = 0
     last_checkpoint = time.monotonic()
+    repaired_entries = {r['identity']: r for r in load_jsonl(repairs_path)} if repairs_path.exists() else {}
+    source_owners = {r['selected']['source_id']: r['identity'] for r in queue}
+    source_owners.update({r['selected']['source_id']: r['identity'] for r in repaired_entries.values()})
+    source_ids.update(source_owners)
+
+    def current_target_state(*, remote=False):
+        path = directory / 'state.json'
+        return json.loads(persister.read_remote_file(str(path.relative_to(root))) if remote and persister
+                          else path.read_text())
+
+    def current_stock():
+        repair_feed.refresh(force=True)
+        target = current_target_state()
+        return stock(queue, target, fresh_sources=repair_feed.ready(target))
 
     def checkpoint():
         nonlocal pending_checkpoint, last_checkpoint
@@ -222,8 +245,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             temporary.replace(additions_path)
         if cache:
             cache.save()
-        current_stock = stock(queue, json.loads((directory / 'state.json').read_text()))
-        if maintain_reserve and current_stock['ready'] >= target_stock:
+        metrics = current_stock()
+        if maintain_reserve and metrics['ready'] >= target_stock:
             state['refilling'] = False
         state['updated_at'] = now_iso()
         atomic_json(state_path, state)
@@ -232,10 +255,12 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                       reserve_total=len(additions), queue_total=len(queue), updated_at=now_iso(),
                       workers=workers, elapsed_seconds=round(elapsed, 2),
                       prepared_per_hour=round(published * 3600 / elapsed, 2),
-                      low_water=low_water, target_stock=target_stock, stock=current_stock,
+                      low_water=low_water, target_stock=target_stock, stock=metrics,
                       cache=cache.metrics() if cache else {},
                       series_paused_this_run=len(paused_series),
                       saved_reviewed_this_run=saved_reviewed, saved_prepared_this_run=saved_published,
+                      repaired_this_run=repaired, repair_statuses=dict(Counter(
+                          r['status'] for r in state['repairs'].values())),
                       statuses=dict(Counter(r['status'] for r in state['episodes'].values())))
         atomic_json(report_path, report)
         if persister:
@@ -248,20 +273,51 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             checkpoint()
             print(f'source_workers_busy workers={workers} prepared={published}', flush=True)
 
-    def tasks():
+    def new_tasks():
         for metadata in reserve_order(eligible, state['episodes'], manifest.rows, paused_series):
             episode = Episode.from_dict(metadata)
             key = episode_key(f'{episode.series_title} {episode.code}')
             if episode.identity in identities or key in keys:
                 continue
             if maintain_reserve and not selected_ids:
-                metrics = stock(queue, json.loads((directory / 'state.json').read_text()))
+                metrics = current_stock()
                 if metrics['ready'] >= target_stock:
                     state['refilling'] = False
                     break
             saved = manifest.rows.get(episode.identity)
             known = saved_groups.get(key) or ({saved['selected']['source_id']: saved} if saved else {})
             yield metadata, saved, dict(state['episodes'].get(episode.identity, {})), list(known.values())
+
+    def repair_tasks():
+        target = current_target_state()
+        already_ready = repair_feed.ready(target)
+        for row in queue:
+            identity = row['identity']
+            if selected_ids and identity not in selected_ids:
+                continue
+            if identity in already_ready or not repairable(target.get('episodes', {}).get(identity, {})):
+                continue
+            old = state['repairs'].get(identity, {})
+            if (old.get('repair_fingerprint') == fingerprint(row) and old.get('retry_after')
+                    and datetime.fromisoformat(old['retry_after']) > datetime.now(UTC)):
+                continue
+            # Saved policy/evidence cannot prove availability. Never take the
+            # current_saved shortcut when repairing a failed queued original.
+            yield (dict(row['episode'], imdb_rating=row.get('imdb_rating'), imdb_votes=row.get('imdb_votes')),
+                   None, dict(old, repair_fingerprint=fingerprint(row)), [])
+
+    def tasks():
+        lanes = [iter(repair_tasks()), iter(new_tasks())]
+        active = [True, True]
+        while any(active):
+            for index, budget in ((0, 2), (1, 4)):
+                for _ in range(budget):
+                    if not active[index]:
+                        break
+                    try:
+                        yield next(lanes[index])
+                    except StopIteration:
+                        active[index] = False
 
     results = inspected_results(tasks(), provider, inspect_preparation, workers=workers,
                                 limit=limit, deadline=deadline, tick=tick)
@@ -270,11 +326,22 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             episode = Episode.from_dict(task[0])
             key = episode_key(f'{episode.series_title} {episode.code}')
             direct_review = record['method'] == 'saved_original'
+            repairing_source = record['method'] == 'source_repair'
+            base = next((r for r in queue if r['identity'] == episode.identity), None) if repairing_source else None
+            if repairing_source:
+                record['repair_fingerprint'] = task[2]['repair_fingerprint']
             saved_reviewed += int(direct_review)
             # Parallel aliases/results are rechecked by the sole publisher. A
             # worker's earlier snapshot is never authority to reserve an episode.
             if replacement is not None:
-                if episode.identity in identities or key in keys:
+                if repairing_source:
+                    if not repairable(current_target_state(remote=True).get('episodes', {}).get(episode.identity, {})):
+                        replacement = None
+                        record['reason'] = 'episode_active_or_completed'
+                    elif source_owners.get(replacement['selected']['source_id'], episode.identity) != episode.identity:
+                        replacement = None
+                        record['reason'] = 'source_already_assigned'
+                elif episode.identity in identities or key in keys:
                     replacement = None
                     record['reason'] = 'episode_already_assigned'
                 elif replacement['selected']['source_id'] in source_ids:
@@ -283,16 +350,29 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             # Checkpoint errors must stop publishing. Never swallow a failed push.
             if replacement is not None:
                 manifest.add(replacement)
-                rank = len(queue) + 1
-                addition = dict(replacement, queue_rank=rank, target_account=ACCOUNTS[(rank - 1) % 2],
-                                generation=generation, base_manifest_sha256=plan['manifest_sha256'])
-                additions.append(addition)
-                queue.append(addition)
-                identities.add(episode.identity)
-                keys.add(key)
+                if repairing_source:
+                    entry = repair_entry(base, replacement, plan)
+                    repaired_row(base, entry, plan)
+                    repaired_entries[episode.identity] = entry
+                    temporary = repairs_path.with_suffix('.jsonl.tmp')
+                    temporary.write_text(''.join(json.dumps(repaired_entries[k], ensure_ascii=False) + '\n'
+                                                  for k in sorted(repaired_entries)), encoding='utf-8')
+                    temporary.replace(repairs_path)
+                    rank = base['queue_rank']
+                    repaired += 1
+                    record['retry_after'] = (datetime.now(UTC) + timedelta(hours=1)).isoformat()
+                else:
+                    rank = len(queue) + 1
+                    addition = dict(replacement, queue_rank=rank, target_account=ACCOUNTS[(rank - 1) % 2],
+                                    generation=generation, base_manifest_sha256=plan['manifest_sha256'])
+                    additions.append(addition)
+                    queue.append(addition)
+                    identities.add(episode.identity)
+                    keys.add(key)
+                    published += 1
                 source_ids.add(replacement['selected']['source_id'])
+                source_owners[replacement['selected']['source_id']] = episode.identity
                 record.update(status='prepared', source_id=replacement['selected']['source_id'], queue_rank=rank)
-                published += 1
                 saved_published += int(direct_review)
                 series_misses[episode.series_id] = 0
                 paused_series.discard(episode.series_id)
@@ -309,7 +389,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                 series_misses[episode.series_id] += 1
                 if not selected_ids and series_misses[episode.series_id] >= MAX_SERIES_MISSES:
                     paused_series.add(episode.series_id)
-            state['episodes'][episode.identity] = record
+            state['repairs' if repairing_source else 'episodes'][episode.identity] = record
             attempted += 1
             pending_checkpoint += 1
             if (pending_checkpoint >= checkpoint_batch or fatal_error
@@ -323,7 +403,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         results.close()
     if pending_checkpoint or maintain_reserve:
         checkpoint()
-    return dict(attempted_this_run=attempted, prepared_this_run=published, reserve_total=len(additions),
+    return dict(attempted_this_run=attempted, prepared_this_run=published, repaired_this_run=repaired, reserve_total=len(additions),
                 saved_reviewed_this_run=saved_reviewed, saved_prepared_this_run=saved_published)
 
 

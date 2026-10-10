@@ -47,6 +47,18 @@ def test_concurrent_cache_single_flight_and_inconclusive_results_are_not_cached(
     assert cache.metrics()['media_hit'] == 3
 
 
+def test_explicit_refresh_replaces_cached_search_and_keeps_other_evidence(tmp_path):
+    cache = SourceCache(tmp_path / 'cache.json')
+    empty = dict(candidates=[], next=None)
+    row = dict(source_id='123', url='https://sdilej.cz/123/video', title='Test S01E01',
+               size_bytes=100000000, width=1920, height=1080, duration_sec=1400)
+    fresh = dict(candidates=[row], next=None)
+    assert cache.remember('search', 'url', lambda: empty) == empty
+    assert cache.remember('search', 'url', lambda: fresh) == empty
+    assert cache.remember('search', 'url', lambda: fresh, force=True) == fresh
+    assert cache.remember('search', 'url', lambda: empty) == fresh
+
+
 def test_cache_schemas_reject_secrets_html_and_signed_urls(tmp_path):
     cache = SourceCache(tmp_path / 'cache.json')
     values = [dict(media(), download_url='https://cdn.invalid/?secret=private'),

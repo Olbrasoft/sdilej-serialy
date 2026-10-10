@@ -220,7 +220,12 @@ def upload_continuously(
                         # and never change a source with an allocated target.
                         row = select_source(row)
                         candidate = Candidate.from_dict(row['selected'])
-                        state.prepared(episode, candidate, row['display_name'])
+                        with state._lock:
+                            if row.get('source_repair'):
+                                # Consume a fresh repair before the first network
+                                # attempt. A failing replacement keeps its backoff.
+                                state.row(episode)['source_repair_token'] = row['source_repair']['token']
+                            state.prepared(episode, candidate, row['display_name'])
                     refreshed = prepare_source(provider, candidate, require_original_size)
 
                     def prepared(video_id: str, size: int) -> None:

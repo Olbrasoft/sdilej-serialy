@@ -74,7 +74,7 @@ class SourceCache:
         payload = json.loads(path.read_text()) if path.exists() else {}
         self.entries = payload.get('entries', {}) if payload.get('revision') == CACHE_REVISION else {}
 
-    def remember(self, namespace, key, compute, *, ttl=86400, cacheable=lambda value: True):
+    def remember(self, namespace, key, compute, *, ttl=86400, cacheable=lambda value: True, force=False):
         digest = hashlib.sha256(f'{namespace}:{key}'.encode()).hexdigest()
         # One computation per key even when two episodes share search pages.
         # Failed/inconclusive work is not cached and must be retried next time.
@@ -83,7 +83,7 @@ class SourceCache:
         with flight:
             with self.lock:
                 entry = self.entries.get(digest)
-                if (entry and entry['expires_at'] > self.clock()
+                if (not force and entry and entry['expires_at'] > self.clock()
                         and safe_value(namespace, entry['value'])):
                     self.stats[f'{namespace}_hit'] += 1
                     return json.loads(json.dumps(entry['value']))

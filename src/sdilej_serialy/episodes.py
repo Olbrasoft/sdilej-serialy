@@ -256,7 +256,17 @@ class EpisodeSourceProvider:
             return fetch()
         # Parsed public search records only: never HTML, cookies or fast links.
         return self.cache.remember('search', url, fetch, ttl=6 * 3600,
+            force=getattr(self, '_fresh_search', False),
             cacheable=lambda page: all(stable_url(r['url']) for r in page['candidates']))
+
+    def discover_fresh(self, episode):
+        """An unavailable queue source needs current listings, not a cached miss."""
+        previous = getattr(self, '_fresh_search', False)
+        self._fresh_search = True
+        try:
+            return self.discover(episode)
+        finally:
+            self._fresh_search = previous
 
     def _inspect(self, episode: Episode, candidate: Candidate) -> Candidate | None:
         detail = parse_detail_html(self._get(candidate.url).text, candidate)

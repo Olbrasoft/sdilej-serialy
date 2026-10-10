@@ -27,12 +27,12 @@ from .resilience import error_evidence, receipt_matches, transient_http
 ACCOUNTS = ('a', 'b')
 
 
-def account_batch(rows, state, blocked, alias, limit):
+def account_batch(rows, state, blocked, alias, limit, fresh_sources=frozenset()):
     eligible = [r for r in rows if r['target_account'] == alias and r['identity'] not in blocked]
     def unavailable_retry(row):
         record = state.data['episodes'].get(row['identity'], {})
         attempts = record.get('attempts', [])
-        return (not record.get('prepared_target') and bool(attempts)
+        return (row['identity'] not in fresh_sources and not record.get('prepared_target') and bool(attempts)
                 and attempts[-1]['error'] == 'SourceUnavailable')
     retries = [r for r in eligible if unavailable_retry(r)]
     ready = [r for r in eligible if not unavailable_retry(r)]
@@ -183,16 +183,19 @@ class LiveReserve:
                     raise ValueError('Live reserve changed existing queue rows')
                 self.state.assignments.update({r['identity']: r['target_account'] for r in latest})
                 self.rows[:] = latest
+                if getattr(self.state, 'source_repairs', None):
+                    self.state.source_repairs.refresh(force=True)
                 self.last_read = time.monotonic()
+            fresh = self.state.source_repairs.ready(self.state.data) if getattr(self.state, 'source_repairs', None) else set()
             blocked = uploaded_identities(self.state) | self.state.retry_deferred_identities() | self.delivered[alias]
             # Retain uncertain allocations, and do not open a new retry lane
             # beyond the two SourceUnavailable retries selected at batch start.
             blocked.update(identity for identity, record in self.state.data['episodes'].items()
                            if (record.get('prepared_target') and not receipt_matches(record))
-                           or (not record.get('prepared_target') and record.get('attempts')
+                           or (identity not in fresh and not record.get('prepared_target') and record.get('attempts')
                                and record['attempts'][-1]['error'] == 'SourceUnavailable'))
             chosen = account_batch(self.rows, self.state, blocked, alias,
-                                   self.limit - len(self.delivered[alias]))
+                                   self.limit - len(self.delivered[alias]), fresh)
             self.delivered[alias].update(r['identity'] for r in chosen)
             return chosen
 
@@ -201,6 +204,12 @@ class SharedState(EpisodeState):
     def __init__(self, path, assignments, **kwargs):
         super().__init__(path, **kwargs)
         self.assignments = assignments
+        self.source_repairs = None
+
+    def retry_deferred_identities(self):
+        with self._lock:
+            fresh = self.source_repairs.ready(self.data) if self.source_repairs else set()
+            return super().retry_deferred_identities() - fresh
 
     def claim(self, episode, worker_id, **kwargs):
         with self._lock:
@@ -264,6 +273,14 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
     read_upgrades = (lambda: persister.read_remote_file(UPGRADES_PATH)) if persister else (
         lambda: upgrade_path.read_text() if upgrade_path.exists() else '')
     upgrade_feed = UpgradeFeed(read_upgrades)
+    from .source_repair import SourceRepairFeed
+    repairs_path = directory / 'source-repairs.jsonl'
+    repairs_relative = str(repairs_path.relative_to(root))
+    read_repairs = (lambda: persister.read_remote_file(repairs_relative, missing_ok=True)) if persister else (
+        lambda: repairs_path.read_text() if repairs_path.exists() else '')
+    repair_feed = SourceRepairFeed(plan, rows, read_repairs)
+    repair_feed.refresh()
+    state.source_repairs = repair_feed
     if state.data.get('halted_at'):
         raise RuntimeError('Dual queue halted after an error; manual review is required')
     if mode == 'full' and not state.data.get('pilot_verified_at'):
@@ -301,8 +318,13 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
         blocked.update(identity for identity, record in state.data['episodes'].items()
                        if record.get('prepared_target') and not receipt_matches(record))
         selected = rows[:4] if mode == 'pilot' else rows
-        batches = {a: account_batch(selected, state, blocked, a, limit_per_account) for a in ACCOUNTS}
+        fresh = repair_feed.ready(state.data)
+        batches = {a: account_batch(selected, state, blocked, a, limit_per_account, fresh) for a in ACCOUNTS}
         reserve = LiveReserve(root, generation, rows, state, batches, limit_per_account, persister)
+
+        def select_source(row):
+            repaired = repair_feed.select(row)
+            return repaired if repaired.get('source_repair') else upgrade_feed.select(row)
 
         def account_worker(alias):
             email, password = creds[alias]
@@ -311,7 +333,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
                     source_email=source_email, source_password=source_password,
                     target_email=email, target_password=password, require_original_size=True,
                     target_login=lambda: target_session(email, password, expected_email=email), stop_event=stop,
-                    select_source=upgrade_feed.select, recover_source_errors=True,
+                    select_source=select_source, recover_source_errors=True,
                     recover_target_errors=True, transient_pause=transient_pause,
                     **({'refill_rows': lambda: reserve.take(alias), 'idle_refill_seconds': idle_refill_seconds}
                        if mode == 'full' else {}))

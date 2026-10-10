@@ -104,7 +104,8 @@ class AuditProvider(EpisodeSourceProvider):
 
     def _get(self, url, *, session=None):
         path = urlsplit(url).path
-        cacheable = session is None and '/s/-6' in path and not re.search(r's\d+e\d+', path, re.I)
+        cacheable = (session is None and not getattr(self, '_fresh_search', False)
+                     and '/s/-6' in path and not re.search(r's\d+e\d+', path, re.I))
         if cacheable and url in self.search_pages:
             self.search_pages.move_to_end(url)
             return self.search_pages[url]

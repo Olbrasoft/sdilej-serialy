@@ -11,7 +11,7 @@ LOW_WATER = 1000
 TARGET_STOCK = 3000
 
 
-def stock(rows, target_state, *, now=None):
+def stock(rows, target_state, *, now=None, fresh_sources=frozenset()):
     now = now or datetime.now(UTC)
     records = target_state.get('episodes', {})
     categories = Counter()
@@ -30,7 +30,7 @@ def stock(rows, target_state, *, now=None):
             category = 'allocated'
         elif record.get('claim'):
             category = 'in_flight'
-        elif record.get('attempts'):
+        elif record.get('attempts') and row['identity'] not in fresh_sources:
             # Failed sources and cooldowns are not a reliable ready reserve,
             # even when the retry delay has expired.
             category = 'failed'
@@ -66,7 +66,13 @@ def main():
     args = parser.parse_args()
     root = Path(os.environ.get('GITHUB_WORKSPACE', Path(__file__).resolve().parents[2]))
     directory, _, rows = load(root, args.generation)
-    metrics = stock(rows, json.loads((directory / 'state.json').read_text()))
+    from .source_repair import SourceRepairFeed
+    plan = json.loads((directory / 'plan.json').read_text())
+    path = directory / 'source-repairs.jsonl'
+    feed = SourceRepairFeed(plan, rows, lambda: path.read_text() if path.exists() else '')
+    feed.refresh()
+    target = json.loads((directory / 'state.json').read_text())
+    metrics = stock(rows, target, fresh_sources=feed.ready(target))
     state_path = root / 'state/reserve-preparation.json'
     state = json.loads(state_path.read_text()) if state_path.exists() else {}
     wanted = should_prepare(metrics, state, args.low_water, args.target_stock)
