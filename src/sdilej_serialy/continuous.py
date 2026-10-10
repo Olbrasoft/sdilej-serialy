@@ -72,8 +72,9 @@ def upload_continuously(
     source_password: str,
     target_email: str,
     target_password: str,
-    refill_rows: Callable[[], list[dict]] | None = None,
+    refill_rows: Callable[[], list[dict] | None] | None = None,
     refill_interval_seconds: float = 15,
+    idle_refill_seconds: float = 0,
     require_original_size: bool = False,
     target_login: Callable[[], object] | None = None,
     stop_event: threading.Event | None = None,
@@ -84,12 +85,16 @@ def upload_continuously(
 ) -> dict:
     if not 1 <= workers <= 6:
         raise ValueError("workers must be between 1 and 6")
+    if not 0 <= idle_refill_seconds <= 300:
+        raise ValueError('Invalid idle refill duration')
     released = state.release_orphaned_claims()
     pending = collections.deque(rows)
     known_identities = {str(row["identity"]) for row in rows}
     queue_condition = threading.Condition()
     in_flight = 0
     refilling = False
+    refill_closed = False
+    idle_since = None
 
     def login_pair(_index: int):
         try:
@@ -106,7 +111,7 @@ def upload_continuously(
         execution = uuid.uuid4().hex
 
         def take_next_row() -> dict | None:
-            nonlocal in_flight, refilling
+            nonlocal in_flight, refilling, refill_closed, idle_since
             while True:
                 refill_leader = False
                 with queue_condition:
@@ -115,9 +120,15 @@ def upload_continuously(
                     if transient_pause is not None and transient_pause.is_set():
                         return None
                     if pending:
+                        idle_since = None
                         in_flight += 1
                         return pending.popleft()
-                    if refill_rows is None or in_flight == 0:
+                    if in_flight == 0 and idle_since is None:
+                        idle_since = time.monotonic()
+                    elif in_flight:
+                        idle_since = None
+                    if (refill_rows is None or refill_closed
+                            or (in_flight == 0 and time.monotonic() - idle_since >= idle_refill_seconds)):
                         return None
                     if not refilling:
                         refilling = True
@@ -142,6 +153,13 @@ def upload_continuously(
                         print(f"queue_refill_failed={type(error).__name__}", flush=True)
                     added = 0
                     with queue_condition:
+                        if fresh_rows is None:
+                            # The owner-specific budget is exhausted, not a
+                            # temporary lack of new verified sources.
+                            refill_closed = True
+                            refilling = False
+                            queue_condition.notify_all()
+                            return None
                         for row in fresh_rows:
                             identity = str(row["identity"])
                             if identity in known_identities:

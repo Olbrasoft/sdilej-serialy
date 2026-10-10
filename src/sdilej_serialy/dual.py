@@ -172,7 +172,7 @@ class LiveReserve:
     def take(self, alias):
         with self.lock, self.state._lock:
             if len(self.delivered[alias]) >= self.limit:
-                return []
+                return None
             if time.monotonic() - self.last_read >= 15:
                 path = directory_for(self.root, self.generation) / 'additions.jsonl'
                 relative = str(path.relative_to(self.root))
@@ -248,11 +248,11 @@ def verify_pilot(rows, state, sessions):
     state.save()
 
 
-def _run(root, generation, mode, limit_per_account=25, persist=False):
+def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refill_seconds=0):
     if os.environ.get('DUAL_ENABLED') != 'true':
         raise RuntimeError('Dual upload is disabled')
     if (mode not in ('pilot', 'full') or not 1 <= limit_per_account <= 25
-            or mode == 'pilot' and limit_per_account < 2):
+            or mode == 'pilot' and limit_per_account < 2 or not 0 <= idle_refill_seconds <= 300):
         raise ValueError('Invalid dual run mode or batch limit')
     directory, plan, rows = load(root, generation)
     report_path = directory / 'report.json'
@@ -313,7 +313,8 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
                     target_login=lambda: target_session(email, password, expected_email=email), stop_event=stop,
                     select_source=upgrade_feed.select, recover_source_errors=True,
                     recover_target_errors=True, transient_pause=transient_pause,
-                    **({'refill_rows': lambda: reserve.take(alias)} if mode == 'full' else {}))
+                    **({'refill_rows': lambda: reserve.take(alias), 'idle_refill_seconds': idle_refill_seconds}
+                       if mode == 'full' else {}))
             except SourceUnavailable:
                 # No target was allocated in this account worker. The other
                 # account may continue; the next batch retries source login.
@@ -326,7 +327,8 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
                 raise
 
         with ThreadPoolExecutor(max_workers=2) as executor:
-            futures = {a: executor.submit(account_worker, a) for a in ACCOUNTS if batches[a]}
+            futures = {a: executor.submit(account_worker, a) for a in ACCOUNTS
+                       if batches[a] or mode == 'full' and idle_refill_seconds > 0}
             for alias, future in futures.items():
                 results[alias] = future.result()
         if stop.is_set():
@@ -362,7 +364,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False):
     return report
 
 
-def run(root, generation, mode, limit_per_account=25, persist=False):
+def run(root, generation, mode, limit_per_account=25, persist=False, idle_refill_seconds=0):
     # Actions concurrency serializes runners; this lock also rejects two local
     # processes using the same working tree. Never lock a file replaced by save.
     import fcntl
@@ -372,7 +374,7 @@ def run(root, generation, mode, limit_per_account=25, persist=False):
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
             raise RuntimeError('Another process owns this dual queue') from None
-        return _run(root, generation, mode, limit_per_account, persist)
+        return _run(root, generation, mode, limit_per_account, persist, idle_refill_seconds)
 
 
 def main():
@@ -383,6 +385,7 @@ def main():
     parser.add_argument('--mode', choices=('pilot', 'full'), default='pilot')
     parser.add_argument('--limit-per-account', type=int, default=25)
     parser.add_argument('--persist-git-state', action='store_true')
+    parser.add_argument('--idle-refill-seconds', type=float, default=300)
     args = parser.parse_args()
     root = Path(os.environ.get('GITHUB_WORKSPACE', Path(__file__).resolve().parents[2])).resolve()
     if args.command == 'prepare':
@@ -390,7 +393,8 @@ def main():
                          root / 'backlog/series-episodes.jsonl.gz',
                          [os.environ[f'PREHRAJTO_{a.upper()}_EMAIL'] for a in ACCOUNTS])
     else:
-        result = run(root, args.generation, args.mode, args.limit_per_account, args.persist_git_state)
+        result = run(root, args.generation, args.mode, args.limit_per_account, args.persist_git_state,
+                     args.idle_refill_seconds)
     print(json.dumps(result))
 
 

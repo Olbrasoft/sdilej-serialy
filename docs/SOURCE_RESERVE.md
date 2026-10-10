@@ -155,3 +155,8 @@ intent, target allocation and complete-transfer receipts still persist immediate
 Existing uploads, uncertain allocations, the frozen queue and target concurrency
 (two per account, four total) remain unchanged. A live refill validates the whole
 combined queue and refuses any modification of its existing prefix.
+
+An empty account also polls for new additions for up to five minutes rather than
+waiting for the other account's long transfer. The idle timer resets on new work;
+the owner's 25-row budget still ends the batch. This is bounded waiting, not an
+extra uploader or an increase in account concurrency.
