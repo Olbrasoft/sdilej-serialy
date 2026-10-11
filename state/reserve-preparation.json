@@ -118534,12 +118534,14 @@
       "retry_after": "2026-10-12T10:29:36.093283+00:00"
     },
     "941:4:5": {
-      "at": "2026-10-09T12:11:50.661351+00:00",
+      "at": "2026-10-11T12:20:28.593551+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
+      "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-10T12:11:55.018742+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 26.76,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-12T12:20:55.353554+00:00"
     },
     "941:4:6": {
       "at": "2026-10-09T12:12:11.089280+00:00",
@@ -119436,12 +119438,14 @@
       "retry_after": "2026-10-12T10:29:46.086389+00:00"
     },
     "2805:2:13": {
-      "at": "2026-10-09T13:52:47.610362+00:00",
+      "at": "2026-10-11T12:20:18.987939+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
+      "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-10T13:52:48.551510+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 16.31,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-12T12:20:35.299352+00:00"
     },
     "2805:3:1": {
       "at": "2026-10-09T13:53:04.075405+00:00",
@@ -133400,9 +133404,27 @@
       "elapsed_seconds": 59.13,
       "source_id": "22813371",
       "queue_rank": 17340
+    },
+    "1237:8:12": {
+      "at": "2026-10-11T12:19:54.699742+00:00",
+      "status": "prepared",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "elapsed_seconds": 33.53,
+      "source_id": "22814181",
+      "queue_rank": 17341
+    },
+    "1237:8:14": {
+      "at": "2026-10-11T12:19:57.315183+00:00",
+      "status": "prepared",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "elapsed_seconds": 40.07,
+      "source_id": "22814223",
+      "queue_rank": 17342
     }
   },
-  "updated_at": "2026-10-11T12:20:05.903060+00:00",
+  "updated_at": "2026-10-11T12:20:56.932959+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -135737,16 +135759,16 @@
       "queue_rank": 10366
     },
     "1180:4:2": {
-      "at": "2026-10-11T09:58:21.472818+00:00",
+      "at": "2026-10-11T12:20:02.162782+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 4,
       "method": "source_repair",
       "source_repair_revision": 2,
       "reason": "no_matches",
-      "elapsed_seconds": 58.77,
+      "elapsed_seconds": 29.01,
       "repair_fingerprint": "c3677cf6d4ff4ca398d18e94f4cf0cce23df7bb7066255f63979d5f4c3b9fa8d",
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-11T10:59:20.252655+00:00"
+      "consecutive_failures": 4,
+      "retry_after": "2026-10-11T13:20:31.177205+00:00"
     },
     "1180:4:3": {
       "at": "2026-10-11T09:58:24.239961+00:00",
@@ -137192,7 +137214,7 @@
     },
     "1237": {
       "misses": [],
-      "updated_at": "2026-10-11T12:20:04.356458+00:00"
+      "updated_at": "2026-10-11T12:20:37.389830+00:00"
     },
     "1709": {
       "misses": [
@@ -137212,9 +137234,11 @@
     "1180": {
       "misses": [
         "1180:2:7",
-        "1180:2:9"
+        "1180:2:9",
+        "1180:4:2"
       ],
-      "updated_at": "2026-10-11T12:18:51.258161+00:00"
+      "updated_at": "2026-10-11T12:20:31.177231+00:00",
+      "retry_after": "2026-10-11T16:20:31.177231+00:00"
     },
     "617": {
       "misses": [],
@@ -137231,15 +137255,27 @@
         "1233:4:5"
       ],
       "updated_at": "2026-10-11T12:18:07.488923+00:00"
+    },
+    "2805": {
+      "misses": [
+        "2805:2:13"
+      ],
+      "updated_at": "2026-10-11T12:20:35.299377+00:00"
+    },
+    "941": {
+      "misses": [
+        "941:4:5"
+      ],
+      "updated_at": "2026-10-11T12:20:55.353582+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 1233,
+    "last_series": 941,
     "last_series_order": [
       false,
       -8.6,
-      -27261,
-      1233
+      -13590,
+      941
     ]
   }
 }
