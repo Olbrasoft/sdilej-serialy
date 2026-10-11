@@ -19,6 +19,7 @@ from .source_audit import fingerprint
 from .target import episode_key
 
 REPAIR_POLICY = 'unavailable-original-discovery-v1'
+REPAIR_SEARCH_REVISION = 2
 
 
 def repairable(record):

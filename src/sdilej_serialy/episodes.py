@@ -257,7 +257,10 @@ class EpisodeSourceProvider:
         # Parsed public search records only: never HTML, cookies or fast links.
         return self.cache.remember('search', url, fetch, ttl=6 * 3600,
             force=getattr(self, '_fresh_search', False),
-            cacheable=lambda page: all(stable_url(r['url']) for r in page['candidates']))
+            # An empty HTTP-200 page may be a temporary search outage. Never
+            # preserve it for six hours or reuse old empty cache entries.
+            cacheable=lambda page: bool(page['candidates'])
+                and all(stable_url(r['url']) for r in page['candidates']))
 
     def discover_fresh(self, episode):
         """An unavailable queue source needs current listings, not a cached miss."""
@@ -349,9 +352,16 @@ class EpisodeSourceProvider:
             if time.monotonic() >= deadline:
                 return None
             try:
-                candidates = self.search(episode)
-                break
+                previous = getattr(self, '_fresh_search', False)
+                self._fresh_search = previous or _attempt > 0
+                try:
+                    candidates = self.search(episode)
+                finally:
+                    self._fresh_search = previous
+                if candidates:
+                    break
             except (SdilejError, requests.RequestException):
+                candidates = None
                 continue
         if candidates is None:
             # A transient search timeout must only defer this episode. Raising

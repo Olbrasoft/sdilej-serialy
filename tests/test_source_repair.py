@@ -192,3 +192,25 @@ def test_idle_workers_pick_up_new_repairs_without_reassigning_or_repeating_rows(
     assert [r['identity'] for r in reserve_feed.take('b')] == [rows[1]['identity'], rows[3]['identity']]
     assert reserve_feed.take('a') == []
     assert reserve_feed.take('b') == []
+
+
+def test_known_source_empty_search_uses_short_backoff_and_recovers_old_daily_exclusion_once(tmp_path, monkeypatch):
+    from datetime import UTC, datetime, timedelta
+    directory, _, rows = setup(tmp_path, monkeypatch)
+    base = rows[0]
+    failed(directory, base)
+    path = tmp_path / 'state/reserve-preparation.json'
+    pipeline.atomic_json(path, dict(schema_version=1, episodes={}, repairs={base['identity']: dict(
+        status='deferred', reason='no_matches', source_repair_revision=1,
+        repair_fingerprint=replenish.fingerprint(base),
+        retry_after=(datetime.now(UTC) + timedelta(hours=20)).isoformat())}))
+    provider = SimpleNamespace(discover=lambda _: None, last_outcome='no_matches')
+    kwargs = dict(identities=[base['identity']], runtime_minutes=0)
+    first = replenish.prepare(tmp_path, 'test', provider, **kwargs)
+    assert first['attempted_this_run'] == 1
+    record = json.loads(path.read_text())['repairs'][base['identity']]
+    assert record['source_repair_revision'] == 2
+    delay = (datetime.fromisoformat(record['retry_after']) - datetime.now(UTC)).total_seconds()
+    assert 14 * 60 < delay <= 15 * 60
+    assert replenish.prepare(tmp_path, 'test', provider, **kwargs)['attempted_this_run'] == 0
+    assert not (directory / 'source-repairs.jsonl').exists()

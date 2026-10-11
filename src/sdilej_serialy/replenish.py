@@ -24,7 +24,8 @@ from .resilience import error_evidence
 from .reserve import LOW_WATER, TARGET_STOCK, should_prepare, stock
 from .source_cache import RequestGate, SourceCache
 from .source_workers import inspected_results
-from .source_repair import SourceRepairFeed, fingerprint, repairable, repair_entry, repaired_row
+from .source_repair import (REPAIR_SEARCH_REVISION, SourceRepairFeed, fingerprint,
+                            repairable, repair_entry, repaired_row)
 
 PREPARATION_REVISION = 3
 SAVED_REVIEW_REVISION = 1
@@ -111,6 +112,8 @@ def inspect_preparation(provider, task):
     if legacy_czech(saved):
         record['saved_review_revision'] = SAVED_REVIEW_REVISION
     record['method'] = 'source_repair' if repairing_source else 'saved_original' if direct_review else 'discovery'
+    if repairing_source:
+        record['source_repair_revision'] = REPAIR_SEARCH_REVISION
     replacement, fatal_error = None, False
     try:
         candidate = None
@@ -298,7 +301,9 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             if identity in already_ready or not repairable(target.get('episodes', {}).get(identity, {})):
                 continue
             old = state['repairs'].get(identity, {})
-            if (old.get('repair_fingerprint') == fingerprint(row) and old.get('retry_after')
+            recover_empty_search = (old.get('reason') == 'no_matches'
+                                    and old.get('source_repair_revision', 1) < REPAIR_SEARCH_REVISION)
+            if (not recover_empty_search and old.get('repair_fingerprint') == fingerprint(row) and old.get('retry_after')
                     and datetime.fromisoformat(old['retry_after']) > datetime.now(UTC)):
                 continue
             # Saved policy/evidence cannot prove availability. Never take the
@@ -383,7 +388,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                 record['consecutive_failures'] = failures
                 minutes = (min(15 * 2 ** min(failures - 1, 2), 60)
                            if reason in ('transient_search', 'transient_original', 'SdilejError',
-                                         'Timeout', 'ConnectionError', 'HTTPError')
+                                         'Timeout', 'ConnectionError', 'HTTPError', 'episode_active_or_completed')
+                           or repairing_source and reason == 'no_matches'
                            else 60 if reason == 'inconclusive_audio' else 24 * 60)
                 record['retry_after'] = (datetime.now(UTC) + timedelta(minutes=minutes)).isoformat()
                 series_misses[episode.series_id] += 1

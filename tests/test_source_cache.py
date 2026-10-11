@@ -59,6 +59,26 @@ def test_explicit_refresh_replaces_cached_search_and_keeps_other_evidence(tmp_pa
     assert cache.remember('search', 'url', lambda: empty) == fresh
 
 
+def test_search_refuses_old_empty_cache_and_never_persists_new_empty_page(tmp_path, monkeypatch):
+    cache = SourceCache(tmp_path / 'cache.json')
+    url = 'https://sdilej.cz/test/s/-6'
+    cache.remember('search', url, lambda: dict(candidates=[], next=None))
+    provider = episodes.EpisodeSourceProvider(None, cache=cache, detector=object())
+    calls = []
+    def get(_):
+        calls.append(1)
+        return SimpleNamespace(text='')
+    monkeypatch.setattr(provider, '_get', get)
+    assert provider._search_page(url, 'Test')['candidates'] == []
+    assert provider._search_page(url, 'Test')['candidates'] == []
+    assert len(calls) == 2
+    new_cache = SourceCache(tmp_path / 'new-cache.json')
+    provider.cache = new_cache
+    provider._search_page(url, 'Test')
+    new_cache.save()
+    assert json.loads(new_cache.path.read_text())['entries'] == {}
+
+
 def test_cache_schemas_reject_secrets_html_and_signed_urls(tmp_path):
     cache = SourceCache(tmp_path / 'cache.json')
     values = [dict(media(), download_url='https://cdn.invalid/?secret=private'),

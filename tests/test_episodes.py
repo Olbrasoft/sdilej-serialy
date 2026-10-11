@@ -329,3 +329,42 @@ def test_discovery_defers_episode_after_repeated_search_timeouts(monkeypatch):
 
     assert provider.discover(episode()) is None
     assert attempts == 2
+
+
+def test_empty_search_is_confirmed_by_fresh_search_before_missing_result(monkeypatch):
+    expected = candidate('working', height=1080, size_bytes=100_000_000, language=LanguageTier.CZECH_AUDIO)
+    provider = EpisodeSourceProvider(requests.Session(), detector=object(), request_gap_seconds=0)
+    freshness = []
+    def search(_):
+        freshness.append(getattr(provider, '_fresh_search', False))
+        return [] if len(freshness) == 1 else [expected]
+    monkeypatch.setattr(provider, 'search', search)
+    monkeypatch.setattr(provider, '_inspect', lambda ep, item: item)
+    monkeypatch.setattr(provider, '_verify_language', lambda ep, item: item)
+    assert provider.discover(episode()) is expected
+    assert freshness == [False, True]
+    assert not provider._fresh_search
+
+
+def test_empty_search_followed_by_timeout_is_transient_not_proof_of_missing_source(monkeypatch):
+    provider = EpisodeSourceProvider(requests.Session(), detector=object(), request_gap_seconds=0)
+    calls = []
+    def search(_):
+        calls.append(1)
+        if len(calls) == 1:
+            return []
+        raise SdilejError('temporary search outage')
+    monkeypatch.setattr(provider, 'search', search)
+    assert provider.discover(episode()) is None
+    assert provider.last_outcome == 'transient_search'
+    assert len(calls) == 2
+    assert not provider._fresh_search
+
+
+def test_two_completed_empty_searches_are_still_reported_as_missing(monkeypatch):
+    provider = EpisodeSourceProvider(requests.Session(), detector=object(), request_gap_seconds=0)
+    calls = []
+    monkeypatch.setattr(provider, 'search', lambda _: calls.append(1) or [])
+    assert provider.discover(episode()) is None
+    assert provider.last_outcome == 'no_matches'
+    assert len(calls) == 2

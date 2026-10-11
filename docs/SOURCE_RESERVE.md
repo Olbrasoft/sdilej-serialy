@@ -142,6 +142,9 @@ Last-Modified invalidates the evidence. Only whitelisted parsed values are saved
 HTML, cookies and signed download/sample URLs are excluded. A failed later
 candidate therefore does not force a restart of all successful earlier probes.
 The cache is bounded to 10,000 live entries and shared with quality auditing.
+Empty search pages are never reused or newly cached. Discovery confirms an empty
+result with a second complete, fresh search; if that confirmation fails, the
+episode is transiently deferred instead of marked missing.
 
 `stock.ready` excludes uploaded, allocated, claimed and previously failed rows,
 including failures whose backoff has elapsed. A newly verified, not-yet-attempted
@@ -192,3 +195,10 @@ uncertain allocations still require receipt-based reconciliation and never chang
 source or create a second target. A full discovery may select a lower resolution
 than the unavailable old file only when it is the best currently verified Czech
 original; an unresolved better candidate still defers the entire selection.
+
+Repair-search revision 2 retries old `no_matches` repair exclusions once without
+their former daily delay. A known unavailable original with a confirmed empty
+search now retries after 15, 30, then 60 minutes: a temporarily empty index is not
+proof that a previously selected episode disappeared for a day. Ordinary new
+catalog episodes still keep their daily no-match cooldown. An active claim seen
+at publication also uses short backoff; no active transfer is changed or replayed.

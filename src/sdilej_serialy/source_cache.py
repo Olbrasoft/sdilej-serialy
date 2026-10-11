@@ -84,7 +84,7 @@ class SourceCache:
             with self.lock:
                 entry = self.entries.get(digest)
                 if (not force and entry and entry['expires_at'] > self.clock()
-                        and safe_value(namespace, entry['value'])):
+                        and safe_value(namespace, entry['value']) and cacheable(entry['value'])):
                     self.stats[f'{namespace}_hit'] += 1
                     return json.loads(json.dumps(entry['value']))
                 self.stats[f'{namespace}_miss'] += 1
