@@ -9,11 +9,12 @@ import threading
 import time
 import unicodedata
 from dataclasses import replace
+from contextlib import nullcontext
 from urllib.parse import urljoin, urlsplit
 
 import requests
 from bs4 import BeautifulSoup
-from sdilej_to_prehrajto.language import LanguageDetectionError, WhisperLanguageDetector
+from sdilej_to_prehrajto.language import LanguageDetectionError
 from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
 from sdilej_to_prehrajto.ranking import (
     language_tier,
@@ -36,6 +37,7 @@ from .quality import quality_acceptable, rank_candidates
 from .numbering import mapped_episode_title
 from .auth import login_with_retry
 from .source_cache import media_key, stable_url, search_url
+from .audio_pipeline import PipelinedLanguageDetector
 
 
 # Underscores are filename separators, not letters adjoining an episode code.
@@ -170,7 +172,7 @@ class EpisodeSourceProvider:
         audio_lock=None,
     ):
         self.session = session
-        self.detector = detector or WhisperLanguageDetector()
+        self.detector = detector or PipelinedLanguageDetector()
         self.request_gap_seconds = request_gap_seconds
         self.discovery_timeout_seconds = discovery_timeout_seconds
         self._last_request = 0.0
@@ -319,9 +321,10 @@ class EpisodeSourceProvider:
 
     def _verify_language(self, episode: Episode, detail: Candidate) -> Candidate:
         def detect():
-            # The shared lazy model and CPU transcriber must not be used by
-            # two threads simultaneously; search and ffprobe still overlap.
-            with self.audio_lock:
+            # The built-in detector downloads samples concurrently and locks
+            # only model loading/inference. Custom detectors stay serialized.
+            with (nullcontext() if getattr(self.detector, 'concurrent_samples', False)
+                  else self.audio_lock):
                 language, probability = self.detector.detect(detail.sample_url)
                 hint = audio_language_hint(detail.filename)
                 if probability < 0.65 or (hint and language_tier(language) != language_tier(hint)):

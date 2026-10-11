@@ -50,7 +50,7 @@ def needs_saved_review(row, record):
     return legacy_czech(row) and record.get('saved_review_revision') != SAVED_REVIEW_REVISION
 
 
-def reserve_order(catalog, records, saved, paused):
+def reserve_order(catalog, records, saved, paused, productive_seasons=None):
     """Drain the known-source backlog before broad discovery, HD originals first."""
     fast, low, ordinary = [], [], []
     for metadata in catalog:
@@ -63,7 +63,7 @@ def reserve_order(catalog, records, saved, paused):
     for metadata in fast + low:
         if metadata['series_id'] not in paused:
             yield metadata
-    yield from preparation_order(ordinary, records, paused)
+    yield from preparation_order(ordinary, records, paused, productive_seasons)
 
 
 def valid_czech(episode, candidate):
@@ -80,24 +80,40 @@ def catalog_order(row):
             -(row.get('imdb_votes') or 0), row['series_id'], row['season'], row['episode'])
 
 
-def preparation_order(catalog, records, paused_series=None):
+def recent_productive_seasons(state, now):
+    """Scheduling hints only; every neighboring episode still needs full checks."""
+    cutoff = (now - timedelta(days=2)).isoformat()
+    return {tuple(map(int, identity.split(':')[:2]))
+            for lane in ('episodes', 'repairs') for identity, record in state.get(lane, {}).items()
+            if record.get('status') == 'prepared' and record.get('at', '') >= cutoff}
+
+
+def preparation_order(catalog, records, paused_series=None, productive_seasons=None):
     """Reserve search time for unseen episodes without abandoning due retries."""
-    fresh, retries = deque(), deque()
+    productive, fresh, retries = deque(), deque(), deque()
+    productive_seasons = productive_seasons or set()
     paused_series = paused_series if paused_series is not None else set()
     for metadata in catalog:
         record = records.get(Episode.from_dict(metadata).identity, {})
         repaired_error = repaired_preparation(record)
-        (fresh if not record or repaired_error else retries).append(metadata)
+        lane = (productive if (metadata['series_id'], metadata['season']) in productive_seasons else fresh)
+        (lane if not record or repaired_error else retries).append(metadata)
     # Inputs retain IMDb/season order within each lane. A daily retry of a long
     # unavailable series must not consume every run before new series are seen.
-    while fresh or retries:
-        for lane, budget in ((fresh, 8), (retries, 2)):
+    while productive or fresh or retries:
+        fresh_emitted = 0
+        # Half the unseen budget explores neighbors of recently verified Czech
+        # episodes. The other half still explores the IMDb catalog, so neither
+        # productive long series nor due retries can starve new discoveries.
+        for lane, budget in ((productive, 4), (fresh, 8), (productive, 8), (retries, 2)):
             emitted = 0
-            while lane and emitted < budget:
+            while lane and emitted < budget and (lane is retries or fresh_emitted < 8):
                 metadata = lane.popleft()
                 if metadata['series_id'] in paused_series:
                     continue
                 emitted += 1
+                if lane is not retries:
+                    fresh_emitted += 1
                 yield metadata
 
 
@@ -222,6 +238,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         eligible.append(metadata)
     series_misses = Counter()
     paused_series = set()
+    productive_seasons = recent_productive_seasons(state, datetime.now(UTC))
     pending_checkpoint = 0
     last_checkpoint = time.monotonic()
     repaired_entries = {r['identity']: r for r in load_jsonl(repairs_path)} if repairs_path.exists() else {}
@@ -258,8 +275,13 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                       reserve_total=len(additions), queue_total=len(queue), updated_at=now_iso(),
                       workers=workers, elapsed_seconds=round(elapsed, 2),
                       prepared_per_hour=round(published * 3600 / elapsed, 2),
+                      available_this_run=published + repaired,
+                      available_per_hour=round((published + repaired) * 3600 / elapsed, 2),
                       low_water=low_water, target_stock=target_stock, stock=metrics,
                       cache=cache.metrics() if cache else {},
+                      audio_pipeline=(provider.detector.metrics()
+                          if callable(getattr(getattr(provider, 'detector', None), 'metrics', None)) else {}),
+                      productive_seasons=len(productive_seasons),
                       series_paused_this_run=len(paused_series),
                       saved_reviewed_this_run=saved_reviewed, saved_prepared_this_run=saved_published,
                       repaired_this_run=repaired, repair_statuses=dict(Counter(
@@ -274,10 +296,10 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
     def tick():
         if time.monotonic() - last_checkpoint >= checkpoint_seconds:
             checkpoint()
-            print(f'source_workers_busy workers={workers} prepared={published}', flush=True)
+            print(f'source_workers_busy workers={workers} prepared={published} repaired={repaired}', flush=True)
 
     def new_tasks():
-        for metadata in reserve_order(eligible, state['episodes'], manifest.rows, paused_series):
+        for metadata in reserve_order(eligible, state['episodes'], manifest.rows, paused_series, productive_seasons):
             episode = Episode.from_dict(metadata)
             key = episode_key(f'{episode.series_title} {episode.code}')
             if episode.identity in identities or key in keys:
@@ -296,6 +318,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         already_ready = repair_feed.ready(target)
         for row in queue:
             identity = row['identity']
+            if not selected_ids and row['episode']['series_id'] in paused_series:
+                continue
             if selected_ids and identity not in selected_ids:
                 continue
             if identity in already_ready or not repairable(target.get('episodes', {}).get(identity, {})):

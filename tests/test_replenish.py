@@ -226,6 +226,27 @@ def test_paused_series_do_not_consume_the_fresh_lane_budget():
     assert list(ordered) == [next_series]
 
 
+def test_productive_seasons_get_bounded_priority_without_starving_exploration_or_retries():
+    first = [source(number=n)['episode'] for n in range(1, 25)]
+    neighbors = [dict(source(number=n)['episode'], series_id=2) for n in range(1, 20)]
+    records = {Episode.from_dict(r).identity: dict(status='deferred') for r in first[:4]}
+    result = list(replenish.preparation_order(first + neighbors, records, productive_seasons={(2, 1)}))
+    assert result[:10] == neighbors[:4] + first[4:8] + first[:2]
+    assert result[10:20] == neighbors[4:8] + first[8:12] + first[2:4]
+    assert len(result) == len(first + neighbors)
+    assert len({Episode.from_dict(r).identity for r in result}) == len(result)
+
+
+def test_productivity_hint_requires_recent_success_in_the_same_season():
+    from datetime import UTC, datetime
+    records = dict(episodes={
+        '1:1:1': dict(status='prepared', at='2026-10-10T10:00:00+00:00'),
+        '2:1:1': dict(status='prepared', at='2026-10-01T10:00:00+00:00'),
+        '3:1:1': dict(status='deferred', at='2026-10-10T10:00:00+00:00'),
+    }, repairs={'4:2:1': dict(status='prepared', at='2026-10-11T08:00:00+00:00')})
+    assert replenish.recent_productive_seasons(records, datetime(2026, 10, 11, 10, tzinfo=UTC)) == {(1, 1), (4, 2)}
+
+
 def test_unavailable_series_yields_to_another_series_without_marking_unsearched_episodes(tmp_path, monkeypatch):
     directory, _, rows = setup(tmp_path, monkeypatch)
     catalog = [dict(source(number=n)['episode'], imdb_rating=9, imdb_votes=100) for n in range(1, 15)]

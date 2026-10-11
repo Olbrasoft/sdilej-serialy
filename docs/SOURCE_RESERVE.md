@@ -3,7 +3,8 @@
 The `prepare-source-reserve` workflow reads the saved 2,000-series catalog in
 `backlog/series-episodes.jsonl.gz`; it does not access the production database or
 hold target-account credentials. It is gated by `SOURCE_PREPARATION_ENABLED=true`
-and runs manually or every 30 minutes. Two source workers search for up to
+and runs manually or every 30 minutes. Two source workers by default (up to four
+through `SOURCE_DISCOVERY_WORKERS`) search for up to
 110 minutes per run, sharing the source-preparation concurrency group with the
 quality audit. A low reserve skips automatic audits before installing Whisper;
 explicit targeted audits remain available. Target uploading is independent.
@@ -128,7 +129,8 @@ remains cumulative and is not the currently unused stock.
 `SOURCE_DISCOVERY_WORKERS` defaults to two and accepts one through four. Each
 worker has its own requests session and cookies. A shared request gate preserves
 the site's two-second request spacing; one audio lock protects the lazy Whisper
-model and bounds CPU-heavy speech work. Search and original probing can overlap.
+model and bounds CPU-heavy speech work. Search, original probing and audio sample
+downloads can overlap; only model loading and inference hold the audio lock.
 Dispatch retains IMDb priority; a completed result is published without waiting
 for an unrelated slower episode. Only the publisher checks final uniqueness and
 assigns consecutive alternating account ranks.
@@ -202,3 +204,33 @@ search now retries after 15, 30, then 60 minutes: a temporarily empty index is n
 proof that a previously selected episode disappeared for a day. Ordinary new
 catalog episodes still keep their daily no-match cooldown. An active claim seen
 at publication also uses short backoff; no active transfer is changed or replayed.
+
+## Pipelined audio and useful discovery throughput (2026-10-11)
+
+The built-in `PipelinedLanguageDetector` lets each bounded source worker extract
+its own temporary audio sample while another worker is detecting language.
+One shared model still serializes loading and inference. The original download
+source, 75-second sample, offsets, CPU model, VAD, confidence threshold and SDK
+multi-sample consensus are unchanged. Custom detectors retain the outer lock.
+Temporary samples are removed even after failures; reports contain aggregate
+download, inference-wait and inference time, never URLs or audio contents.
+
+Of each eight unseen-episode slots, up to four first explore the same seasons as
+successful Czech preparations/repairs in the previous two days. The other four
+explore the remaining IMDb-ranked catalog, followed by two due retries. Empty
+lanes give their capacity to the other unseen lane. IMDb/episode order remains
+stable within each lane. This is only a dispatch hint: every episode still gets
+full identity, original resolution, size and Czech speech verification. Legacy
+saved-source review retains priority. Existing target queue order/owners do not
+change. No series is permanently excluded.
+
+The existing three-miss per-series budget now also applies to queued-source
+repairs; previously that lane ignored the pause and could exhaust a run checking
+many missing episodes from the same series. Unsearched episodes receive no
+failure record or cooldown, and explicit targeted checks bypass this budget.
+
+`available_this_run` and `available_per_hour` count both new additions and usable
+repaired sources. `prepared_this_run`/`prepared_per_hour` remain the narrower new
+addition counters for compatibility. Neither cumulative additions nor successful
+repairs are a substitute for `stock.ready`, the actual unused upload reserve.
+Raising source workers does not raise the target limit of two uploads per account.

@@ -44,6 +44,9 @@ def test_failed_high_resolution_source_is_rediscovered_without_changing_queue_or
                                identities=[base['identity']], runtime_minutes=0)
     assert calls == [base['identity']]
     assert result['repaired_this_run'] == 1 and result['prepared_this_run'] == 0
+    report = json.loads((tmp_path / 'reports/reserve-preparation.json').read_text())
+    assert report['available_this_run'] == 1 and report['available_per_hour'] > 0
+    assert report['prepared_per_hour'] == 0
     for name, content in before.items():
         assert (directory / name).read_bytes() == content
     assert not (directory / 'additions.jsonl').exists()
@@ -77,6 +80,26 @@ def test_claim_during_discovery_prevents_publishing_replacement(tmp_path, monkey
                                identities=[rows[0]['identity']], runtime_minutes=0)
     assert result['repaired_this_run'] == 0
     assert not (directory / 'source-repairs.jsonl').exists()
+
+
+def test_repair_lane_respects_series_budget_without_deferring_unsearched_episodes(tmp_path, monkeypatch):
+    from sdilej_serialy.catalog import write_jsonl_gzip
+    directory, _, rows = setup_plan(tmp_path, monkeypatch, count=8)
+    write_jsonl_gzip(tmp_path / 'backlog/series-episodes.jsonl.gz', [r['episode'] for r in rows])
+    for row in rows:
+        failed(directory, row)
+    calls = []
+    provider = SimpleNamespace(discover=lambda ep: calls.append(ep.identity), last_outcome='no_matches')
+    result = replenish.prepare(tmp_path, 'test', provider, runtime_minutes=0)
+    assert result['attempted_this_run'] == 3
+    assert calls == [r['identity'] for r in rows[:3]]
+    records = json.loads((tmp_path / 'state/reserve-preparation.json').read_text())['repairs']
+    assert set(records) == set(calls)
+    # Explicit checks still bypass the per-series dispatch budget.
+    calls.clear()
+    replenish.prepare(tmp_path, 'test', provider, runtime_minutes=0,
+                      identities=[r['identity'] for r in rows[3:]])
+    assert calls == [r['identity'] for r in rows[3:]]
 
 
 @pytest.mark.parametrize('kind', ['inconclusive', 'foreign', 'duplicate_source'])

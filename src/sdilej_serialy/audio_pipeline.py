@@ -1,0 +1,72 @@
+"""Overlap remote sample extraction while keeping one bounded Whisper model."""
+import os
+import subprocess
+import tempfile
+import threading
+import time
+from collections import Counter
+from pathlib import Path
+
+from sdilej_to_prehrajto.language import LanguageDetectionError, WhisperLanguageDetector
+
+
+class PipelinedLanguageDetector(WhisperLanguageDetector):
+    # The provider may overlap detect/consensus calls. Only this implementation
+    # owns the narrower lock; unknown/custom detectors retain the outer lock.
+    concurrent_samples = True
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.inference_lock = threading.Lock()
+        self.metrics_lock = threading.Lock()
+        self.stats = Counter()
+
+    def _add(self, **values):
+        with self.metrics_lock:
+            self.stats.update(values)
+
+    def metrics(self):
+        with self.metrics_lock:
+            return {key: round(value, 2) for key, value in self.stats.items()}
+
+    def _extract(self, media_url, offset, sample):
+        timeout = max(self.seconds + 30, int(os.environ.get('WHISPER_FFMPEG_TIMEOUT_SECONDS', '120')))
+        # Same source, offsets, sample length and decoder settings as the SDK.
+        # Signed URLs live only in memory/the child process, never in reports.
+        result = subprocess.run([
+            'ffmpeg', '-y', '-nostdin', '-hide_banner', '-loglevel', 'error',
+            '-rw_timeout', str(timeout * 1_000_000), '-ss', str(offset),
+            '-t', str(self.seconds), '-i', media_url, '-vn', '-ac', '1',
+            '-ar', '16000', str(sample),
+        ], capture_output=True, text=True, timeout=timeout, check=False)
+        if result.returncode != 0 or not sample.exists() or sample.stat().st_size == 0:
+            raise LanguageDetectionError('ffmpeg could not create an audio sample')
+
+    def _detect_at(self, media_url, offset):
+        try:
+            with tempfile.TemporaryDirectory() as directory:
+                sample = Path(directory) / 'sample.wav'
+                started = time.monotonic()
+                try:
+                    self._extract(media_url, offset, sample)
+                finally:
+                    self._add(sample_count=1, download_seconds=time.monotonic() - started)
+                waiting = time.monotonic()
+                with self.inference_lock:
+                    self._add(inference_wait_seconds=time.monotonic() - waiting)
+                    started = time.monotonic()
+                    try:
+                        # Loading and language detection remain serialized.
+                        # transcribe computes language eagerly; its unused
+                        # segment generator is never iterated, as in the SDK.
+                        model = self._load_model()
+                        _, info = model.transcribe(str(sample), beam_size=1, vad_filter=True)
+                    finally:
+                        self._add(inference_seconds=time.monotonic() - started)
+                language = (info.language or '').lower()
+                if not language:
+                    raise LanguageDetectionError('Whisper returned no language')
+                return language, float(info.language_probability or 0.0)
+        except Exception:
+            self._add(failures=1)
+            raise
