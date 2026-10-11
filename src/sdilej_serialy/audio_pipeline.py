@@ -4,7 +4,7 @@ import subprocess
 import tempfile
 import threading
 import time
-from collections import Counter
+from collections import Counter, defaultdict
 from pathlib import Path
 
 from sdilej_to_prehrajto.language import LanguageDetectionError, WhisperLanguageDetector
@@ -29,9 +29,42 @@ class PipelinedLanguageDetector(WhisperLanguageDetector):
         with self.metrics_lock:
             return {key: round(value, 2) for key, value in self.stats.items()}
 
+    def initial_offset(self, duration_sec):
+        offset = max(0, int(os.environ.get('WHISPER_SAMPLE_OFFSET', '180')))
+        return min(offset, max(0, int(duration_sec) - self.seconds)) if duration_sec else offset
+
+    def detect_for_duration(self, media_url, duration_sec):
+        return self._detect_at(media_url, self.initial_offset(duration_sec))
+
+    def detect_consensus(self, media_url, duration_sec, *, initial=None, preferred_language=None):
+        if not duration_sec or duration_sec >= 900:
+            return super().detect_consensus(media_url, duration_sec, initial=initial,
+                                            preferred_language=preferred_language)
+        # The SDK assumes a minimum 15-minute movie. That seeks beyond the end
+        # of short episodes, turning a valid Czech sample into a decoder error.
+        maximum = max(0, int(duration_sec) - self.seconds)
+        offsets = ([0, maximum // 2, maximum] if duration_sec < 2 * self.seconds else
+                   [min(int(duration_sec * fraction), maximum) for fraction in (.25, .5, .75)])
+        used = {self.initial_offset(duration_sec)} if initial else set()
+        samples = [initial] if initial else []
+        for offset in offsets:
+            if offset not in used:
+                samples.append(self._detect_at(media_url, offset))
+                used.add(offset)
+        # Preserve the SDK's confidence/preferred-language rule; repeated
+        # clamped offsets must not count as independent consensus votes.
+        grouped = defaultdict(list)
+        for language, probability in samples:
+            grouped[language.lower()].append(float(probability))
+        preferred = (preferred_language or '').lower()
+        if preferred in grouped and max(grouped[preferred]) >= .55:
+            return preferred, max(grouped[preferred])
+        winner, probabilities = max(grouped.items(), key=lambda item: (len(item[1]), sum(item[1]), item[0]))
+        return winner, sum(probabilities) / len(probabilities)
+
     def _extract(self, media_url, offset, sample):
         timeout = max(self.seconds + 30, int(os.environ.get('WHISPER_FFMPEG_TIMEOUT_SECONDS', '120')))
-        # Same source, offsets, sample length and decoder settings as the SDK.
+        # Same source, sample length and decoder settings as the SDK.
         # Signed URLs live only in memory/the child process, never in reports.
         result = subprocess.run([
             'ffmpeg', '-y', '-nostdin', '-hide_banner', '-loglevel', 'error',

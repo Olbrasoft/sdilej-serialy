@@ -329,7 +329,9 @@ class EpisodeSourceProvider:
             # only model loading/inference. Custom detectors stay serialized.
             with (nullcontext() if getattr(self.detector, 'concurrent_samples', False)
                   else self.audio_lock):
-                language, probability = self.detector.detect(detail.sample_url)
+                bounded_detect = getattr(self.detector, 'detect_for_duration', None)
+                language, probability = (bounded_detect(detail.sample_url, detail.duration_sec)
+                    if callable(bounded_detect) else self.detector.detect(detail.sample_url))
                 hint = audio_language_hint(detail.filename)
                 if probability < 0.65 or (hint and language_tier(language) != language_tier(hint)):
                     consensus = getattr(self.detector, "detect_consensus", None)
@@ -339,7 +341,8 @@ class EpisodeSourceProvider:
                     raise LanguageDetectionError("Whisper language confidence is too low")
                 return dict(language=language, probability=probability)
         fingerprint = getattr(detail, '_cache_fingerprint', media_key(detail))
-        key = 'whisper-small-consensus-v1:' + fingerprint if fingerprint is not None else None
+        version = 'v2-short' if detail.duration_sec and detail.duration_sec < 900 else 'v1'
+        key = f'whisper-small-consensus-{version}:' + fingerprint if fingerprint is not None else None
         verified = self.cache.remember('audio', key, detect) if self.cache is not None and key is not None else detect()
         language, probability = verified['language'], verified['probability']
         return replace(

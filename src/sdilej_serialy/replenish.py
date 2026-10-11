@@ -28,7 +28,7 @@ from .source_repair import (REPAIR_SEARCH_REVISION, SourceRepairFeed, fingerprin
                             repairable, repair_entry, repaired_row)
 from .discovery_index import CandidateIndex, indexed_order, paused_series as saved_pauses, record_series_result
 
-PREPARATION_REVISION = 3
+PREPARATION_REVISION = 4
 SAVED_REVIEW_REVISION = 1
 MAX_SERIES_MISSES = 3
 
@@ -54,10 +54,17 @@ def pipeline_health(metrics, target, preparation, now):
                 preparation_outcomes_last_hour=dict(outcomes))
 
 
-def repaired_preparation(record):
+def needs_short_audio_review(record, metadata):
+    runtime = (metadata or {}).get('runtime_min') or (metadata or {}).get('runtime')
+    return (record.get('reason') == 'inconclusive_audio' and record.get('preparation_revision', 1) < 4
+            and runtime is not None and 0 < runtime < 15)
+
+
+def repaired_preparation(record, metadata=None):
     revision = record.get('preparation_revision', 1)
     return ((record.get('reason') == 'TypeError' and revision < 2)
-            or (record.get('reason') == 'no_verified_czech_match' and revision < 3))
+            or (record.get('reason') == 'no_verified_czech_match' and revision < 3)
+            or needs_short_audio_review(record, metadata))
 
 
 def legacy_czech(row):
@@ -90,7 +97,7 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
     else:
         fresh = {Episode.from_dict(m).identity for m in ordinary
                  if not records.get(Episode.from_dict(m).identity)
-                 or repaired_preparation(records[Episode.from_dict(m).identity])}
+                 or repaired_preparation(records[Episode.from_dict(m).identity], m)}
         yield from indexed_order(ordinary, fresh, paused, index, refresh, progress)
 
 
@@ -123,7 +130,7 @@ def preparation_order(catalog, records, paused_series=None, productive_seasons=N
     paused_series = paused_series if paused_series is not None else set()
     for metadata in catalog:
         record = records.get(Episode.from_dict(metadata).identity, {})
-        repaired_error = repaired_preparation(record)
+        repaired_error = repaired_preparation(record, metadata)
         lane = (productive if (metadata['series_id'], metadata['season']) in productive_seasons else fresh)
         (lane if not record or repaired_error else retries).append(metadata)
     # Inputs retain IMDb/season order within each lane. A daily retry of a long
@@ -267,7 +274,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         record = state['episodes'].get(episode.identity, {})
         # Retry pre-v2 audio errors and pre-v3 filename-identity misses once.
         # New inconclusive sources keep their normal cooldown.
-        repaired_error = repaired_preparation(record)
+        repaired_error = repaired_preparation(record, metadata)
         fresh_saved_review = needs_saved_review(manifest.rows.get(episode.identity), record)
         if (not repaired_error and not fresh_saved_review and record.get('retry_after')
                 and datetime.fromisoformat(record['retry_after']) > datetime.now(UTC)):
@@ -275,6 +282,11 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         eligible.append(metadata)
     series_misses = Counter()
     paused_series = set() if selected_ids else saved_pauses(state['series_discovery'], datetime.now(UTC))
+    # The old sampler's beyond-end errors are not evidence of an unavailable
+    # series. Release that scheduling pause once for affected short episodes.
+    paused_series.difference_update(m['series_id'] for m in catalog if any(
+        needs_short_audio_review(state[lane].get(Episode.from_dict(m).identity, {}), m)
+        for lane in ('episodes', 'repairs')))
     productive_seasons = recent_productive_seasons(state, datetime.now(UTC))
     pending_checkpoint = 0
     last_checkpoint = time.monotonic()
@@ -374,7 +386,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             old = state['repairs'].get(identity, {})
             recover_empty_search = (old.get('reason') == 'no_matches'
                                     and old.get('source_repair_revision', 1) < REPAIR_SEARCH_REVISION)
-            if (not recover_empty_search and old.get('repair_fingerprint') == fingerprint(row) and old.get('retry_after')
+            if (not recover_empty_search and not needs_short_audio_review(old, row['episode'])
+                    and old.get('repair_fingerprint') == fingerprint(row) and old.get('retry_after')
                     and datetime.fromisoformat(old['retry_after']) > datetime.now(UTC)):
                 continue
             # Saved policy/evidence cannot prove availability. Never take the

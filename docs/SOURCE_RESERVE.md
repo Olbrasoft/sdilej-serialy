@@ -288,3 +288,17 @@ check and fall back to a fresh probe and audio verification. They never authoriz
 stale Czech evidence or trigger an unbounded full-file download. Raw samples and
 authenticated URLs are not persisted. Target transfer preparation is unchanged;
 the extra read-only samples apply only to cached source inspection.
+
+### Duration-aware language sampling
+
+The SDK consensus assumes a minimum 900-second movie. On seven-minute episodes
+this selected offsets beyond EOF, causing repeated ffmpeg failures and false
+`inconclusive_audio` deferrals. The built-in detector now clamps the initial
+sample to the probed original duration and places short-episode consensus samples
+inside that duration. Duplicate clamped offsets do not count as extra votes.
+Normal-length SDK consensus, speech confidence and Czech preference are unchanged.
+Short-original audio evidence uses a new cache key; media evidence is retained.
+
+Preparation revision 4 rechecks previously inconclusive, known-under-15-minute
+episodes once without the old episode/series cooldown. It does not release other
+failures or target reservations. Newly inconclusive checks restore normal backoff.

@@ -405,9 +405,26 @@ def test_pre_parser_fix_miss_is_retried_once_then_respects_cooldown(tmp_path, mo
     provider = SimpleNamespace(discover=lambda ep: calls.append(ep.identity))
     kwargs = dict(identities=['1:1:5'], runtime_minutes=0)
     assert replenish.prepare(tmp_path, 'test', provider, **kwargs)['attempted_this_run'] == 1
-    assert json.loads(path.read_text())['episodes']['1:1:5']['preparation_revision'] == 3
+    assert json.loads(path.read_text())['episodes']['1:1:5']['preparation_revision'] == replenish.PREPARATION_REVISION
     assert replenish.prepare(tmp_path, 'test', provider, **kwargs)['attempted_this_run'] == 0
     assert calls == ['1:1:5']
+
+
+def test_short_audio_fix_releases_old_episode_and_series_cooldown_once(tmp_path, monkeypatch):
+    from datetime import UTC, datetime, timedelta
+    setup(tmp_path, monkeypatch)
+    catalog_path = tmp_path / 'backlog/series-episodes.jsonl.gz'
+    write_jsonl_gzip(catalog_path, [dict(r, runtime_min=7) for r in load_jsonl(catalog_path)])
+    path = tmp_path / 'state/reserve-preparation.json'
+    later = (datetime.now(UTC) + timedelta(hours=1)).isoformat()
+    pipeline.atomic_json(path, dict(schema_version=1, episodes={'1:1:5': dict(
+        status='deferred', reason='inconclusive_audio', preparation_revision=3, retry_after=later)},
+        series_discovery={'1': dict(misses=['1:1:5'], retry_after=later)}))
+    provider = SimpleNamespace(discover=lambda _: None, last_outcome='inconclusive_audio')
+    assert replenish.prepare(tmp_path, 'test', provider, limit=1, runtime_minutes=0)['attempted_this_run'] == 1
+    assert json.loads(path.read_text())['episodes']['1:1:5']['preparation_revision'] == 4
+    assert replenish.prepare(tmp_path, 'test', provider, identities=['1:1:5'], runtime_minutes=0)['attempted_this_run'] == 0
+    assert not replenish.needs_short_audio_review(dict(reason='inconclusive_audio', preparation_revision=3), dict(runtime_min=45))
 
 
 def test_programming_failure_is_durable_and_fails_job_without_false_success(tmp_path, monkeypatch):

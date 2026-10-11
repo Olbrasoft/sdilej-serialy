@@ -68,6 +68,39 @@ def test_consensus_keeps_sdk_offsets_votes_and_confidence(monkeypatch):
     assert offsets == [400, 800, 1200]
 
 
+@pytest.mark.parametrize('duration,expected', [(420, [105, 210, 315]), (100, [0, 12]), (30, [])])
+def test_short_episode_consensus_never_seeks_past_end_or_duplicates_initial(monkeypatch, duration, expected):
+    detector = PipelinedLanguageDetector()
+    offsets = []
+    def detect(url, offset):
+        assert 0 <= offset < duration
+        assert offset + min(detector.seconds, duration) <= duration
+        offsets.append(offset)
+        return 'cs', .95
+    monkeypatch.setattr(detector, '_detect_at', detect)
+    initial = detector.detect_for_duration('sample', duration)
+    initial_offset = offsets.pop()
+    assert initial_offset == min(180, max(0, duration - 75))
+    assert detector.detect_consensus('sample', duration, initial=initial, preferred_language='cs') == ('cs', .95)
+    assert offsets == expected
+    assert initial_offset not in offsets and len(set(offsets)) == len(offsets)
+
+
+def test_short_episode_provider_rechecks_disagreement_inside_real_duration(monkeypatch):
+    detector = PipelinedLanguageDetector()
+    offsets = []
+    def detect(url, offset):
+        offsets.append(offset)
+        assert offset + 75 <= 420
+        return ('en', .8) if offset == 180 else ('cs', .9)
+    monkeypatch.setattr(detector, '_detect_at', detect)
+    provider = EpisodeSourceProvider(None, detector=detector)
+    result = provider._verify_language(episode(), Candidate('1', 'url', 'title',
+        filename='Episode CZ dabing.mkv', sample_url='sample', duration_sec=420))
+    assert result.audio_language == 'cs' and result.language_probability == .9
+    assert offsets == [180, 105, 210, 315]
+
+
 def test_failed_download_never_loads_model_or_leaks_sample(monkeypatch):
     detector = PipelinedLanguageDetector()
     paths = []
