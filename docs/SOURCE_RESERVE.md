@@ -234,3 +234,57 @@ repaired sources. `prepared_this_run`/`prepared_per_hour` remain the narrower ne
 addition counters for compatibility. Neither cumulative additions nor successful
 repairs are a substitute for `stock.ready`, the actual unused upload reserve.
 Raising source workers does not raise the target limit of two uploads per account.
+
+## Evidence-led discovery and restart fairness
+
+A running producer is not proof of an adequate reserve. The preparation report
+now exposes per-account time since the last completed upload, recent discovery
+outcomes, and `health.status=starved` when an account has no ready source or active
+claim and no completion for 30 minutes. Such checkpoints also emit an Actions
+warning. Allocated-but-uncertain historical rows do not count as active progress.
+
+Production scheduling uses the existing positive search cache as a cross-episode
+index. Complete public candidate rows are matched to catalog aliases and exact
+episode codes with the existing sequel/range guards. Expired cache entries are
+not imported. Every minute the dispatcher imports new hints discovered by the
+other workers. An index hit only prioritizes a full normal discovery: it is not
+verified Czech speech, the best available original, a ready upload, or permission
+to bypass any episode cooldown, target reservation or duplicate guard.
+
+Each round first dispatches up to six indexed candidates (Czech filename hints
+before unknown language), two unexplored series probes, and two due retries.
+Unused indexed capacity goes to exploration. All lanes share a pending-identity
+set. Candidate IMDb order is preserved within the indexed lane. Exploration
+rotates through series and durably saves its cursor, including its ordering
+anchor when a series disappears from the eligible set. A restart therefore does
+not repeatedly spend the run on the same first unavailable series. Legacy saved
+source revalidation still precedes these lanes. Without an evidence cache the
+older bounded scheduler remains available for adapters and targeted tests.
+
+Three distinct unsuccessful episodes persist a bounded series dispatch pause
+across runs: four hours for missing/foreign/rejected originals, 30 minutes for
+transient or inconclusive checks. Success resets the budget; expiry grants a new
+probe budget. Unsearched episodes are never marked missing or modified. Explicit
+targeted verification bypasses series pauses, but not per-episode safety checks.
+When the reserve is low, one queued repair is interleaved with eight preparation
+tasks; positive repair hints go first. This prevents repeatedly missing old
+sources from monopolizing the preparation capacity while keeping repair work
+alive. Frozen queue ownership and the two-target-workers/account limit remain
+unchanged. `indexed_candidates_in_scan` counts search hints, not ready stock.
+
+### Stable original evidence despite request-time Last-Modified
+
+The download handler can set `Last-Modified` equal to the HTTP response `Date`
+on every range request. Treating this as a file version invalidated both the media
+and audio cache even on consecutive checks of the same original. If these dates
+are within five seconds, the request timestamp is discarded. A strong ETag is
+retained; without one, cache reuse requires a fresh SHA-256 fingerprint of three
+64-KiB ranges (start, middle, end) plus the existing stable identity, metadata and
+exact size. This is a bounded sampled-content check, not a full-file checksum.
+Normal stable Last-Modified/ETag validators retain their original behavior.
+
+Failed, truncated or unsupported sample ranges disable cache reuse for that
+check and fall back to a fresh probe and audio verification. They never authorize
+stale Czech evidence or trigger an unbounded full-file download. Raw samples and
+authenticated URLs are not persisted. Target transfer preparation is unchanged;
+the extra read-only samples apply only to cached source inspection.

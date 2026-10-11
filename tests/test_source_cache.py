@@ -9,6 +9,7 @@ from sdilej_serialy import episodes
 from sdilej_serialy.source_cache import SourceCache, media_key, safe_value
 from sdilej_to_prehrajto.models import Candidate, LanguageTier
 from test_episodes import episode
+import pytest
 
 
 def media(width=1920):
@@ -93,6 +94,21 @@ def test_cache_schemas_reject_secrets_html_and_signed_urls(tmp_path):
     assert 'private' not in cache.path.read_text()
 
 
+def test_search_candidate_snapshot_excludes_expired_or_unsafe_values_and_is_detached(tmp_path):
+    now = [100]
+    cache = SourceCache(tmp_path / 'cache.json', clock=lambda: now[0])
+    row = dict(source_id='123', url='https://sdilej.cz/123/video', title='Test S01E01',
+               size_bytes=100000000, width=1920, height=1080, duration_sec=1400)
+    cache.remember('search', 'one', lambda: dict(candidates=[row], next=None), ttl=10)
+    cache.remember('search', 'two', lambda: dict(candidates=[row], next=None), ttl=10)
+    result = cache.search_candidates()
+    assert len(result) == 1
+    result[0]['title'] = 'Changed'
+    assert cache.search_candidates()[0]['title'] == 'Test S01E01'
+    now[0] = 111
+    assert cache.search_candidates() == []
+
+
 def test_resume_keeps_probes_and_verified_foreign_audio_but_rechecks_unresolved_candidate(tmp_path, monkeypatch):
     ep = episode()
     originals = [Candidate('123', 'https://sdilej.cz/123/test.mkv', f'{ep.series_title} {ep.code}',
@@ -158,3 +174,25 @@ def test_shared_audio_model_is_serialized_and_sessions_are_independent(tmp_path)
     assert peak[0] == 1
     worker.session.close()
     original.session.close()
+
+
+@pytest.mark.parametrize('fingerprints,expected_calls', [(['same', 'same'], 1), (['old', 'changed'], 2), ([None, None], 2)])
+def test_volatile_headers_reuse_both_media_and_speech_only_with_matching_content(tmp_path, monkeypatch, fingerprints, expected_calls):
+    ep = episode()
+    original = Candidate('123', 'https://sdilej.cz/123/test.mkv', f'{ep.series_title} {ep.code}',
+                         width=1920, height=1080, duration_sec=1400, size_bytes=20000000)
+    probes, samples = [], []
+    monkeypatch.setattr(episodes, 'parse_detail_html', lambda html, c: replace(c, download_url='signed', sample_url='signed'))
+    def resolve(session, candidate, *, evidence):
+        evidence.update(etag=None, needs_content_fingerprint=True)
+        return candidate
+    monkeypatch.setattr(episodes, 'resolve_original', resolve)
+    values = iter(fingerprints)
+    monkeypatch.setattr(episodes, 'sampled_content_fingerprint', lambda *args: next(values))
+    monkeypatch.setattr(episodes, 'probe_media', lambda _: probes.append(True) or media())
+    provider = episodes.EpisodeSourceProvider(None, cache=SourceCache(tmp_path / 'cache.json'),
+        detector=SimpleNamespace(detect=lambda _: samples.append(True) or ('cs', .99)))
+    monkeypatch.setattr(provider, '_get', lambda _: SimpleNamespace(text='detail'))
+    for _ in range(2):
+        assert provider._verify(ep, original).audio_language == 'cs'
+    assert len(probes) == len(samples) == expected_calls

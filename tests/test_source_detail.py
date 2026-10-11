@@ -82,3 +82,65 @@ def test_original_server_can_ignore_range_and_return_full_media():
                           download_url='https://sdilej.cz/download')
     result = resolve_original(SimpleNamespace(get=lambda *a, **kw: response), candidate)
     assert result.size_bytes == 865831506
+
+
+@pytest.mark.parametrize('etag,needs_samples', [(None, True), ('W/"weak"', True), ('"strong"', False)])
+def test_request_timestamp_is_not_a_stable_original_validator(etag, needs_samples):
+    from types import SimpleNamespace
+    from sdilej_serialy.source_detail import resolve_original
+    headers = {'Content-Range': 'bytes 0-0/2000000',
+               'Date': 'Sun, 11 Oct 2026 11:00:14 GMT',
+               'Last-Modified': 'Sun, 11 Oct 2026 11:00:15 GMT'}
+    if etag:
+        headers['ETag'] = etag
+    response = SimpleNamespace(status_code=206, headers=headers, url='https://cdn.example/original',
+                               raise_for_status=lambda: None, close=lambda: None)
+    evidence = {}
+    resolve_original(SimpleNamespace(get=lambda *a, **kw: response), Candidate(
+        '1', 'https://sdilej.cz/1/video', 'title', download_url='fast'), evidence=evidence)
+    assert 'last_modified' not in evidence
+    assert bool(evidence.get('needs_content_fingerprint')) == needs_samples
+    assert evidence['etag'] == etag
+
+
+def test_sampled_fingerprint_is_bounded_and_detects_same_size_middle_changes():
+    from types import SimpleNamespace
+    from sdilej_serialy.source_detail import sampled_content_fingerprint
+    requested, closed = [], []
+    middle = [b'a']
+    size = 2000000
+    def get(url, **kwargs):
+        assert url == 'https://new-cdn.example/original'
+        assert kwargs['stream'] and kwargs['headers']['Accept-Encoding'] == 'identity'
+        requested.append(kwargs['headers']['Range'])
+        start, end = map(int, requested[-1][6:].split('-'))
+        assert end - start + 1 == 65536
+        content = middle[0] * 65536 if start == size // 2 else b'x' * 65536
+        return SimpleNamespace(status_code=206, headers={'Content-Range': f'bytes {start}-{end}/{size}'},
+            iter_content=lambda **kw: iter([content]), close=lambda: closed.append(True))
+    candidate = Candidate('1', 'https://sdilej.cz/1/video', 'title', size_bytes=size,
+                          download_url='https://new-cdn.example/original')
+    session = SimpleNamespace(get=get)
+    first = sampled_content_fingerprint(session, candidate)
+    assert first == sampled_content_fingerprint(session, candidate)
+    middle[0] = b'b'
+    assert first != sampled_content_fingerprint(session, candidate)
+    assert len(requested) == len(closed) == 9
+
+
+@pytest.mark.parametrize('mode', ['ignored_range', 'wrong_range', 'short_body', 'error'])
+def test_unsupported_fingerprint_does_not_authorize_stale_cache_or_read_full_file(mode):
+    from types import SimpleNamespace
+    import requests
+    from sdilej_serialy.source_detail import sampled_content_fingerprint
+    closed, reads = [], []
+    def get(*args, **kwargs):
+        if mode == 'error':
+            raise requests.Timeout('unavailable')
+        return SimpleNamespace(status_code=200 if mode == 'ignored_range' else 206,
+            headers={'Content-Range': 'bytes 1-65536/2000000' if mode == 'wrong_range' else 'bytes 0-65535/2000000'},
+            iter_content=lambda **kw: reads.append(True) or iter([b'short']), close=lambda: closed.append(True))
+    candidate = Candidate('1', 'https://sdilej.cz/1/video', 'title', size_bytes=2000000, download_url='fast')
+    assert sampled_content_fingerprint(SimpleNamespace(get=get), candidate) is None
+    assert bool(reads) == (mode == 'short_body')
+    assert bool(closed) == (mode != 'error')

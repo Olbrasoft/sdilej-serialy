@@ -81,6 +81,42 @@ def test_existing_verified_source_is_reused_without_discovery(tmp_path, monkeypa
     assert result['prepared_this_run'] == 1
 
 
+def test_index_hint_prioritizes_work_but_never_bypasses_language_verification(tmp_path, monkeypatch):
+    from sdilej_serialy.source_cache import SourceCache
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    cache = SourceCache(tmp_path / 'state/source-evidence-cache.json')
+    hint = dict(source_id='999', url='https://sdilej.cz/999/video.mkv', title='Series 1 S01E06 CZ.mkv',
+                size_bytes=100, width=1920, height=1080, duration_sec=100)
+    cache.remember('search', 'test', lambda: dict(candidates=[hint], next=None))
+    calls = []
+    def inspect(ep):
+        calls.append(ep.identity)
+        return replace(discover(ep), audio_language='en', language_tier=LanguageTier.FOREIGN_AUDIO)
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=inspect, cache=cache),
+                               runtime_minutes=0, limit=1)
+    assert calls == ['1:1:6']
+    assert result['prepared_this_run'] == 0
+    assert not (directory / 'additions.jsonl').exists()
+
+
+def test_health_marks_only_idle_starved_accounts_and_separates_discovery_outcomes():
+    from datetime import UTC, datetime
+    now = datetime(2026, 10, 11, 12, tzinfo=UTC)
+    metrics = dict(ready=0, ready_by_account=dict(a=0, b=0))
+    target = dict(episodes={
+        'old-a': dict(target_account='a', upload=dict(uploaded_at='2026-10-11T10:00:00+00:00')),
+        'old-b': dict(target_account='b', upload=dict(uploaded_at='2026-10-11T10:00:00+00:00')),
+        'active': dict(target_account='a', claim=dict(worker_id='active')),
+    })
+    prep = dict(episodes={'check': dict(at='2026-10-11T11:50:00+00:00', status='deferred', reason='no_matches')})
+    health = replenish.pipeline_health(metrics, target, prep, now)
+    assert health['status'] == 'starved' and health['starved_accounts'] == ['b']
+    assert health['seconds_since_upload'] == dict(a=7200, b=7200)
+    assert health['preparation_outcomes_last_hour'] == dict(no_matches=1)
+    metrics.update(ready=1, ready_by_account=dict(a=0, b=1))
+    assert replenish.pipeline_health(metrics, target, prep, now)['status'] == 'buffered'
+
+
 def save_legacy(tmp_path, number=5, height=1080):
     manifest = SourceManifest(tmp_path / 'manifests/selected-episodes.jsonl')
     row = source(number=number, height=height)
@@ -263,8 +299,15 @@ def test_unavailable_series_yields_to_another_series_without_marking_unsearched_
     state = json.loads((tmp_path / 'state/reserve-preparation.json').read_text())
     assert '1:1:8' not in state['episodes']
     assert load_jsonl(directory / 'additions.jsonl')[0]['identity'] == '2:1:15'
-    # The next run tries the next unsearched episodes, not a permanent series ban.
+    # A restart must not immediately repeat a known-unproductive series.
     calls.clear()
+    replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)
+    assert calls == []
+    state_path = tmp_path / 'state/reserve-preparation.json'
+    state = json.loads(state_path.read_text())
+    state['series_discovery']['1']['retry_after'] = '2000-01-01T00:00:00+00:00'
+    pipeline.atomic_json(state_path, state)
+    # After the bounded pause, the next unsearched episodes remain eligible.
     replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=provider), runtime_minutes=0)
     assert calls == ['1:1:8', '1:1:9', '1:1:10']
 

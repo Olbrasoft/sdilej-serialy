@@ -117,6 +117,16 @@ class SourceCache:
         with self.lock:
             return {k: round(v, 2) for k, v in self.stats.items()}
 
+    def search_candidates(self):
+        """Copy only live public results for cross-episode scheduling hints."""
+        with self.lock:
+            now = self.clock()
+            rows = {r['source_id']: dict(r) for entry in self.entries.values()
+                    if entry.get('namespace') == 'search' and entry['expires_at'] > now
+                    and safe_value('search', entry['value'])
+                    for r in entry['value']['candidates']}
+            return list(rows.values())
+
 
 class RequestGate:
     """Keep the existing site-wide request spacing across source workers."""

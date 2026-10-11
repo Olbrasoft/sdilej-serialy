@@ -32,7 +32,7 @@ from sdilej_to_prehrajto.sdilej import (
 )
 
 from .models import Episode
-from .source_detail import parse_detail_html, resolve_original
+from .source_detail import parse_detail_html, resolve_original, sampled_content_fingerprint
 from .quality import quality_acceptable, rank_candidates
 from .numbering import mapped_episode_title
 from .auth import login_with_retry
@@ -280,7 +280,11 @@ class EpisodeSourceProvider:
             self.request_gate.wait()
         detail = (resolve_original(self.session, detail, evidence=evidence) if self.cache is not None
                   else resolve_original(self.session, detail))
-        fingerprint = media_key(detail) + json.dumps(evidence, sort_keys=True)
+        reusable = True
+        if evidence.pop('needs_content_fingerprint', False):
+            evidence['content_fingerprint'] = sampled_content_fingerprint(self.session, detail)
+            reusable = evidence['content_fingerprint'] is not None
+        fingerprint = media_key(detail) + json.dumps(evidence, sort_keys=True) if reusable else None
         def inspect():
             media = probe_media(detail.download_url)
             return {k: media[k] for k in ('video_codec', 'width', 'height', 'duration_sec') if k in media}
@@ -289,7 +293,7 @@ class EpisodeSourceProvider:
                     or (all(k in media for k in ('video_codec', 'width', 'height'))
                         and not any(media[k] for k in ('video_codec', 'width', 'height'))))
         media = (self.cache.remember('media', fingerprint, inspect, cacheable=complete)
-                 if self.cache is not None else inspect())
+                 if self.cache is not None and fingerprint is not None else inspect())
         # A successful ffprobe with no selected video stream returns explicit
         # empty video fields (e.g. an AC3 file mislabeled .mkv). It cannot be an
         # episode candidate. An empty result is a probe failure and stays fatal
@@ -334,8 +338,9 @@ class EpisodeSourceProvider:
                 if probability < 0.65:
                     raise LanguageDetectionError("Whisper language confidence is too low")
                 return dict(language=language, probability=probability)
-        key = 'whisper-small-consensus-v1:' + getattr(detail, '_cache_fingerprint', media_key(detail))
-        verified = self.cache.remember('audio', key, detect) if self.cache is not None else detect()
+        fingerprint = getattr(detail, '_cache_fingerprint', media_key(detail))
+        key = 'whisper-small-consensus-v1:' + fingerprint if fingerprint is not None else None
+        verified = self.cache.remember('audio', key, detect) if self.cache is not None and key is not None else detect()
         language, probability = verified['language'], verified['probability']
         return replace(
             detail,

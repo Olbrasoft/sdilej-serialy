@@ -26,10 +26,32 @@ from .source_cache import RequestGate, SourceCache
 from .source_workers import inspected_results
 from .source_repair import (REPAIR_SEARCH_REVISION, SourceRepairFeed, fingerprint,
                             repairable, repair_entry, repaired_row)
+from .discovery_index import CandidateIndex, indexed_order, paused_series as saved_pauses, record_series_result
 
 PREPARATION_REVISION = 3
 SAVED_REVIEW_REVISION = 1
 MAX_SERIES_MISSES = 3
+
+
+def pipeline_health(metrics, target, preparation, now):
+    """Report account progress separately from a running/green producer job."""
+    records = list(target.get('episodes', {}).values())
+    active = {r.get('target_account') for r in records if r.get('claim')}
+    ages = {}
+    for account in ACCOUNTS:
+        latest = max((r['upload']['uploaded_at'] for r in records
+                      if r.get('target_account') == account and r.get('upload', {}).get('uploaded_at')),
+                     default=None)
+        ages[account] = max(0, int((now - datetime.fromisoformat(latest)).total_seconds())) if latest else None
+    starved = [a for a in ACCOUNTS if not metrics['ready_by_account'].get(a)
+               and a not in active and ages[a] is not None and ages[a] >= 1800]
+    cutoff = (now - timedelta(hours=1)).isoformat()
+    outcomes = Counter(r.get('reason', r['status'])
+        for lane in ('episodes', 'repairs') for r in preparation.get(lane, {}).values()
+        if r.get('at', '') >= cutoff)
+    return dict(status='starved' if starved else 'waiting_for_sources' if not metrics['ready'] else 'buffered',
+                starved_accounts=starved, seconds_since_upload=ages,
+                preparation_outcomes_last_hour=dict(outcomes))
 
 
 def repaired_preparation(record):
@@ -50,7 +72,7 @@ def needs_saved_review(row, record):
     return legacy_czech(row) and record.get('saved_review_revision') != SAVED_REVIEW_REVISION
 
 
-def reserve_order(catalog, records, saved, paused, productive_seasons=None):
+def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, index=None, refresh=None, progress=None):
     """Drain the known-source backlog before broad discovery, HD originals first."""
     fast, low, ordinary = [], [], []
     for metadata in catalog:
@@ -63,7 +85,13 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None):
     for metadata in fast + low:
         if metadata['series_id'] not in paused:
             yield metadata
-    yield from preparation_order(ordinary, records, paused, productive_seasons)
+    if index is None:
+        yield from preparation_order(ordinary, records, paused, productive_seasons)
+    else:
+        fresh = {Episode.from_dict(m).identity for m in ordinary
+                 if not records.get(Episode.from_dict(m).identity)
+                 or repaired_preparation(records[Episode.from_dict(m).identity])}
+        yield from indexed_order(ordinary, fresh, paused, index, refresh, progress)
 
 
 def valid_czech(episode, candidate):
@@ -182,6 +210,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
     if state.get('schema_version') != 1:
         raise ValueError('Unsupported reserve preparation state')
     state.setdefault('repairs', {})
+    state.setdefault('series_discovery', {})
+    state.setdefault('discovery_progress', {})
     repair_feed = SourceRepairFeed(plan, queue, lambda: repairs_path.read_text() if repairs_path.exists() else '')
     repair_feed.refresh()
     target_state = json.loads((directory / 'state.json').read_text())
@@ -214,6 +244,13 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             saved_groups[episode_key(saved['display_name'])][saved['selected']['source_id']] = saved
     additions = load_jsonl(additions_path) if additions_path.exists() else []
     cache = getattr(provider, 'cache', None)
+    index = CandidateIndex(catalog) if callable(getattr(cache, 'search_candidates', None)) else None
+
+    def refresh_index():
+        if index is not None:
+            index.observe(cache.search_candidates())
+
+    refresh_index()
     checkpoint_paths = (manifest_path, additions_path, repairs_path, report_path) + ((cache.path,) if cache else ())
     persister = GitCheckpointPersister(root, checkpoint_paths, min_interval_seconds=15) if persist else None
     started = time.monotonic()
@@ -237,7 +274,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             continue
         eligible.append(metadata)
     series_misses = Counter()
-    paused_series = set()
+    paused_series = set() if selected_ids else saved_pauses(state['series_discovery'], datetime.now(UTC))
     productive_seasons = recent_productive_seasons(state, datetime.now(UTC))
     pending_checkpoint = 0
     last_checkpoint = time.monotonic()
@@ -266,6 +303,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         if cache:
             cache.save()
         metrics = current_stock()
+        target = current_target_state()
+        health = pipeline_health(metrics, target, state, datetime.now(UTC))
         if maintain_reserve and metrics['ready'] >= target_stock:
             state['refilling'] = False
         state['updated_at'] = now_iso()
@@ -278,6 +317,9 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                       available_this_run=published + repaired,
                       available_per_hour=round((published + repaired) * 3600 / elapsed, 2),
                       low_water=low_water, target_stock=target_stock, stock=metrics,
+                      health=health,
+                      indexed_candidates_in_scan=sum(index.rank(Episode.from_dict(m).identity) < 2 for m in eligible) if index else 0,
+                      discovery_progress=dict(state['discovery_progress']),
                       cache=cache.metrics() if cache else {},
                       audio_pipeline=(provider.detector.metrics()
                           if callable(getattr(getattr(provider, 'detector', None), 'metrics', None)) else {}),
@@ -288,6 +330,9 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                           r['status'] for r in state['repairs'].values())),
                       statuses=dict(Counter(r['status'] for r in state['episodes'].values())))
         atomic_json(report_path, report)
+        if health['status'] == 'starved':
+            print('::warning::An account has no ready source, active transfer or completed upload for 30 minutes; '
+                  'source discovery is still active, not evidence of healthy upload throughput.', flush=True)
         if persister:
             persist_source_checkpoint(persister, state_path)
         pending_checkpoint = 0
@@ -299,7 +344,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             print(f'source_workers_busy workers={workers} prepared={published} repaired={repaired}', flush=True)
 
     def new_tasks():
-        for metadata in reserve_order(eligible, state['episodes'], manifest.rows, paused_series, productive_seasons):
+        for metadata in reserve_order(eligible, state['episodes'], manifest.rows, paused_series, productive_seasons,
+                index=index, refresh=refresh_index, progress=state['discovery_progress']):
             episode = Episode.from_dict(metadata)
             key = episode_key(f'{episode.series_title} {episode.code}')
             if episode.identity in identities or key in keys:
@@ -316,7 +362,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
     def repair_tasks():
         target = current_target_state()
         already_ready = repair_feed.ready(target)
-        for row in queue:
+        ordered = sorted(queue, key=lambda r: (index.rank(r['identity']), r['queue_rank'])) if index else queue
+        for row in ordered:
             identity = row['identity']
             if not selected_ids and row['episode']['series_id'] in paused_series:
                 continue
@@ -339,14 +386,15 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         lanes = [iter(repair_tasks()), iter(new_tasks())]
         active = [True, True]
         while any(active):
-            for index, budget in ((0, 2), (1, 4)):
+            budgets = ((0, 1), (1, 8)) if index is not None and initial_stock['ready'] < low_water else ((0, 2), (1, 4))
+            for lane_index, budget in budgets:
                 for _ in range(budget):
-                    if not active[index]:
+                    if not active[lane_index]:
                         break
                     try:
-                        yield next(lanes[index])
+                        yield next(lanes[lane_index])
                     except StopIteration:
-                        active[index] = False
+                        active[lane_index] = False
 
     results = inspected_results(tasks(), provider, inspect_preparation, workers=workers,
                                 limit=limit, deadline=deadline, tick=tick)
@@ -420,6 +468,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                 if not selected_ids and series_misses[episode.series_id] >= MAX_SERIES_MISSES:
                     paused_series.add(episode.series_id)
             state['repairs' if repairing_source else 'episodes'][episode.identity] = record
+            record_series_result(state['series_discovery'], episode, record, datetime.now(UTC))
             attempted += 1
             pending_checkpoint += 1
             if (pending_checkpoint >= checkpoint_batch or fatal_error
