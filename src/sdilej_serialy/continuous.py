@@ -75,6 +75,7 @@ def upload_continuously(
     refill_rows: Callable[[], list[dict] | None] | None = None,
     refill_interval_seconds: float = 15,
     idle_refill_seconds: float = 0,
+    keep_waiting: Callable[[], bool] | None = None,
     require_original_size: bool = False,
     target_login: Callable[[], object] | None = None,
     stop_event: threading.Event | None = None,
@@ -127,8 +128,10 @@ def upload_continuously(
                         idle_since = time.monotonic()
                     elif in_flight:
                         idle_since = None
-                    if (refill_rows is None or refill_closed
-                            or (in_flight == 0 and time.monotonic() - idle_since >= idle_refill_seconds)):
+                    idle_expired = in_flight == 0 and time.monotonic() - idle_since >= idle_refill_seconds
+                    peer_active = (idle_expired and idle_refill_seconds > 0
+                                   and keep_waiting is not None and keep_waiting())
+                    if refill_rows is None or refill_closed or idle_expired and not peer_active:
                         return None
                     if not refilling:
                         refilling = True

@@ -206,6 +206,11 @@ class SharedState(EpisodeState):
         self.assignments = assignments
         self.source_repairs = None
 
+    def other_account_active(self, alias):
+        with self._lock:
+            return any(r.get('claim') and r.get('target_account') != alias
+                       for r in self.data['episodes'].values())
+
     def retry_deferred_identities(self):
         with self._lock:
             fresh = self.source_repairs.ready(self.data) if self.source_repairs else set()
@@ -335,7 +340,8 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
                     target_login=lambda: target_session(email, password, expected_email=email), stop_event=stop,
                     select_source=select_source, recover_source_errors=True,
                     recover_target_errors=True, transient_pause=transient_pause,
-                    **({'refill_rows': lambda: reserve.take(alias), 'idle_refill_seconds': idle_refill_seconds}
+                    **({'refill_rows': lambda: reserve.take(alias), 'idle_refill_seconds': idle_refill_seconds,
+                        'keep_waiting': lambda: state.other_account_active(alias)}
                        if mode == 'full' else {}))
             except SourceUnavailable:
                 # No target was allocated in this account worker. The other

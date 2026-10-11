@@ -302,3 +302,13 @@ Short-original audio evidence uses a new cache key; media evidence is retained.
 Preparation revision 4 rechecks previously inconclusive, known-under-15-minute
 episodes once without the old episode/series cooldown. It does not release other
 failures or target reservations. Newly inconclusive checks restore normal backoff.
+
+### Idle account while its peer transfers
+
+The five-minute idle refill window no longer closes an account's workers while
+the other account still has an active transfer claim. They continue polling at
+the normal interval and can consume later verified additions/repairs without
+waiting for the peer's large file and a whole new batch. Once neither account
+has active work, the original bounded idle exit applies. Historical uncertain
+allocations do not prolong waiting; stop signals, queue integrity failures and
+the 25-episode/account budget still close refill. No extra workers are created.
