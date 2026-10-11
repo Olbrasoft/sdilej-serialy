@@ -7760,11 +7760,14 @@
       "retry_after": "2026-10-12T09:47:39.218196+00:00"
     },
     "1265:4:5": {
-      "at": "2026-10-01T21:44:40.471914+00:00",
+      "at": "2026-10-11T11:09:51.341003+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T21:45:25.719300+00:00"
+      "preparation_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 96.78,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-12T11:11:28.118710+00:00"
     },
     "1265:4:6": {
       "at": "2026-10-01T21:45:29.011952+00:00",
@@ -133092,7 +133095,7 @@
       "retry_after": "2026-10-12T11:03:24.167712+00:00"
     }
   },
-  "updated_at": "2026-10-11T11:10:30.809117+00:00",
+  "updated_at": "2026-10-11T11:11:34.935753+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -134959,16 +134962,16 @@
       "queue_rank": 6858
     },
     "901:1:6": {
-      "at": "2026-10-11T09:48:19.236828+00:00",
-      "status": "deferred",
+      "at": "2026-10-11T11:10:27.323061+00:00",
+      "status": "prepared",
       "preparation_revision": 3,
       "method": "source_repair",
       "source_repair_revision": 2,
-      "reason": "no_matches",
-      "elapsed_seconds": 60.94,
+      "elapsed_seconds": 58.21,
       "repair_fingerprint": "072ec32ece5d5d6d887e1161dea2837eb71d0dc1de8251447831ac09311b0257",
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-11T10:49:20.184829+00:00"
+      "retry_after": "2026-10-11T12:11:26.095349+00:00",
+      "source_id": "27204882",
+      "queue_rank": 6863
     },
     "901:1:8": {
       "at": "2026-10-11T09:48:34.063892+00:00",
@@ -136677,7 +136680,7 @@
   "series_discovery": {
     "901": {
       "misses": [],
-      "updated_at": "2026-10-11T11:08:10.518780+00:00"
+      "updated_at": "2026-10-11T11:11:26.095380+00:00"
     },
     "9685": {
       "misses": [
@@ -136693,6 +136696,12 @@
         "1611:6:4"
       ],
       "updated_at": "2026-10-11T11:09:50.763993+00:00"
+    },
+    "1265": {
+      "misses": [
+        "1265:4:5"
+      ],
+      "updated_at": "2026-10-11T11:11:28.118743+00:00"
     }
   },
   "discovery_progress": {
