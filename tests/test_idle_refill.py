@@ -47,6 +47,24 @@ def test_empty_account_polling_is_bounded(tmp_path, monkeypatch):
     assert polls and result['queued'] == 0
 
 
+def test_unvalidated_refill_token_cannot_requeue_a_known_identity(tmp_path, monkeypatch):
+    options = stub(monkeypatch)
+    row = source()
+    state = EpisodeState(tmp_path / 'state.json')
+    claims = []
+    original_claim = state.claim
+    def claim(*args, **kwargs):
+        claims.append(1)
+        return original_claim(*args, **kwargs)
+    monkeypatch.setattr(state, 'claim', claim)
+    def unavailable(*args):
+        raise continuous.SourceUnavailable('Unavailable original')
+    monkeypatch.setattr(continuous, 'prepare_source', unavailable)
+    continuous.upload_continuously([row], state, recover_source_errors=True,
+        refill_rows=lambda: [dict(row, _dispatch_repair_token='untrusted')], **options)
+    assert claims == [1]
+
+
 def test_idle_account_keeps_refilling_while_peer_transfers_without_extra_workers(tmp_path, monkeypatch):
     options = stub(monkeypatch)
     row = source()

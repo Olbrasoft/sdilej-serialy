@@ -166,12 +166,15 @@ class LiveReserve:
         self.root, self.generation, self.rows, self.state = root, generation, rows, state
         self.limit, self.persister = limit, persister
         self.delivered = {a: {r['identity'] for r in batches[a]} for a in ACCOUNTS}
+        self.versions = {a: {(r['identity'], state.source_revision(r['identity']))
+                             for r in batches[a]} for a in ACCOUNTS}
+        self.dispatched = {a: len(batches[a]) for a in ACCOUNTS}
         self.lock = threading.Lock()
         self.last_read = float('-inf')
 
     def take(self, alias):
         with self.lock, self.state._lock:
-            if len(self.delivered[alias]) >= self.limit:
+            if self.dispatched[alias] >= self.limit:
                 return None
             if time.monotonic() - self.last_read >= 15:
                 path = directory_for(self.root, self.generation) / 'additions.jsonl'
@@ -186,8 +189,13 @@ class LiveReserve:
                 if getattr(self.state, 'source_repairs', None):
                     self.state.source_repairs.refresh(force=True)
                 self.last_read = time.monotonic()
-            fresh = self.state.source_repairs.ready(self.state.data) if getattr(self.state, 'source_repairs', None) else set()
-            blocked = uploaded_identities(self.state) | self.state.retry_deferred_identities() | self.delivered[alias]
+            tokens = (self.state.source_repairs.ready_tokens(self.state.data)
+                      if getattr(self.state, 'source_repairs', None) else {})
+            fresh = set(tokens)
+            renewed = {identity for identity, token in tokens.items()
+                       if (identity, token) not in self.versions[alias]}
+            blocked = (uploaded_identities(self.state) | self.state.retry_deferred_identities()
+                       | (self.delivered[alias] - renewed))
             # Retain uncertain allocations, and do not open a new retry lane
             # beyond the two SourceUnavailable retries selected at batch start.
             blocked.update(identity for identity, record in self.state.data['episodes'].items()
@@ -195,9 +203,15 @@ class LiveReserve:
                            or (identity not in fresh and not record.get('prepared_target') and record.get('attempts')
                                and record['attempts'][-1]['error'] == 'SourceUnavailable'))
             chosen = account_batch(self.rows, self.state, blocked, alias,
-                                   self.limit - len(self.delivered[alias]), fresh)
+                                   self.limit - self.dispatched[alias], fresh)
             self.delivered[alias].update(r['identity'] for r in chosen)
-            return chosen
+            self.versions[alias].update((r['identity'], tokens.get(r['identity'])) for r in chosen)
+            self.dispatched[alias] += len(chosen)
+            # A dispatch token permits one retry of a newly verified source,
+            # not replay of an allocated/uploaded episode. Select the actual
+            # replacement only after the global claim, as for initial rows.
+            return [dict(r, _dispatch_repair_token=tokens[r['identity']])
+                    if r['identity'] in tokens else r for r in chosen]
 
 
 class SharedState(EpisodeState):
@@ -205,6 +219,10 @@ class SharedState(EpisodeState):
         super().__init__(path, **kwargs)
         self.assignments = assignments
         self.source_repairs = None
+
+    def source_revision(self, identity):
+        with self._lock:
+            return self.source_repairs.ready_tokens(self.data).get(identity) if self.source_repairs else None
 
     def other_account_active(self, alias):
         with self._lock:

@@ -312,3 +312,12 @@ waiting for the peer's large file and a whole new batch. Once neither account
 has active work, the original bounded idle exit applies. Historical uncertain
 allocations do not prolong waiting; stop signals, queue integrity failures and
 the 25-episode/account budget still close refill. No extra workers are created.
+
+A validated, unused repair token can also re-dispatch an episode whose old
+original failed earlier in the same batch, before any target allocation. Both
+the reserve and worker deduplicate dispatch versions; each repair retry consumes
+one of the 25 dispatch slots. The token is rechecked against the repair feed and
+the global episode claim still precedes source selection and durable token
+consumption. Uploaded, allocated, active and already-consumed repairs cannot be
+replayed. This avoids waiting for an unrelated large transfer and batch restart
+merely to consume an already verified replacement.

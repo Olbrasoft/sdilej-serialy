@@ -237,3 +237,95 @@ def test_known_source_empty_search_uses_short_backoff_and_recovers_old_daily_exc
     assert 14 * 60 < delay <= 15 * 60
     assert replenish.prepare(tmp_path, 'test', provider, **kwargs)['attempted_this_run'] == 0
     assert not (directory / 'source-repairs.jsonl').exists()
+
+
+def test_live_repair_retries_delivered_identity_once_per_version_within_dispatch_budget(tmp_path, monkeypatch):
+    directory, plan, rows = setup_plan(tmp_path, monkeypatch, count=4)
+    for row in rows:
+        failed(directory, row)
+    base = rows[0]
+    entries = []
+    feed = SourceRepairFeed(plan, rows, lambda: '\n'.join(json.dumps(e) for e in entries))
+    feed.refresh()
+    state = dual.SharedState(directory / 'state.json', {r['identity']: r['target_account'] for r in rows})
+    state.source_repairs = feed
+    live = dual.LiveReserve(tmp_path, 'test', rows, state, dict(a=[base], b=[]), 3)
+    assert live.take('a') == []
+    for source_id in ('999', '998'):
+        entry = repair_entry(base, replacement(base, source_id), plan)
+        entries[:] = [entry]
+        live.last_read = float('-inf')
+        chosen = live.take('a')
+        assert len(chosen) == 1 and chosen[0]['identity'] == base['identity']
+        assert chosen[0]['_dispatch_repair_token'] == entry['source_repair']['token']
+        assert chosen[0]['selected'] == base['selected']  # selection follows the global claim
+        assert not live.take('a')
+        ep = Episode.from_dict(base['episode'])
+        assert state.claim(ep, 'worker')
+        state.row(ep)['source_repair_token'] = entry['source_repair']['token']
+        state.failure(ep, continuous.SourceUnavailable('Replacement unavailable'))
+        assert not feed.ready_tokens(state.data)
+    entries[:] = [repair_entry(base, replacement(base, '997'), plan)]
+    live.last_read = float('-inf')
+    assert live.take('a') is None
+    assert live.dispatched['a'] == 3 and len(live.delivered['a']) == 1
+
+
+@pytest.mark.parametrize('protected', ['upload', 'prepared_target', 'claim'])
+def test_live_repair_never_replays_protected_delivered_identity(tmp_path, monkeypatch, protected):
+    directory, plan, rows = setup_plan(tmp_path, monkeypatch, count=4)
+    for row in rows:
+        failed(directory, row)
+    base = rows[0]
+    entries = []
+    feed = SourceRepairFeed(plan, rows, lambda: '\n'.join(json.dumps(e) for e in entries))
+    feed.refresh()
+    state = dual.SharedState(directory / 'state.json', {r['identity']: r['target_account'] for r in rows})
+    state.source_repairs = feed
+    live = dual.LiveReserve(tmp_path, 'test', rows, state, dict(a=[base], b=[]), 3)
+    entries.append(repair_entry(base, replacement(base), plan))
+    state.data['episodes'][base['identity']][protected] = dict(target_video_id='123', worker_id='active')
+    assert live.take('a') == []
+    assert not feed.ready_tokens(state.data)
+
+
+def test_worker_accepts_new_verified_repair_after_source_failure_in_same_batch(tmp_path, monkeypatch):
+    directory, plan, rows = setup_plan(tmp_path, monkeypatch, count=4)
+    for row in rows[1:]:
+        failed(directory, row)
+    base = rows[0]
+    entries = []
+    feed = SourceRepairFeed(plan, rows, lambda: '\n'.join(json.dumps(e) for e in entries))
+    feed.refresh()
+    state = dual.SharedState(directory / 'state.json', {r['identity']: r['target_account'] for r in rows})
+    state.source_repairs = feed
+    live = dual.LiveReserve(tmp_path, 'test', rows, state, dict(a=[base], b=[]), 2)
+    monkeypatch.setattr(continuous.EpisodeSourceProvider, 'authenticated', lambda *a: SimpleNamespace(session=object()))
+    monkeypatch.setattr(continuous, 'existing_episode', lambda *a: None)
+    monkeypatch.setattr(continuous, 'target_confirmed', lambda *a: True)
+    monkeypatch.setattr(continuous.prehrajto, 'uploaded_video_count', lambda *a: 1)
+    tried, uploaded = [], []
+    def prepare(provider, candidate, require_size):
+        tried.append(candidate.source_id)
+        if candidate.source_id != '999':
+            entries.append(repair_entry(base, replacement(base), plan))
+            live.last_read = float('-inf')
+            raise continuous.SourceUnavailable('Old original unavailable')
+        return candidate
+    monkeypatch.setattr(continuous, 'prepare_source', prepare)
+    def relay(target, session, candidate, name, description, on_prepared):
+        uploaded.append(candidate.source_id)
+        on_prepared('123', candidate.size_bytes)
+        return SimpleNamespace(video_id='123')
+    monkeypatch.setattr(continuous.prehrajto, 'relay_upload', relay)
+    result = continuous.upload_continuously([base], state, workers=2,
+        source_email='x', source_password='x', target_email='x', target_password='x',
+        require_original_size=True, target_login=lambda: object(), select_source=feed.select,
+        recover_source_errors=True, refill_rows=lambda: live.take('a'),
+        idle_refill_seconds=.1, refill_interval_seconds=.001)
+    assert tried == [base['selected']['source_id'], '999'] and uploaded == ['999']
+    assert result['queued'] == result['uploaded_or_reconciled'] == 1
+    record = state.data['episodes'][base['identity']]
+    assert record['source_repair_token'] == entries[0]['source_repair']['token']
+    assert record['target_account'] == base['target_account']
+    assert len(record['attempts']) == 1 and record['upload']['target_video_id'] == '123'

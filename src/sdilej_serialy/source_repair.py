@@ -97,12 +97,15 @@ class SourceRepairFeed:
             self.entries = entries
             self.last_read = time.monotonic()
 
-    def ready(self, target_state):
+    def ready_tokens(self, target_state):
         with self.lock:
-            return {identity for identity, row in self.entries.items()
+            return {identity: row['source_repair']['token'] for identity, row in self.entries.items()
                     if repairable(target_state.get('episodes', {}).get(identity, {}))
                     and target_state['episodes'][identity].get('source_repair_token')
                     != row['source_repair']['token']}
+
+    def ready(self, target_state):
+        return set(self.ready_tokens(target_state))
 
     def select(self, row):
         self.refresh()

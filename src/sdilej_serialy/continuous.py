@@ -91,6 +91,7 @@ def upload_continuously(
     released = state.release_orphaned_claims()
     pending = collections.deque(rows)
     known_identities = {str(row["identity"]) for row in rows}
+    known_versions = {(str(row['identity']), row.get('_dispatch_repair_token')) for row in rows}
     queue_condition = threading.Condition()
     in_flight = 0
     refilling = False
@@ -165,8 +166,15 @@ def upload_continuously(
                             return None
                         for row in fresh_rows:
                             identity = str(row["identity"])
-                            if identity in known_identities:
+                            token = row.get('_dispatch_repair_token')
+                            version = (identity, token)
+                            if version in known_versions:
                                 continue
+                            if identity in known_identities:
+                                revision = getattr(state, 'source_revision', None)
+                                if not token or not callable(revision) or revision(identity) != token:
+                                    continue
+                            known_versions.add(version)
                             known_identities.add(identity)
                             pending.append(row)
                             added += 1
