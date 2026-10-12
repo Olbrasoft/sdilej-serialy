@@ -22566,14 +22566,14 @@
       "retry_after": "2026-10-13T09:55:10.348188+00:00"
     },
     "1392:1:8": {
-      "at": "2026-10-10T11:34:44.789361+00:00",
+      "at": "2026-10-12T10:05:17.373799+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 4,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 3.73,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-11T11:34:48.522651+00:00"
+      "elapsed_seconds": 13.14,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-13T10:05:30.515277+00:00"
     },
     "1392:1:9": {
       "at": "2026-10-10T12:29:58.749256+00:00",
@@ -130235,14 +130235,14 @@
       "retry_after": "2026-10-12T08:26:11.880620+00:00"
     },
     "561:10:1": {
-      "at": "2026-10-11T08:25:38.230670+00:00",
+      "at": "2026-10-12T10:02:49.466970+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 43.64,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T08:26:21.879468+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 115.3,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-12T10:34:44.771957+00:00"
     },
     "561:10:3": {
       "at": "2026-10-11T08:25:56.169582+00:00",
@@ -151108,9 +151108,29 @@
       "elapsed_seconds": 353.36,
       "source_id": "18123154",
       "queue_rank": 18351
+    },
+    "8993:1:1": {
+      "at": "2026-10-12T10:04:45.156370+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 19.27,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-13T10:05:04.425833+00:00"
+    },
+    "2773:1:1": {
+      "at": "2026-10-12T10:05:04.829097+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 11.93,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-13T10:05:16.758983+00:00"
     }
   },
-  "updated_at": "2026-10-12T10:04:25.353527+00:00",
+  "updated_at": "2026-10-12T10:05:33.475920+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -154818,9 +154838,10 @@
     },
     "1392": {
       "misses": [
-        "1392:1:7"
+        "1392:1:7",
+        "1392:1:8"
       ],
-      "updated_at": "2026-10-12T09:55:10.348224+00:00"
+      "updated_at": "2026-10-12T10:05:30.515301+00:00"
     },
     "1831": {
       "misses": [
@@ -155600,9 +155621,10 @@
     },
     "561": {
       "misses": [
-        "561:8:4"
+        "561:8:4",
+        "561:10:1"
       ],
-      "updated_at": "2026-10-12T10:03:23.754868+00:00"
+      "updated_at": "2026-10-12T10:04:44.771975+00:00"
     },
     "593": {
       "misses": [],
@@ -159874,15 +159896,27 @@
         "3194:1:1"
       ],
       "updated_at": "2026-10-12T09:54:08.337879+00:00"
+    },
+    "8993": {
+      "misses": [
+        "8993:1:1"
+      ],
+      "updated_at": "2026-10-12T10:05:04.425891+00:00"
+    },
+    "2773": {
+      "misses": [
+        "2773:1:1"
+      ],
+      "updated_at": "2026-10-12T10:05:16.759009+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 4746,
+    "last_series": 2773,
     "last_series_order": [
       false,
       -8.1,
-      -8116,
-      4746
+      -8019,
+      2773
     ]
   }
 }
