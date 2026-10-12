@@ -19383,14 +19383,14 @@
       "retry_after": "2026-10-13T07:22:46.480189+00:00"
     },
     "1344:2:5": {
-      "at": "2026-10-10T12:28:58.604524+00:00",
+      "at": "2026-10-12T07:25:34.425644+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 4,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 3.81,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-11T12:29:02.414381+00:00"
+      "elapsed_seconds": 17.72,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-13T07:25:52.148853+00:00"
     },
     "1344:2:6": {
       "at": "2026-10-10T12:29:00.628027+00:00",
@@ -150099,9 +150099,38 @@
       "elapsed_seconds": 89.36,
       "source_id": "33977540",
       "queue_rank": 18270
+    },
+    "1771:1:1": {
+      "at": "2026-10-12T07:24:52.353567+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 23.94,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-13T07:25:24.220762+00:00"
+    },
+    "1177:1:4": {
+      "at": "2026-10-12T07:24:29.145786+00:00",
+      "status": "prepared",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "elapsed_seconds": 98.64,
+      "source_id": "28647319",
+      "queue_rank": 18271
+    },
+    "10234:37:9": {
+      "at": "2026-10-12T07:25:24.529238+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 45.46,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-13T07:26:09.991726+00:00"
     }
   },
-  "updated_at": "2026-10-12T07:25:16.786469+00:00",
+  "updated_at": "2026-10-12T07:26:11.391683+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -152890,16 +152919,16 @@
       "retry_after": "2026-10-12T08:06:57.867977+00:00"
     },
     "3303:1:2": {
-      "at": "2026-10-12T01:43:36.733025+00:00",
+      "at": "2026-10-12T07:24:48.383522+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "source_repair",
       "source_repair_revision": 2,
       "reason": "no_matches",
-      "elapsed_seconds": 43.02,
+      "elapsed_seconds": 45.74,
       "repair_fingerprint": "2d8c315c03501b59eee2e201b57d44bb4869a62823cc5a318b959d4da8608a84",
-      "consecutive_failures": 6,
-      "retry_after": "2026-10-12T02:44:19.759134+00:00"
+      "consecutive_failures": 7,
+      "retry_after": "2026-10-12T08:25:34.128807+00:00"
     },
     "3303:1:3": {
       "at": "2026-10-12T01:45:51.460051+00:00",
@@ -153778,9 +153807,11 @@
     "1344": {
       "misses": [
         "1344:2:3",
-        "1344:2:4"
+        "1344:2:4",
+        "1344:2:5"
       ],
-      "updated_at": "2026-10-12T07:22:46.480244+00:00"
+      "updated_at": "2026-10-12T07:25:52.148882+00:00",
+      "retry_after": "2026-10-12T11:25:52.148882+00:00"
     },
     "2844": {
       "misses": [
@@ -154598,7 +154629,7 @@
     },
     "1177": {
       "misses": [],
-      "updated_at": "2026-10-12T07:24:52.057531+00:00"
+      "updated_at": "2026-10-12T07:26:07.788793+00:00"
     },
     "5657": {
       "misses": [
@@ -154702,9 +154733,10 @@
     },
     "3303": {
       "misses": [
-        "3303:1:1"
+        "3303:1:1",
+        "3303:1:2"
       ],
-      "updated_at": "2026-10-12T07:06:57.868006+00:00"
+      "updated_at": "2026-10-12T07:25:34.128838+00:00"
     },
     "142": {
       "misses": [
@@ -158661,15 +158693,27 @@
         "6141:1:2"
       ],
       "updated_at": "2026-10-12T07:22:08.464028+00:00"
+    },
+    "1771": {
+      "misses": [
+        "1771:1:1"
+      ],
+      "updated_at": "2026-10-12T07:25:24.220805+00:00"
+    },
+    "10234": {
+      "misses": [
+        "10234:37:9"
+      ],
+      "updated_at": "2026-10-12T07:26:09.991754+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 1771,
+    "last_series": 10234,
     "last_series_order": [
       false,
       -8.1,
-      -17665,
-      1771
+      -17326,
+      10234
     ]
   }
 }
