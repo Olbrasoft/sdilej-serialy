@@ -24124,14 +24124,14 @@
       "queue_rank": 9681
     },
     "595:6:3": {
-      "at": "2026-10-10T10:21:36.969990+00:00",
+      "at": "2026-10-12T23:25:16.979817+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 4,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 14.17,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-11T10:21:51.143395+00:00"
+      "elapsed_seconds": 14.34,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-13T23:25:31.317833+00:00"
     },
     "595:6:4": {
       "at": "2026-10-03T09:24:01.883269+00:00",
@@ -164165,9 +164165,19 @@
       "elapsed_seconds": 186.19,
       "consecutive_failures": 1,
       "retry_after": "2026-10-12T23:39:01.127945+00:00"
+    },
+    "1117:2:15": {
+      "at": "2026-10-12T23:22:34.657645+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 161.91,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-12T23:40:16.562923+00:00"
     }
   },
-  "updated_at": "2026-10-12T23:24:41.876462+00:00",
+  "updated_at": "2026-10-12T23:25:52.380772+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -175473,9 +175483,11 @@
     "1117": {
       "misses": [
         "1117:2:2",
-        "1117:2:4"
+        "1117:2:4",
+        "1117:2:15"
       ],
-      "updated_at": "2026-10-12T23:24:01.127969+00:00"
+      "updated_at": "2026-10-12T23:25:16.562946+00:00",
+      "retry_after": "2026-10-12T23:55:16.562946+00:00"
     },
     "59": {
       "misses": [
@@ -175606,6 +175618,12 @@
         "55:1:1"
       ],
       "updated_at": "2026-10-12T23:22:16.162260+00:00"
+    },
+    "595": {
+      "misses": [
+        "595:6:3"
+      ],
+      "updated_at": "2026-10-12T23:25:31.317859+00:00"
     }
   },
   "discovery_progress": {
