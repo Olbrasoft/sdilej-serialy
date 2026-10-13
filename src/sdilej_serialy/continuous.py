@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import concurrent.futures
 import collections
+import math
 import threading
 import time
 import uuid
@@ -76,6 +77,7 @@ def upload_continuously(
     refill_interval_seconds: float = 15,
     idle_refill_seconds: float = 0,
     keep_waiting: Callable[[], bool] | None = None,
+    claim_deadline: float | None = None,
     require_original_size: bool = False,
     target_login: Callable[[], object] | None = None,
     stop_event: threading.Event | None = None,
@@ -88,6 +90,12 @@ def upload_continuously(
         raise ValueError("workers must be between 1 and 6")
     if not 0 <= idle_refill_seconds <= 300:
         raise ValueError('Invalid idle refill duration')
+    if claim_deadline is not None and not math.isfinite(claim_deadline):
+        raise ValueError('Invalid monotonic claim deadline')
+
+    def admission_closed():
+        return claim_deadline is not None and time.monotonic() >= claim_deadline
+
     released = state.release_orphaned_claims()
     pending = collections.deque(rows)
     known_identities = {str(row["identity"]) for row in rows}
@@ -117,6 +125,10 @@ def upload_continuously(
             while True:
                 refill_leader = False
                 with queue_condition:
+                    # Drain existing transfers instead of starting the rest of
+                    # a preloaded batch past the workflow's admission deadline.
+                    if admission_closed():
+                        return None
                     if stop_event is not None and stop_event.is_set():
                         return None
                     if transient_pause is not None and transient_pause.is_set():
@@ -202,9 +214,14 @@ def upload_continuously(
                     if not upload_eligible(row):
                         print(f"upload_deferred=quality_review identity={row['identity']}", flush=True)
                         continue
-                    episode = Episode.from_dict(row["episode"])
-                    if not state.claim(episode, f"{execution}-worker-{index}"):
+                    if admission_closed():
                         continue
+                    episode = Episode.from_dict(row["episode"])
+                    with state._lock:
+                        # Check after acquiring the shared state lock as well:
+                        # another worker's checkpoint can outlive the deadline.
+                        if admission_closed() or not state.claim(episode, f"{execution}-worker-{index}"):
+                            continue
                     candidate = Candidate.from_dict(row["selected"])
                     if recover_target_errors and state.row(episode).get('prepared_target'):
                         record = state.row(episode)
@@ -330,4 +347,6 @@ def upload_continuously(
             if transient_pause is not None:
                 transient_pause.set()
             print(f'target_statistics_deferred error={error_evidence(error)}', flush=True)
-    return {"released_orphaned_claims": released, "queued": len(known_identities), "uploaded_or_reconciled": completed, "target_video_count_before": before, "target_video_count_after": after}
+    return {"released_orphaned_claims": released, "queued": len(known_identities), "uploaded_or_reconciled": completed,
+            "target_video_count_before": before, "target_video_count_after": after,
+            "claim_deadline_reached": admission_closed()}

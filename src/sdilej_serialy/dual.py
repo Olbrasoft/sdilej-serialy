@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import math
 import os
 import re
 import threading
@@ -280,12 +281,19 @@ def verify_pilot(rows, state, sessions):
     state.save()
 
 
-def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refill_seconds=0):
+def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refill_seconds=0,
+         stop_claiming_at=None):
     if os.environ.get('DUAL_ENABLED') != 'true':
         raise RuntimeError('Dual upload is disabled')
     if (mode not in ('pilot', 'full') or not 1 <= limit_per_account <= 25
             or mode == 'pilot' and limit_per_account < 2 or not 0 <= idle_refill_seconds <= 300):
         raise ValueError('Invalid dual run mode or batch limit')
+    if stop_claiming_at is not None and (not math.isfinite(stop_claiming_at) or stop_claiming_at <= 0):
+        raise ValueError('Invalid workflow claim deadline')
+    # One absolute job deadline survives batch restarts. Convert it once so a
+    # wall-clock adjustment cannot extend either account's admission window.
+    claim_deadline = (time.monotonic() + max(0, stop_claiming_at - time.time())
+                      if stop_claiming_at is not None else None)
     directory, plan, rows = load(root, generation)
     report_path = directory / 'report.json'
     persister = GitCheckpointPersister(root, (report_path,)) if persist else None
@@ -358,6 +366,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
                     target_login=lambda: target_session(email, password, expected_email=email), stop_event=stop,
                     select_source=select_source, recover_source_errors=True,
                     recover_target_errors=True, transient_pause=transient_pause,
+                    claim_deadline=claim_deadline,
                     **({'refill_rows': lambda: reserve.take(alias), 'idle_refill_seconds': idle_refill_seconds,
                         'keep_waiting': lambda: state.other_account_active(alias)}
                        if mode == 'full' else {}))
@@ -401,6 +410,8 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
                       halted=bool(state.data.get('halted_at')), updated_at=now_iso())
         report['retry_deferred'] = len(state.retry_deferred_identities())
         report['transient_pause'] = transient_pause.is_set()
+        report['stop_claiming_at'] = stop_claiming_at
+        report['claim_deadline_reached'] = claim_deadline is not None and time.monotonic() >= claim_deadline
         report['pending_confirmation'] = sum(bool(r.get('prepared_target')) for r in state.data['episodes'].values())
         atomic_json(report_path, report)
         if persister:
@@ -410,7 +421,8 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
     return report
 
 
-def run(root, generation, mode, limit_per_account=25, persist=False, idle_refill_seconds=0):
+def run(root, generation, mode, limit_per_account=25, persist=False, idle_refill_seconds=0,
+        stop_claiming_at=None):
     # Actions concurrency serializes runners; this lock also rejects two local
     # processes using the same working tree. Never lock a file replaced by save.
     import fcntl
@@ -420,7 +432,7 @@ def run(root, generation, mode, limit_per_account=25, persist=False, idle_refill
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         except BlockingIOError:
             raise RuntimeError('Another process owns this dual queue') from None
-        return _run(root, generation, mode, limit_per_account, persist, idle_refill_seconds)
+        return _run(root, generation, mode, limit_per_account, persist, idle_refill_seconds, stop_claiming_at)
 
 
 def main():
@@ -432,6 +444,8 @@ def main():
     parser.add_argument('--limit-per-account', type=int, default=25)
     parser.add_argument('--persist-git-state', action='store_true')
     parser.add_argument('--idle-refill-seconds', type=float, default=300)
+    parser.add_argument('--stop-claiming-at', type=float,
+                        help='Unix timestamp after which no new transfers start; active transfers drain')
     args = parser.parse_args()
     root = Path(os.environ.get('GITHUB_WORKSPACE', Path(__file__).resolve().parents[2])).resolve()
     if args.command == 'prepare':
@@ -440,7 +454,7 @@ def main():
                          [os.environ[f'PREHRAJTO_{a.upper()}_EMAIL'] for a in ACCOUNTS])
     else:
         result = run(root, args.generation, args.mode, args.limit_per_account, args.persist_git_state,
-                     args.idle_refill_seconds)
+                     args.idle_refill_seconds, args.stop_claiming_at)
     print(json.dumps(result))
 
 

@@ -321,3 +321,28 @@ the global episode claim still precedes source selection and durable token
 consumption. Uploaded, allocated, active and already-consumed repairs cannot be
 replayed. This avoids waiting for an unrelated large transfer and batch restart
 merely to consume an already verified replacement.
+
+### Graceful workflow admission deadline
+
+Checking a job deadline only between 25-row batches was insufficient: a batch
+started just before the cutoff could still claim episodes near the runner's
+350-minute hard limit. GitHub then killed active transfers, leaving uncertain
+allocations that correctly cannot be replayed automatically. This occurred on
+October 11 and 12 even though the next scheduled job resumed the rest of the queue.
+
+The dual workflow now passes one absolute `--stop-claiming-at` timestamp to every
+batch. Both accounts convert it to the same monotonic deadline. Pending rows,
+live refills and peer-active idle waiting cannot extend admission beyond that
+deadline. An already claimed transfer continues through receipt persistence and
+confirmation; the deadline neither cancels its HTTP thread nor marks it failed.
+Unclaimed rows remain untouched for the next serialized run. Reports expose
+`stop_claiming_at` and `claim_deadline_reached` to distinguish a safe drain from a
+failure or exhausted reserve.
+
+Admission lasts 210 minutes, leaving roughly 140 minutes of the 350-minute job
+budget for draining, setup and checkpoints (including the SDK's long response
+timeout). This is headroom, not a guarantee against arbitrarily slow services or
+an external cancellation. The concurrency lock and two workers per account are
+unchanged. Existing uncertain allocations are preserved, not retried or deleted.
+Workflow changes apply to newly dispatched runs; do not cancel active transfers
+merely to reload the workflow definition.

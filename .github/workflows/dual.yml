@@ -55,13 +55,15 @@ jobs:
             python -m sdilej_serialy.dual run --generation "$DUAL_GENERATION" --mode pilot --persist-git-state
             exit 0
           fi
-          dual_deadline=$(( $(date +%s) + 300 * 60 ))
+          # Stop admission well before the 350-minute runner limit. This leaves
+          # over two hours to finish active relays and persist their receipts.
+          dual_deadline=$(( $(date +%s) + 210 * 60 ))
           while [ "$(date +%s)" -lt "$dual_deadline" ]; do
             git pull --rebase origin main
             # Pulling the repository does not update an installed wheel.
             # Reload fixes and source-upgrade support between safe batches.
             pip install --no-deps .
-            python -m sdilej_serialy.dual run --generation "$DUAL_GENERATION" --mode full --persist-git-state
+            python -m sdilej_serialy.dual run --generation "$DUAL_GENERATION" --mode full --persist-git-state --stop-claiming-at "$dual_deadline"
             if python -c 'import json,os,sys; r=json.load(open("dual/"+os.environ["DUAL_GENERATION"]+"/report.json")); sys.exit(r["remaining"] != 0)'; then
               exit 0
             fi
