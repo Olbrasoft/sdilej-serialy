@@ -201352,9 +201352,47 @@
       "elapsed_seconds": 218.0,
       "source_id": "33858433",
       "queue_rank": 21687
+    },
+    "225:1:10": {
+      "at": "2026-10-14T11:22:17.309630+00:00",
+      "status": "prepared",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "elapsed_seconds": 235.44,
+      "source_id": "33667181",
+      "queue_rank": 21688
+    },
+    "225:2:1": {
+      "at": "2026-10-14T11:23:05.595663+00:00",
+      "status": "prepared",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "elapsed_seconds": 180.54,
+      "source_id": "34061526",
+      "queue_rank": 21689
+    },
+    "725:1:5": {
+      "at": "2026-10-14T11:26:17.856062+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 50.37,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-15T11:27:08.228194+00:00"
+    },
+    "1112:1:2": {
+      "at": "2026-10-14T11:26:18.310181+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 51.91,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-15T11:27:10.223575+00:00"
     }
   },
-  "updated_at": "2026-10-14T11:25:58.844310+00:00",
+  "updated_at": "2026-10-14T11:27:20.511755+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -211171,7 +211209,7 @@
     },
     "225": {
       "misses": [],
-      "updated_at": "2026-10-14T11:25:00.710907+00:00"
+      "updated_at": "2026-10-14T11:26:17.401097+00:00"
     },
     "588": {
       "misses": [
@@ -211188,14 +211226,17 @@
       "updated_at": "2026-10-14T11:20:30.279696+00:00"
     },
     "725": {
-      "misses": [],
-      "updated_at": "2026-10-13T13:58:03.866552+00:00"
+      "misses": [
+        "725:1:5"
+      ],
+      "updated_at": "2026-10-14T11:27:08.228218+00:00"
     },
     "1112": {
       "misses": [
-        "1112:1:1"
+        "1112:1:1",
+        "1112:1:2"
       ],
-      "updated_at": "2026-10-12T12:57:08.965234+00:00"
+      "updated_at": "2026-10-14T11:27:10.223601+00:00"
     },
     "583": {
       "misses": [
@@ -216637,12 +216678,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 659,
+    "last_series": 1112,
     "last_series_order": [
       false,
       -8.0,
-      -142955,
-      659
+      -136330,
+      1112
     ]
   }
 }
