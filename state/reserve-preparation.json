@@ -5493,14 +5493,14 @@
       "retry_after": "2026-10-16T15:22:12.585485+00:00"
     },
     "4815:1:4": {
-      "at": "2026-10-14T20:13:42.635963+00:00",
+      "at": "2026-10-15T21:14:39.012007+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 50.61,
-      "consecutive_failures": 5,
-      "retry_after": "2026-10-15T20:14:33.247080+00:00"
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 323.08,
+      "consecutive_failures": 6,
+      "retry_after": "2026-10-16T21:20:02.092122+00:00"
     },
     "4815:1:5": {
       "at": "2026-10-15T21:15:08.381998+00:00",
@@ -226795,9 +226795,28 @@
       "elapsed_seconds": 242.6,
       "source_id": "10959806",
       "queue_rank": 23344
+    },
+    "1082:5:7": {
+      "at": "2026-10-15T21:17:23.220894+00:00",
+      "status": "prepared",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "elapsed_seconds": 188.53,
+      "source_id": "27709811",
+      "queue_rank": 23345
+    },
+    "1082:5:2": {
+      "at": "2026-10-15T21:17:04.686462+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 212.62,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-15T21:35:37.310445+00:00"
     }
   },
-  "updated_at": "2026-10-15T21:19:37.216407+00:00",
+  "updated_at": "2026-10-15T21:20:42.511330+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -230787,9 +230806,10 @@
     },
     "4815": {
       "misses": [
-        "4815:1:5"
+        "4815:1:5",
+        "4815:1:4"
       ],
-      "updated_at": "2026-10-15T21:18:52.676456+00:00"
+      "updated_at": "2026-10-15T21:20:02.092155+00:00"
     },
     "1180": {
       "misses": [
@@ -233154,8 +233174,10 @@
       "retry_after": "2026-10-16T00:04:30.880546+00:00"
     },
     "1082": {
-      "misses": [],
-      "updated_at": "2026-10-15T21:17:22.826575+00:00"
+      "misses": [
+        "1082:5:2"
+      ],
+      "updated_at": "2026-10-15T21:20:37.310468+00:00"
     },
     "101": {
       "misses": [
