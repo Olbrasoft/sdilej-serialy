@@ -4,9 +4,9 @@
   "prepared_this_run": 0,
   "reserve_total": 16724,
   "queue_total": 25159,
-  "updated_at": "2026-10-17T16:36:31.313889+00:00",
+  "updated_at": "2026-10-17T16:37:51.449007+00:00",
   "workers": 4,
-  "elapsed_seconds": 64.35,
+  "elapsed_seconds": 144.48,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -14,39 +14,40 @@
   "target_stock": 3000,
   "stock": {
     "queue_total": 25159,
-    "ready": 494,
+    "ready": 490,
     "ready_by_account": {
-      "a": 258,
-      "b": 236
+      "a": 256,
+      "b": 234
     },
     "categories": {
-      "completed": 24619,
-      "allocated": 23,
+      "completed": 24623,
+      "allocated": 22,
       "failed": 23,
-      "ready": 494
+      "in_flight": 1,
+      "ready": 490
     },
     "completed_by_account": {
-      "a": 12293,
-      "b": 12326
+      "a": 12295,
+      "b": 12328
     },
-    "uploads_last_24h": 1202,
-    "uploads_per_hour_24h": 50.08,
-    "stock_hours_24h": 9.86
+    "uploads_last_24h": 1203,
+    "uploads_per_hour_24h": 50.12,
+    "stock_hours_24h": 9.78
   },
   "health": {
     "status": "buffered",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 194,
-      "b": 197
+      "a": 73,
+      "b": 112
     },
     "preparation_outcomes_last_hour": {
       "no_matches": 15,
-      "verified_non_czech": 5,
+      "verified_non_czech": 4,
       "no_acceptable_original": 2,
       "prepared": 34,
-      "inconclusive_audio": 3,
-      "transient_original": 3
+      "transient_original": 3,
+      "inconclusive_audio": 1
     }
   },
   "indexed_candidates_in_scan": 1130,
@@ -63,9 +64,15 @@
     "search_miss": 4,
     "search_seconds": 19.07,
     "search_hit": 12,
-    "media_hit": 12
+    "media_hit": 32,
+    "audio_miss": 1
   },
-  "audio_pipeline": {},
+  "audio_pipeline": {
+    "sample_count": 3,
+    "download_seconds": 30.35,
+    "inference_wait_seconds": 0.0,
+    "inference_seconds": 7.62
+  },
   "productive_seasons": 388,
   "series_paused_this_run": 86,
   "saved_reviewed_this_run": 0,
