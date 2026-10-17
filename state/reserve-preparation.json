@@ -229742,14 +229742,13 @@
       "retry_after": "2026-10-17T01:28:05.513425+00:00"
     },
     "2550:1:3": {
-      "at": "2026-10-16T01:28:05.518582+00:00",
-      "status": "deferred",
+      "at": "2026-10-17T17:08:15.440402+00:00",
+      "status": "prepared",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 44.4,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-17T01:28:49.920563+00:00"
+      "elapsed_seconds": 135.37,
+      "source_id": "24529646",
+      "queue_rank": 25168
     },
     "1951:6:2": {
       "at": "2026-10-16T01:28:07.013732+00:00",
@@ -254328,9 +254327,19 @@
       "elapsed_seconds": 37.44,
       "source_id": "34345094",
       "queue_rank": 25166
+    },
+    "3106:1:3": {
+      "at": "2026-10-17T17:10:35.436551+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 55.49,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-18T17:11:30.926562+00:00"
     }
   },
-  "updated_at": "2026-10-17T17:10:26.154568+00:00",
+  "updated_at": "2026-10-17T17:11:38.711260+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -259012,7 +259021,7 @@
     },
     "2550": {
       "misses": [],
-      "updated_at": "2026-10-17T17:08:14.939942+00:00"
+      "updated_at": "2026-10-17T17:10:34.939166+00:00"
     },
     "561": {
       "misses": [
@@ -271335,9 +271344,11 @@
     "3106": {
       "misses": [
         "3106:1:1",
-        "3106:1:2"
+        "3106:1:2",
+        "3106:1:3"
       ],
-      "updated_at": "2026-10-15T13:40:35.638122+00:00"
+      "updated_at": "2026-10-17T17:11:30.926588+00:00",
+      "retry_after": "2026-10-17T21:11:30.926588+00:00"
     },
     "699": {
       "misses": [
@@ -271869,12 +271880,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 570,
+    "last_series": 532,
     "last_series_order": [
       false,
       -7.5,
-      -18112,
-      570
+      -17888,
+      532
     ]
   }
 }
