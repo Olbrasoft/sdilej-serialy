@@ -189431,24 +189431,24 @@
       "retry_after": "2026-10-19T06:31:01.554529+00:00"
     },
     "1375:1:4": {
-      "at": "2026-10-17T08:41:10.974058+00:00",
+      "at": "2026-10-18T15:39:51.870761+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 59.41,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-18T08:42:10.387335+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 69.19,
+      "consecutive_failures": 4,
+      "retry_after": "2026-10-18T16:41:02.001120+00:00"
     },
     "1375:1:5": {
-      "at": "2026-10-17T08:41:26.596593+00:00",
+      "at": "2026-10-18T15:40:25.528106+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 62.47,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-18T08:42:32.201686+00:00"
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 62.97,
+      "consecutive_failures": 4,
+      "retry_after": "2026-10-19T15:41:28.502386+00:00"
     },
     "3296:1:18": {
       "at": "2026-10-13T23:16:40.938538+00:00",
@@ -189471,14 +189471,14 @@
       "retry_after": "2026-10-14T23:17:28.513800+00:00"
     },
     "1375:1:6": {
-      "at": "2026-10-17T08:41:52.724570+00:00",
+      "at": "2026-10-18T15:40:39.376500+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 43.52,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-18T08:42:36.247312+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 53.68,
+      "consecutive_failures": 4,
+      "retry_after": "2026-10-18T16:41:33.054508+00:00"
     },
     "1375:1:7": {
       "at": "2026-10-17T08:42:06.888731+00:00",
@@ -274663,9 +274663,29 @@
       "elapsed_seconds": 61.92,
       "source_id": "24709910",
       "queue_rank": 26028
+    },
+    "3756:1:4": {
+      "at": "2026-10-18T15:41:02.324022+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 18.83,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-19T15:41:21.154257+00:00"
+    },
+    "2470:1:4": {
+      "at": "2026-10-18T15:41:21.474407+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 23.58,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-19T15:41:45.053031+00:00"
     }
   },
-  "updated_at": "2026-10-18T15:40:59.625504+00:00",
+  "updated_at": "2026-10-18T15:41:46.605748+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -281890,10 +281910,12 @@
     },
     "1375": {
       "misses": [
-        "1375:1:2",
-        "1375:1:1"
+        "1375:1:4",
+        "1375:1:5",
+        "1375:1:6"
       ],
-      "updated_at": "2026-10-18T15:40:39.030720+00:00"
+      "updated_at": "2026-10-18T15:41:33.054531+00:00",
+      "retry_after": "2026-10-18T16:11:33.054531+00:00"
     },
     "1104": {
       "misses": [],
@@ -289465,12 +289487,9 @@
     },
     "3756": {
       "misses": [
-        "3756:1:1",
-        "3756:1:2",
-        "3756:1:3"
+        "3756:1:4"
       ],
-      "updated_at": "2026-10-17T16:21:06.224784+00:00",
-      "retry_after": "2026-10-17T20:21:06.224784+00:00"
+      "updated_at": "2026-10-18T15:41:21.154281+00:00"
     },
     "3463": {
       "misses": [
@@ -289481,12 +289500,9 @@
     },
     "2470": {
       "misses": [
-        "2470:1:1",
-        "2470:1:2",
-        "2470:1:3"
+        "2470:1:4"
       ],
-      "updated_at": "2026-10-17T16:25:23.803393+00:00",
-      "retry_after": "2026-10-17T20:25:23.803393+00:00"
+      "updated_at": "2026-10-18T15:41:45.053057+00:00"
     },
     "2941": {
       "misses": [
@@ -290202,12 +290218,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1357,
+    "last_series": 2470,
     "last_series_order": [
       false,
       -7.5,
-      -24306,
-      1357
+      -20963,
+      2470
     ]
   }
 }
