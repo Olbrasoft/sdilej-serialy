@@ -151416,14 +151416,14 @@
       "queue_rank": 18383
     },
     "3279:5:10": {
-      "at": "2026-10-12T11:10:28.336436+00:00",
+      "at": "2026-10-18T04:34:28.089328+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 36.34,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-13T11:11:13.011504+00:00"
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 65.5,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-19T04:35:35.268697+00:00"
     },
     "4118:1:2": {
       "at": "2026-10-16T07:00:10.949712+00:00",
@@ -262326,9 +262326,19 @@
       "elapsed_seconds": 37.24,
       "consecutive_failures": 1,
       "retry_after": "2026-10-19T04:30:24.321705+00:00"
+    },
+    "2069:1:4": {
+      "at": "2026-10-18T04:35:35.823470+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 40.91,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-19T04:36:16.731759+00:00"
     }
   },
-  "updated_at": "2026-10-18T04:35:30.575754+00:00",
+  "updated_at": "2026-10-18T04:36:39.830955+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -271076,9 +271086,11 @@
     "3279": {
       "misses": [
         "3279:1:4",
-        "3279:1:5"
+        "3279:1:5",
+        "3279:5:10"
       ],
-      "updated_at": "2026-10-18T04:29:46.528233+00:00"
+      "updated_at": "2026-10-18T04:35:35.268730+00:00",
+      "retry_after": "2026-10-18T08:35:35.268730+00:00"
     },
     "5404": {
       "misses": [
@@ -271088,12 +271100,9 @@
     },
     "2069": {
       "misses": [
-        "2069:1:1",
-        "2069:1:2",
-        "2069:1:3"
+        "2069:1:4"
       ],
-      "updated_at": "2026-10-16T06:22:20.310538+00:00",
-      "retry_after": "2026-10-16T10:22:20.310538+00:00"
+      "updated_at": "2026-10-18T04:36:16.731787+00:00"
     },
     "1186": {
       "misses": [
@@ -279258,12 +279267,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1186,
+    "last_series": 2069,
     "last_series_order": [
       false,
       -8.1,
-      -24498,
-      1186
+      -24075,
+      2069
     ]
   }
 }
