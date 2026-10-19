@@ -120266,12 +120266,14 @@
       "retry_after": "2026-10-19T16:44:14.316041+00:00"
     },
     "4113:3:6": {
-      "at": "2026-10-09T15:44:19.322261+00:00",
+      "at": "2026-10-19T16:14:22.182614+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
+      "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-10T15:44:39.265411+00:00"
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 39.73,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-20T16:15:04.740348+00:00"
     },
     "10089:3:19": {
       "at": "2026-10-11T09:00:37.593396+00:00",
@@ -297147,9 +297149,19 @@
       "elapsed_seconds": 105.75,
       "source_id": "27659545",
       "queue_rank": 26914
+    },
+    "9667:2:4": {
+      "at": "2026-10-19T16:13:58.416440+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 125.61,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-20T16:16:04.022242+00:00"
     }
   },
-  "updated_at": "2026-10-19T16:14:51.698968+00:00",
+  "updated_at": "2026-10-19T16:16:07.852515+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -301188,12 +301200,9 @@
     },
     "4113": {
       "misses": [
-        "4113:3:5",
-        "4113:3:1",
-        "4113:1:1"
+        "4113:3:6"
       ],
-      "updated_at": "2026-10-18T16:54:37.362417+00:00",
-      "retry_after": "2026-10-18T20:54:37.362417+00:00"
+      "updated_at": "2026-10-19T16:15:04.740379+00:00"
     },
     "1074": {
       "misses": [
@@ -301853,9 +301862,11 @@
     "9667": {
       "misses": [
         "9667:2:3",
-        "9667:1:40"
+        "9667:1:40",
+        "9667:2:4"
       ],
-      "updated_at": "2026-10-19T16:12:52.088060+00:00"
+      "updated_at": "2026-10-19T16:16:04.022271+00:00",
+      "retry_after": "2026-10-19T20:16:04.022271+00:00"
     },
     "7803": {
       "misses": [
@@ -313654,12 +313665,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 4113,
+    "last_series": 1074,
     "last_series_order": [
       false,
-      -8.6,
-      -8835,
-      4113
+      -8.5,
+      -360482,
+      1074
     ]
   }
 }
