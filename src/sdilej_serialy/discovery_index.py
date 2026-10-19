@@ -49,13 +49,16 @@ class CandidateIndex:
         return self.hints.get(identity, 3)
 
 
-def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *, clock=time.monotonic):
-    """Six positive hints, two new-series probes, two due retries per round.
+def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
+                  productive_seasons=None, records=None, clock=time.monotonic):
+    """Eight fresh probes (up to six prioritized) and two due retries per round.
 
     All lanes share one pending set. The exploration cursor survives restarts;
     publishing/selection still belongs to the existing single producer.
     """
     pending = {Episode.from_dict(row).identity: row for row in catalog}
+    productive_seasons = productive_seasons if productive_seasons is not None else set()
+    records = records if records is not None else {}
     positions = {identity: n for n, identity in enumerate(pending)}
     groups = defaultdict(deque)
     series_orders = {}
@@ -79,8 +82,17 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *, clock
         series = ([s for s in series if series_orders[s] > anchor]
                   + [s for s in series if series_orders[s] <= anchor])
     series = deque(series)
-    hinted = deque()
+    hinted, productive = deque(), deque()
     refreshed = float('-inf')
+
+    def productive_identity(identity):
+        row = pending[identity]
+        return (row['series_id'], row['season']) in productive_seasons
+
+    def retry_priority(identity):
+        failures = records.get(identity, {}).get('consecutive_failures', 0)
+        return (failures >= 3, not productive_identity(identity), index.rank(identity),
+                failures, positions[identity])
 
     def take(lane):
         while lane:
@@ -104,17 +116,28 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *, clock
     while pending:
         if clock() - refreshed >= 60:
             refresh()
-            hinted = deque(sorted((i for i in pending if index.rank(i) < 2),
+            # A filename/search hit must not smuggle a due retry into the
+            # fresh lane. Otherwise old CZ hints can consume all six slots
+            # even after dozens of failed speech/original checks.
+            hinted = deque(sorted((i for i in pending if i in fresh_ids and index.rank(i) < 2),
                                   key=lambda i: (index.rank(i), positions[i])))
+            productive = deque(sorted((i for i in pending if i in fresh_ids
+                                        and productive_identity(i) and index.rank(i) != 2),
+                                       key=lambda i: (index.rank(i), positions[i])))
+            retries = deque(sorted((i for i in pending if i not in fresh_ids), key=retry_priority))
             refreshed = clock()
         emitted = hinted_count = 0
-        for _ in range(6):
-            row = take(hinted)
-            if row is None:
-                break
-            emitted += 1
-            hinted_count += 1
-            yield row
+        # Restore recently proven Czech seasons to the production scheduler,
+        # not only its cache-less fallback. Keep room for other indexed hints,
+        # unexplored series and bounded due retries in every round.
+        for lane, budget in ((productive, 4), (hinted, 6)):
+            for _ in range(min(budget, 6 - hinted_count)):
+                row = take(lane)
+                if row is None:
+                    break
+                emitted += 1
+                hinted_count += 1
+                yield row
         # Unused hint slots go to exploration, not more repeated old failures.
         for _ in range(8 - hinted_count):
             row = explore()

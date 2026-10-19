@@ -98,7 +98,8 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
         fresh = {Episode.from_dict(m).identity for m in ordinary
                  if not records.get(Episode.from_dict(m).identity)
                  or repaired_preparation(records[Episode.from_dict(m).identity], m)}
-        yield from indexed_order(ordinary, fresh, paused, index, refresh, progress)
+        yield from indexed_order(ordinary, fresh, paused, index, refresh, progress,
+                                 productive_seasons=productive_seasons, records=records)
 
 
 def valid_czech(episode, candidate):
@@ -466,6 +467,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                 saved_published += int(direct_review)
                 series_misses[episode.series_id] = 0
                 paused_series.discard(episode.series_id)
+                productive_seasons.add((episode.series_id, episode.season))
             else:
                 reason = record.get('reason', '')
                 previous = task[2]

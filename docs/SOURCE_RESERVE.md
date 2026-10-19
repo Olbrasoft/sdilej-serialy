@@ -346,3 +346,26 @@ an external cancellation. The concurrency lock and two workers per account are
 unchanged. Existing uncertain allocations are preserved, not retried or deleted.
 Workflow changes apply to newly dispatched runs; do not cancel active transfers
 merely to reload the workflow definition.
+
+### Prevent indexed retries from starving fresh discovery
+
+On October 19 the reserve was empty even though the positive search index still
+contained untouched episodes from recently productive Czech seasons. The indexed
+lane admitted due retries as well as fresh identities. A filename marked CZ could
+therefore send an inconclusive source to the front again after 80+ failed checks,
+bypassing the intended two-retry budget. Production also ignored productive-season
+hints that were only used by the cache-less fallback scheduler.
+
+Indexed and productive lanes now admit only fresh identities (including explicitly
+version-released checks). Each round allows up to four fresh episodes from seasons
+with a Czech success in the last two days, then other indexed hints up to six
+prioritized identities in total. Exploration fills the eight-fresh budget; two
+additional slots remain for due retries. Retries with fewer than three failures
+precede persistent failures, then recent productivity and positive search evidence
+break ties before catalog order. Cooldowns, paused series and immutable queue
+reservations still apply. New Czech successes update the shared productive-season
+set during the run; the next index refresh can prioritize neighboring episodes.
+
+These are dispatch hints only. Every selected episode still requires complete
+original-resolution, Czech speech and smallest-file checks. No language or quality
+threshold is weakened, and no uncertain/uploaded target is replayed.

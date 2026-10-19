@@ -100,3 +100,70 @@ def test_series_pause_uses_distinct_misses_survives_restart_and_expires():
     assert len(records['1']['misses']) == 1 and 'retry_after' not in records['1']
     record_series_result(records, ep, dict(status='prepared'), now + timedelta(hours=5))
     assert records['1']['misses'] == []
+
+
+def test_czech_search_hints_cannot_bypass_the_due_retry_budget():
+    rows = [metadata(series=n) for n in range(1, 31)]
+    index = CandidateIndex(rows)
+    index.observe([candidate(f'Series {n} S01E01 CZ.mkv', str(n)) for n in range(1, 13)])
+    fresh = {Episode.from_dict(r).identity for r in rows[12:]}
+    records = {Episode.from_dict(r).identity: dict(consecutive_failures=80) for r in rows[:12]}
+    result = list(indexed_order(rows, fresh, set(), index, lambda: None, {}, records=records))
+    first = [r['series_id'] for r in result[:10]]
+    assert first == list(range(13, 21)) + [1, 2]
+    assert len({Episode.from_dict(r).identity for r in result}) == len(rows)
+
+
+def test_productive_fresh_seasons_precede_unproven_hints_without_starving_other_lanes():
+    rows = [metadata(series=n) for n in range(1, 31)]
+    index = CandidateIndex(rows)
+    index.observe([candidate(f'Series {n} S01E01 CZ.mkv', str(n)) for n in range(1, 13)])
+    fresh = {Episode.from_dict(r).identity for r in rows[:-2]}
+    productive = {(n, 1) for n in range(21, 27)}
+    result = list(indexed_order(rows, fresh, set(), index, lambda: None, {}, productive_seasons=productive))
+    assert [r['series_id'] for r in result[:10]] == [21, 22, 23, 24, 1, 2, 3, 4, 29, 30]
+    assert len({Episode.from_dict(r).identity for r in result}) == len(rows)
+
+
+def test_new_productive_season_is_used_without_restarting_the_producer():
+    rows = [metadata(series=n) for n in range(1, 30)]
+    index, productive, now = CandidateIndex(rows), set(), [0]
+    result = indexed_order(rows, {Episode.from_dict(r).identity for r in rows}, set(), index,
+                           lambda: None, {}, productive_seasons=productive, clock=lambda: now[0])
+    assert [r['series_id'] for r in islice(result, 8)] == list(range(1, 9))
+    productive.add((29, 1))
+    now[0] = 61
+    assert next(result)['series_id'] == 29
+
+
+def test_repeat_failures_do_not_monopolize_the_retry_lane():
+    rows = [metadata(series=n) for n in range(1, 6)]
+    index = CandidateIndex(rows)
+    index.observe([candidate('Series 1 S01E01 CZ.mkv')])
+    records = {'1:1:1': dict(consecutive_failures=89), '2:1:1': dict(consecutive_failures=1)}
+    result = list(indexed_order(rows, set(), set(), index, lambda: None, {}, records=records,
+                               productive_seasons={(2, 1)}))
+    assert result[0]['series_id'] == 2
+    assert result[-1]['series_id'] == 1
+    assert len(result) == 5
+
+
+def test_productive_lane_respects_pauses_and_does_not_treat_other_seasons_as_proven():
+    rows = [metadata(series=n) for n in range(1, 5)]
+    index = CandidateIndex(rows)
+    result = list(indexed_order(rows, {Episode.from_dict(r).identity for r in rows}, {4}, index,
+                               lambda: None, {}, productive_seasons={(3, 2), (4, 1)}))
+    assert [r['series_id'] for r in result] == [1, 2, 3]
+
+
+def test_reserve_production_path_preserves_productive_hints_and_retry_budget():
+    from sdilej_serialy.replenish import reserve_order
+    rows = [metadata(series=n) for n in range(1, 14)]
+    index = CandidateIndex(rows)
+    index.observe([candidate('Series 1 S01E01 CZ.mkv')])
+    records = {'1:1:1': dict(reason='inconclusive_audio', preparation_revision=4,
+                            consecutive_failures=89)}
+    result = list(reserve_order(rows, records, {}, set(), {(13, 1)},
+                               index=index, refresh=lambda: None, progress={}))
+    assert result[0]['series_id'] == 13
+    assert result[8]['series_id'] == 1
