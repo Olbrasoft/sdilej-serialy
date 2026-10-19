@@ -292050,9 +292050,39 @@
       "elapsed_seconds": 33.7,
       "consecutive_failures": 1,
       "retry_after": "2026-10-20T12:42:58.699504+00:00"
+    },
+    "1898:1:13": {
+      "at": "2026-10-19T12:42:39.214789+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 57.68,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-20T12:43:36.892639+00:00"
+    },
+    "1898:2:5": {
+      "at": "2026-10-19T12:42:49.308253+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 59.58,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-20T12:43:48.891242+00:00"
+    },
+    "3256:1:5": {
+      "at": "2026-10-19T12:42:53.342362+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 61.59,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-20T12:43:54.931349+00:00"
     }
   },
-  "updated_at": "2026-10-19T12:43:00.915364+00:00",
+  "updated_at": "2026-10-19T12:44:07.758764+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -305578,10 +305608,12 @@
     },
     "1898": {
       "misses": [
-        "1898:1:4",
-        "1898:1:5"
+        "1898:1:5",
+        "1898:1:13",
+        "1898:2:5"
       ],
-      "updated_at": "2026-10-19T06:41:34.845683+00:00"
+      "updated_at": "2026-10-19T12:43:48.891266+00:00",
+      "retry_after": "2026-10-19T16:43:48.891266+00:00"
     },
     "2597": {
       "misses": [
@@ -306872,9 +306904,10 @@
     },
     "3256": {
       "misses": [
-        "3256:1:4"
+        "3256:1:4",
+        "3256:1:5"
       ],
-      "updated_at": "2026-10-18T14:48:02.312083+00:00"
+      "updated_at": "2026-10-19T12:43:54.931374+00:00"
     },
     "3574": {
       "misses": [
@@ -308382,12 +308415,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3256,
+    "last_series": 3574,
     "last_series_order": [
       false,
       -7.6,
-      -13968,
-      3256
+      -13878,
+      3574
     ]
   }
 }
