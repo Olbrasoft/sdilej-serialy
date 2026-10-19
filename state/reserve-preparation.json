@@ -205752,14 +205752,13 @@
       "retry_after": "2026-10-15T15:37:17.211600+00:00"
     },
     "1055:1:3": {
-      "at": "2026-10-14T15:36:35.794773+00:00",
-      "status": "deferred",
+      "at": "2026-10-19T11:00:58.862860+00:00",
+      "status": "prepared",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 61.58,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-15T15:37:37.373475+00:00"
+      "elapsed_seconds": 138.21,
+      "source_id": "28152160",
+      "queue_rank": 26564
     },
     "2121:1:2": {
       "at": "2026-10-17T10:00:23.062345+00:00",
@@ -253205,14 +253204,14 @@
       "queue_rank": 26191
     },
     "1416:1:3": {
-      "at": "2026-10-17T13:58:29.186853+00:00",
+      "at": "2026-10-19T11:04:42.484915+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 59.42,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-18T13:59:28.603692+00:00"
+      "elapsed_seconds": 55.26,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-20T11:05:37.748808+00:00"
     },
     "1549:7:2": {
       "at": "2026-10-18T21:31:20.667834+00:00",
@@ -289318,9 +289317,38 @@
       "elapsed_seconds": 33.85,
       "consecutive_failures": 1,
       "retry_after": "2026-10-20T11:03:01.480578+00:00"
+    },
+    "162:2:6": {
+      "at": "2026-10-19T11:02:16.640453+00:00",
+      "status": "prepared",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "elapsed_seconds": 89.23,
+      "source_id": "29960904",
+      "queue_rank": 26565
+    },
+    "1055:3:11": {
+      "at": "2026-10-19T11:03:01.994582+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 25.6,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-20T11:04:40.945093+00:00"
+    },
+    "2064:1:9": {
+      "at": "2026-10-19T11:04:41.454949+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 46.42,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-20T11:05:27.873039+00:00"
     }
   },
-  "updated_at": "2026-10-19T11:03:13.541392+00:00",
+  "updated_at": "2026-10-19T11:05:40.058391+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -300294,8 +300322,10 @@
       "updated_at": "2026-10-18T23:30:21.363988+00:00"
     },
     "1055": {
-      "misses": [],
-      "updated_at": "2026-10-19T11:03:06.664741+00:00"
+      "misses": [
+        "1055:3:11"
+      ],
+      "updated_at": "2026-10-19T11:04:40.945108+00:00"
     },
     "257": {
       "misses": [
@@ -302554,10 +302584,8 @@
       "retry_after": "2026-10-19T11:25:04.197189+00:00"
     },
     "162": {
-      "misses": [
-        "162:4:8"
-      ],
-      "updated_at": "2026-10-19T10:36:55.201657+00:00"
+      "misses": [],
+      "updated_at": "2026-10-19T11:04:40.945043+00:00"
     },
     "1161": {
       "misses": [
@@ -303447,12 +303475,9 @@
     },
     "2064": {
       "misses": [
-        "2064:1:4",
-        "2064:1:6",
-        "2064:5:2"
+        "2064:1:9"
       ],
-      "updated_at": "2026-10-18T18:20:38.650863+00:00",
-      "retry_after": "2026-10-18T22:20:38.650863+00:00"
+      "updated_at": "2026-10-19T11:05:27.873064+00:00"
     },
     "1306": {
       "misses": [
@@ -304396,8 +304421,10 @@
       "retry_after": "2026-10-18T19:04:48.616574+00:00"
     },
     "1416": {
-      "misses": [],
-      "updated_at": "2026-10-17T17:43:43.322377+00:00"
+      "misses": [
+        "1416:1:3"
+      ],
+      "updated_at": "2026-10-19T11:05:37.748832+00:00"
     },
     "174": {
       "misses": [],
@@ -305452,12 +305479,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1386,
+    "last_series": 2064,
     "last_series_order": [
       false,
       -7.6,
-      -80539,
-      1386
+      -78709,
+      2064
     ]
   }
 }
