@@ -121768,12 +121768,14 @@
       "retry_after": "2026-10-18T19:32:39.612854+00:00"
     },
     "1103:3:16": {
-      "at": "2026-10-09T19:39:57.167673+00:00",
+      "at": "2026-10-19T16:20:07.187960+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
+      "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-10T19:40:21.941568+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 38.73,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-20T16:20:45.913628+00:00"
     },
     "1103:3:21": {
       "at": "2026-10-09T19:40:46.170958+00:00",
@@ -297189,9 +297191,37 @@
       "elapsed_seconds": 52.42,
       "source_id": "27659777",
       "queue_rank": 26918
+    },
+    "1126:3:8": {
+      "at": "2026-10-19T16:19:19.581517+00:00",
+      "status": "prepared",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "elapsed_seconds": 66.01,
+      "source_id": "27659796",
+      "queue_rank": 26919
+    },
+    "1126:3:11": {
+      "at": "2026-10-19T16:19:20.137045+00:00",
+      "status": "prepared",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "elapsed_seconds": 96.04,
+      "source_id": "27659891",
+      "queue_rank": 26920
+    },
+    "1118:11:6": {
+      "at": "2026-10-19T16:20:26.132432+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 33.79,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-20T16:20:59.925648+00:00"
     }
   },
-  "updated_at": "2026-10-19T16:19:56.453613+00:00",
+  "updated_at": "2026-10-19T16:21:02.109534+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -298993,16 +299023,16 @@
       "retry_after": "2026-10-19T17:14:49.178255+00:00"
     },
     "1553:1:16": {
-      "at": "2026-10-19T10:36:01.044288+00:00",
+      "at": "2026-10-19T16:19:20.147242+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "source_repair",
       "source_repair_revision": 2,
       "reason": "no_matches",
-      "elapsed_seconds": 32.1,
+      "elapsed_seconds": 43.82,
       "repair_fingerprint": "82d62b1309301580aa416159d9d96fd057da6f45b84d933791fe97e9b440d953",
-      "consecutive_failures": 38,
-      "retry_after": "2026-10-19T11:36:40.523611+00:00"
+      "consecutive_failures": 39,
+      "retry_after": "2026-10-19T17:20:06.646892+00:00"
     },
     "1553:2:13": {
       "at": "2026-10-19T10:41:57.088724+00:00",
@@ -301244,12 +301274,9 @@
     },
     "1103": {
       "misses": [
-        "1103:1:6",
-        "1103:1:7",
-        "1103:1:8"
+        "1103:3:16"
       ],
-      "updated_at": "2026-10-18T23:11:15.012755+00:00",
-      "retry_after": "2026-10-18T23:41:15.012755+00:00"
+      "updated_at": "2026-10-19T16:20:45.913662+00:00"
     },
     "9844": {
       "misses": [
@@ -301262,12 +301289,9 @@
     },
     "1118": {
       "misses": [
-        "1118:2:12",
-        "1118:8:8",
-        "1118:10:9"
+        "1118:11:6"
       ],
-      "updated_at": "2026-10-19T03:32:51.349956+00:00",
-      "retry_after": "2026-10-19T07:32:51.349956+00:00"
+      "updated_at": "2026-10-19T16:20:59.925674+00:00"
     },
     "2183": {
       "misses": [
@@ -301440,9 +301464,10 @@
     },
     "1553": {
       "misses": [
-        "1553:1:15"
+        "1553:1:15",
+        "1553:1:16"
       ],
-      "updated_at": "2026-10-19T16:14:49.178295+00:00"
+      "updated_at": "2026-10-19T16:20:06.646930+00:00"
     },
     "2108": {
       "misses": [
@@ -310421,7 +310446,7 @@
     },
     "1126": {
       "misses": [],
-      "updated_at": "2026-10-19T16:19:19.027417+00:00"
+      "updated_at": "2026-10-19T16:20:56.174430+00:00"
     },
     "1222": {
       "misses": [
@@ -313695,12 +313720,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1074,
+    "last_series": 1118,
     "last_series_order": [
       false,
       -8.5,
-      -360482,
-      1074
+      -264167,
+      1118
     ]
   }
 }
