@@ -294658,14 +294658,14 @@
       "queue_rank": 26747
     },
     "1109:2:6": {
-      "at": "2026-10-19T14:16:23.250397+00:00",
+      "at": "2026-10-19T17:05:48.921640+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 311.84,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T14:36:35.093207+00:00"
+      "elapsed_seconds": 393.55,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-19T17:42:22.474392+00:00"
     },
     "91:4:2": {
       "at": "2026-10-19T14:20:52.213156+00:00",
@@ -298479,9 +298479,37 @@
       "elapsed_seconds": 126.33,
       "source_id": "30118634",
       "queue_rank": 26998
+    },
+    "1126:2:2": {
+      "at": "2026-10-19T17:11:05.142291+00:00",
+      "status": "prepared",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "elapsed_seconds": 80.7,
+      "source_id": "25192957",
+      "queue_rank": 26999
+    },
+    "1126:2:3": {
+      "at": "2026-10-19T17:11:57.619317+00:00",
+      "status": "prepared",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "elapsed_seconds": 42.7,
+      "source_id": "25192979",
+      "queue_rank": 27000
+    },
+    "1126:2:5": {
+      "at": "2026-10-19T17:12:26.391180+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 15.83,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-20T17:12:42.226218+00:00"
     }
   },
-  "updated_at": "2026-10-19T17:12:01.880764+00:00",
+  "updated_at": "2026-10-19T17:13:10.002053+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -311716,8 +311744,10 @@
       "updated_at": "2026-10-17T03:14:38.573381+00:00"
     },
     "1126": {
-      "misses": [],
-      "updated_at": "2026-10-19T17:10:39.385750+00:00"
+      "misses": [
+        "1126:2:5"
+      ],
+      "updated_at": "2026-10-19T17:12:42.226241+00:00"
     },
     "1222": {
       "misses": [
@@ -313903,9 +313933,10 @@
     },
     "1109": {
       "misses": [
-        "1109:2:7"
+        "1109:2:7",
+        "1109:2:6"
       ],
-      "updated_at": "2026-10-19T17:11:56.828155+00:00"
+      "updated_at": "2026-10-19T17:12:22.474427+00:00"
     },
     "1585": {
       "misses": [
