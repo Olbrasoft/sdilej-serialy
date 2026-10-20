@@ -99,6 +99,44 @@ def test_index_hint_prioritizes_work_but_never_bypasses_language_verification(tm
     assert not (directory / 'additions.jsonl').exists()
 
 
+@pytest.mark.parametrize('pause_seconds,expected', [(30, 14), (120, 12)])
+def test_running_producer_releases_only_elapsed_series_pauses(tmp_path, monkeypatch, pause_seconds, expected):
+    from datetime import UTC, datetime, timedelta
+    from sdilej_serialy.discovery_index import indexed_order
+    from sdilej_serialy.source_cache import SourceCache
+    setup(tmp_path, monkeypatch)
+    catalog = load_jsonl(tmp_path / 'backlog/series-episodes.jsonl.gz')
+    catalog.extend(dict(source(series=n)['episode'], imdb_rating=8.0, imdb_votes=100)
+                   for n in range(2, 14))
+    write_jsonl_gzip(tmp_path / 'backlog/series-episodes.jsonl.gz', catalog)
+    started, elapsed = datetime(2026, 10, 20, tzinfo=UTC), [0]
+    class Clock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return started + timedelta(seconds=elapsed[0])
+    monkeypatch.setattr(replenish, 'datetime', Clock)
+    monkeypatch.setattr(replenish, 'indexed_order',
+        lambda *a, **kw: indexed_order(*a, **kw, clock=lambda: elapsed[0]))
+    pipeline.atomic_json(tmp_path / 'state/reserve-preparation.json', dict(
+        schema_version=1, episodes={}, series_discovery={
+            '1': dict(retry_after=(started + timedelta(seconds=pause_seconds)).isoformat())}))
+    calls = []
+    def inspect(ep):
+        calls.append(ep.identity)
+        if len(calls) == 8:
+            elapsed[0] = 61
+        return replace(Candidate.from_dict(source(series=ep.series_id, number=ep.number)['selected']),
+                       title=f'{ep.series_title} {ep.code}')
+    cache = SourceCache(tmp_path / 'state/source-evidence-cache.json')
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=inspect, cache=cache),
+                               runtime_minutes=0)
+    assert result['prepared_this_run'] == expected
+    assert len(calls) == len(set(calls)) == expected
+    assert calls[:8] == [f'{n}:1:1' for n in range(2, 10)]
+    assert ('1:1:5' in calls) == (pause_seconds == 30)
+    assert ('1:1:6' in calls) == (pause_seconds == 30)
+
+
 def test_health_marks_only_idle_starved_accounts_and_separates_discovery_outcomes():
     from datetime import UTC, datetime
     now = datetime(2026, 10, 11, 12, tzinfo=UTC)

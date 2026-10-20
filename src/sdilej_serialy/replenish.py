@@ -26,7 +26,8 @@ from .source_cache import RequestGate, SourceCache
 from .source_workers import inspected_results
 from .source_repair import (REPAIR_SEARCH_REVISION, SourceRepairFeed, fingerprint,
                             repairable, repair_entry, repaired_row)
-from .discovery_index import CandidateIndex, indexed_order, paused_series as saved_pauses, record_series_result
+from .discovery_index import (CandidateIndex, indexed_order, paused_series as saved_pauses,
+                              record_series_result, release_expired_pauses)
 
 PREPARATION_REVISION = 4
 SAVED_REVIEW_REVISION = 1
@@ -289,6 +290,16 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         needs_short_audio_review(state[lane].get(Episode.from_dict(m).identity, {}), m)
         for lane in ('episodes', 'repairs')))
     productive_seasons = recent_productive_seasons(state, datetime.now(UTC))
+
+    def refresh_pauses():
+        for series_id in release_expired_pauses(state['series_discovery'], paused_series, datetime.now(UTC)):
+            # A completed cooldown starts a new probe budget in this same run.
+            series_misses.pop(series_id, None)
+
+    def refresh_discovery():
+        refresh_pauses()
+        refresh_index()
+
     pending_checkpoint = 0
     last_checkpoint = time.monotonic()
     repaired_entries = {r['identity']: r for r in load_jsonl(repairs_path)} if repairs_path.exists() else {}
@@ -353,12 +364,13 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
 
     def tick():
         if time.monotonic() - last_checkpoint >= checkpoint_seconds:
+            refresh_pauses()
             checkpoint()
             print(f'source_workers_busy workers={workers} prepared={published} repaired={repaired}', flush=True)
 
     def new_tasks():
         for metadata in reserve_order(eligible, state['episodes'], manifest.rows, paused_series, productive_seasons,
-                index=index, refresh=refresh_index, progress=state['discovery_progress']):
+                index=index, refresh=refresh_discovery, progress=state['discovery_progress']):
             episode = Episode.from_dict(metadata)
             key = episode_key(f'{episode.series_title} {episode.code}')
             if episode.identity in identities or key in keys:

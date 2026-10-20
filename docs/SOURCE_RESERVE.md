@@ -369,3 +369,19 @@ set during the run; the next index refresh can prioritize neighboring episodes.
 These are dispatch hints only. Every selected episode still requires complete
 original-resolution, Czech speech and smallest-file checks. No language or quality
 threshold is weakened, and no uncertain/uploaded target is replayed.
+
+### Release elapsed series pauses during a running producer
+
+On October 20 the 09:02 producer retained its initial paused-series snapshot for
+the entire run. For example, series 3713 was paused until 09:07 UTC, but its fresh
+S03E01 was not inspected until the next run at 10:49; it then produced a verified
+Czech original. A long stretch of unsuccessful exploration exhausted the reserve.
+
+The producer now removes elapsed series pauses on periodic checkpoints and index
+refreshes, resetting the in-run miss budget for those series. It does not restore
+pauses deliberately released by version-specific recovery, shorten active
+cooldowns, or change episode-level retry eligibility. Exploration lanes are also
+rebuilt from the shared pending set at each index refresh: previously skipped
+unhinted episodes must not disappear permanently from a deque after their pause
+expires. The saved exploration cursor, fresh/retry budgets, global ownership and
+all source-quality checks remain unchanged.

@@ -1,7 +1,8 @@
 from datetime import UTC, datetime, timedelta
 from itertools import islice
 
-from sdilej_serialy.discovery_index import CandidateIndex, indexed_order, paused_series, record_series_result
+from sdilej_serialy.discovery_index import (CandidateIndex, indexed_order, paused_series,
+                                            record_series_result, release_expired_pauses)
 from sdilej_serialy.models import Episode
 from test_dual import source
 
@@ -167,3 +168,52 @@ def test_reserve_production_path_preserves_productive_hints_and_retry_budget():
                                index=index, refresh=lambda: None, progress={}))
     assert result[0]['series_id'] == 13
     assert result[8]['series_id'] == 1
+
+
+def test_expired_pauses_are_released_without_restoring_explicit_unpauses():
+    now = datetime(2026, 10, 20, tzinfo=UTC)
+    records = {
+        '1': dict(retry_after=(now - timedelta(seconds=1)).isoformat()),
+        '2': dict(retry_after=(now + timedelta(hours=1)).isoformat()),
+        '3': dict(retry_after=now.isoformat()),
+        '4': dict(retry_after=(now + timedelta(hours=1)).isoformat()),
+    }
+    paused = {1, 2, 3, 5}
+    assert release_expired_pauses(records, paused, now) == {1, 3}
+    assert paused == {2, 5}
+    assert release_expired_pauses(records, paused, now) == set()
+
+
+def test_expired_pause_restores_skipped_unhinted_rows_without_repeating_work():
+    rows = [metadata(series=n) for n in range(1, 13)]
+    fresh = {Episode.from_dict(r).identity for r in rows}
+    index, paused, now, progress = CandidateIndex(rows), {1}, [0], {}
+    def refresh():
+        if now[0] >= 60:
+            paused.clear()
+    result = indexed_order(rows, fresh, paused, index, refresh, progress, clock=lambda: now[0])
+    first = list(islice(result, 8))
+    assert [r['series_id'] for r in first] == list(range(2, 10))
+    now[0] = 61
+    rest = list(result)
+    assert [r['series_id'] for r in rest] == [10, 11, 12, 1]
+    assert len({Episode.from_dict(r).identity for r in first + rest}) == len(rows)
+
+
+def test_refresh_keeps_active_pauses_and_restores_hinted_and_productive_lanes():
+    rows = [metadata(series=n) for n in range(1, 16)]
+    fresh = {Episode.from_dict(r).identity for r in rows}
+    index, paused, now = CandidateIndex(rows), {1, 2, 3}, [0]
+    index.observe([candidate('Series 1 S01E01 CZ.mkv')])
+    def refresh():
+        if now[0] >= 60:
+            paused.difference_update({1, 2})
+    result = indexed_order(rows, fresh, paused, index, refresh, {}, productive_seasons={(2, 1)},
+                           clock=lambda: now[0])
+    first = list(islice(result, 8))
+    assert [r['series_id'] for r in first] == list(range(4, 12))
+    now[0] = 61
+    rest = list(result)
+    assert [r['series_id'] for r in rest[:2]] == [2, 1]
+    assert 3 not in [r['series_id'] for r in first + rest]
+    assert len({Episode.from_dict(r).identity for r in first + rest}) == 14

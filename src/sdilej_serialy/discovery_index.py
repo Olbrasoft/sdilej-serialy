@@ -60,30 +60,32 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
     productive_seasons = productive_seasons if productive_seasons is not None else set()
     records = records if records is not None else {}
     positions = {identity: n for n, identity in enumerate(pending)}
-    groups = defaultdict(deque)
     series_orders = {}
-    retries = deque()
     for identity, row in pending.items():
         if identity in fresh_ids:
-            groups[row['series_id']].append(identity)
             series_orders[row['series_id']] = (row.get('imdb_rating') is None, -(row.get('imdb_rating') or 0),
                                               -(row.get('imdb_votes') or 0), row['series_id'])
-        else:
-            retries.append(identity)
-    series = list(groups)
-    cursor = progress.get('last_series')
-    if cursor in series:
-        position = series.index(cursor) + 1
-        series = series[position:] + series[:position]
-    elif progress.get('last_series_order'):
-        # The last probed series may now have no eligible rows. Do not reset
-        # exploration to the start just because its final episode was consumed.
-        anchor = tuple(progress['last_series_order'])
-        series = ([s for s in series if series_orders[s] > anchor]
-                  + [s for s in series if series_orders[s] <= anchor])
-    series = deque(series)
+    groups, series, retries = defaultdict(deque), deque(), deque()
     hinted, productive = deque(), deque()
     refreshed = float('-inf')
+
+    def exploration_lanes():
+        # take() skips paused rows without deleting them from pending. Rebuild
+        # every lane so an expired pause can restore even an unhinted episode.
+        lanes = defaultdict(deque)
+        for identity, row in pending.items():
+            if identity in fresh_ids:
+                lanes[row['series_id']].append(identity)
+        order = list(lanes)
+        cursor = progress.get('last_series')
+        if cursor in order:
+            position = order.index(cursor) + 1
+            order = order[position:] + order[:position]
+        elif progress.get('last_series_order'):
+            anchor = tuple(progress['last_series_order'])
+            order = ([s for s in order if series_orders[s] > anchor]
+                     + [s for s in order if series_orders[s] <= anchor])
+        return lanes, deque(order)
 
     def productive_identity(identity):
         row = pending[identity]
@@ -116,6 +118,7 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
     while pending:
         if clock() - refreshed >= 60:
             refresh()
+            groups, series = exploration_lanes()
             # A filename/search hit must not smuggle a due retry into the
             # fresh lane. Otherwise old CZ hints can consume all six slots
             # even after dozens of failed speech/original checks.
@@ -158,6 +161,15 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
 def paused_series(records, now):
     return {int(key) for key, value in records.items()
             if value.get('retry_after') and datetime.fromisoformat(value['retry_after']) > now}
+
+
+def release_expired_pauses(records, paused, now):
+    """Release only elapsed pauses, preserving explicit/version-specific unpauses."""
+    expired = {series_id for series_id in paused
+               if records.get(str(series_id), {}).get('retry_after')
+               and datetime.fromisoformat(records[str(series_id)]['retry_after']) <= now}
+    paused.difference_update(expired)
+    return expired
 
 
 def record_series_result(records, episode, result, now):
