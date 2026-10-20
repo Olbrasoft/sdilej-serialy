@@ -261709,14 +261709,13 @@
       "retry_after": "2026-10-19T03:13:31.533817+00:00"
     },
     "87:2:6": {
-      "at": "2026-10-18T03:13:31.083041+00:00",
-      "status": "deferred",
+      "at": "2026-10-20T16:10:24.611320+00:00",
+      "status": "prepared",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 27.18,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T03:13:58.263826+00:00"
+      "elapsed_seconds": 153.98,
+      "source_id": "30885690",
+      "queue_rank": 28011
     },
     "193:2:1": {
       "at": "2026-10-18T03:13:31.539024+00:00",
@@ -334909,9 +334908,19 @@
       "elapsed_seconds": 27.23,
       "consecutive_failures": 1,
       "retry_after": "2026-10-21T16:12:49.148031+00:00"
+    },
+    "2286:1:12": {
+      "at": "2026-10-20T16:13:01.027366+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 42.33,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-21T16:13:43.358423+00:00"
     }
   },
-  "updated_at": "2026-10-20T16:12:53.091419+00:00",
+  "updated_at": "2026-10-20T16:14:04.402068+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -339375,9 +339384,11 @@
     "2286": {
       "misses": [
         "2286:1:10",
-        "2286:1:11"
+        "2286:1:11",
+        "2286:1:12"
       ],
-      "updated_at": "2026-10-20T09:08:48.488325+00:00"
+      "updated_at": "2026-10-20T16:13:43.358452+00:00",
+      "retry_after": "2026-10-20T20:13:43.358452+00:00"
     },
     "1599": {
       "misses": [
@@ -343357,7 +343368,7 @@
     },
     "87": {
       "misses": [],
-      "updated_at": "2026-10-20T16:11:07.972323+00:00"
+      "updated_at": "2026-10-20T16:13:00.435747+00:00"
     },
     "193": {
       "misses": [
@@ -350880,12 +350891,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2820,
+    "last_series": 1599,
     "last_series_order": [
       false,
       -8.5,
-      -7419,
-      2820
+      -5950,
+      1599
     ]
   }
 }
