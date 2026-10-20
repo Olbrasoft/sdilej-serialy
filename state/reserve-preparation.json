@@ -16406,24 +16406,24 @@
       "retry_after": "2026-10-21T10:12:23.129030+00:00"
     },
     "4066:6:3": {
-      "at": "2026-10-10T19:47:13.801633+00:00",
+      "at": "2026-10-20T10:13:15.867415+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 4,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 1.69,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-11T19:47:15.495745+00:00"
+      "elapsed_seconds": 35.46,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-21T10:13:51.327429+00:00"
     },
     "4066:6:5": {
-      "at": "2026-10-10T19:47:15.764727+00:00",
+      "at": "2026-10-20T10:13:27.888191+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 4,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 1.72,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-11T19:47:17.486569+00:00"
+      "elapsed_seconds": 29.44,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-21T10:13:57.329018+00:00"
     },
     "4066:7:1": {
       "at": "2026-10-10T19:47:17.760063+00:00",
@@ -323514,9 +323514,39 @@
       "elapsed_seconds": 61.18,
       "consecutive_failures": 1,
       "retry_after": "2026-10-21T10:12:59.023714+00:00"
+    },
+    "3046:2:1": {
+      "at": "2026-10-20T10:12:45.686045+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 29.63,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-21T10:13:15.318438+00:00"
+    },
+    "1773:1:7": {
+      "at": "2026-10-20T10:12:25.714212+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 61.61,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-21T10:13:27.328385+00:00"
+    },
+    "4997:1:6": {
+      "at": "2026-10-20T10:12:55.673401+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 59.64,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-21T10:13:55.317516+00:00"
     }
   },
-  "updated_at": "2026-10-20T10:13:01.324587+00:00",
+  "updated_at": "2026-10-20T10:13:59.608392+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -329126,10 +329156,12 @@
     },
     "4066": {
       "misses": [
-        "4066:5:5",
-        "4066:6:1"
+        "4066:6:1",
+        "4066:6:3",
+        "4066:6:5"
       ],
-      "updated_at": "2026-10-20T10:12:23.129056+00:00"
+      "updated_at": "2026-10-20T10:13:57.329043+00:00",
+      "retry_after": "2026-10-20T14:13:57.329043+00:00"
     },
     "7931": {
       "misses": [
@@ -330437,30 +330469,21 @@
     },
     "1773": {
       "misses": [
-        "1773:1:4",
-        "1773:1:5",
-        "1773:1:6"
+        "1773:1:7"
       ],
-      "updated_at": "2026-10-19T19:36:01.708108+00:00",
-      "retry_after": "2026-10-19T23:36:01.708108+00:00"
+      "updated_at": "2026-10-20T10:13:27.328406+00:00"
     },
     "3046": {
       "misses": [
-        "3046:1:4",
-        "3046:1:5",
-        "3046:1:6"
+        "3046:2:1"
       ],
-      "updated_at": "2026-10-19T19:37:46.685218+00:00",
-      "retry_after": "2026-10-19T23:37:46.685218+00:00"
+      "updated_at": "2026-10-20T10:13:15.318457+00:00"
     },
     "4997": {
       "misses": [
-        "4997:1:3",
-        "4997:1:4",
-        "4997:1:5"
+        "4997:1:6"
       ],
-      "updated_at": "2026-10-19T19:38:41.302876+00:00",
-      "retry_after": "2026-10-19T23:38:41.302876+00:00"
+      "updated_at": "2026-10-20T10:13:55.317540+00:00"
     },
     "2734": {
       "misses": [
@@ -340779,12 +340802,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 4997,
+    "last_series": 6171,
     "last_series_order": [
       false,
       -8.3,
-      -4695,
-      4997
+      -3723,
+      6171
     ]
   }
 }
