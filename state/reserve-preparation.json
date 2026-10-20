@@ -216369,14 +216369,13 @@
       "retry_after": "2026-10-16T05:11:04.965936+00:00"
     },
     "1359:1:4": {
-      "at": "2026-10-15T05:10:18.781047+00:00",
-      "status": "deferred",
+      "at": "2026-10-20T23:26:20.775411+00:00",
+      "status": "prepared",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 51.59,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-16T05:11:10.373686+00:00"
+      "elapsed_seconds": 62.7,
+      "source_id": "25116971",
+      "queue_rank": 28379
     },
     "1124:1:2": {
       "at": "2026-10-15T05:11:04.966077+00:00",
@@ -283908,14 +283907,14 @@
       "retry_after": "2026-10-19T23:44:52.820048+00:00"
     },
     "2409:2:1": {
-      "at": "2026-10-18T23:44:27.383215+00:00",
+      "at": "2026-10-20T23:26:18.651349+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 61.66,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T23:45:29.044644+00:00"
+      "elapsed_seconds": 55.42,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-21T23:27:14.069117+00:00"
     },
     "4298:1:5": {
       "at": "2026-10-18T23:44:53.418781+00:00",
@@ -344383,9 +344382,39 @@
       "elapsed_seconds": 30.48,
       "consecutive_failures": 1,
       "retry_after": "2026-10-21T23:26:22.071436+00:00"
+    },
+    "3646:2:2": {
+      "at": "2026-10-20T23:26:00.877810+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 59.19,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-21T23:27:00.381723+00:00"
+    },
+    "1208:1:8": {
+      "at": "2026-10-20T23:26:22.785739+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 31.48,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-21T23:27:00.381838+00:00"
+    },
+    "1296:1:8": {
+      "at": "2026-10-20T23:27:01.589894+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 22.88,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-21T23:27:24.465317+00:00"
     }
   },
-  "updated_at": "2026-10-20T23:26:56.171210+00:00",
+  "updated_at": "2026-10-20T23:27:26.853961+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -350130,9 +350159,10 @@
     },
     "2409": {
       "misses": [
-        "2409:3:4"
+        "2409:3:4",
+        "2409:2:1"
       ],
-      "updated_at": "2026-10-20T12:48:06.134704+00:00"
+      "updated_at": "2026-10-20T23:27:14.069144+00:00"
     },
     "1405": {
       "misses": [
@@ -355638,15 +355668,17 @@
     },
     "3646": {
       "misses": [
-        "3646:2:1"
+        "3646:2:1",
+        "3646:2:2"
       ],
-      "updated_at": "2026-10-20T12:27:47.841984+00:00"
+      "updated_at": "2026-10-20T23:27:00.381768+00:00"
     },
     "1208": {
       "misses": [
-        "1208:1:7"
+        "1208:1:7",
+        "1208:1:8"
       ],
-      "updated_at": "2026-10-20T12:27:45.846795+00:00"
+      "updated_at": "2026-10-20T23:27:00.381851+00:00"
     },
     "2175": {
       "misses": [
@@ -355669,9 +355701,10 @@
     },
     "1296": {
       "misses": [
-        "1296:1:7"
+        "1296:1:7",
+        "1296:1:8"
       ],
-      "updated_at": "2026-10-20T12:27:55.839403+00:00"
+      "updated_at": "2026-10-20T23:27:24.465345+00:00"
     },
     "4327": {
       "misses": [
@@ -356963,7 +356996,7 @@
     },
     "1359": {
       "misses": [],
-      "updated_at": "2026-10-20T21:19:35.723417+00:00"
+      "updated_at": "2026-10-20T23:27:23.471377+00:00"
     },
     "10328": {
       "misses": [
@@ -360619,12 +360652,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1208,
+    "last_series": 2411,
     "last_series_order": [
       false,
       -7.9,
-      -34756,
-      1208
+      -26813,
+      2411
     ]
   }
 }
