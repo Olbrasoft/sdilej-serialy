@@ -80,7 +80,15 @@ def needs_saved_review(row, record):
     return legacy_czech(row) and record.get('saved_review_revision') != SAVED_REVIEW_REVISION
 
 
-def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, index=None, refresh=None, progress=None):
+def preparation_due(record, metadata, saved, now):
+    """Evaluate episode backoff at dispatch, not only at producer startup."""
+    return (repaired_preparation(record, metadata) or needs_saved_review(saved, record)
+            or not record.get('retry_after')
+            or datetime.fromisoformat(record['retry_after']) <= now)
+
+
+def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, index=None, refresh=None,
+                  progress=None, available=None):
     """Drain the known-source backlog before broad discovery, HD originals first."""
     fast, low, ordinary = [], [], []
     for metadata in catalog:
@@ -91,16 +99,16 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
         else:
             ordinary.append(metadata)
     for metadata in fast + low:
-        if metadata['series_id'] not in paused:
+        if metadata['series_id'] not in paused and (available is None or available(metadata)):
             yield metadata
     if index is None:
-        yield from preparation_order(ordinary, records, paused, productive_seasons)
+        yield from preparation_order(ordinary, records, paused, productive_seasons, available=available)
     else:
         fresh = {Episode.from_dict(m).identity for m in ordinary
                  if not records.get(Episode.from_dict(m).identity)
                  or repaired_preparation(records[Episode.from_dict(m).identity], m)}
         yield from indexed_order(ordinary, fresh, paused, index, refresh, progress,
-                                 productive_seasons=productive_seasons, records=records)
+                                 productive_seasons=productive_seasons, records=records, available=available)
 
 
 def valid_czech(episode, candidate):
@@ -125,7 +133,7 @@ def recent_productive_seasons(state, now):
             if record.get('status') == 'prepared' and record.get('at', '') >= cutoff}
 
 
-def preparation_order(catalog, records, paused_series=None, productive_seasons=None):
+def preparation_order(catalog, records, paused_series=None, productive_seasons=None, *, available=None):
     """Reserve search time for unseen episodes without abandoning due retries."""
     productive, fresh, retries = deque(), deque(), deque()
     productive_seasons = productive_seasons or set()
@@ -146,7 +154,8 @@ def preparation_order(catalog, records, paused_series=None, productive_seasons=N
             emitted = 0
             while lane and emitted < budget and (lane is retries or fresh_emitted < 8):
                 metadata = lane.popleft()
-                if metadata['series_id'] in paused_series:
+                if (metadata['series_id'] in paused_series
+                        or (available is not None and not available(metadata))):
                     continue
                 emitted += 1
                 if lane is not retries:
@@ -273,14 +282,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         key = episode_key(f'{episode.series_title} {episode.code}')
         if episode.identity in identities or key in keys:
             continue
-        record = state['episodes'].get(episode.identity, {})
-        # Retry pre-v2 audio errors and pre-v3 filename-identity misses once.
-        # New inconclusive sources keep their normal cooldown.
-        repaired_error = repaired_preparation(record, metadata)
-        fresh_saved_review = needs_saved_review(manifest.rows.get(episode.identity), record)
-        if (not repaired_error and not fresh_saved_review and record.get('retry_after')
-                and datetime.fromisoformat(record['retry_after']) > datetime.now(UTC)):
-            continue
+        # Retain cooling-down identities in the scheduler's pending set. Their
+        # backoff may expire while other episodes are being inspected.
         eligible.append(metadata)
     series_misses = Counter()
     paused_series = set() if selected_ids else saved_pauses(state['series_discovery'], datetime.now(UTC))
@@ -368,9 +371,14 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             checkpoint()
             print(f'source_workers_busy workers={workers} prepared={published} repaired={repaired}', flush=True)
 
+    def available(metadata):
+        identity = Episode.from_dict(metadata).identity
+        return preparation_due(state['episodes'].get(identity, {}), metadata,
+                               manifest.rows.get(identity), datetime.now(UTC))
+
     def new_tasks():
         for metadata in reserve_order(eligible, state['episodes'], manifest.rows, paused_series, productive_seasons,
-                index=index, refresh=refresh_discovery, progress=state['discovery_progress']):
+                index=index, refresh=refresh_discovery, progress=state['discovery_progress'], available=available):
             episode = Episode.from_dict(metadata)
             key = episode_key(f'{episode.series_title} {episode.code}')
             if episode.identity in identities or key in keys:

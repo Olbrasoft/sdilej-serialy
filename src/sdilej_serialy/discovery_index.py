@@ -50,7 +50,7 @@ class CandidateIndex:
 
 
 def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
-                  productive_seasons=None, records=None, clock=time.monotonic):
+                  productive_seasons=None, records=None, available=None, clock=time.monotonic):
     """Eight fresh probes (up to six prioritized) and two due retries per round.
 
     All lanes share one pending set. The exploration cursor survives restarts;
@@ -100,7 +100,8 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
         while lane:
             identity = lane.popleft()
             row = pending.get(identity)
-            if row is not None and row['series_id'] not in paused:
+            if (row is not None and row['series_id'] not in paused
+                    and (available is None or available(row))):
                 del pending[identity]
                 return row
 

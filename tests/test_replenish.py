@@ -137,6 +137,50 @@ def test_running_producer_releases_only_elapsed_series_pauses(tmp_path, monkeypa
     assert ('1:1:6' in calls) == (pause_seconds == 30)
 
 
+@pytest.mark.parametrize('cooldown_seconds,expected', [(30, 14), (120, 12)])
+def test_running_producer_rechecks_episode_backoff_before_dispatch(tmp_path, monkeypatch, cooldown_seconds, expected):
+    from datetime import UTC, datetime, timedelta
+    from sdilej_serialy.discovery_index import indexed_order
+    from sdilej_serialy.source_cache import SourceCache
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    before = (directory / 'state.json').read_bytes()
+    catalog = load_jsonl(tmp_path / 'backlog/series-episodes.jsonl.gz')
+    catalog.extend(dict(source(series=n)['episode'], imdb_rating=8.0, imdb_votes=100)
+                   for n in range(2, 14))
+    write_jsonl_gzip(tmp_path / 'backlog/series-episodes.jsonl.gz', catalog)
+    started, elapsed = datetime(2026, 10, 21, tzinfo=UTC), [0]
+    class Clock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return started + timedelta(seconds=elapsed[0])
+    monkeypatch.setattr(replenish, 'datetime', Clock)
+    monkeypatch.setattr(replenish, 'indexed_order',
+        lambda *a, **kw: indexed_order(*a, **kw, clock=lambda: elapsed[0]))
+    pipeline.atomic_json(tmp_path / 'state/reserve-preparation.json', dict(
+        schema_version=1, episodes={f'1:1:{n}': dict(
+            status='deferred', reason='transient_original', preparation_revision=4,
+            retry_after=(started + timedelta(seconds=cooldown_seconds)).isoformat()) for n in (5, 6)}))
+    calls = []
+    def inspect(ep):
+        calls.append(ep.identity)
+        if ep.series_id == 1:
+            assert elapsed[0] >= cooldown_seconds
+        if len(calls) == 8:
+            elapsed[0] = 61
+        return replace(Candidate.from_dict(source(series=ep.series_id, number=ep.number)['selected']),
+                       title=f'{ep.series_title} {ep.code}')
+    cache = SourceCache(tmp_path / 'state/source-evidence-cache.json')
+    result = replenish.prepare(tmp_path, 'test', SimpleNamespace(discover=inspect, cache=cache),
+                               runtime_minutes=0)
+    assert result['prepared_this_run'] == expected
+    assert len(calls) == len(set(calls)) == expected
+    assert calls[:8] == [f'{n}:1:1' for n in range(2, 10)]
+    assert ('1:1:5' in calls) == (cooldown_seconds == 30)
+    assert ('1:1:6' in calls) == (cooldown_seconds == 30)
+    assert (directory / 'state.json').read_bytes() == before
+    assert len(dual.load(tmp_path, 'test')[2]) == 4 + expected
+
+
 def test_health_marks_only_idle_starved_accounts_and_separates_discovery_outcomes():
     from datetime import UTC, datetime
     now = datetime(2026, 10, 11, 12, tzinfo=UTC)

@@ -385,3 +385,23 @@ rebuilt from the shared pending set at each index refresh: previously skipped
 unhinted episodes must not disappear permanently from a deque after their pause
 expires. The saved exploration cursor, fresh/retry budgets, global ownership and
 all source-quality checks remain unchanged.
+
+### Re-evaluate episode backoff during discovery
+
+On October 21 the producer started at 17:24 UTC with some episode retry deadlines
+still in the future. Outer Banks S01E09 became due at 17:29, but startup filtering
+had removed it from that run entirely; at 18:01 both upload accounts had been idle
+for over 30 minutes. Expired series pauses were already refreshed, but individual
+episode backoffs were not. This was an additional avoidable delay, not proof that
+every deferred source is usable (a manual check still found an incomplete original
+for this particular episode).
+
+The indexed dispatcher now retains unassigned, cooling-down episode identities
+and checks their current retry deadline before dispatch. Its normal minute refresh
+can restore skipped retries once due. Active episode/series cooldowns remain in
+force, version-specific recovery exceptions are unchanged, and each identity is
+still dispatched at most once per run. Newly due work stays in the bounded retry
+lane; it cannot consume the fresh lane or bypass Czech/original/duplicate checks.
+If all remaining work is unavailable, the scan finishes without busy-waiting;
+the next scheduled producer resumes it. Upload state and existing targets are
+never changed by this scheduling repair.

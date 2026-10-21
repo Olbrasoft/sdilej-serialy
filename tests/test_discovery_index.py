@@ -217,3 +217,28 @@ def test_refresh_keeps_active_pauses_and_restores_hinted_and_productive_lanes():
     assert [r['series_id'] for r in rest[:2]] == [2, 1]
     assert 3 not in [r['series_id'] for r in first + rest]
     assert len({Episode.from_dict(r).identity for r in first + rest}) == 14
+
+
+def test_episode_backoff_is_rechecked_without_repeating_a_dispatched_identity():
+    rows = [metadata(series=n) for n in range(1, 27)]
+    fresh = {Episode.from_dict(r).identity for r in rows[2:]}
+    index, now = CandidateIndex(rows), [0]
+    index.observe([candidate('Series 1 S01E01 CZ.mkv')])
+    available = lambda row: now[0] >= {1: 30, 2: 120}.get(row['series_id'], 0)
+    result = indexed_order(rows, fresh, set(), index, lambda: None, {},
+                           available=available, clock=lambda: now[0])
+    # Advancing into the next round makes take() skip both cooling retries.
+    first = list(islice(result, 9))
+    assert [r['series_id'] for r in first] == list(range(3, 12))
+    now[0] = 61
+    rest = list(result)
+    assert 1 in [r['series_id'] for r in rest]
+    assert 2 not in [r['series_id'] for r in rest]
+    assert len({Episode.from_dict(r).identity for r in first + rest}) == len(first + rest) == 25
+
+
+def test_only_cooling_episodes_end_scan_without_dispatch_or_busy_wait():
+    rows = [metadata()]
+    result = indexed_order(rows, set(), set(), CandidateIndex(rows), lambda: None, {},
+                           available=lambda _: False)
+    assert list(result) == []
