@@ -8000,11 +8000,14 @@
       "retry_after": "2026-10-22T21:08:34.503933+00:00"
     },
     "1265:4:26": {
-      "at": "2026-10-01T22:02:41.710799+00:00",
+      "at": "2026-10-21T21:07:19.220507+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T22:03:52.003057+00:00"
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 126.3,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T21:09:25.518326+00:00"
     },
     "1265:4:27": {
       "at": "2026-10-01T22:04:06.717147+00:00",
@@ -8014,11 +8017,14 @@
       "retry_after": "2026-10-02T22:05:03.827252+00:00"
     },
     "1265:4:28": {
-      "at": "2026-10-01T22:05:13.551994+00:00",
+      "at": "2026-10-21T21:08:35.085292+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T22:05:57.812379+00:00"
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 83.62,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T21:09:58.705137+00:00"
     },
     "2462:1:1": {
       "at": "2026-09-29T06:46:03.304568+00:00",
@@ -382326,9 +382332,39 @@
       "elapsed_seconds": 129.83,
       "consecutive_failures": 1,
       "retry_after": "2026-10-22T21:08:41.764865+00:00"
+    },
+    "2592:6:4": {
+      "at": "2026-10-21T21:08:42.363714+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 35.61,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T21:09:17.974500+00:00"
+    },
+    "6023:2:4": {
+      "at": "2026-10-21T21:09:18.564620+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 20.59,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T21:09:39.156115+00:00"
+    },
+    "3092:1:11": {
+      "at": "2026-10-21T21:09:26.111880+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 31.64,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T21:09:57.751262+00:00"
     }
   },
-  "updated_at": "2026-10-21T21:09:04.046105+00:00",
+  "updated_at": "2026-10-21T21:10:02.318307+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -386070,9 +386106,12 @@
     },
     "1265": {
       "misses": [
-        "1265:4:25"
+        "1265:4:25",
+        "1265:4:26",
+        "1265:4:28"
       ],
-      "updated_at": "2026-10-21T21:08:34.503958+00:00"
+      "updated_at": "2026-10-21T21:09:58.705160+00:00",
+      "retry_after": "2026-10-22T01:09:58.705160+00:00"
     },
     "998": {
       "misses": [
@@ -394688,8 +394727,10 @@
       "retry_after": "2026-10-21T09:39:08.058071+00:00"
     },
     "2592": {
-      "misses": [],
-      "updated_at": "2026-10-21T21:07:00.584511+00:00"
+      "misses": [
+        "2592:6:4"
+      ],
+      "updated_at": "2026-10-21T21:09:17.974523+00:00"
     },
     "1382": {
       "misses": [
@@ -396506,15 +396547,17 @@
     },
     "6023": {
       "misses": [
-        "6023:2:3"
+        "6023:2:3",
+        "6023:2:4"
       ],
-      "updated_at": "2026-10-21T16:19:05.161471+00:00"
+      "updated_at": "2026-10-21T21:09:39.156142+00:00"
     },
     "3092": {
       "misses": [
-        "3092:1:10"
+        "3092:1:10",
+        "3092:1:11"
       ],
-      "updated_at": "2026-10-21T16:20:01.412836+00:00"
+      "updated_at": "2026-10-21T21:09:57.751294+00:00"
     },
     "8762": {
       "misses": [
@@ -398785,12 +398828,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3277,
+    "last_series": 3092,
     "last_series_order": [
       false,
       -7.7,
-      -5638,
-      3277
+      -5380,
+      3092
     ]
   }
 }
