@@ -238383,14 +238383,13 @@
       "retry_after": "2026-10-17T13:18:37.657372+00:00"
     },
     "3114:1:5": {
-      "at": "2026-10-16T13:18:38.116205+00:00",
-      "status": "deferred",
+      "at": "2026-10-21T05:26:51.996926+00:00",
+      "status": "prepared",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 29.64,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-17T13:19:07.754623+00:00"
+      "elapsed_seconds": 53.78,
+      "source_id": "12340394",
+      "queue_rank": 28475
     },
     "291:1:5": {
       "at": "2026-10-19T03:58:39.632384+00:00",
@@ -356234,9 +356233,49 @@
       "elapsed_seconds": 31.63,
       "consecutive_failures": 1,
       "retry_after": "2026-10-22T05:26:43.961133+00:00"
+    },
+    "1152:2:8": {
+      "at": "2026-10-21T05:25:50.539207+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 61.58,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T05:26:52.117980+00:00"
+    },
+    "5512:2:1": {
+      "at": "2026-10-21T05:26:32.346696+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 29.74,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T05:27:02.085718+00:00"
+    },
+    "6441:1:10": {
+      "at": "2026-10-21T05:26:26.368078+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 59.71,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T05:27:26.077080+00:00"
+    },
+    "1688:1:9": {
+      "at": "2026-10-21T05:27:26.462615+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 19.71,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T05:27:46.169428+00:00"
     }
   },
-  "updated_at": "2026-10-21T05:26:45.690391+00:00",
+  "updated_at": "2026-10-21T05:27:48.356627+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -367443,7 +367482,7 @@
     },
     "3114": {
       "misses": [],
-      "updated_at": "2026-10-21T05:25:50.155406+00:00"
+      "updated_at": "2026-10-21T05:27:45.778430+00:00"
     },
     "5172": {
       "misses": [
@@ -367611,16 +367650,19 @@
     },
     "6441": {
       "misses": [
-        "6441:1:9"
+        "6441:1:9",
+        "6441:1:10"
       ],
-      "updated_at": "2026-10-20T23:21:02.882139+00:00"
+      "updated_at": "2026-10-21T05:27:26.077102+00:00"
     },
     "5512": {
       "misses": [
         "5512:1:7",
-        "5512:1:8"
+        "5512:1:8",
+        "5512:2:1"
       ],
-      "updated_at": "2026-10-20T23:21:19.310836+00:00"
+      "updated_at": "2026-10-21T05:27:02.085744+00:00",
+      "retry_after": "2026-10-21T09:27:02.085744+00:00"
     },
     "7627": {
       "misses": [
@@ -367645,9 +367687,11 @@
     "1688": {
       "misses": [
         "1688:1:7",
-        "1688:1:8"
+        "1688:1:8",
+        "1688:1:9"
       ],
-      "updated_at": "2026-10-20T23:21:45.319215+00:00"
+      "updated_at": "2026-10-21T05:27:46.169443+00:00",
+      "retry_after": "2026-10-21T09:27:46.169443+00:00"
     },
     "6992": {
       "misses": [
@@ -371170,12 +371214,12 @@
     },
     "1152": {
       "misses": [
-        "1152:2:3",
         "1152:2:4",
-        "1152:2:7"
+        "1152:2:7",
+        "1152:2:8"
       ],
-      "updated_at": "2026-10-21T05:26:11.958606+00:00",
-      "retry_after": "2026-10-21T09:26:11.958606+00:00"
+      "updated_at": "2026-10-21T05:26:52.117997+00:00",
+      "retry_after": "2026-10-21T09:26:52.117997+00:00"
     },
     "516": {
       "misses": [
@@ -373170,12 +373214,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 5512,
+    "last_series": 6992,
     "last_series_order": [
       false,
       -8.0,
-      -2957,
-      5512
+      -2779,
+      6992
     ]
   }
 }
