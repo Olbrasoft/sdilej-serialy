@@ -274294,14 +274294,14 @@
       "retry_after": "2026-10-19T15:04:19.345009+00:00"
     },
     "1362:1:9": {
-      "at": "2026-10-18T15:04:19.350272+00:00",
+      "at": "2026-10-21T16:55:44.531824+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 29.27,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T15:04:48.616536+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 246.59,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-21T17:29:55.576176+00:00"
     },
     "1972:1:9": {
       "at": "2026-10-19T18:40:37.451196+00:00",
@@ -374618,9 +374618,19 @@
       "elapsed_seconds": 45.66,
       "consecutive_failures": 1,
       "retry_after": "2026-10-22T16:57:43.317379+00:00"
+    },
+    "1081:3:19": {
+      "at": "2026-10-21T16:57:44.072409+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 173.89,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T17:00:37.962881+00:00"
     }
   },
-  "updated_at": "2026-10-21T16:59:48.844336+00:00",
+  "updated_at": "2026-10-21T17:01:00.707703+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -389593,8 +389603,10 @@
       "retry_after": "2026-10-20T17:49:13.796794+00:00"
     },
     "1362": {
-      "misses": [],
-      "updated_at": "2026-10-21T16:55:06.327822+00:00"
+      "misses": [
+        "1362:1:9"
+      ],
+      "updated_at": "2026-10-21T16:59:55.576226+00:00"
     },
     "1416": {
       "misses": [
@@ -390095,9 +390107,10 @@
     },
     "1081": {
       "misses": [
-        "1081:3:16"
+        "1081:3:16",
+        "1081:3:19"
       ],
-      "updated_at": "2026-10-21T16:55:42.224663+00:00"
+      "updated_at": "2026-10-21T17:00:37.962907+00:00"
     },
     "569": {
       "misses": [
@@ -390699,12 +390712,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1611,
+    "last_series": 3013,
     "last_series_order": [
       false,
-      -9.3,
-      -7199,
-      1611
+      -8.9,
+      -8130,
+      3013
     ]
   }
 }
