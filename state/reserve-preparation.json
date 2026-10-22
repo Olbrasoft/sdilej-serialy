@@ -427487,9 +427487,39 @@
       "elapsed_seconds": 50.91,
       "consecutive_failures": 1,
       "retry_after": "2026-10-22T22:17:34.599415+00:00"
+    },
+    "1152:3:5": {
+      "at": "2026-10-22T22:02:18.725532+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 57.21,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T22:18:15.940496+00:00"
+    },
+    "4500:2:4": {
+      "at": "2026-10-22T22:03:16.661702+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 15.34,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-23T22:03:31.997501+00:00"
+    },
+    "1152:3:4": {
+      "at": "2026-10-22T22:02:06.304482+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 101.61,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T22:18:47.914126+00:00"
     }
   },
-  "updated_at": "2026-10-22T22:02:52.131174+00:00",
+  "updated_at": "2026-10-22T22:04:04.554200+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -437568,9 +437598,11 @@
     "4500": {
       "misses": [
         "4500:2:2",
-        "4500:2:3"
+        "4500:2:3",
+        "4500:2:4"
       ],
-      "updated_at": "2026-10-22T19:25:46.057111+00:00"
+      "updated_at": "2026-10-22T22:03:31.997527+00:00",
+      "retry_after": "2026-10-23T02:03:31.997527+00:00"
     },
     "5111": {
       "misses": [
@@ -442337,9 +442369,12 @@
     },
     "1152": {
       "misses": [
-        "1152:3:3"
+        "1152:3:3",
+        "1152:3:5",
+        "1152:3:4"
       ],
-      "updated_at": "2026-10-22T22:02:34.599439+00:00"
+      "updated_at": "2026-10-22T22:03:47.914155+00:00",
+      "retry_after": "2026-10-22T22:33:47.914155+00:00"
     },
     "516": {
       "misses": [
@@ -444360,12 +444395,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 4536,
+    "last_series": 5111,
     "last_series_order": [
       false,
       -8.1,
-      -2230,
-      4536
+      -2056,
+      5111
     ]
   }
 }
