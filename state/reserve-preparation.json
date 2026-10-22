@@ -410561,9 +410561,38 @@
       "elapsed_seconds": 114.82,
       "source_id": "33675809",
       "queue_rank": 29168
+    },
+    "1168:2:6": {
+      "at": "2026-10-22T11:51:11.695966+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 42.54,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T12:06:54.236864+00:00"
+    },
+    "912:1:47": {
+      "at": "2026-10-22T11:50:12.932882+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "elapsed_seconds": 105.96,
+      "source_id": "33675825",
+      "queue_rank": 29169
+    },
+    "465:1:15": {
+      "at": "2026-10-22T11:51:28.259922+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 47.91,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-23T11:52:16.168027+00:00"
     }
   },
-  "updated_at": "2026-10-22T11:51:38.818934+00:00",
+  "updated_at": "2026-10-22T11:52:51.504396+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -425559,14 +425588,16 @@
     },
     "912": {
       "misses": [],
-      "updated_at": "2026-10-22T11:51:27.587449+00:00"
+      "updated_at": "2026-10-22T11:51:58.891640+00:00"
     },
     "1168": {
       "misses": [
         "1168:2:2",
-        "1168:2:4"
+        "1168:2:4",
+        "1168:2:6"
       ],
-      "updated_at": "2026-10-22T10:22:12.480160+00:00"
+      "updated_at": "2026-10-22T11:51:54.236889+00:00",
+      "retry_after": "2026-10-22T12:21:54.236889+00:00"
     },
     "1020": {
       "misses": [
@@ -425580,9 +425611,11 @@
     "465": {
       "misses": [
         "465:1:13",
-        "465:1:14"
+        "465:1:14",
+        "465:1:15"
       ],
-      "updated_at": "2026-10-22T10:22:14.358278+00:00"
+      "updated_at": "2026-10-22T11:52:16.168081+00:00",
+      "retry_after": "2026-10-22T15:52:16.168081+00:00"
     },
     "686": {
       "misses": [
