@@ -348330,14 +348330,14 @@
       "retry_after": "2026-10-23T19:24:06.094511+00:00"
     },
     "4797:1:11": {
-      "at": "2026-10-21T19:22:33.339780+00:00",
+      "at": "2026-10-22T19:24:38.707043+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 43.63,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-22T19:23:16.972318+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 104.05,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-22T20:26:22.753557+00:00"
     },
     "4797:2:1": {
       "at": "2026-10-22T01:39:07.088603+00:00",
@@ -422601,9 +422601,49 @@
       "elapsed_seconds": 29.47,
       "consecutive_failures": 1,
       "retry_after": "2026-10-23T19:25:34.063780+00:00"
+    },
+    "4500:2:3": {
+      "at": "2026-10-22T19:25:22.682319+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 23.37,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-23T19:25:46.057068+00:00"
+    },
+    "5111:1:17": {
+      "at": "2026-10-22T19:25:40.467847+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 31.58,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-23T19:26:12.049118+00:00"
+    },
+    "1669:4:8": {
+      "at": "2026-10-22T19:25:46.540685+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 31.2,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T19:41:17.739238+00:00"
+    },
+    "589:3:3": {
+      "at": "2026-10-22T19:26:12.539198+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 25.2,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-22T19:41:37.740284+00:00"
     }
   },
-  "updated_at": "2026-10-22T19:25:36.328109+00:00",
+  "updated_at": "2026-10-22T19:26:39.931047+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -432373,15 +432413,17 @@
     },
     "4500": {
       "misses": [
-        "4500:2:2"
+        "4500:2:2",
+        "4500:2:3"
       ],
-      "updated_at": "2026-10-22T15:02:47.633318+00:00"
+      "updated_at": "2026-10-22T19:25:46.057111+00:00"
     },
     "5111": {
       "misses": [
-        "5111:1:16"
+        "5111:1:16",
+        "5111:1:17"
       ],
-      "updated_at": "2026-10-22T15:03:13.253769+00:00"
+      "updated_at": "2026-10-22T19:26:12.049142+00:00"
     },
     "7239": {
       "misses": [
@@ -432529,9 +432571,10 @@
     },
     "1669": {
       "misses": [
-        "1669:4:7"
+        "1669:4:7",
+        "1669:4:8"
       ],
-      "updated_at": "2026-10-22T15:03:54.455094+00:00"
+      "updated_at": "2026-10-22T19:26:17.739259+00:00"
     },
     "1056": {
       "misses": [
@@ -432578,12 +432621,9 @@
     },
     "589": {
       "misses": [
-        "589:2:10",
-        "589:3:1",
-        "589:3:2"
+        "589:3:3"
       ],
-      "updated_at": "2026-10-22T15:03:57.321212+00:00",
-      "retry_after": "2026-10-22T19:03:57.321212+00:00"
+      "updated_at": "2026-10-22T19:26:37.740310+00:00"
     },
     "5023": {
       "misses": [
@@ -436192,9 +436232,11 @@
     "4797": {
       "misses": [
         "4797:1:8",
-        "4797:1:10"
+        "4797:1:10",
+        "4797:1:11"
       ],
-      "updated_at": "2026-10-22T19:24:06.094555+00:00"
+      "updated_at": "2026-10-22T19:26:22.753588+00:00",
+      "retry_after": "2026-10-22T19:56:22.753588+00:00"
     },
     "3135": {
       "misses": [
@@ -438948,12 +438990,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 4500,
+    "last_series": 2379,
     "last_series_order": [
       false,
-      -8.1,
-      -2074,
-      4500
+      -8.0,
+      -43827,
+      2379
     ]
   }
 }
