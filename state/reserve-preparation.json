@@ -282175,14 +282175,13 @@
       "retry_after": "2026-10-19T22:22:12.052506+00:00"
     },
     "1056:5:21": {
-      "at": "2026-10-18T22:22:02.614733+00:00",
-      "status": "deferred",
+      "at": "2026-10-22T03:37:50.567218+00:00",
+      "status": "prepared",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 31.44,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T22:22:34.050654+00:00"
+      "elapsed_seconds": 78.23,
+      "source_id": "34730194",
+      "queue_rank": 29128
     },
     "1669:2:5": {
       "at": "2026-10-18T22:21:42.759028+00:00",
@@ -392409,9 +392408,49 @@
       "elapsed_seconds": 38.3,
       "consecutive_failures": 1,
       "retry_after": "2026-10-23T03:37:49.851230+00:00"
+    },
+    "3137:2:9": {
+      "at": "2026-10-22T03:36:57.393459+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 84.64,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-23T03:38:22.037236+00:00"
+    },
+    "2263:2:2": {
+      "at": "2026-10-22T03:38:21.891434+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 21.47,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-23T03:38:43.362833+00:00"
+    },
+    "1657:1:7": {
+      "at": "2026-10-22T03:38:22.746509+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 24.62,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-23T03:38:47.364809+00:00"
+    },
+    "2463:2:6": {
+      "at": "2026-10-22T03:38:44.065252+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 23.24,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-23T03:39:07.309410+00:00"
     }
   },
-  "updated_at": "2026-10-22T03:38:17.568495+00:00",
+  "updated_at": "2026-10-22T03:39:11.495367+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -402641,7 +402680,7 @@
     },
     "1056": {
       "misses": [],
-      "updated_at": "2026-10-22T03:29:04.381535+00:00"
+      "updated_at": "2026-10-22T03:39:08.801314+00:00"
     },
     "600": {
       "misses": [
@@ -407699,25 +407738,26 @@
     "2263": {
       "misses": [
         "2263:1:12",
-        "2263:1:13"
+        "2263:1:13",
+        "2263:2:2"
       ],
-      "updated_at": "2026-10-21T21:52:22.231314+00:00"
+      "updated_at": "2026-10-22T03:38:43.362861+00:00",
+      "retry_after": "2026-10-22T07:38:43.362861+00:00"
     },
     "1657": {
       "misses": [
-        "1657:2:16",
-        "1657:2:17",
-        "1657:2:18"
+        "1657:1:7"
       ],
-      "updated_at": "2026-10-21T23:34:28.202906+00:00",
-      "retry_after": "2026-10-22T03:34:28.202906+00:00"
+      "updated_at": "2026-10-22T03:38:47.364832+00:00"
     },
     "2463": {
       "misses": [
         "2463:2:4",
-        "2463:2:5"
+        "2463:2:5",
+        "2463:2:6"
       ],
-      "updated_at": "2026-10-21T22:01:06.437342+00:00"
+      "updated_at": "2026-10-22T03:39:07.309444+00:00",
+      "retry_after": "2026-10-22T07:39:07.309444+00:00"
     },
     "636": {
       "misses": [],
@@ -407900,12 +407940,12 @@
     },
     "3137": {
       "misses": [
-        "3137:2:8",
         "3137:2:10",
-        "3137:3:2"
+        "3137:3:2",
+        "3137:2:9"
       ],
-      "updated_at": "2026-10-22T03:37:49.851255+00:00",
-      "retry_after": "2026-10-22T07:37:49.851255+00:00"
+      "updated_at": "2026-10-22T03:38:22.037259+00:00",
+      "retry_after": "2026-10-22T07:38:22.037259+00:00"
     },
     "7590": {
       "misses": [
@@ -409518,12 +409558,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 4359,
+    "last_series": 3525,
     "last_series_order": [
       false,
       -7.6,
-      -19857,
-      4359
+      -18466,
+      3525
     ]
   }
 }
