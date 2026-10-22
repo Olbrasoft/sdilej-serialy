@@ -43,6 +43,9 @@ from .audio_pipeline import PipelinedLanguageDetector
 # Underscores are filename separators, not letters adjoining an episode code.
 # Keep alphanumeric boundaries so embedded or truncated codes cannot match.
 EPISODE_CODE_RE = re.compile(r"(?<![^\W_])(?:S(?P<season>\d{1,2})E(?P<episode>\d{1,3})|(?P<sx>\d{1,2})x(?P<ex>\d{1,3}))(?![^\W_])", re.I)
+EPISODE_SUFFIX_RE = re.compile(
+    r'\s*[-+]\s*(?:(?P<quality>(?:360|480|540|576|720|1080|1440|2160|4320)p|[248]k)(?![^\W_])'
+    r'|E?(?P<number>\d{1,3})(?!\d))', re.I)
 NOISE_RE = re.compile(r"\b(?:1080p|720p|2160p|4k|bluray|webrip|web[ ._-]?dl|hdtv|x26[45]|hevc|av1|cz|cs|sk|eng|dabing|titulky|mkv|mp4)\b", re.I)
 
 
@@ -118,6 +121,15 @@ def episode_match(episode: Episode, candidate_title: str) -> tuple[MatchTier, di
         (int(match.group("season") or match.group("sx")), int(match.group("episode") or match.group("ex")))
         for match in code_matches_found
     }
+    single_episode_suffix = False
+    for code_match in code_matches_found:
+        position = code_match.end()
+        season = int(code_match['season'] or code_match['sx'])
+        while suffix := EPISODE_SUFFIX_RE.match(candidate_title, position):
+            single_episode_suffix = True
+            if suffix['number'] is not None:
+                codes.add((season, int(suffix['number'])))
+            position = suffix.end()
     code_matches = (episode.season, episode.number) in codes
     title_matches, unmatched_prefix = series_identity_match(
         episode,
@@ -131,10 +143,12 @@ def episode_match(episode: Episode, candidate_title: str) -> tuple[MatchTier, di
         "unmatched_series_prefix": unmatched_prefix,
     }
     evidence["episode_codes_found"] = [f"S{season:02d}E{number:02d}" for season, number in sorted(codes)]
-    if len(codes) > 1 or re.search(r'S\d{1,2}E\d{1,3}\s*[-+]\s*E?\d{1,3}(?!\d)', candidate_title, re.I):
+    if len(codes) > 1:
         evidence["reason"] = "multiple_episode_codes"
         return MatchTier.REJECT, evidence
     if code_matches and title_matches:
+        if single_episode_suffix:
+            evidence['single_episode_suffix'] = True
         return MatchTier.STRONG, evidence
     evidence["reason"] = "missing_series_or_episode_identity"
     return MatchTier.REJECT, evidence

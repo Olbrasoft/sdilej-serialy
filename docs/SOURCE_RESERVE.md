@@ -405,3 +405,28 @@ lane; it cannot consume the fresh lane or bypass Czech/original/duplicate checks
 If all remaining work is unavailable, the scan finishes without busy-waiting;
 the next scheduled producer resumes it. Upload state and existing targets are
 never changed by this scheduling repair.
+
+### Distinguish compact ranges from quality labels and repeated numbers
+
+On October 22 the unused reserve was empty after 280 source checks produced only
+one usable episode. A cache audit found seven unassigned episode identities with
+otherwise matching titles rejected because a compact suffix repeated the same
+episode number, such as `Famílie S05E22-22`. The same range expression incorrectly
+treated `+720p` as another episode. A live full discovery after the parser repair
+verified Famílie S05E22, source 33672689, as a Czech original (640x352,
+352242672 bytes, Czech probability 0.9752).
+
+The matcher now collects the actual episode numbers from compact suffix chains.
+Repeated identical numbers and explicitly recognized resolution labels do not
+create another episode. A different number anywhere in the chain still rejects
+the file, including `S01E01-01-02` and `S01E01+720p+E02`. Exact series/sequel,
+original duration, original resolution, Czech speech and smallest-file checks
+remain required. An ambiguous episode/season-total notation such as `S05E01-22`
+is still rejected; the fix does not assume that a different suffix is a total.
+
+Preparation revision 5 gives one recovery check only to old deferred identities
+with a positive, newly accepted suffix match in the live search cache. At startup
+these specific series scheduling pauses can be released; unrelated episode
+cooldowns remain active. A new failure restores ordinary backoff and cannot reuse
+this migration. Unsearched recovered hints remain fresh discoveries, not verified
+sources. No uploaded or allocated target is replayed or modified.

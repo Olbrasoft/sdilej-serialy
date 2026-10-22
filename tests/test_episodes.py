@@ -52,6 +52,27 @@ def test_episode_ranges_are_not_single_episodes(title):
     assert episode_match(episode(), title)[0] == MatchTier.REJECT
 
 
+@pytest.mark.parametrize('suffix', ['+720p', '-480p', '+4K', '-1080p', '+720p_CZ', '-01', '+E01', '-01-01'])
+def test_quality_and_repeated_episode_numbers_are_not_multiple_episodes(suffix):
+    tier, evidence = episode_match(episode(), f'The Big Bang Theory S01E01{suffix} CZ.mkv')
+    assert tier == MatchTier.STRONG
+    assert evidence['episode_codes_found'] == ['S01E01']
+    assert evidence['single_episode_suffix']
+
+
+@pytest.mark.parametrize('suffix', ['-01-02', '+E01+E02', '-01-1080p+02', '+720p+E02',
+                                  '-02CZ', '-02_1080p', '+E720p', '-01-S02E01'])
+def test_compact_suffix_chains_cannot_hide_another_episode(suffix):
+    assert episode_match(episode(), f'The Big Bang Theory S01E01{suffix}')[0] == MatchTier.REJECT
+
+
+def test_repeated_number_still_requires_the_correct_series_and_episode():
+    assert episode_match(episode(), 'The Big Bang Theory II S01E01-01 CZ')[0] == MatchTier.REJECT
+    assert episode_match(episode(), 'The Big Bang Theory S01E02-02 CZ')[0] == MatchTier.REJECT
+    assert episode_match(episode(), 'The Big Bang Theory S01E01-22 CZ')[0] == MatchTier.REJECT
+    assert episode_match(episode(), 'The Big Bang Theory 1x1+02 CZ')[0] == MatchTier.REJECT
+
+
 @pytest.mark.parametrize('code', ['XS01E01', 'S01E01X', 'S01E0100', '11x1', 'éS01E01'])
 def test_episode_boundaries_do_not_match_embedded_or_other_codes(code):
     assert not has_exact_code(f'The Big Bang Theory_{code}_CZ', episode())

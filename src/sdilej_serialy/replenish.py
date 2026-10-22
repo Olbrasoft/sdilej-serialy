@@ -29,7 +29,7 @@ from .source_repair import (REPAIR_SEARCH_REVISION, SourceRepairFeed, fingerprin
 from .discovery_index import (CandidateIndex, indexed_order, paused_series as saved_pauses,
                               record_series_result, release_expired_pauses)
 
-PREPARATION_REVISION = 4
+PREPARATION_REVISION = 5
 SAVED_REVIEW_REVISION = 1
 MAX_SERIES_MISSES = 3
 
@@ -61,11 +61,12 @@ def needs_short_audio_review(record, metadata):
             and runtime is not None and 0 < runtime < 15)
 
 
-def repaired_preparation(record, metadata=None):
+def repaired_preparation(record, metadata=None, *, filename_recovery=False):
     revision = record.get('preparation_revision', 1)
     return ((record.get('reason') == 'TypeError' and revision < 2)
             or (record.get('reason') == 'no_verified_czech_match' and revision < 3)
-            or needs_short_audio_review(record, metadata))
+            or needs_short_audio_review(record, metadata)
+            or (filename_recovery and revision < 5 and record.get('status') == 'deferred'))
 
 
 def legacy_czech(row):
@@ -80,9 +81,10 @@ def needs_saved_review(row, record):
     return legacy_czech(row) and record.get('saved_review_revision') != SAVED_REVIEW_REVISION
 
 
-def preparation_due(record, metadata, saved, now):
+def preparation_due(record, metadata, saved, now, *, filename_recovery=False):
     """Evaluate episode backoff at dispatch, not only at producer startup."""
-    return (repaired_preparation(record, metadata) or needs_saved_review(saved, record)
+    return (repaired_preparation(record, metadata, filename_recovery=filename_recovery)
+            or needs_saved_review(saved, record)
             or not record.get('retry_after')
             or datetime.fromisoformat(record['retry_after']) <= now)
 
@@ -106,7 +108,8 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
     else:
         fresh = {Episode.from_dict(m).identity for m in ordinary
                  if not records.get(Episode.from_dict(m).identity)
-                 or repaired_preparation(records[Episode.from_dict(m).identity], m)}
+                 or repaired_preparation(records[Episode.from_dict(m).identity], m,
+                      filename_recovery=Episode.from_dict(m).identity in index.recovered_hints)}
         yield from indexed_order(ordinary, fresh, paused, index, refresh, progress,
                                  productive_seasons=productive_seasons, records=records, available=available)
 
@@ -292,6 +295,15 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
     paused_series.difference_update(m['series_id'] for m in catalog if any(
         needs_short_audio_review(state[lane].get(Episode.from_dict(m).identity, {}), m)
         for lane in ('episodes', 'repairs')))
+    # Release only series with positive, newly recognized single-episode
+    # filenames. Do not turn every historical miss into fresh work again.
+    if index is not None:
+        for metadata in eligible:
+            identity = Episode.from_dict(metadata).identity
+            record = state['episodes'].get(identity, {})
+            if identity in index.recovered_hints and (not record or repaired_preparation(
+                    record, metadata, filename_recovery=True)):
+                paused_series.discard(metadata['series_id'])
     productive_seasons = recent_productive_seasons(state, datetime.now(UTC))
 
     def refresh_pauses():
@@ -374,7 +386,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
     def available(metadata):
         identity = Episode.from_dict(metadata).identity
         return preparation_due(state['episodes'].get(identity, {}), metadata,
-                               manifest.rows.get(identity), datetime.now(UTC))
+                               manifest.rows.get(identity), datetime.now(UTC),
+                               filename_recovery=index is not None and identity in index.recovered_hints)
 
     def new_tasks():
         for metadata in reserve_order(eligible, state['episodes'], manifest.rows, paused_series, productive_seasons,

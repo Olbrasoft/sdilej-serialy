@@ -35,6 +35,17 @@ def test_index_accepts_original_aliases_combined_prefixes_and_years():
     assert index.rank('1:1:1') == 0
 
 
+def test_index_marks_only_unambiguous_suffix_matches_for_scoped_recovery():
+    rows = [metadata(series=n) for n in range(1, 5)]
+    index = CandidateIndex(rows)
+    index.observe([candidate('Series 1 S01E01-01 CZ', '1'),
+                   candidate('Series 2 S01E01+720p_CZ', '2'),
+                   candidate('Series 3 S01E01-02 CZ', '3'),
+                   candidate('Series 4 S01E01 CZ', '4')])
+    assert index.recovered_hints == {'1:1:1', '2:1:1'}
+    assert index.hints == {'1:1:1': 0, '2:1:1': 0, '4:1:1': 0}
+
+
 def test_indexed_order_prioritizes_seen_sources_without_starving_exploration_or_retries():
     rows = [metadata(series=n) for n in range(1, 21)]
     index = CandidateIndex(rows)

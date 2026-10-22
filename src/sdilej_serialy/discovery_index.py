@@ -15,6 +15,7 @@ class CandidateIndex:
     def __init__(self, catalog):
         self.aliases = defaultdict(list)
         self.hints = {}
+        self.recovered_hints = set()
         self.seen = set()
         for metadata in catalog:
             episode = Episode.from_dict(metadata)
@@ -39,8 +40,11 @@ class CandidateIndex:
             # thousands of unrelated S01E01 catalog rows.
             for end in range(1, len(words) + 1):
                 for episode in self.aliases.get((' '.join(words[:end]), *code), ()):
-                    if episode_match(episode, row['title'])[0] not in (MatchTier.STRONG, MatchTier.SOLID):
+                    tier, evidence = episode_match(episode, row['title'])
+                    if tier not in (MatchTier.STRONG, MatchTier.SOLID):
                         continue
+                    if evidence.get('single_episode_suffix'):
+                        self.recovered_hints.add(episode.identity)
                     hint = audio_language_hint(row['title'])
                     rank = 0 if hint == 'cs' else 1 if not hint else 2
                     self.hints[episode.identity] = min(rank, self.hints.get(episode.identity, 3))

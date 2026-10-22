@@ -99,6 +99,36 @@ def test_index_hint_prioritizes_work_but_never_bypasses_language_verification(tm
     assert not (directory / 'additions.jsonl').exists()
 
 
+def test_filename_recovery_is_hint_scoped_once_and_keeps_other_episode_backoff(tmp_path, monkeypatch):
+    from datetime import UTC, datetime, timedelta
+    from sdilej_serialy.source_cache import SourceCache
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    original_target = (directory / 'state.json').read_bytes()
+    path = tmp_path / 'state/reserve-preparation.json'
+    later = (datetime.now(UTC) + timedelta(hours=23)).isoformat()
+    records = {f'1:1:{n}': dict(status='deferred', reason='no_matches',
+                              preparation_revision=4, retry_after=later) for n in (5, 6)}
+    pipeline.atomic_json(path, dict(schema_version=1, episodes=records,
+                                   series_discovery={'1': dict(retry_after=later)}))
+    cache = SourceCache(tmp_path / 'state/source-evidence-cache.json')
+    for n, suffix in ((5, '-05'), (6, '')):
+        row = dict(source_id=str(900+n), url=f'https://sdilej.cz/{900+n}/video.mkv',
+                   title=f'Series 1 S01E{n:02d}{suffix} CZ', size_bytes=100,
+                   width=1920, height=1080, duration_sec=100)
+        cache.remember('search', str(n), lambda row=row: dict(candidates=[row], next=None))
+    calls = []
+    provider = SimpleNamespace(cache=cache, discover=lambda ep: calls.append(ep.identity), last_outcome='no_matches')
+    result = replenish.prepare(tmp_path, 'test', provider, runtime_minutes=0)
+    assert result['attempted_this_run'] == 1 and result['prepared_this_run'] == 0
+    assert calls == ['1:1:5']
+    saved = json.loads(path.read_text())['episodes']
+    assert saved['1:1:5']['preparation_revision'] == replenish.PREPARATION_REVISION
+    assert saved['1:1:6'] == records['1:1:6']
+    assert replenish.prepare(tmp_path, 'test', provider, runtime_minutes=0)['attempted_this_run'] == 0
+    assert (directory / 'state.json').read_bytes() == original_target
+    assert not (directory / 'additions.jsonl').exists()
+
+
 @pytest.mark.parametrize('pause_seconds,expected', [(30, 14), (120, 12)])
 def test_running_producer_releases_only_elapsed_series_pauses(tmp_path, monkeypatch, pause_seconds, expected):
     from datetime import UTC, datetime, timedelta
@@ -504,7 +534,7 @@ def test_short_audio_fix_releases_old_episode_and_series_cooldown_once(tmp_path,
         series_discovery={'1': dict(misses=['1:1:5'], retry_after=later)}))
     provider = SimpleNamespace(discover=lambda _: None, last_outcome='inconclusive_audio')
     assert replenish.prepare(tmp_path, 'test', provider, limit=1, runtime_minutes=0)['attempted_this_run'] == 1
-    assert json.loads(path.read_text())['episodes']['1:1:5']['preparation_revision'] == 4
+    assert json.loads(path.read_text())['episodes']['1:1:5']['preparation_revision'] == replenish.PREPARATION_REVISION
     assert replenish.prepare(tmp_path, 'test', provider, identities=['1:1:5'], runtime_minutes=0)['attempted_this_run'] == 0
     assert not replenish.needs_short_audio_review(dict(reason='inconclusive_audio', preparation_revision=3), dict(runtime_min=45))
 
