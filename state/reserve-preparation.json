@@ -259198,14 +259198,14 @@
       "retry_after": "2026-10-18T23:53:36.612978+00:00"
     },
     "3022:1:6": {
-      "at": "2026-10-17T23:53:55.099341+00:00",
+      "at": "2026-10-22T10:15:20.912152+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 57.72,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-18T23:54:52.823967+00:00"
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 88.1,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-23T10:16:49.010035+00:00"
     },
     "3534:1:6": {
       "at": "2026-10-19T04:02:57.961633+00:00",
@@ -305588,14 +305588,14 @@
       "retry_after": "2026-10-20T21:15:51.886603+00:00"
     },
     "3022:1:7": {
-      "at": "2026-10-19T21:14:55.415890+00:00",
+      "at": "2026-10-22T10:15:42.712569+00:00",
       "status": "deferred",
       "preparation_revision": 4,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 63.84,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-20T21:15:59.251949+00:00"
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 49.82,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-23T10:16:40.134001+00:00"
     },
     "3533:1:7": {
       "at": "2026-10-19T21:14:57.302243+00:00",
@@ -407305,9 +407305,39 @@
       "elapsed_seconds": 59.29,
       "consecutive_failures": 1,
       "retry_after": "2026-10-23T10:16:09.980514+00:00"
+    },
+    "3599:2:1": {
+      "at": "2026-10-22T10:15:46.844988+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 45.04,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-23T10:16:39.407502+00:00"
+    },
+    "4538:3:3": {
+      "at": "2026-10-22T10:16:10.716113+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 30.11,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-23T10:16:40.872471+00:00"
+    },
+    "4361:3:8": {
+      "at": "2026-10-22T10:16:40.134146+00:00",
+      "status": "deferred",
+      "preparation_revision": 4,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 22.09,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-23T10:17:02.220149+00:00"
     }
   },
-  "updated_at": "2026-10-22T10:16:36.078518+00:00",
+  "updated_at": "2026-10-22T10:17:05.001664+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -417951,10 +417981,12 @@
     },
     "3022": {
       "misses": [
-        "3022:1:4",
-        "3022:1:5"
+        "3022:1:5",
+        "3022:1:7",
+        "3022:1:6"
       ],
-      "updated_at": "2026-10-22T10:14:46.100521+00:00"
+      "updated_at": "2026-10-22T10:16:49.010062+00:00",
+      "retry_after": "2026-10-22T14:16:49.010062+00:00"
     },
     "3622": {
       "misses": [
@@ -421748,15 +421780,17 @@
     },
     "3599": {
       "misses": [
-        "3599:1:13"
+        "3599:1:13",
+        "3599:2:1"
       ],
-      "updated_at": "2026-10-22T08:03:47.118855+00:00"
+      "updated_at": "2026-10-22T10:16:39.407545+00:00"
     },
     "4538": {
       "misses": [
-        "4538:3:2"
+        "4538:3:2",
+        "4538:3:3"
       ],
-      "updated_at": "2026-10-22T08:04:09.124298+00:00"
+      "updated_at": "2026-10-22T10:16:40.872504+00:00"
     },
     "4127": {
       "misses": [],
@@ -421800,9 +421834,10 @@
     },
     "4361": {
       "misses": [
-        "4361:3:7"
+        "4361:3:7",
+        "4361:3:8"
       ],
-      "updated_at": "2026-10-22T08:04:03.124859+00:00"
+      "updated_at": "2026-10-22T10:17:02.220178+00:00"
     },
     "7164": {
       "misses": [
@@ -424321,12 +424356,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 4538,
+    "last_series": 4477,
     "last_series_order": [
       false,
       -7.7,
-      -10563,
-      4538
+      -7937,
+      4477
     ]
   }
 }
