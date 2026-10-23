@@ -260,7 +260,7 @@ def inspect_preparation(provider, task):
         elif candidate is None and subtitled:
             candidate = discover_subtitled(provider, episode)
         elif candidate is None:
-            fresh = repairing_source or metadata.get('requested_audio_policy') == SLOVAK_POLICY or (saved or {}).get('source_policy') == SLOVAK_POLICY
+            fresh = repairing_source or fresh_probe or (saved or {}).get('source_policy') == SLOVAK_POLICY
             discover = getattr(provider, 'discover_fresh', provider.discover) if fresh else provider.discover
             candidate = discover(episode)
         if candidate is not None and (subtitled or valid_dubbed(episode, candidate)):

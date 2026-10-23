@@ -159,6 +159,24 @@ def test_fresh_probe_bypasses_legacy_source_and_backoff_only_once():
     assert not replenish.preparation_due(old,metadata,None,datetime.now(UTC))
 
 
+def test_czech_neighbors_reuse_search_pages_but_slovak_fallback_rechecks_current_absence(monkeypatch):
+    ep=Episode.from_dict(source(number=5)['episode'])
+    calls=[]
+    provider=SimpleNamespace(discover=lambda ep:calls.append('cached') or discover(ep),
+        discover_fresh=lambda ep:pytest.fail('Czech neighbor unnecessarily refreshes shared title pages'))
+    record,row,fatal=replenish.inspect_preparation(provider,(dict(ep.to_dict(),
+        requested_audio_policy=SLOVAK_POLICY),None,{},[]))
+    assert row and not fatal and calls==['cached']
+    sk=replace(candidate('11',height=1080,size_bytes=200,language=LanguageTier.SLOVAK_AUDIO),
+               audio_language='sk',language_probability=.99)
+    provider=provider_with(monkeypatch,[sk],lambda ep,c:c)
+    freshness=[]
+    monkeypatch.setattr(provider,'search',lambda ep:freshness.append(getattr(provider,'_fresh_search',False)) or [sk])
+    assert provider.discover(episode()) is sk
+    assert freshness==[False,True]
+    assert sk._language_selection['czech_search_complete']
+
+
 def test_slovak_publisher_waits_for_capability_then_dual_loader_accepts(tmp_path,monkeypatch):
     directory,_,_=setup(tmp_path,monkeypatch)
     row=slovak_row()

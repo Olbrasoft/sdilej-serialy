@@ -545,6 +545,9 @@ identity, runtime, original dimensions/bytes and verified audio. A positive samp
 unlocks that season's remaining episodes, not their upload eligibility. Registered
 series continue after their first upload; restarting does not skip the whole series.
 In-flight samples can wake gated work in the same producer run without busy-waiting.
+Neighboring Czech episodes reuse cached series-title search pages. Initial season
+samples, repairs and the final Czech-absence check for Slovak fallback use fresh
+searches; every original and its audio still need verified evidence.
 
 Selection order is Czech before Slovak, then highest original resolution, then
 smallest original file. A Slovak fallback requires a completed fresh source search
