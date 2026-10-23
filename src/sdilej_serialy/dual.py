@@ -144,7 +144,7 @@ def load(root, generation, *, additions_payload=None):
             if (row.get('generation') != generation
                     or row.get('base_manifest_sha256') != plan['manifest_sha256']
                     or row['identity'] != Episode.from_dict(row['episode']).identity
-                    or row['selected'].get('audio_language') != 'cs'
+                    or (row.get('source_policy') != SUBTITLE_POLICY and row['selected'].get('audio_language') != 'cs')
                     or (row['selected'].get('language_probability') or 0) < .65):
                 raise ValueError('Invalid prepared addition')
         rows.extend(additions)
@@ -302,7 +302,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
         # Publish only after this process has imported the policy-aware loader.
         # An older, still-running uploader must never receive foreign rows.
         capability_path = directory / 'uploader-capabilities.json'
-        atomic_json(capability_path, dict(schema_version=1, generation=generation,
+        atomic_json(capability_path, dict(schema_version=1, subtitle_queue_version=2, generation=generation,
                     source_policies=[SUBTITLE_POLICY], updated_at=now_iso(),
                     run_id=os.environ.get('GITHUB_RUN_ID')))
         persister(capability_path)

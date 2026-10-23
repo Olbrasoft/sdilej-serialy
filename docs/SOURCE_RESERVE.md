@@ -96,7 +96,8 @@ Normalized subtitle SHA-256, exact source ID/URL/byte size, cue count and timing
 are retained. Subtitle text and authenticated media addresses are not stored in Git.
 
 The publisher first requires `dual/<generation>/uploader-capabilities.json` from
-the policy-aware uploader. Until a safe batch reload advertises that capability,
+the policy-aware uploader, including `subtitle_queue_version: 2` for its append-only
+queue loader. Until a safe batch reload advertises that capability,
 the verified source is saved without appending a foreign row to the shared queue.
 This prevents an older running uploader from rejecting its live refill. Existing
 owners, ranks, claims, completed uploads and the two-workers-per-account limit

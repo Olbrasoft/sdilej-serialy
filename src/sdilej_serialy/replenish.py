@@ -500,7 +500,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                 payload = (persister.read_remote_file(str(capability_path.relative_to(root)), missing_ok=True)
                            if persister else capability_path.read_text() if capability_path.exists() else '')
                 capability = json.loads(payload) if payload else {}
-                if (capability.get('schema_version') != 1 or capability.get('generation') != generation
+                if (capability.get('schema_version') != 1 or capability.get('subtitle_queue_version') != 2
+                        or capability.get('generation') != generation
                         or SUBTITLE_POLICY not in capability.get('source_policies', [])):
                     # Retain verified evidence without exposing a foreign row
                     # to an old process which still admits Czech audio only.

@@ -254,7 +254,8 @@ def test_subtitle_retry_after_is_respected_without_a_mutating_retry():
     assert len(calls) == 1
 
 
-def test_publisher_waits_for_policy_aware_uploader_and_reuses_verified_source(tmp_path, monkeypatch):
+@pytest.mark.parametrize('old_capability', [False, True])
+def test_publisher_waits_for_policy_aware_uploader_and_reuses_verified_source(tmp_path, monkeypatch, old_capability):
     from datetime import datetime, UTC, timedelta
     from test_replenish import setup
     directory, _, _ = setup(tmp_path, monkeypatch)
@@ -267,11 +268,15 @@ def test_publisher_waits_for_policy_aware_uploader_and_reuses_verified_source(tm
     monkeypatch.setattr(replenish, 'discover_subtitled', lambda *args: calls.append(True) or candidate)
     provider = SimpleNamespace(discover=lambda ep: pytest.fail('Wrong language lane'))
     before = (directory / 'state.json').read_bytes()
+    if old_capability:
+        atomic_json(directory / 'uploader-capabilities.json', dict(schema_version=1,
+                    generation='test', source_policies=[quality.SUBTITLE_POLICY]))
     result = replenish.prepare(tmp_path, 'test', provider, identities=[episode.identity], runtime_minutes=0)
     assert result['prepared_this_run'] == 0 and calls == [True]
     assert episode.identity in SourceManifest(tmp_path / 'manifests/selected-episodes.jsonl').rows
     assert (directory / 'state.json').read_bytes() == before
-    atomic_json(directory / 'uploader-capabilities.json', dict(schema_version=1, generation='test', source_policies=[quality.SUBTITLE_POLICY]))
+    atomic_json(directory / 'uploader-capabilities.json', dict(schema_version=1, subtitle_queue_version=2,
+                generation='test', source_policies=[quality.SUBTITLE_POLICY]))
     later = datetime.now(UTC) + timedelta(minutes=2)
     class Clock(datetime):
         @classmethod
@@ -280,6 +285,16 @@ def test_publisher_waits_for_policy_aware_uploader_and_reuses_verified_source(tm
     result = replenish.prepare(tmp_path, 'test', provider, identities=[episode.identity], runtime_minutes=0)
     assert result['prepared_this_run'] == 1 and calls == [True]
     assert (directory / 'state.json').read_bytes() == before
+    from sdilej_serialy.dual import load
+    _, _, loaded = load(tmp_path, 'test')
+    added = next(r for r in loaded if r['identity'] == episode.identity)
+    assert added['source_policy'] == quality.SUBTITLE_POLICY
+    assert added['selected']['audio_language'] == 'en'
+    assert quality.upload_eligible(added)
+    rejected = (directory / 'additions.jsonl').read_text()
+    (directory / 'additions.jsonl').write_text(rejected.replace(quality.SUBTITLE_POLICY, 'unsupported-policy'))
+    with pytest.raises(ValueError):
+        load(tmp_path, 'test')
 
 
 def test_requested_subtitle_sources_can_be_reused_in_a_future_ranked_generation():
