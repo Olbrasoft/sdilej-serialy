@@ -137,6 +137,14 @@ The selected-source record retains the public source ID, byte size and check tim
 never the signed address or media bytes. Earlier subtitle requests deferred by
 this old original check receive one recovery attempt; ordinary cooldowns remain.
 
+This requested English path has an additional bounded 15-minute allowance for
+audio and full-text extraction beyond the ordinary discovery budget. If its first
+75-second audio sample fails, the second attempt reads another 75 seconds starting
+at 60 seconds (clamped for short sources), rather than repeating the same slow
+180-second seek. Confidence and preferred-language consensus checks remain active;
+the alternate offset has a separate cache key. Older inconclusive subtitle/audio
+records receive one recovery attempt. Ordinary Czech discovery is unchanged.
+
 To avoid starving uploads when the reserve runs dry, search scheduling interleaves
 eight unseen episodes with two due retries, retaining IMDb/season order inside
 both groups. Old audio-bug records remain eligible for their one-time recovery.

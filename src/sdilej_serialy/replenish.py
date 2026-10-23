@@ -70,6 +70,8 @@ def repaired_preparation(record, metadata=None, *, filename_recovery=False):
             or needs_short_audio_review(record, metadata)
             or (subtitle_request(metadata or {}) and record.get('reason') == 'transient_original'
                 and record.get('subtitle_verification_revision', 0) < 1)
+            or (subtitle_request(metadata or {}) and record.get('reason') in ('inconclusive_audio', 'inconclusive_subtitles')
+                and record.get('subtitle_verification_revision', 0) < 2)
             or (filename_recovery and revision < 5 and record.get('status') == 'deferred'))
 
 
@@ -184,7 +186,7 @@ def inspect_preparation(provider, task):
     started = time.monotonic()
     record = {'at': now_iso(), 'status': 'deferred', 'preparation_revision': PREPARATION_REVISION}
     if subtitled:
-        record['subtitle_verification_revision'] = 1
+        record['subtitle_verification_revision'] = 2
     repairing_source = bool(old_record.get('repair_fingerprint'))
     direct_review = not subtitled and not repairing_source and needs_saved_review(saved, old_record) and not low_resolution(saved)
     if legacy_czech(saved):

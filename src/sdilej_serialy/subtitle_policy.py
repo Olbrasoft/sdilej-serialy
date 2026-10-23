@@ -31,7 +31,9 @@ def subtitle_evidence(payload, candidate, provenance):
 
 def discover_subtitled(provider, episode):
     """Inspect every original, then English/full-Czech-text, resolution, size."""
-    deadline = time.monotonic() + provider.discovery_timeout_seconds
+    # Full original text extraction is additional work beyond ordinary Czech
+    # discovery. Keep it bounded without exhausting the audio/search allowance.
+    deadline = time.monotonic() + provider.discovery_timeout_seconds + 900
     provider.last_outcome = 'transient_search'
     previous_fresh = getattr(provider, '_fresh_search', False)
     provider._fresh_search = True
@@ -72,7 +74,9 @@ def discover_subtitled(provider, episode):
             if time.monotonic() >= deadline:
                 return None
             try:
-                checked = provider._verify_language(episode, original)
+                verify = (getattr(provider, 'verify_language_retry', provider._verify_language)
+                          if attempt else provider._verify_language)
+                checked = verify(episode, original)
                 break
             except (SdilejError, LanguageDetectionError, requests.RequestException, subprocess.TimeoutExpired):
                 if attempt:

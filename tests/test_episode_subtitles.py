@@ -151,6 +151,38 @@ def test_old_subtitle_original_deferral_gets_one_recovery_attempt():
     assert not replenish.preparation_due(dict(record, subtitle_verification_revision=1), metadata, None, now)
     assert not replenish.preparation_due(record, dict(metadata, season=3), None, now)
     assert not replenish.preparation_due(dict(record, reason='no_english_czech_subtitles'), metadata, None, now)
+    for reason in ('inconclusive_audio', 'inconclusive_subtitles'):
+        assert replenish.preparation_due(dict(record, reason=reason, subtitle_verification_revision=1), metadata, None, now)
+        assert not replenish.preparation_due(dict(record, reason=reason, subtitle_verification_revision=2), metadata, None, now)
+
+
+def test_failed_requested_audio_retries_another_full_length_sample(monkeypatch):
+    import subprocess
+    episode, candidate, _, payload = english_row()
+    calls = []
+    def first(*args):
+        calls.append('normal')
+        raise subprocess.TimeoutExpired('redacted', 120)
+    def retry(*args):
+        calls.append('alternate')
+        return candidate
+    provider = SimpleNamespace(discovery_timeout_seconds=900, session=None, search=lambda episode: [candidate],
+                               _inspect=lambda episode, c: c, _verify_language=first, verify_language_retry=retry)
+    monkeypatch.setattr(subtitle_policy, 'extract_original', lambda *args, **kwargs: (payload, {}))
+    assert subtitle_policy.discover_subtitled(provider, episode).source_id == candidate.source_id
+    assert calls == ['normal', 'alternate']
+
+
+def test_source_audio_retry_preserves_sample_length_and_clamps_its_offset():
+    from sdilej_serialy.episodes import EpisodeSourceProvider
+    episode, candidate, _, _ = english_row()
+    calls = []
+    detector = SimpleNamespace(seconds=75, concurrent_samples=True,
+        _detect_at=lambda url, offset: calls.append(offset) or ('en', .99))
+    provider = EpisodeSourceProvider(None, detector=detector)
+    checked = provider.verify_language_retry(episode, candidate)
+    assert checked.audio_language == 'en' and detector.seconds == 75
+    assert calls == [25]
 
 
 def test_full_czech_text_is_required_and_forced_or_images_do_not_substitute():
