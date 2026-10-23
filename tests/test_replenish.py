@@ -470,6 +470,33 @@ def test_preparation_workflow_has_no_production_db_or_target_credentials():
     assert 'sdilej-serialy-source-preparation' in text
 
 
+@pytest.mark.parametrize('requested,expected', [
+    ('', []),
+    ('1:1:5', ['1:1:5']),
+    ('1:1:5,1:1:6,2:1:1,2:1:2', ['1:1:5', '1:1:6', '2:1:1', '2:1:2']),
+    ('1:1:5,invalid', None),
+    ('1:1:5,1:1:6;echo injected', None),
+    (','.join(['1:1:5'] * 51), None),
+])
+def test_preparation_workflow_passes_validated_batch_identities(requested, expected):
+    import os
+    import subprocess
+    import textwrap
+    workflow = Path('.github/workflows/prepare-reserve.yml').read_text()
+    step = workflow.split('      - name: Prepare new originals from cached catalog and append reserve\n', 1)[1]
+    script = textwrap.dedent(step.split('        run: |\n', 1)[1])
+    result = subprocess.run(['bash', '-c', 'python() { printf "%s\\0" "$@"; }\n' + script],
+                            env=dict(os.environ, DUAL_GENERATION='test', SOURCE_DISCOVERY_WORKERS='4',
+                                     PREPARATION_IDENTITY=requested), capture_output=True, text=True)
+    if expected is None:
+        assert result.returncode != 0 and not result.stdout
+    else:
+        assert result.returncode == 0
+        arguments = result.stdout.split('\0')[:-1]
+        assert arguments[:2] == ['-m', 'sdilej_serialy.replenish']
+        assert [arguments[i + 1] for i, arg in enumerate(arguments) if arg == '--identity'] == expected
+
+
 def test_dependency_bug_records_are_retried_once_without_waiting_a_day(tmp_path, monkeypatch):
     from datetime import UTC, datetime, timedelta
     setup(tmp_path, monkeypatch)

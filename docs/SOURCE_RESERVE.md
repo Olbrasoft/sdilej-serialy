@@ -65,9 +65,19 @@ rejects that candidate without blocking real videos. Failed probes and
 unresolved video metadata still defer selection rather than permit a downgrade.
 
 For end-to-end acceptance after a repair, the manual workflow accepts an optional
-`identity` (`series:season:episode`). It applies the same source verification,
+`identity` (`series:season:episode`, or up to 50 comma-separated identities). It applies the same source verification,
 cooldown, ownership and duplicate guards and appends through the normal durable
 publisher. Scheduled/default runs scan the full cached catalog.
+
+Newly requested series can be added to the cached catalog without rebuilding the
+historical upload plan. On October 23, VisionQuest S01E01-S01E04 were appended
+from a transaction explicitly opened `READ ONLY` against the CR production
+catalog (series 10496; episode IDs 203716, 203715, 203764, 203765). The existing
+catalog rows, frozen queue, owners and completed targets were retained. A targeted
+batch uses the same serialized source publisher as scheduled preparation; each
+verified episode receives one normal alternating queue assignment. It does not
+authorize re-uploading existing episodes or accepting title-only quality/audio
+claims. Preparation jobs never receive production database credentials.
 
 To avoid starving uploads when the reserve runs dry, search scheduling interleaves
 eight unseen episodes with two due retries, retaining IMDb/season order inside
