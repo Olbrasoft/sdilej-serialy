@@ -523,7 +523,10 @@ sources. No uploaded or allocated target is replayed or modified.
 ### Requested new series and Czech/Slovak audio (October 23)
 
 `backlog/requested-series.json` records the requested series, their aired episode
-inventory, and an immutable baseline of series already present on either target.
+inventory plus additional CR-catalog episodes, and an immutable baseline of series
+already present on either target. CR episodes can precede TMDB (for example Hriech
+S01E08); they still need full source verification before publication. CR seasons
+absent from the canonical season inventory are not inferred or renumbered.
 The October 23 request covers the first two Czech-filtered CR listing pages:
 30 new series, with 18 existing series excluded (including Tulsa and VisionQuest).
 Positive CR episode IDs are retained where available; supplementary TMDB episode
