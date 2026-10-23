@@ -1,0 +1,74 @@
+name: check-source-search
+
+on:
+  workflow_dispatch:
+    inputs:
+      identity:
+        description: Catalog series:season:episode to inspect without publishing or uploading
+        required: true
+        default: '10472:1:4'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SOURCE_IDENTITY: ${{ inputs.identity }}
+      SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
+      SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install .
+      - name: Inspect authenticated search responses without media transfer
+        run: |
+          python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          from urllib.parse import urlsplit
+          from bs4 import BeautifulSoup
+          from sdilej_serialy.catalog import load_jsonl
+          from sdilej_serialy.models import Episode
+          from sdilej_serialy.source_audit import AuditProvider
+          from sdilej_serialy.source_cache import RequestGate
+          from sdilej_serialy.resilience import error_evidence
+
+          identity = os.environ['SOURCE_IDENTITY']
+          if not re.fullmatch(r'\d+:\d+:\d+', identity):
+              raise ValueError('Invalid episode identity')
+          metadata = next(r for r in load_jsonl(Path('backlog/series-episodes.jsonl.gz'))
+                          if Episode.from_dict(r).identity == identity)
+          episode = Episode.from_dict(metadata)
+          provider = AuditProvider.authenticated(os.environ['SDILEJ_EMAIL'], os.environ['SDILEJ_PASSWORD'],
+              detector=object(), request_gate=RequestGate(), discovery_timeout_seconds=300)
+          original_get = provider._get
+          def observed_get(url, **kwargs):
+              response = original_get(url, **kwargs)
+              if '/s/-6' in url:
+                  soup = BeautifulSoup(response.text, 'html.parser')
+                  print(json.dumps(dict(search_path=urlsplit(url).path,
+                      response_path=urlsplit(response.url).path, status=response.status_code,
+                      bytes=len(response.content), boxes=len(soup.select('div.videobox')),
+                      heading=soup.h1.get_text(' ', strip=True)[:120] if soup.h1 else None)), flush=True)
+              return response
+          provider._get = observed_get
+          try:
+              provider._fresh_search = True
+              sources = provider.search(episode)
+              print(json.dumps(dict(identity=identity, matching_sources=[dict(source_id=c.source_id,
+                  title=c.title, match_tier=c.match_tier.value) for c in sources])), flush=True)
+              profile = provider.session.get('https://sdilej.cz/nastaveni', allow_redirects=False, timeout=30)
+              print(json.dumps(dict(authenticated_profile_status=profile.status_code)), flush=True)
+          except Exception as error:
+              print(json.dumps(dict(error=error_evidence(error))), flush=True)
+              raise SystemExit(1)
+          finally:
+              provider.session.close()
+          PY
