@@ -119,6 +119,13 @@ The local subtitle media/target helpers reuse the shared transfer project's
 subtitle implementation without changing the pinned media relay SDK. Production
 database access is never part of this follow-up workflow.
 
+The owned upload listing must expose its ready subtitle form before the worker
+reads the public player. A processing detail page can omit its numeric video ID;
+that expected state is reported as `target_processing`, not an identity failure.
+Writes also require the verified player to be ready and use the observed owned
+form action. Missing listings never authorize a subtitle write. Earlier failures
+from this processing-page identity check receive one bounded recheck.
+
 The October 23 read-only production export supplied S04E01 (episode 203749).
 S04E02 was already present on Sdilej but absent from that catalog. Its local
 metadata therefore uses the explicitly provisional negative ID -581004002 with

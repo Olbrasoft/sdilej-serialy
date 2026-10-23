@@ -14,7 +14,7 @@ from sdilej_serialy.manifest import SourceManifest
 from sdilej_serialy.models import Episode
 from sdilej_serialy.pipeline import atomic_json
 from sdilej_serialy.subtitle_media import normalize_srt, choose_stream, SubtitleUnavailable
-from sdilej_serialy.subtitle_target import Target
+from sdilej_serialy.subtitle_target import Target, TargetUnavailable
 from sdilej_serialy.git_state import CheckpointError
 from sdilej_serialy import subtitle_http
 from sdilej_serialy import subtitle_media
@@ -240,6 +240,48 @@ def test_processing_target_does_not_extract_or_upload():
         None, None, None, lambda: pytest.fail('Unexpected write'), None, deadline=float('inf'))
     assert entry['status'] == 'target_processing'
     assert 'intent' not in entry
+
+
+def test_processing_listing_skips_the_unfinished_player_and_existing_czech_tracks():
+    _, candidate, row, _ = english_row()
+    listing = Target('555', row['display_name'], False,
+        tracks=[dict(id='10', czech=True, processing=False)])
+    api = SimpleNamespace(refresh=lambda *args: pytest.fail('Processing player must not be requested'))
+    view = episode_subtitles.read_target_view(api, '555', listing, 'https://example.invalid/detail')
+    entry = {}
+    episode_subtitles.attach(row, target_record(candidate), entry, view,
+        None, None, None, lambda: pytest.fail('Unexpected write'), None, deadline=float('inf'))
+    assert entry['status'] == 'target_processing' and 'intent' not in entry
+
+
+def test_both_owned_form_and_verified_player_must_be_ready():
+    _, candidate, row, _ = english_row()
+    listing = Target('555', row['display_name'], True, action='owned-form')
+    public = Target('555', row['display_name'], False, action='static-action')
+    api = SimpleNamespace(refresh=lambda *args: public)
+    view = episode_subtitles.read_target_view(api, '555', listing, 'https://example.invalid/detail')
+    assert view.action == 'owned-form'
+    entry = {}
+    episode_subtitles.attach(row, target_record(candidate), entry, view,
+        None, None, None, lambda: pytest.fail('Unexpected write'), None, deadline=float('inf'))
+    assert entry['status'] == 'target_processing'
+
+
+def test_missing_owned_listing_cannot_authorize_public_player_subtitle_writes():
+    with pytest.raises(TargetUnavailable, match='target_listing_video_missing'):
+        episode_subtitles.read_target_view(None, '555', None, 'https://example.invalid/detail')
+
+
+def test_old_processing_page_identity_error_gets_only_one_early_recheck():
+    from datetime import UTC, datetime, timedelta
+    _, candidate, row, _ = english_row()
+    uploads = dict(episodes={row['identity']: target_record(candidate)})
+    previous = dict(status='deferred', reason='target_detail_identity_unverified',
+                    retry_after=(datetime.now(UTC) + timedelta(hours=1)).isoformat())
+    state = dict(videos={'555': previous})
+    assert len(list(episode_subtitles.eligible_rows([row], uploads, state))) == 1
+    previous['processing_guard_revision'] = 1
+    assert not list(episode_subtitles.eligible_rows([row], uploads, state))
 
 
 def test_wrong_uploaded_source_cannot_receive_subtitles():

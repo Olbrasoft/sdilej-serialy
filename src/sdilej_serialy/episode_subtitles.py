@@ -44,9 +44,26 @@ def eligible_rows(queue, uploads, state):
         previous = state.get('videos', {}).get(str(upload['target_video_id']), {})
         if previous.get('status') == 'attached_verified' and previous.get('title_updated'):
             continue
-        if previous.get('retry_after') and datetime.fromisoformat(previous['retry_after']) > now:
+        recover_processing = (previous.get('reason') == 'target_detail_identity_unverified'
+                              and previous.get('processing_guard_revision', 0) < 1)
+        if not recover_processing and previous.get('retry_after') and datetime.fromisoformat(previous['retry_after']) > now:
             continue
         yield row, record
+
+
+def read_target_view(api, video_id, listing, detail_url):
+    """Require the owned upload form to be ready before reading its player."""
+    if listing is None:
+        raise TargetUnavailable('target_listing_video_missing')
+    if not listing.ready:
+        return listing
+    view = api.refresh(video_id, listing.title, detail_url)
+    view.ready = bool(view.ready and listing.ready)
+    view.action = listing.action
+    by_id = {track['id']: track for track in listing.tracks}
+    for track in view.tracks:
+        track['language_action'] = by_id.get(track['id'], {}).get('language_action', '')
+    return view
 
 
 def exact_source(row, record):
@@ -184,6 +201,7 @@ def run(root, generation, *, persist=False, dry_run=False, runtime_minutes=25):
                                                                       target_video_id=video_id, status='pending'))
                     if entry['identity'] != row['identity'] or entry['account'] != alias:
                         raise ValueError('Subtitle target identity changed')
+                    entry['processing_guard_revision'] = 1
                     try:
                         if not target_confirmed(session, video_id, upload['display_name']):
                             raise TargetUnavailable('target_owner_unverified')
@@ -199,12 +217,7 @@ def run(root, generation, *, persist=False, dry_run=False, runtime_minutes=25):
                                 entry['detail_url'] = listing.detail_url
                             if not trusted_detail(entry.get('detail_url', '')):
                                 raise TargetUnavailable('target_detail_url_missing')
-                            view = api.refresh(video_id, listing.title if listing else upload['display_name'], entry['detail_url'])
-                            if listing:
-                                by_id = {track['id']: track for track in listing.tracks}
-                                for track in view.tracks:
-                                    track['language_action'] = by_id.get(track['id'], {}).get('language_action', '')
-                            return view
+                            return read_target_view(api, video_id, listing, entry['detail_url'])
 
                         view = refresh()
                         attach(row, record, entry, view, api, provider, refresh, save,
