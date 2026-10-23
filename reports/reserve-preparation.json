@@ -4,9 +4,9 @@
   "prepared_this_run": 0,
   "reserve_total": 21448,
   "queue_total": 29883,
-  "updated_at": "2026-10-23T23:54:30.946406+00:00",
+  "updated_at": "2026-10-23T23:55:43.036788+00:00",
   "workers": 4,
-  "elapsed_seconds": 64.1,
+  "elapsed_seconds": 136.19,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -14,34 +14,34 @@
   "target_stock": 3000,
   "stock": {
     "queue_total": 29883,
-    "ready": 4,
+    "ready": 0,
     "ready_by_account": {
-      "a": 2,
-      "b": 2
+      "a": 0,
+      "b": 0
     },
     "categories": {
-      "completed": 29838,
-      "allocated": 29,
+      "completed": 29842,
+      "allocated": 28,
       "failed": 12,
-      "ready": 4
+      "in_flight": 1
     },
     "completed_by_account": {
-      "a": 14917,
-      "b": 14921
+      "a": 14919,
+      "b": 14923
     },
-    "uploads_last_24h": 370,
-    "uploads_per_hour_24h": 15.42,
-    "stock_hours_24h": 0.26
+    "uploads_last_24h": 374,
+    "uploads_per_hour_24h": 15.58,
+    "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "buffered",
+    "status": "waiting_for_sources",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 320,
-      "b": 286
+      "a": 136,
+      "b": 111
     },
     "preparation_outcomes_last_hour": {
-      "no_matches": 87,
+      "no_matches": 82,
       "prepared": 36,
       "verified_non_czech": 15,
       "transient_search": 1,
@@ -60,13 +60,22 @@
     ]
   },
   "cache": {
-    "search_miss": 20,
-    "search_hit": 3,
-    "search_seconds": 114.72,
-    "media_hit": 6,
-    "audio_hit": 1
+    "search_miss": 22,
+    "search_hit": 4,
+    "search_seconds": 147.16,
+    "media_hit": 19,
+    "audio_hit": 1,
+    "audio_miss": 3,
+    "media_miss": 2,
+    "media_seconds": 6.05,
+    "audio_seconds": 88.31
   },
-  "audio_pipeline": {},
+  "audio_pipeline": {
+    "sample_count": 9,
+    "download_seconds": 84.49,
+    "inference_wait_seconds": 0.0,
+    "inference_seconds": 14.92
+  },
   "productive_seasons": 148,
   "series_paused_this_run": 104,
   "saved_reviewed_this_run": 0,
