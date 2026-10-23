@@ -257,11 +257,20 @@ class EpisodeSourceProvider:
                     url = page['next']
                     if url and urlsplit(url).netloc != urlsplit(BASE_URL).netloc:
                         raise SdilejError('Unexpected search pagination host')
+        if not candidates and self.cache is not None:
+            snapshot = getattr(self.cache, 'search_candidates', None)
+            if callable(snapshot) and any(has_exact_code(row['title'], episode)
+                    and episode_match(episode, row['title'])[0] in (MatchTier.STRONG, MatchTier.SOLID)
+                    for row in snapshot()):
+                # A short-lived empty response cannot establish absence while
+                # recent complete search pages still contain this episode.
+                raise SdilejError('Search omitted recently observed episode sources')
         return list(candidates.values())
 
     def _search_page(self, url, query):
         def fetch():
-            html = self._get(url).text
+            response = self._get(url)
+            html = response.text
             soup = BeautifulSoup(html, 'html.parser')
             next_page = soup.select_one('a[rel~="next"][href]')
             next_url = urljoin(url, next_page['href']) if next_page else None
@@ -270,6 +279,12 @@ class EpisodeSourceProvider:
             fields = ('source_id', 'url', 'title', 'size_bytes', 'duration_sec', 'width', 'height')
             rows = [{key: getattr(candidate, key) for key in fields}
                     for candidate in parse_search_html(html, query=query)]
+            trace = getattr(self, 'last_search_evidence', [])
+            trace.append(dict(path=urlsplit(url).path, status=getattr(response, 'status_code', None),
+                response_bytes=len(html.encode('utf-8')), boxes=len(soup.select('div.videobox')),
+                parsed_candidates=len(rows), heading_matches_query=bool(soup.h1
+                    and normalize(soup.h1.get_text(' ', strip=True)) == normalize(query))))
+            self.last_search_evidence = trace[-12:]
             return dict(candidates=rows, next=next_url)
         if self.cache is None:
             return fetch()
@@ -383,6 +398,7 @@ class EpisodeSourceProvider:
 
     def discover(self, episode: Episode) -> Candidate | None:
         self.last_outcome = 'transient_search'
+        self.last_search_evidence = []
         deadline = time.monotonic() + self.discovery_timeout_seconds
         if time.monotonic() >= deadline:
             return None

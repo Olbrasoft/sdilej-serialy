@@ -40,7 +40,8 @@ class RequestedSeries:
         if sid not in self.series:
             return metadata
         return dict(metadata, requested_audio_policy=SLOVAK_POLICY,
-                    requested_probe=identity in self.samples.get((sid, season), []))
+                    requested_probe=(identity in self.samples.get((sid, season), [])
+                                     and not self.positive(sid, season)))
 
     def checked(self, identity):
         return self.records.get(identity, {}).get('request_probe_revision') == PROBE_REVISION

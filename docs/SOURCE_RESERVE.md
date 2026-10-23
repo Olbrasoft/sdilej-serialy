@@ -563,3 +563,27 @@ checkpoint (`audio_queue_version=1`) before appending a Slovak queue row. The
 uploader reloads code between batches, retaining its two transfers per account,
 global ownership, duplicate reservations and all historical receipts. No active
 media transfer needs cancellation to deploy this change.
+
+### Recover contradictory missing results in requested seasons
+
+The October 23 follow-up confirmed 13 completed new episodes but found that the
+producer had marked Hriech S01E04 missing for a day. An authenticated full local
+check selected Slovak source 35348222, and a separate read-only Actions runner
+found the same source. The long-running producer's negative result was therefore
+insufficient evidence of absence; the precise upstream/session cause is not yet
+established.
+
+Only the first successful season sample needs the initial discovery refresh.
+Later episodes retain individual original/audio checks while reusing recent
+complete series search pages. Dispatch re-evaluates the season evidence after
+in-flight results, and reusing a verified sample preserves its availability tag.
+A search that omits an exact episode still present in recent positive evidence
+now receives transient backoff, rather than a daily missing-source verdict.
+Old requested-series missing results with exact positive hints get one scoped
+recovery check; unrelated cooldowns, uploaded targets and ownership remain intact.
+
+Failed search checkpoints retain only bounded response diagnostics (canonical
+search path, HTTP status, byte/row counts and heading-match boolean), with no
+HTML, cookies or authenticated stream addresses. `check-source-search` is a
+manual read-only workflow for comparing a fresh Actions session; it never
+publishes sources or uploads media.

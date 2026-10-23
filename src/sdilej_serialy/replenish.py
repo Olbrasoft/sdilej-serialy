@@ -36,6 +36,7 @@ from .discovery_index import (CandidateIndex, indexed_order, paused_series as sa
 PREPARATION_REVISION = 5
 SAVED_REVIEW_REVISION = 1
 AUDIO_POLICY_REVISION = 1
+SEARCH_RECOVERY_REVISION = 1
 MAX_SERIES_MISSES = 3
 
 
@@ -66,7 +67,7 @@ def needs_short_audio_review(record, metadata):
             and runtime is not None and 0 < runtime < 15)
 
 
-def repaired_preparation(record, metadata=None, *, filename_recovery=False):
+def repaired_preparation(record, metadata=None, *, filename_recovery=False, source_hint=False):
     revision = record.get('preparation_revision', 1)
     return ((record.get('reason') == 'TypeError' and revision < 2)
             or (record.get('reason') == 'no_verified_czech_match' and revision < 3)
@@ -74,6 +75,9 @@ def repaired_preparation(record, metadata=None, *, filename_recovery=False):
             or ((metadata or {}).get('requested_audio_policy') == SLOVAK_POLICY
                 and record.get('audio_policy_revision', 0) < AUDIO_POLICY_REVISION
                 and record.get('reason') in ('verified_non_czech', 'no_verified_czech_match'))
+            or ((metadata or {}).get('requested_audio_policy') == SLOVAK_POLICY and source_hint
+                and record.get('reason') == 'no_matches'
+                and record.get('search_recovery_revision', 0) < SEARCH_RECOVERY_REVISION)
             or (subtitle_request(metadata or {}) and record.get('reason') == 'transient_original'
                 and record.get('subtitle_verification_revision', 0) < 1)
             or (subtitle_request(metadata or {}) and record.get('reason') in ('inconclusive_audio', 'inconclusive_subtitles')
@@ -93,10 +97,10 @@ def needs_saved_review(row, record):
     return legacy_czech(row) and record.get('saved_review_revision') != SAVED_REVIEW_REVISION
 
 
-def preparation_due(record, metadata, saved, now, *, filename_recovery=False):
+def preparation_due(record, metadata, saved, now, *, filename_recovery=False, source_hint=False):
     """Evaluate episode backoff at dispatch, not only at producer startup."""
     return (bool(metadata.get('requested_probe') and record.get('request_probe_revision') != PROBE_REVISION)
-            or repaired_preparation(record, metadata, filename_recovery=filename_recovery)
+            or repaired_preparation(record, metadata, filename_recovery=filename_recovery, source_hint=source_hint)
             or needs_saved_review(saved, record)
             or not record.get('retry_after')
             or datetime.fromisoformat(record['retry_after']) <= now)
@@ -143,7 +147,8 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
         fresh = {Episode.from_dict(m).identity for m in ordinary
                  if not records.get(Episode.from_dict(m).identity)
                  or repaired_preparation(records[Episode.from_dict(m).identity], m,
-                      filename_recovery=Episode.from_dict(m).identity in index.recovered_hints)}
+                      filename_recovery=Episode.from_dict(m).identity in index.recovered_hints,
+                      source_hint=index.rank(Episode.from_dict(m).identity) < 2)}
         yield from indexed_order(ordinary, fresh, paused, index, refresh, progress,
                                  productive_seasons=productive_seasons, records=records, available=available,
                                  wait_for_changes=bool(requested and requested.series))
@@ -215,7 +220,7 @@ def inspect_preparation(provider, task):
     subtitled = subtitle_request(metadata)
     started = time.monotonic()
     record = {'at': now_iso(), 'status': 'deferred', 'preparation_revision': PREPARATION_REVISION,
-              'audio_policy_revision': AUDIO_POLICY_REVISION}
+              'audio_policy_revision': AUDIO_POLICY_REVISION, 'search_recovery_revision': SEARCH_RECOVERY_REVISION}
     if subtitled:
         record['subtitle_verification_revision'] = 2
     repairing_source = bool(old_record.get('repair_fingerprint'))
@@ -270,7 +275,7 @@ def inspect_preparation(provider, task):
                 imdb_votes=int(metadata.get('imdb_votes') or 0))
             if not subtitled:
                 replacement.update(audio_policy_fields(candidate))
-                if requested_probe:
+                if requested_probe or (checked_probe and saved.get('requested_audio_check', {}).get('source_id') == candidate.source_id):
                     replacement['requested_audio_check'] = dict(revision=PROBE_REVISION,
                         identity=episode.identity, source_id=candidate.source_id,
                         audio_language=candidate.audio_language, checked_at=now_iso())
@@ -300,6 +305,8 @@ def inspect_preparation(provider, task):
         record['error'] = error_evidence(error)
         fatal_error = isinstance(error, (TypeError, AttributeError, ImportError))
     record['elapsed_seconds'] = round(time.monotonic() - started, 2)
+    if record.get('reason') in ('no_matches', 'transient_search'):
+        record['search_evidence'] = list(getattr(provider, 'last_search_evidence', []))[-12:]
     return record, replacement, fatal_error
 
 
@@ -483,7 +490,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         identity = Episode.from_dict(metadata).identity
         return requested.available(metadata) and preparation_due(state['episodes'].get(identity, {}), metadata,
                                manifest.rows.get(identity), datetime.now(UTC),
-                               filename_recovery=index is not None and identity in index.recovered_hints)
+                               filename_recovery=index is not None and identity in index.recovered_hints,
+                               source_hint=index is not None and index.rank(identity) < 2)
 
     def new_tasks():
         for metadata in reserve_order(eligible, state['episodes'], manifest.rows, paused_series, productive_seasons,
@@ -492,6 +500,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             if metadata is DISPATCH_WAIT:
                 yield DISPATCH_WAIT
                 continue
+            metadata = requested.decorate(metadata)
             episode = Episode.from_dict(metadata)
             key = episode_key(f'{episode.series_title} {episode.code}')
             if episode.identity in identities or key in keys:
