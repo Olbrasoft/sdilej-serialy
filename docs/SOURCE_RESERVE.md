@@ -533,7 +533,9 @@ Positive CR episode IDs are retained where available; supplementary TMDB episode
 metadata uses deterministic negative local IDs and explicit provenance. Production
 CR data is read only. Catalog rows, source history and uploaded targets are retained.
 
-The producer prioritizes these series by IMDb rating. It tries the first available
+The producer rotates these series in IMDb order, inspecting one episode per series
+before returning to its neighbors so one slow series cannot occupy every source
+worker. It tries the first available
 episode of the first regular season, then at most two neighboring episodes until
 CZ/SK audio is verified. Each subsequent season has its own samples and status in
 `reports/reserve-preparation.json`; foreign-only samples are marked as requiring

@@ -213,3 +213,15 @@ def test_idle_wait_does_not_spin_or_submit_a_sentinel():
         pytest.fail('Idle scheduler resumed')
     assert list(inspected_results(items(),SimpleNamespace(),lambda *a:pytest.fail('Sentinel inspected'),
         workers=2,limit=5,deadline=float('inf'),tick=lambda:ticks.append(1)))==[]
+
+
+def test_requested_series_rotate_in_rating_order_before_neighboring_episodes():
+    catalog=[dict(source(series=s,number=n)['episode'],imdb_rating=10-s)
+             for s in range(1,6) for n in range(1,4)]
+    requested=SimpleNamespace(series={s:{} for s in range(1,6)})
+    ordered=list(replenish.reserve_order(catalog,{}, {},set(),requested=requested,
+                                         available=lambda m:m['episode']>1))
+    assert [r['series_id'] for r in ordered[:5]]==list(range(1,6))
+    assert [r['episode'] for r in ordered[:5]]==[2]*5
+    assert [r['episode'] for r in ordered[5:]]==[3]*5
+    assert len({Episode.from_dict(r).identity for r in ordered})==10

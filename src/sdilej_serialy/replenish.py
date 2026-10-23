@@ -115,8 +115,10 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
         pending = {Episode.from_dict(m).identity: m for m in catalog if m['series_id'] in requested.series}
         while pending:
             emitted = False
+            seen_series = set()
             for identity, metadata in list(pending.items()):
-                if available is None or available(metadata):
+                if metadata['series_id'] not in seen_series and (available is None or available(metadata)):
+                    seen_series.add(metadata['series_id'])
                     del pending[identity]
                     emitted = True
                     yield metadata
