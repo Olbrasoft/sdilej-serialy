@@ -1,0 +1,56 @@
+name: episode-subtitles
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '27 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sdilej-serialy-subtitle-attachment
+  cancel-in-progress: false
+
+jobs:
+  attach:
+    if: vars.DUAL_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    env:
+      DUAL_GENERATION: ${{ vars.DUAL_GENERATION }}
+      SDILEJ_EMAIL: ${{ secrets.SDILEJ_EMAIL }}
+      SDILEJ_PASSWORD: ${{ secrets.SDILEJ_PASSWORD }}
+      PREHRAJTO_A_EMAIL: ${{ secrets.PREHRAJTO_A_EMAIL }}
+      PREHRAJTO_A_PASSWORD: ${{ secrets.PREHRAJTO_A_PASSWORD }}
+      PREHRAJTO_B_EMAIL: ${{ secrets.PREHRAJTO_B_EMAIL }}
+      PREHRAJTO_B_PASSWORD: ${{ secrets.PREHRAJTO_B_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install .
+      - name: Check durable subtitle work
+        id: work
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$DUAL_GENERATION" =~ ^[a-z0-9][a-z0-9-]{0,63}$ ]]
+          needed=$(python -m sdilej_serialy.episode_subtitles --generation "$DUAL_GENERATION" --decision needed)
+          echo "needed=$needed" >> "$GITHUB_OUTPUT"
+      - name: Install bounded original subtitle extraction tools
+        if: steps.work.outputs.needed == 'true'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes ffmpeg
+      - name: Attach only after processing and verify exact Czech text
+        if: steps.work.outputs.needed == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python -m sdilej_serialy.episode_subtitles --generation "$DUAL_GENERATION" --persist-git-state

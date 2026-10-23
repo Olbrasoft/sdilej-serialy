@@ -13,7 +13,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 
 from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
-from sdilej_to_prehrajto.ranking import language_tier, resolution_rank
+from sdilej_to_prehrajto.ranking import language_tier
 
 from .catalog import load_jsonl
 from .episodes import EpisodeSourceProvider, display_name, episode_match, runtime_acceptable
@@ -21,7 +21,7 @@ from .git_state import GitCheckpointPersister, persist_source_checkpoint
 from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import atomic_json, now_iso
-from .quality import QUALITY_POLICY, quality_acceptable
+from .quality import QUALITY_POLICY, quality_acceptable, resolution_rank, SUBTITLE_POLICY
 from .target import episode_key
 from .source_cache import RequestGate, SourceCache
 
@@ -35,7 +35,10 @@ def low_resolution(row):
 
 
 def fingerprint(row):
-    payload = json.dumps({k: row.get(k) for k in ('identity', 'selected', 'quality_policy')}, sort_keys=True)
+    fields = ('identity', 'selected', 'quality_policy')
+    if row.get('source_policy'):
+        fields += ('source_policy', 'subtitles')
+    payload = json.dumps({k: row.get(k) for k in fields}, sort_keys=True)
     return hashlib.sha256(payload.encode()).hexdigest()
 
 
@@ -46,7 +49,7 @@ def preference(candidate):
 
 def upgraded_row(base, replacement, *, czech_only=False):
     """Keep ownership/order fixed; reject wrong episodes, remakes and unverified media."""
-    if not low_resolution(base):
+    if base.get('source_policy') == SUBTITLE_POLICY or not low_resolution(base):
         return base
     SourceManifest._validate(replacement)
     episode = Episode.from_dict(base['episode'])

@@ -16,11 +16,7 @@ import requests
 from bs4 import BeautifulSoup
 from sdilej_to_prehrajto.language import LanguageDetectionError
 from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
-from sdilej_to_prehrajto.ranking import (
-    language_tier,
-    resolution_label,
-    resolution_rank,
-)
+from sdilej_to_prehrajto.ranking import language_tier
 from sdilej_to_prehrajto.sdilej import (
     BASE_URL,
     SdilejError,
@@ -33,7 +29,7 @@ from sdilej_to_prehrajto.sdilej import (
 
 from .models import Episode
 from .source_detail import parse_detail_html, resolve_original, sampled_content_fingerprint
-from .quality import quality_acceptable, rank_candidates
+from .quality import quality_acceptable, rank_candidates, resolution_label, resolution_rank
 from .numbering import mapped_episode_title
 from .auth import login_with_retry
 from .source_cache import media_key, stable_url, search_url

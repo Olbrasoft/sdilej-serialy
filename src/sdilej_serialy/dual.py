@@ -20,7 +20,7 @@ from .git_state import GitCheckpointPersister
 from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import EpisodeState, atomic_json, now_iso, target_session
-from .quality import QUALITY_POLICY, rank_candidates, upload_eligible
+from .quality import QUALITY_POLICY, rank_candidates, upload_eligible, SUBTITLE_POLICY
 from .recovery import digest
 from .target import episode_key, listing_rows
 from .resilience import error_evidence, receipt_matches, transient_http
@@ -64,7 +64,8 @@ def ranked_sources(sources, catalog):
         if not upload_eligible(row):
             continue
         selected = row['selected']
-        if selected.get('audio_language') != 'cs' or (selected.get('language_probability') or 0) < .65:
+        if ((row.get('source_policy') != SUBTITLE_POLICY and selected.get('audio_language') != 'cs')
+                or (selected.get('language_probability') or 0) < .65):
             continue
         key = episode_key(row['display_name'])
         if not key or row['identity'] != Episode.from_dict(row['episode']).identity:
@@ -297,6 +298,14 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
     directory, plan, rows = load(root, generation)
     report_path = directory / 'report.json'
     persister = GitCheckpointPersister(root, (report_path,)) if persist else None
+    if persister:
+        # Publish only after this process has imported the policy-aware loader.
+        # An older, still-running uploader must never receive foreign rows.
+        capability_path = directory / 'uploader-capabilities.json'
+        atomic_json(capability_path, dict(schema_version=1, generation=generation,
+                    source_policies=[SUBTITLE_POLICY], updated_at=now_iso(),
+                    run_id=os.environ.get('GITHUB_RUN_ID')))
+        persister(capability_path)
     state = SharedState(directory / 'state.json', {r['identity']: r['target_account'] for r in rows},
                         on_save=persister)
     from .source_audit import UpgradeFeed, UPGRADES_PATH

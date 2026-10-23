@@ -17,7 +17,9 @@ from .git_state import GitCheckpointPersister, persist_source_checkpoint
 from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import atomic_json, now_iso
-from .quality import QUALITY_POLICY, quality_acceptable
+from .quality import (QUALITY_POLICY, quality_acceptable, SUBTITLE_POLICY,
+                      subtitle_request, subtitled_eligible, upload_eligible)
+from .subtitle_policy import discover_subtitled
 from .source_audit import AuditProvider, low_resolution
 from .target import episode_key
 from .resilience import error_evidence
@@ -92,6 +94,12 @@ def preparation_due(record, metadata, saved, now, *, filename_recovery=False):
 def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, index=None, refresh=None,
                   progress=None, available=None):
     """Drain the known-source backlog before broad discovery, HD originals first."""
+    dispatched_requests = set()
+    for metadata in catalog:
+        if subtitle_request(metadata) and (available is None or available(metadata)):
+            dispatched_requests.add(Episode.from_dict(metadata).identity)
+            yield metadata
+    catalog = [metadata for metadata in catalog if Episode.from_dict(metadata).identity not in dispatched_requests]
     fast, low, ordinary = [], [], []
     for metadata in catalog:
         identity = Episode.from_dict(metadata).identity
@@ -170,10 +178,11 @@ def inspect_preparation(provider, task):
     """Read-only worker result; no worker may assign ranks, owners or write files."""
     metadata, saved, old_record, known = task
     episode = Episode.from_dict(metadata)
+    subtitled = subtitle_request(metadata)
     started = time.monotonic()
     record = {'at': now_iso(), 'status': 'deferred', 'preparation_revision': PREPARATION_REVISION}
     repairing_source = bool(old_record.get('repair_fingerprint'))
-    direct_review = not repairing_source and needs_saved_review(saved, old_record) and not low_resolution(saved)
+    direct_review = not subtitled and not repairing_source and needs_saved_review(saved, old_record) and not low_resolution(saved)
     if legacy_czech(saved):
         record['saved_review_revision'] = SAVED_REVIEW_REVISION
     record['method'] = 'source_repair' if repairing_source else 'saved_original' if direct_review else 'discovery'
@@ -182,21 +191,35 @@ def inspect_preparation(provider, task):
     replacement, fatal_error = None, False
     try:
         candidate = None
-        if not repairing_source and saved and saved.get('quality_policy') == QUALITY_POLICY:
+        if metadata.get('source_policy') and metadata.get('source_policy') != 'czech_audio' and not subtitled:
+            raise ValueError('Unapproved episode language policy')
+        if subtitled and not repairing_source and saved and subtitled_eligible(saved):
+            candidate = Candidate.from_dict(saved['selected'])
+            candidate._subtitle_evidence = saved['subtitles']
+            record['method'] = 'current_saved'
+        elif not subtitled and not repairing_source and saved and saved.get('quality_policy') == QUALITY_POLICY:
             existing = Candidate.from_dict(saved['selected'])
             if valid_czech(episode, existing):
                 candidate = existing
                 record['method'] = 'current_saved'
         if direct_review:
             candidate = provider.revalidate_saved(episode, [Candidate.from_dict(r['selected']) for r in known])
+        elif candidate is None and subtitled:
+            candidate = discover_subtitled(provider, episode)
         elif candidate is None:
             discover = getattr(provider, 'discover_fresh', provider.discover) if repairing_source else provider.discover
             candidate = discover(episode)
-        if candidate is not None and valid_czech(episode, candidate):
+        if candidate is not None and (subtitled or valid_czech(episode, candidate)):
             replacement = dict(identity=episode.identity, episode=episode.to_dict(),
                 selected=candidate.to_dict(), display_name=display_name(episode, candidate),
                 quality_policy=QUALITY_POLICY, imdb_rating=metadata.get('imdb_rating'),
                 imdb_votes=int(metadata.get('imdb_votes') or 0))
+            if subtitled:
+                evidence = getattr(candidate, '_subtitle_evidence', None)
+                replacement.update(source_policy=SUBTITLE_POLICY, subtitles=evidence or {})
+                if not upload_eligible(replacement):
+                    raise ValueError('English episode lacks verified original Czech subtitles')
+                replacement['display_name'] += ' (titulky čekají)'
             if direct_review:
                 replacement['source_review'] = dict(policy='saved-original-revalidation-v1', reviewed_at=now_iso(),
                     previous_policy=saved.get('quality_policy'), previous_source_id=saved['selected']['source_id'])
@@ -426,7 +449,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                 continue
             # Saved policy/evidence cannot prove availability. Never take the
             # current_saved shortcut when repairing a failed queued original.
-            yield (dict(row['episode'], imdb_rating=row.get('imdb_rating'), imdb_votes=row.get('imdb_votes')),
+            yield (dict(row['episode'], imdb_rating=row.get('imdb_rating'), imdb_votes=row.get('imdb_votes'),
+                        source_policy=row.get('source_policy')),
                    None, dict(old, repair_fingerprint=fingerprint(row)), [])
 
     def tasks():
@@ -471,6 +495,18 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                 elif replacement['selected']['source_id'] in source_ids:
                     replacement = None
                     record['reason'] = 'source_already_assigned'
+            if replacement is not None and replacement.get('source_policy') == SUBTITLE_POLICY:
+                capability_path = directory / 'uploader-capabilities.json'
+                payload = (persister.read_remote_file(str(capability_path.relative_to(root)), missing_ok=True)
+                           if persister else capability_path.read_text() if capability_path.exists() else '')
+                capability = json.loads(payload) if payload else {}
+                if (capability.get('schema_version') != 1 or capability.get('generation') != generation
+                        or SUBTITLE_POLICY not in capability.get('source_policies', [])):
+                    # Retain verified evidence without exposing a foreign row
+                    # to an old process which still admits Czech audio only.
+                    manifest.add(replacement)
+                    replacement = None
+                    record['reason'] = 'uploader_upgrade_pending'
             # Checkpoint errors must stop publishing. Never swallow a failed push.
             if replacement is not None:
                 manifest.add(replacement)
@@ -506,11 +542,12 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                 previous = task[2]
                 failures = previous.get('consecutive_failures', 0) + 1
                 record['consecutive_failures'] = failures
-                minutes = (min(15 * 2 ** min(failures - 1, 2), 60)
+                minutes = (1 if reason == 'uploader_upgrade_pending'
+                           else 30 if reason == 'no_english_czech_subtitles' else min(15 * 2 ** min(failures - 1, 2), 60)
                            if reason in ('transient_search', 'transient_original', 'SdilejError',
                                          'Timeout', 'ConnectionError', 'HTTPError', 'episode_active_or_completed')
                            or repairing_source and reason == 'no_matches'
-                           else 60 if reason == 'inconclusive_audio' else 24 * 60)
+                           else 60 if reason in ('inconclusive_audio', 'inconclusive_subtitles') else 24 * 60)
                 record['retry_after'] = (datetime.now(UTC) + timedelta(minutes=minutes)).isoformat()
                 series_misses[episode.series_id] += 1
                 if not selected_ids and series_misses[episode.series_id] >= MAX_SERIES_MISSES:

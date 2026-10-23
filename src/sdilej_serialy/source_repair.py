@@ -14,7 +14,7 @@ from .episodes import display_name, episode_match, runtime_acceptable
 from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import now_iso
-from .quality import QUALITY_POLICY, quality_acceptable
+from .quality import QUALITY_POLICY, quality_acceptable, SUBTITLE_POLICY, upload_eligible
 from .source_audit import fingerprint
 from .target import episode_key
 
@@ -43,6 +43,10 @@ def repaired_row(base, entry, plan):
     review = entry.get('source_repair', {})
     episode, other = Episode.from_dict(base['episode']), Episode.from_dict(entry['episode'])
     candidate = Candidate.from_dict(entry['selected'])
+    subtitled = base.get('source_policy') == SUBTITLE_POLICY
+    language_valid = (upload_eligible(entry) and entry.get('source_policy') == SUBTITLE_POLICY if subtitled else
+                     not entry.get('source_policy') and candidate.language_tier == LanguageTier.CZECH_AUDIO
+                     and candidate.audio_language == 'cs')
     detail = urlsplit(candidate.url)
     tier, _ = episode_match(episode, candidate.title)
     if (review.get('policy') != REPAIR_POLICY or review.get('generation') != plan['generation']
@@ -55,7 +59,7 @@ def repaired_row(base, entry, plan):
             or episode.episode_id != other.episode_id
             or episode_key(entry['display_name']) != episode_key(base['display_name'])
             or entry.get('quality_policy') != QUALITY_POLICY
-            or candidate.language_tier != LanguageTier.CZECH_AUDIO or candidate.audio_language != 'cs'
+            or not language_valid
             or (candidate.language_probability or 0) < .65
             or candidate.match_tier not in (MatchTier.STRONG, MatchTier.SOLID)
             or tier not in (MatchTier.STRONG, MatchTier.SOLID)
@@ -63,8 +67,11 @@ def repaired_row(base, entry, plan):
         raise ValueError('Source repair lacks matching queue, episode or verified Czech original')
     # Ownership, rank and metadata are always taken from the frozen queue, never
     # from an overlay. A lower resolution is allowed only after full discovery.
-    return dict(base, selected=entry['selected'], quality_policy=QUALITY_POLICY,
-                display_name=display_name(episode, candidate), source_repair=review)
+    result = dict(base, selected=entry['selected'], quality_policy=QUALITY_POLICY,
+                  display_name=entry['display_name'] if subtitled else display_name(episode, candidate), source_repair=review)
+    if subtitled:
+        result['subtitles'] = entry['subtitles']
+    return result
 
 
 class SourceRepairFeed:

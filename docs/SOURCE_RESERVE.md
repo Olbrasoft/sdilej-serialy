@@ -79,6 +79,53 @@ verified episode receives one normal alternating queue assignment. It does not
 authorize re-uploading existing episodes or accepting title-only quality/audio
 claims. Preparation jobs never receive production database credentials.
 
+### Explicit English uploads with original Czech text subtitles
+
+The ordinary reserve still accepts verified Czech audio only. A catalog row may
+opt into `requested-english-original-czech-subtitles-v1` only for the explicitly
+requested Tulsa King season 4 (series 581). The season registry preserves this
+request after later catalog imports, and due requested episodes precede broad
+exploration. Search pages are refreshed for this new season. A conclusively
+missing English/full-Czech-subtitle source is retried after 30 minutes.
+Its English speech, episode identity,
+original resolution/size and a full Czech text subtitle track must be verified
+before publication. Selection inspects all originals, then chooses the highest
+eligible resolution and smallest file in that tier. Unknown better originals or
+subtitle extraction failures defer the episode; they do not authorize a downgrade.
+Normalized subtitle SHA-256, exact source ID/URL/byte size, cue count and timing
+are retained. Subtitle text and authenticated media addresses are not stored in Git.
+
+The publisher first requires `dual/<generation>/uploader-capabilities.json` from
+the policy-aware uploader. Until a safe batch reload advertises that capability,
+the verified source is saved without appending a foreign row to the shared queue.
+This prevents an older running uploader from rejecting its live refill. Existing
+owners, ranks, claims, completed uploads and the two-workers-per-account limit
+remain unchanged. Small encoder crops such as 3832x1632 retain the 4K tier in new
+selection/display; existing target names are not rewritten.
+
+`episode-subtitles` runs hourly or manually, separately from media transfers and
+with one worker. Only completed, explicitly opted-in uploads are eligible. The
+worker verifies account ownership and the actual recorded upload source, waits
+for processing, and extracts the exact original Czech text again. A changed hash,
+unknown existing track or missing provenance prevents the write. A durable intent
+with a unique filename/hash is committed before the single subtitle POST. An
+uncertain response is reconciled by reads, never a repeated POST. Language changes
+also have a single recorded attempt. Completion requires the created Czech track
+and an identical normalized content hash from the same target ID. Existing tracks
+are never deleted or overwritten. The waiting suffix is removed only after proof.
+
+The local subtitle media/target helpers reuse the shared transfer project's
+subtitle implementation without changing the pinned media relay SDK. Production
+database access is never part of this follow-up workflow.
+
+The October 23 read-only production export supplied S04E01 (episode 203749).
+S04E02 was already present on Sdilej but absent from that catalog. Its local
+metadata therefore uses the explicitly provisional negative ID -581004002 with
+source provenance; the duplicate key remains `581:4:2`, including after a later
+canonical catalog import. The observed S04E02 original had English audio and
+English subtitles only, so it must remain unqueued until full Czech text exists.
+No production database rows were added or modified.
+
 To avoid starving uploads when the reserve runs dry, search scheduling interleaves
 eight unseen episodes with two due retries, retaining IMDb/season order inside
 both groups. Old audio-bug records remain eligible for their one-time recovery.
