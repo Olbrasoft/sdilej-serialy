@@ -127592,12 +127592,14 @@
       "retry_after": "2026-10-24T03:20:32.603762+00:00"
     },
     "1233:6:1": {
-      "at": "2026-10-10T07:58:09.312501+00:00",
+      "at": "2026-10-23T05:26:21.227005+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
+      "preparation_revision": 5,
       "method": "discovery",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-11T07:58:46.786753+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 13.68,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T05:26:34.910762+00:00"
     },
     "1233:6:2": {
       "at": "2026-10-10T07:59:35.974671+00:00",
@@ -273811,14 +273813,14 @@
       "retry_after": "2026-10-19T14:43:05.735214+00:00"
     },
     "3042:3:1": {
-      "at": "2026-10-18T14:42:08.057661+00:00",
+      "at": "2026-10-23T05:22:30.711795+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 59.74,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T14:43:07.797247+00:00"
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 246.88,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T05:26:37.588139+00:00"
     },
     "1373:1:4": {
       "at": "2026-10-21T17:50:08.106840+00:00",
@@ -441910,9 +441912,39 @@
       "elapsed_seconds": 79.75,
       "consecutive_failures": 1,
       "retry_after": "2026-10-24T05:26:04.625718+00:00"
+    },
+    "1333:6:9": {
+      "at": "2026-10-23T05:24:58.164619+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 71.43,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T05:26:12.047005+00:00"
+    },
+    "1333:6:10": {
+      "at": "2026-10-23T05:25:13.438721+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 67.24,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T05:26:20.674562+00:00"
+    },
+    "1333:6:12": {
+      "at": "2026-10-23T05:26:12.653317+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "elapsed_seconds": 37.96,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T05:26:50.617065+00:00"
     }
   },
-  "updated_at": "2026-10-23T05:26:07.514752+00:00",
+  "updated_at": "2026-10-23T05:26:52.560636+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -445932,9 +445964,10 @@
     },
     "1233": {
       "misses": [
-        "1233:5:12"
+        "1233:5:12",
+        "1233:6:1"
       ],
-      "updated_at": "2026-10-23T03:20:32.603795+00:00"
+      "updated_at": "2026-10-23T05:26:34.910789+00:00"
     },
     "2805": {
       "misses": [
@@ -446554,9 +446587,12 @@
     },
     "1333": {
       "misses": [
-        "1333:6:8"
+        "1333:6:9",
+        "1333:6:10",
+        "1333:6:12"
       ],
-      "updated_at": "2026-10-23T05:26:04.625747+00:00"
+      "updated_at": "2026-10-23T05:26:50.617097+00:00",
+      "retry_after": "2026-10-23T09:26:50.617097+00:00"
     },
     "3423": {
       "misses": [
@@ -456864,12 +456900,12 @@
     },
     "3042": {
       "misses": [
-        "3042:3:4",
         "3042:1:5",
-        "3042:1:8"
+        "3042:1:8",
+        "3042:3:1"
       ],
-      "updated_at": "2026-10-23T05:12:22.064873+00:00",
-      "retry_after": "2026-10-23T09:12:22.064873+00:00"
+      "updated_at": "2026-10-23T05:26:37.588172+00:00",
+      "retry_after": "2026-10-23T09:26:37.588172+00:00"
     },
     "2310": {
       "misses": [],
@@ -458678,12 +458714,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1709,
+    "last_series": 1260,
     "last_series_order": [
       false,
-      -8.6,
-      -36127,
-      1709
+      -8.5,
+      -129381,
+      1260
     ]
   }
 }
