@@ -119207,14 +119207,14 @@
       "queue_rank": 29507
     },
     "51:2:4": {
-      "at": "2026-10-10T15:58:41.287312+00:00",
+      "at": "2026-10-23T00:20:16.731294+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 0.97,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-11T15:58:42.259444+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 267.27,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-23T00:54:48.070805+00:00"
     },
     "1074:2:11": {
       "at": "2026-10-09T13:15:21.502155+00:00",
@@ -431742,9 +431742,49 @@
       "elapsed_seconds": 35.46,
       "consecutive_failures": 1,
       "retry_after": "2026-10-24T00:24:16.519697+00:00"
+    },
+    "1035:4:8": {
+      "at": "2026-10-23T00:24:07.450960+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 37.27,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T00:24:48.070909+00:00"
+    },
+    "1357:3:13": {
+      "at": "2026-10-23T00:24:17.177158+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 39.5,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T00:24:56.679125+00:00"
+    },
+    "1790:1:17": {
+      "at": "2026-10-23T00:24:49.407723+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 23.3,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T00:25:12.710990+00:00"
+    },
+    "2001:2:11": {
+      "at": "2026-10-23T00:24:48.745053+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 45.98,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T00:25:34.728295+00:00"
     }
   },
-  "updated_at": "2026-10-23T00:24:43.667237+00:00",
+  "updated_at": "2026-10-23T00:25:37.206389+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -448082,18 +448122,16 @@
     },
     "1035": {
       "misses": [
-        "1035:4:7"
+        "1035:4:7",
+        "1035:4:8"
       ],
-      "updated_at": "2026-10-22T23:03:48.027943+00:00"
+      "updated_at": "2026-10-23T00:24:48.070925+00:00"
     },
     "1357": {
       "misses": [
-        "1357:3:10",
-        "1357:3:11",
-        "1357:1:1"
+        "1357:3:13"
       ],
-      "updated_at": "2026-10-22T19:46:25.998348+00:00",
-      "retry_after": "2026-10-22T23:46:25.998348+00:00"
+      "updated_at": "2026-10-23T00:24:56.679176+00:00"
     },
     "3756": {
       "misses": [
@@ -448256,9 +448294,11 @@
     "2001": {
       "misses": [
         "2001:2:8",
-        "2001:2:10"
+        "2001:2:10",
+        "2001:2:11"
       ],
-      "updated_at": "2026-10-22T23:04:57.732486+00:00"
+      "updated_at": "2026-10-23T00:25:34.728318+00:00",
+      "retry_after": "2026-10-23T04:25:34.728318+00:00"
     },
     "3870": {
       "misses": [
@@ -448289,12 +448329,9 @@
     },
     "1790": {
       "misses": [
-        "1790:1:16",
-        "1790:1:4",
-        "1790:1:6"
+        "1790:1:17"
       ],
-      "updated_at": "2026-10-22T19:38:03.543412+00:00",
-      "retry_after": "2026-10-22T23:38:03.543412+00:00"
+      "updated_at": "2026-10-23T00:25:12.711010+00:00"
     },
     "4227": {
       "misses": [
@@ -448698,9 +448735,10 @@
     },
     "51": {
       "misses": [
-        "51:2:5"
+        "51:2:5",
+        "51:2:4"
       ],
-      "updated_at": "2026-10-23T00:24:06.778299+00:00"
+      "updated_at": "2026-10-23T00:24:48.070843+00:00"
     },
     "568": {
       "misses": [
@@ -448965,12 +449003,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1357,
+    "last_series": 1611,
     "last_series_order": [
       false,
-      -7.5,
-      -24306,
-      1357
+      -9.3,
+      -7199,
+      1611
     ]
   }
 }
