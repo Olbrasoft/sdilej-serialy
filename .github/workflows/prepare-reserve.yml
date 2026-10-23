@@ -60,8 +60,15 @@ jobs:
         if: steps.reserve.outputs.needed == 'true'
         timeout-minutes: 10
         run: |
-          sudo apt-get update
-          sudo apt-get install --yes ffmpeg
+          # Azure's regional mirror repeatedly downloaded below 60 kB/s and
+          # exhausted the setup deadline before discovery could start.
+          for mirror_file in /etc/apt/apt-mirrors*.txt /etc/apt/sources.list /etc/apt/sources.list.d/ubuntu.sources; do
+            if [ -f "$mirror_file" ]; then
+              sudo sed -i -E 's#https?://azure[.]archive[.]ubuntu[.]com/ubuntu#https://archive.ubuntu.com/ubuntu#g' "$mirror_file"
+            fi
+          done
+          sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update
+          sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install --yes --no-install-recommends ffmpeg
           pip install ".[whisper]"
           python -m sdilej_serialy.audio_check
       - name: Configure durable preparation checkpoints

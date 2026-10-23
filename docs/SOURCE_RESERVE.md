@@ -587,3 +587,21 @@ search path, HTTP status, byte/row counts and heading-match boolean), with no
 HTML, cookies or authenticated stream addresses. `check-source-search` is a
 manual read-only workflow for comparing a fresh Actions session; it never
 publishes sources or uploads media.
+
+### Extend the request to listing pages two and three
+
+The second page was already registered. The third page adds 19 new series and
+837 episode metadata records to inspect, bringing the plan to 49 requested
+series and 4,684 episode identities. Rick and Morty, House of the Dragon,
+The Gentlemen, The Agency and Ride or Die were excluded using active-generation
+upload evidence. An authenticated search on both targets found no additional
+existing series among the 19 new titles. Existing requests, exclusions, claims,
+source selections and completed uploads are preserved. Catalog metadata is
+not a verified upload reserve: each new season and episode still follows the
+same CZ-before-SK, original-resolution and smallest-file checks.
+
+Source runner setup had repeatedly timed out downloading FFmpeg dependencies
+from the regional Azure Ubuntu mirror at under 60 kB/s. Preparation now uses
+the official Ubuntu archive over HTTPS, omits optional package recommendations,
+and bounds connection retries while retaining its ten-minute setup deadline
+and the Whisper decoder startup check.
