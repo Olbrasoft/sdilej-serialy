@@ -14,6 +14,7 @@ from sdilej_serialy.models import Episode
 from sdilej_serialy.quality import SLOVAK_POLICY, slovak_eligible, upload_eligible
 from sdilej_serialy.requested_series import RequestedSeries
 from sdilej_serialy.source_workers import DISPATCH_WAIT, inspected_results
+from sdilej_serialy.source_repair import repair_entry, repaired_row
 from test_dual import setup_plan, source
 from test_episodes import episode, candidate, provider_with
 from test_replenish import setup, discover, parallel_provider
@@ -58,6 +59,33 @@ def test_partial_saved_review_cannot_authorize_slovak_fallback(monkeypatch):
     provider = provider_with(monkeypatch,[sk],lambda ep,c:c)
     result = provider.revalidate_saved(episode(),[sk])
     assert result is sk and not hasattr(result,'_language_selection')
+
+
+def test_unknown_czech_candidate_prevents_slovak_fallback(monkeypatch):
+    from sdilej_to_prehrajto.language import LanguageDetectionError
+    sk=replace(candidate('11',height=1080,size_bytes=200,language=LanguageTier.SLOVAK_AUDIO),
+               audio_language='sk',language_probability=.99)
+    unresolved=replace(sk,source_id='12',width=720,height=480,language_tier=LanguageTier.UNKNOWN)
+    def verify(ep,c):
+        if c is unresolved:raise LanguageDetectionError('Unresolved audio')
+        return c
+    provider=provider_with(monkeypatch,[sk,unresolved],verify)
+    assert provider.discover_fresh(episode()) is None
+
+
+def test_source_repair_preserves_owner_and_can_replace_slovak_with_czech():
+    base=slovak_row()
+    base.update(queue_rank=9,target_account='a')
+    czech=source(number=5)
+    czech['selected']['title']='Series 1 S01E05'
+    plan=dict(generation='test',manifest_sha256='b'*64)
+    entry=repair_entry(base,czech,plan)
+    result=repaired_row(base,entry,plan)
+    assert result['target_account']=='a' and result['queue_rank']==9
+    assert 'source_policy' not in result and 'language_selection' not in result
+    entry=repair_entry(czech,slovak_row(),plan)
+    result=repaired_row(czech,entry,plan)
+    assert upload_eligible(result) and result['source_policy']==SLOVAK_POLICY
 
 
 @pytest.mark.parametrize('field,value', [('source_id','999'),('source_size_bytes',999),
