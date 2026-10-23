@@ -528452,9 +528452,102 @@
       "elapsed_seconds": 342.67,
       "source_id": "32504924",
       "queue_rank": 29866
+    },
+    "1239:7:11": {
+      "at": "2026-10-23T23:22:16.417740+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.815974086523056,
+      "observed_source_id": "21707241",
+      "elapsed_seconds": 600.02,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T23:33:02.184157+00:00"
+    },
+    "1150:4:6": {
+      "at": "2026-10-23T23:33:02.696687+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 38.38,
+      "search_evidence": [
+        {
+          "path": "/super-drbna-s04e06/s/-6",
+          "status": 200,
+          "response_bytes": 216963,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/super-drbna/s/-6",
+          "status": 200,
+          "response_bytes": 424272,
+          "boxes": 186,
+          "parsed_candidates": 179,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/gossip-girl-s04e06/s/-6",
+          "status": 200,
+          "response_bytes": 216981,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/gossip-girl/s/-6",
+          "status": 200,
+          "response_bytes": 296950,
+          "boxes": 74,
+          "parsed_candidates": 60,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/super-drbna-s04e06/s/-6",
+          "status": 200,
+          "response_bytes": 216912,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/super-drbna/s/-6",
+          "status": 200,
+          "response_bytes": 424412,
+          "boxes": 186,
+          "parsed_candidates": 179,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/gossip-girl-s04e06/s/-6",
+          "status": 200,
+          "response_bytes": 217006,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/gossip-girl/s/-6",
+          "status": 200,
+          "response_bytes": 296836,
+          "boxes": 74,
+          "parsed_candidates": 60,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T23:33:41.073240+00:00"
     }
   },
-  "updated_at": "2026-10-23T23:32:01.248816+00:00",
+  "updated_at": "2026-10-23T23:34:05.604084+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -533722,9 +533815,11 @@
     "1239": {
       "misses": [
         "1239:7:9",
-        "1239:7:10"
+        "1239:7:10",
+        "1239:7:11"
       ],
-      "updated_at": "2026-10-23T21:29:57.230677+00:00"
+      "updated_at": "2026-10-23T23:33:02.184201+00:00",
+      "retry_after": "2026-10-24T03:33:02.184201+00:00"
     },
     "1951": {
       "misses": [
@@ -544169,9 +544264,11 @@
     "1150": {
       "misses": [
         "1150:4:4",
-        "1150:4:5"
+        "1150:4:5",
+        "1150:4:6"
       ],
-      "updated_at": "2026-10-23T21:30:57.719836+00:00"
+      "updated_at": "2026-10-23T23:33:41.073270+00:00",
+      "retry_after": "2026-10-24T03:33:41.073270+00:00"
     },
     "587": {
       "misses": [],
@@ -545724,12 +545821,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1095,
+    "last_series": 1133,
     "last_series_order": [
       false,
       -7.5,
-      -237243,
-      1095
+      -64944,
+      1133
     ]
   }
 }
