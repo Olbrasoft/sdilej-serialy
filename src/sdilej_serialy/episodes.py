@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import re
 import json
+import hashlib
+from datetime import UTC, datetime
 import subprocess
 import threading
 import time
@@ -29,7 +31,7 @@ from sdilej_to_prehrajto.sdilej import (
 
 from .models import Episode
 from .source_detail import parse_detail_html, resolve_original, sampled_content_fingerprint
-from .quality import quality_acceptable, rank_candidates, resolution_label, resolution_rank
+from .quality import quality_acceptable, rank_candidates, resolution_label, resolution_rank, SLOVAK_POLICY
 from .numbering import mapped_episode_title
 from .auth import login_with_retry
 from .source_cache import media_key, stable_url, search_url
@@ -57,6 +59,11 @@ def normalize(value: str) -> str:
 
 def series_aliases(episode: Episode) -> tuple[str, ...]:
     aliases = [title for title in (episode.series_title, episode.series_original_title) if title]
+    for title in tuple(aliases):
+        if '&' in title:
+            aliases.append(title.replace('&', 'and'))
+        if re.search(r'\band\b', title, re.I):
+            aliases.append(re.sub(r'\band\b', '&', title, flags=re.I))
     # The catalog spells the acronym with asterisks, while many releases and
     # search results use a single word. Do not collapse arbitrary series words.
     if any(normalize(title) == 'm a s h' for title in aliases):
@@ -405,7 +412,11 @@ class EpisodeSourceProvider:
         if not candidates:
             self.last_outcome = 'no_matches'
             return None
-        return self._select_originals(episode, candidates, deadline)
+        result = self._select_originals(episode, candidates, deadline, complete_search=True)
+        if result and result.language_tier == LanguageTier.SLOVAK_AUDIO and not getattr(self, '_fresh_search', False):
+            # A cached search page cannot establish current Czech absence.
+            return self.discover_fresh(episode)
+        return result
 
     def revalidate_saved(self, episode: Episode, candidates: list[Candidate]) -> Candidate | None:
         """Recheck known HD originals without search; low-resolution sources need discovery."""
@@ -413,9 +424,10 @@ class EpisodeSourceProvider:
                                       time.monotonic() + self.discovery_timeout_seconds,
                                       minimum_resolution=3)
 
-    def _select_originals(self, episode, candidates, deadline, *, minimum_resolution=0):
+    def _select_originals(self, episode, candidates, deadline, *, minimum_resolution=0, complete_search=False):
         self.last_outcome = 'transient_original'
         by_resolution: dict[int, list[Candidate]] = {}
+        exclusions = []
         for candidate in candidates:
             # Search metadata can describe a low-resolution preview of a 4K
             # original. Inspect every original before choosing a resolution.
@@ -427,6 +439,12 @@ class EpisodeSourceProvider:
                     break
                 except (SdilejError, requests.RequestException):
                     if attempt == 1:
+                        from .subtitle_media import zero_original_evidence
+                        evidence = zero_original_evidence(self.session, candidate, deadline=deadline)
+                        if evidence:
+                            exclusions.append(evidence)
+                            detail = None
+                            break
                         return None
             if detail:
                 by_resolution.setdefault(resolution_rank(detail.width, detail.height), []).append(detail)
@@ -469,9 +487,21 @@ class EpisodeSourceProvider:
                     # candidate was conclusively checked before reaching here.
                     if detail.language_tier == LanguageTier.CZECH_AUDIO:
                         self.last_outcome = 'verified_czech'
-                        return rank_candidates(resolved)[0]
+                        best = rank_candidates(resolved)[0]
+                        best._source_exclusions = exclusions
+                        return best
         ranked = rank_candidates(resolved)
         self.last_outcome = 'verified_non_czech' if ranked else 'no_acceptable_original'
+        if ranked and ranked[0].language_tier == LanguageTier.SLOVAK_AUDIO and complete_search:
+            best = ranked[0]
+            evidence = sorted((c.source_id, c.audio_language, c.language_probability,
+                               c.width, c.height, c.size_bytes) for c in resolved)
+            best._language_selection = dict(policy=SLOVAK_POLICY, czech_search_complete=True,
+                czech_found=False, checked_at=datetime.now(UTC).isoformat(),
+                checked_source_count=len(resolved),
+                checked_sources_sha256=hashlib.sha256(json.dumps(evidence, sort_keys=True).encode()).hexdigest(),
+                source_id=best.source_id, source_url=best.url, source_size_bytes=best.size_bytes)
+            best._source_exclusions = exclusions
         return ranked[0] if ranked else None
 
     def refresh(self, candidate: Candidate, *, session: requests.Session) -> Candidate:

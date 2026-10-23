@@ -14,7 +14,7 @@ from .episodes import display_name, episode_match, runtime_acceptable
 from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import now_iso
-from .quality import QUALITY_POLICY, quality_acceptable, SUBTITLE_POLICY, upload_eligible
+from .quality import QUALITY_POLICY, quality_acceptable, SUBTITLE_POLICY, SLOVAK_POLICY, upload_eligible
 from .source_audit import fingerprint
 from .target import episode_key
 
@@ -45,8 +45,9 @@ def repaired_row(base, entry, plan):
     candidate = Candidate.from_dict(entry['selected'])
     subtitled = base.get('source_policy') == SUBTITLE_POLICY
     language_valid = (upload_eligible(entry) and entry.get('source_policy') == SUBTITLE_POLICY if subtitled else
-                     not entry.get('source_policy') and candidate.language_tier == LanguageTier.CZECH_AUDIO
-                     and candidate.audio_language == 'cs')
+                     (not entry.get('source_policy') and candidate.language_tier == LanguageTier.CZECH_AUDIO
+                      and candidate.audio_language == 'cs')
+                     or (entry.get('source_policy') == SLOVAK_POLICY and upload_eligible(entry)))
     detail = urlsplit(candidate.url)
     tier, _ = episode_match(episode, candidate.title)
     if (review.get('policy') != REPAIR_POLICY or review.get('generation') != plan['generation']
@@ -69,8 +70,10 @@ def repaired_row(base, entry, plan):
     # from an overlay. A lower resolution is allowed only after full discovery.
     result = dict(base, selected=entry['selected'], quality_policy=QUALITY_POLICY,
                   display_name=entry['display_name'] if subtitled else display_name(episode, candidate), source_repair=review)
-    if subtitled:
-        result['subtitles'] = entry['subtitles']
+    for field in ('source_policy', 'subtitles', 'language_selection'):
+        result.pop(field, None)
+        if field in entry:
+            result[field] = entry[field]
     return result
 
 

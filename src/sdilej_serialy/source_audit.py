@@ -21,7 +21,7 @@ from .git_state import GitCheckpointPersister, persist_source_checkpoint
 from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import atomic_json, now_iso
-from .quality import QUALITY_POLICY, quality_acceptable, resolution_rank, SUBTITLE_POLICY
+from .quality import QUALITY_POLICY, quality_acceptable, resolution_rank, SUBTITLE_POLICY, SLOVAK_POLICY
 from .target import episode_key
 from .source_cache import RequestGate, SourceCache
 
@@ -38,6 +38,8 @@ def fingerprint(row):
     fields = ('identity', 'selected', 'quality_policy')
     if row.get('source_policy'):
         fields += ('source_policy', 'subtitles')
+    if row.get('source_policy') == SLOVAK_POLICY:
+        fields += ('language_selection',)
     payload = json.dumps({k: row.get(k) for k in fields}, sort_keys=True)
     return hashlib.sha256(payload.encode()).hexdigest()
 
@@ -49,7 +51,7 @@ def preference(candidate):
 
 def upgraded_row(base, replacement, *, czech_only=False):
     """Keep ownership/order fixed; reject wrong episodes, remakes and unverified media."""
-    if base.get('source_policy') == SUBTITLE_POLICY or not low_resolution(base):
+    if base.get('source_policy') in (SUBTITLE_POLICY, SLOVAK_POLICY) or not low_resolution(base):
         return base
     SourceManifest._validate(replacement)
     episode = Episode.from_dict(base['episode'])

@@ -3,11 +3,13 @@ import threading
 import time
 from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 
+DISPATCH_WAIT = object()
+
 
 def inspected_results(items, provider, inspect, *, workers, limit, deadline, tick):
     if workers == 1:
         for index, item in enumerate(items):
-            if index >= limit or time.monotonic() >= deadline:
+            if item is DISPATCH_WAIT or index >= limit or time.monotonic() >= deadline:
                 break
             yield item, inspect(provider, item)
         return
@@ -26,11 +28,15 @@ def inspected_results(items, provider, inspect, *, workers, limit, deadline, tic
     pool = ThreadPoolExecutor(max_workers=workers, thread_name_prefix='source')
     futures, submitted = {}, 0
     last_tick = time.monotonic()
+    blocked = False
     try:
         while True:
-            while len(futures) < workers and submitted < limit and time.monotonic() < deadline:
+            while not blocked and len(futures) < workers and submitted < limit and time.monotonic() < deadline:
                 item = next(iterator, None)
                 if item is None:
+                    break
+                if item is DISPATCH_WAIT:
+                    blocked = True
                     break
                 future = pool.submit(evaluate, item)
                 futures[future] = (submitted, item)
@@ -46,6 +52,8 @@ def inspected_results(items, provider, inspect, *, workers, limit, deadline, tic
             for future in sorted(done, key=lambda f: futures[f][0]):
                 _, item = futures.pop(future)
                 yield item, future.result()
+            if done:
+                blocked = False
     finally:
         # An unsuccessful publication prevents any additional dispatch. Work
         # already running is read-only; cancel unstarted futures and close all

@@ -9,6 +9,7 @@ from sdilej_to_prehrajto.sdilej import audio_language_hint
 
 from .episodes import EPISODE_CODE_RE, episode_match, normalize, series_aliases
 from .models import Episode
+from .source_workers import DISPATCH_WAIT
 
 
 class CandidateIndex:
@@ -46,7 +47,7 @@ class CandidateIndex:
                     if evidence.get('single_episode_suffix'):
                         self.recovered_hints.add(episode.identity)
                     hint = audio_language_hint(row['title'])
-                    rank = 0 if hint == 'cs' else 1 if not hint else 2
+                    rank = 0 if hint == 'cs' else 1 if hint in (None, 'sk') else 2
                     self.hints[episode.identity] = min(rank, self.hints.get(episode.identity, 3))
 
     def rank(self, identity):
@@ -54,7 +55,8 @@ class CandidateIndex:
 
 
 def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
-                  productive_seasons=None, records=None, available=None, clock=time.monotonic):
+                  productive_seasons=None, records=None, available=None, clock=time.monotonic,
+                  wait_for_changes=False):
     """Eight fresh probes (up to six prioritized) and two due retries per round.
 
     All lanes share one pending set. The exploration cursor survives restarts;
@@ -160,7 +162,10 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
             emitted += 1
             yield row
         if not emitted:
-            return
+            if not wait_for_changes:
+                return
+            yield DISPATCH_WAIT
+            refreshed = float('-inf')
 
 
 def paused_series(records, now):

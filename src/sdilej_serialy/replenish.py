@@ -18,14 +18,16 @@ from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import atomic_json, now_iso
 from .quality import (QUALITY_POLICY, quality_acceptable, SUBTITLE_POLICY,
-                      subtitle_request, subtitled_eligible, upload_eligible)
+                      subtitle_request, subtitled_eligible, upload_eligible,
+                      SLOVAK_POLICY, slovak_eligible, audio_policy_fields)
 from .subtitle_policy import discover_subtitled
 from .source_audit import AuditProvider, low_resolution
 from .target import episode_key
 from .resilience import error_evidence
 from .reserve import LOW_WATER, TARGET_STOCK, should_prepare, stock
 from .source_cache import RequestGate, SourceCache
-from .source_workers import inspected_results
+from .source_workers import inspected_results, DISPATCH_WAIT
+from .requested_series import RequestedSeries, PROBE_REVISION
 from .source_repair import (REPAIR_SEARCH_REVISION, SourceRepairFeed, fingerprint,
                             repairable, repair_entry, repaired_row)
 from .discovery_index import (CandidateIndex, indexed_order, paused_series as saved_pauses,
@@ -33,6 +35,7 @@ from .discovery_index import (CandidateIndex, indexed_order, paused_series as sa
 
 PREPARATION_REVISION = 5
 SAVED_REVIEW_REVISION = 1
+AUDIO_POLICY_REVISION = 1
 MAX_SERIES_MISSES = 3
 
 
@@ -68,6 +71,9 @@ def repaired_preparation(record, metadata=None, *, filename_recovery=False):
     return ((record.get('reason') == 'TypeError' and revision < 2)
             or (record.get('reason') == 'no_verified_czech_match' and revision < 3)
             or needs_short_audio_review(record, metadata)
+            or ((metadata or {}).get('requested_audio_policy') == SLOVAK_POLICY
+                and record.get('audio_policy_revision', 0) < AUDIO_POLICY_REVISION
+                and record.get('reason') in ('verified_non_czech', 'no_verified_czech_match'))
             or (subtitle_request(metadata or {}) and record.get('reason') == 'transient_original'
                 and record.get('subtitle_verification_revision', 0) < 1)
             or (subtitle_request(metadata or {}) and record.get('reason') in ('inconclusive_audio', 'inconclusive_subtitles')
@@ -89,14 +95,15 @@ def needs_saved_review(row, record):
 
 def preparation_due(record, metadata, saved, now, *, filename_recovery=False):
     """Evaluate episode backoff at dispatch, not only at producer startup."""
-    return (repaired_preparation(record, metadata, filename_recovery=filename_recovery)
+    return (bool(metadata.get('requested_probe') and record.get('request_probe_revision') != PROBE_REVISION)
+            or repaired_preparation(record, metadata, filename_recovery=filename_recovery)
             or needs_saved_review(saved, record)
             or not record.get('retry_after')
             or datetime.fromisoformat(record['retry_after']) <= now)
 
 
 def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, index=None, refresh=None,
-                  progress=None, available=None):
+                  progress=None, available=None, requested=None):
     """Drain the known-source backlog before broad discovery, HD originals first."""
     dispatched_requests = set()
     for metadata in catalog:
@@ -104,11 +111,24 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
             dispatched_requests.add(Episode.from_dict(metadata).identity)
             yield metadata
     catalog = [metadata for metadata in catalog if Episode.from_dict(metadata).identity not in dispatched_requests]
+    if requested and requested.series:
+        pending = {Episode.from_dict(m).identity: m for m in catalog if m['series_id'] in requested.series}
+        while pending:
+            emitted = False
+            for identity, metadata in list(pending.items()):
+                if available is None or available(metadata):
+                    del pending[identity]
+                    emitted = True
+                    yield metadata
+            if not emitted:
+                break
+        catalog = [m for m in catalog if m['series_id'] not in requested.series
+                   or Episode.from_dict(m).identity in pending]
     fast, low, ordinary = [], [], []
     for metadata in catalog:
         identity = Episode.from_dict(metadata).identity
         row = saved.get(identity)
-        if needs_saved_review(row, records.get(identity, {})):
+        if not metadata.get('requested_audio_policy') and needs_saved_review(row, records.get(identity, {})):
             (low if low_resolution(row) else fast).append(metadata)
         else:
             ordinary.append(metadata)
@@ -123,7 +143,8 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
                  or repaired_preparation(records[Episode.from_dict(m).identity], m,
                       filename_recovery=Episode.from_dict(m).identity in index.recovered_hints)}
         yield from indexed_order(ordinary, fresh, paused, index, refresh, progress,
-                                 productive_seasons=productive_seasons, records=records, available=available)
+                                 productive_seasons=productive_seasons, records=records, available=available,
+                                 wait_for_changes=bool(requested and requested.series))
 
 
 def valid_czech(episode, candidate):
@@ -133,6 +154,13 @@ def valid_czech(episode, candidate):
             and candidate.match_tier in (MatchTier.STRONG, MatchTier.SOLID)
             and tier in (MatchTier.STRONG, MatchTier.SOLID)
             and runtime_acceptable(episode, candidate.duration_sec) and quality_acceptable(candidate))
+
+
+def valid_dubbed(episode, candidate):
+    if valid_czech(episode, candidate):
+        return True
+    return slovak_eligible(dict(identity=episode.identity, episode=episode.to_dict(),
+        selected=candidate.to_dict(), **audio_policy_fields(candidate)))
 
 
 def catalog_order(row):
@@ -184,11 +212,17 @@ def inspect_preparation(provider, task):
     episode = Episode.from_dict(metadata)
     subtitled = subtitle_request(metadata)
     started = time.monotonic()
-    record = {'at': now_iso(), 'status': 'deferred', 'preparation_revision': PREPARATION_REVISION}
+    record = {'at': now_iso(), 'status': 'deferred', 'preparation_revision': PREPARATION_REVISION,
+              'audio_policy_revision': AUDIO_POLICY_REVISION}
     if subtitled:
         record['subtitle_verification_revision'] = 2
     repairing_source = bool(old_record.get('repair_fingerprint'))
-    direct_review = not subtitled and not repairing_source and needs_saved_review(saved, old_record) and not low_resolution(saved)
+    requested_probe = bool(metadata.get('requested_probe'))
+    if requested_probe:
+        record['request_probe_revision'] = PROBE_REVISION
+    checked_probe = bool(saved and saved.get('requested_audio_check', {}).get('revision') == PROBE_REVISION)
+    fresh_probe = requested_probe and not checked_probe
+    direct_review = not fresh_probe and not subtitled and not repairing_source and needs_saved_review(saved, old_record) and not low_resolution(saved)
     if legacy_czech(saved):
         record['saved_review_revision'] = SAVED_REVIEW_REVISION
     record['method'] = 'source_repair' if repairing_source else 'saved_original' if direct_review else 'discovery'
@@ -197,30 +231,49 @@ def inspect_preparation(provider, task):
     replacement, fatal_error = None, False
     try:
         candidate = None
-        if metadata.get('source_policy') and metadata.get('source_policy') != 'czech_audio' and not subtitled:
+        if metadata.get('source_policy') not in (None, 'czech_audio', SLOVAK_POLICY) and not subtitled:
             raise ValueError('Unapproved episode language policy')
         if subtitled and not repairing_source and saved and subtitled_eligible(saved):
             candidate = Candidate.from_dict(saved['selected'])
             candidate._subtitle_evidence = saved['subtitles']
             candidate._source_exclusions = saved.get('source_exclusions', [])
             record['method'] = 'current_saved'
-        elif not subtitled and not repairing_source and saved and saved.get('quality_policy') == QUALITY_POLICY:
+        elif not fresh_probe and not subtitled and not repairing_source and saved and saved.get('quality_policy') == QUALITY_POLICY:
             existing = Candidate.from_dict(saved['selected'])
             if valid_czech(episode, existing):
                 candidate = existing
                 record['method'] = 'current_saved'
+            elif (slovak_eligible(saved)
+                  and 0 <= (datetime.now(UTC) - datetime.fromisoformat(saved['language_selection']['checked_at'])).total_seconds() < 3600):
+                candidate = existing
+                candidate._language_selection = saved['language_selection']
+                record['method'] = 'current_saved'
+            if candidate:
+                candidate._source_exclusions = saved.get('source_exclusions', [])
         if direct_review:
             candidate = provider.revalidate_saved(episode, [Candidate.from_dict(r['selected']) for r in known])
+            if candidate and candidate.language_tier == LanguageTier.SLOVAK_AUDIO:
+                candidate = getattr(provider, 'discover_fresh', provider.discover)(episode)
+                record['method'] = 'saved_original_then_discovery'
         elif candidate is None and subtitled:
             candidate = discover_subtitled(provider, episode)
         elif candidate is None:
-            discover = getattr(provider, 'discover_fresh', provider.discover) if repairing_source else provider.discover
+            fresh = repairing_source or metadata.get('requested_audio_policy') == SLOVAK_POLICY or (saved or {}).get('source_policy') == SLOVAK_POLICY
+            discover = getattr(provider, 'discover_fresh', provider.discover) if fresh else provider.discover
             candidate = discover(episode)
-        if candidate is not None and (subtitled or valid_czech(episode, candidate)):
+        if candidate is not None and (subtitled or valid_dubbed(episode, candidate)):
             replacement = dict(identity=episode.identity, episode=episode.to_dict(),
                 selected=candidate.to_dict(), display_name=display_name(episode, candidate),
                 quality_policy=QUALITY_POLICY, imdb_rating=metadata.get('imdb_rating'),
                 imdb_votes=int(metadata.get('imdb_votes') or 0))
+            if not subtitled:
+                replacement.update(audio_policy_fields(candidate))
+                if requested_probe:
+                    replacement['requested_audio_check'] = dict(revision=PROBE_REVISION,
+                        identity=episode.identity, source_id=candidate.source_id,
+                        audio_language=candidate.audio_language, checked_at=now_iso())
+                if getattr(candidate, '_source_exclusions', None):
+                    replacement['source_exclusions'] = candidate._source_exclusions
             if subtitled:
                 evidence = getattr(candidate, '_subtitle_evidence', None)
                 replacement.update(source_policy=SUBTITLE_POLICY, subtitles=evidence or {})
@@ -236,6 +289,10 @@ def inspect_preparation(provider, task):
         else:
             record['reason'] = (getattr(provider, 'last_outcome', None)
                                 or ('saved_original_unverified' if direct_review else 'no_verified_czech_match'))
+            if candidate:
+                record.update(observed_audio_language=candidate.audio_language,
+                              observed_language_probability=candidate.language_probability,
+                              observed_source_id=candidate.source_id)
     except Exception as error:
         record['reason'] = type(error).__name__
         record['error'] = error_evidence(error)
@@ -275,6 +332,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         state['refilling'] = True
     catalog = sorted(load_jsonl(root / 'backlog/series-episodes.jsonl.gz'), key=catalog_order)
     manifest = SourceManifest(manifest_path)
+    requested = RequestedSeries(root / 'backlog/requested-series.json', generation,
+                                state['episodes'], manifest.rows)
     # Historical sources can outlive a cached catalog entry. Keep their saved
     # episode metadata instead of silently losing them during queue migration.
     catalog_ids = {Episode.from_dict(r).identity for r in catalog}
@@ -283,6 +342,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                    for r in manifest.rows.values()
                    if legacy_czech(r) and r['identity'] not in catalog_ids)
     catalog.sort(key=catalog_order)
+    catalog = [requested.decorate(m) for m in catalog]
     selected_ids = set(identities or ())
     if selected_ids:
         if selected_ids - {Episode.from_dict(r).identity for r in catalog}:
@@ -297,10 +357,10 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             saved_groups[episode_key(saved['display_name'])][saved['selected']['source_id']] = saved
     additions = load_jsonl(additions_path) if additions_path.exists() else []
     cache = getattr(provider, 'cache', None)
-    index = CandidateIndex(catalog) if callable(getattr(cache, 'search_candidates', None)) else None
+    index = CandidateIndex(catalog) if requested.series or callable(getattr(cache, 'search_candidates', None)) else None
 
     def refresh_index():
-        if index is not None:
+        if index is not None and callable(getattr(cache, 'search_candidates', None)):
             index.observe(cache.search_candidates())
 
     refresh_index()
@@ -322,6 +382,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         eligible.append(metadata)
     series_misses = Counter()
     paused_series = set() if selected_ids else saved_pauses(state['series_discovery'], datetime.now(UTC))
+    paused_series.difference_update(requested.series)
     # The old sampler's beyond-end errors are not evidence of an unavailable
     # series. Release that scheduling pause once for affected short episodes.
     paused_series.difference_update(m['series_id'] for m in catalog if any(
@@ -400,6 +461,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                       repaired_this_run=repaired, repair_statuses=dict(Counter(
                           r['status'] for r in state['repairs'].values())),
                       statuses=dict(Counter(r['status'] for r in state['episodes'].values())))
+        report['requested_series'] = requested.report()
         atomic_json(report_path, report)
         if health['status'] == 'starved':
             print('::warning::An account has no ready source, active transfer or completed upload for 30 minutes; '
@@ -417,13 +479,17 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
 
     def available(metadata):
         identity = Episode.from_dict(metadata).identity
-        return preparation_due(state['episodes'].get(identity, {}), metadata,
+        return requested.available(metadata) and preparation_due(state['episodes'].get(identity, {}), metadata,
                                manifest.rows.get(identity), datetime.now(UTC),
                                filename_recovery=index is not None and identity in index.recovered_hints)
 
     def new_tasks():
         for metadata in reserve_order(eligible, state['episodes'], manifest.rows, paused_series, productive_seasons,
-                index=index, refresh=refresh_discovery, progress=state['discovery_progress'], available=available):
+                index=index, refresh=refresh_discovery, progress=state['discovery_progress'], available=available,
+                requested=requested):
+            if metadata is DISPATCH_WAIT:
+                yield DISPATCH_WAIT
+                continue
             episode = Episode.from_dict(metadata)
             key = episode_key(f'{episode.series_title} {episode.code}')
             if episode.identity in identities or key in keys:
@@ -504,14 +570,17 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                 elif replacement['selected']['source_id'] in source_ids:
                     replacement = None
                     record['reason'] = 'source_already_assigned'
-            if replacement is not None and replacement.get('source_policy') == SUBTITLE_POLICY:
+            if replacement is not None and replacement.get('source_policy') in (SUBTITLE_POLICY, SLOVAK_POLICY):
                 capability_path = directory / 'uploader-capabilities.json'
                 payload = (persister.read_remote_file(str(capability_path.relative_to(root)), missing_ok=True)
                            if persister else capability_path.read_text() if capability_path.exists() else '')
                 capability = json.loads(payload) if payload else {}
-                if (capability.get('schema_version') != 1 or capability.get('subtitle_queue_version') != 2
+                policy = replacement['source_policy']
+                version_ok = (capability.get('subtitle_queue_version') == 2 if policy == SUBTITLE_POLICY
+                              else capability.get('audio_queue_version') == 1)
+                if (capability.get('schema_version') != 1 or not version_ok
                         or capability.get('generation') != generation
-                        or SUBTITLE_POLICY not in capability.get('source_policies', [])):
+                        or policy not in capability.get('source_policies', [])):
                     # Retain verified evidence without exposing a foreign row
                     # to an old process which still admits Czech audio only.
                     manifest.add(replacement)
@@ -560,7 +629,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                            else 60 if reason in ('inconclusive_audio', 'inconclusive_subtitles') else 24 * 60)
                 record['retry_after'] = (datetime.now(UTC) + timedelta(minutes=minutes)).isoformat()
                 series_misses[episode.series_id] += 1
-                if not selected_ids and series_misses[episode.series_id] >= MAX_SERIES_MISSES:
+                if (not selected_ids and episode.series_id not in requested.series
+                        and series_misses[episode.series_id] >= MAX_SERIES_MISSES):
                     paused_series.add(episode.series_id)
             state['repairs' if repairing_source else 'episodes'][episode.identity] = record
             record_series_result(state['series_discovery'], episode, record, datetime.now(UTC))

@@ -519,3 +519,39 @@ these specific series scheduling pauses can be released; unrelated episode
 cooldowns remain active. A new failure restores ordinary backoff and cannot reuse
 this migration. Unsearched recovered hints remain fresh discoveries, not verified
 sources. No uploaded or allocated target is replayed or modified.
+
+### Requested new series and Czech/Slovak audio (October 23)
+
+`backlog/requested-series.json` records the requested series, their aired episode
+inventory, and an immutable baseline of series already present on either target.
+The October 23 request covers the first two Czech-filtered CR listing pages:
+30 new series, with 18 existing series excluded (including Tulsa and VisionQuest).
+Positive CR episode IDs are retained where available; supplementary TMDB episode
+metadata uses deterministic negative local IDs and explicit provenance. Production
+CR data is read only. Catalog rows, source history and uploaded targets are retained.
+
+The producer prioritizes these series by IMDb rating. It tries the first available
+episode of the first regular season, then at most two neighboring episodes until
+CZ/SK audio is verified. Each subsequent season has its own samples and status in
+`reports/reserve-preparation.json`; foreign-only samples are marked as requiring
+subtitles. A negative first season does not permanently exclude later seasons.
+Sampling controls scheduling only: every published episode still requires exact
+identity, runtime, original dimensions/bytes and verified audio. A positive sample
+unlocks that season's remaining episodes, not their upload eligibility. Registered
+series continue after their first upload; restarting does not skip the whole series.
+In-flight samples can wake gated work in the same producer run without busy-waiting.
+
+Selection order is Czech before Slovak, then highest original resolution, then
+smallest original file. A Slovak fallback requires a completed fresh source search
+and conclusive audio checks establishing that no acceptable Czech candidate was
+found. Unresolved originals/audio defer the episode. Its source-bound evidence is
+stored with `source_policy=czech-preferred-slovak-fallback-v1`; names use `SK Dabing`.
+Stable queue eligibility does not expire, while reusing Slovak discovery evidence
+for a new publication requires a recent check. Existing Czech and Tulsa subtitle
+policies remain compatible.
+
+The producer saves verified Slovak evidence but waits for an uploader capability
+checkpoint (`audio_queue_version=1`) before appending a Slovak queue row. The
+uploader reloads code between batches, retaining its two transfers per account,
+global ownership, duplicate reservations and all historical receipts. No active
+media transfer needs cancellation to deploy this change.

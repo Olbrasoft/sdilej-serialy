@@ -2,6 +2,7 @@
 from sdilej_to_prehrajto.models import LanguageTier, MatchTier
 import re
 from urllib.parse import urlsplit
+from datetime import datetime
 
 from sdilej_to_prehrajto.ranking import resolution_rank as sdk_resolution_rank
 
@@ -11,6 +12,44 @@ from .source_cache import stable_url
 QUALITY_POLICY = 'original-media-v4'
 SUBTITLE_POLICY = 'requested-english-original-czech-subtitles-v1'
 SUBTITLE_SEASONS = frozenset({(581, 4)})
+SLOVAK_POLICY = 'czech-preferred-slovak-fallback-v1'
+
+
+def slovak_eligible(row):
+    """A Slovak fallback needs full Czech-absence evidence, never a name hint."""
+    selected, proof = row.get('selected', {}), row.get('language_selection', {})
+    try:
+        from .episodes import episode_match, runtime_acceptable
+        from sdilej_to_prehrajto.models import Candidate
+        episode = Episode.from_dict(row['episode'])
+        candidate = Candidate.from_dict(selected)
+        tier, _ = episode_match(episode, candidate.title)
+        checked = datetime.fromisoformat(proof['checked_at'])
+        matching = (row.get('identity') == episode.identity
+                    and tier in (MatchTier.STRONG, MatchTier.SOLID)
+                    and runtime_acceptable(episode, candidate.duration_sec)
+                    and checked.tzinfo is not None)
+    except (KeyError, TypeError, ValueError):
+        return False
+    return (matching and row.get('source_policy') == SLOVAK_POLICY
+            and selected.get('audio_language') == 'sk' and selected.get('language_tier') == 'slovak_audio'
+            and (selected.get('language_probability') or 0) >= .65
+            and selected.get('match_tier') in ('strong', 'solid')
+            and all(isinstance(selected.get(k), (int, float)) and selected[k] > 0
+                    for k in ('width', 'height', 'duration_sec', 'size_bytes'))
+            and stable_url(selected.get('url', ''))
+            and urlsplit(selected['url']).path.split('/')[1:2] == [selected.get('source_id')]
+            and proof.get('policy') == SLOVAK_POLICY and proof.get('czech_search_complete') is True
+            and proof.get('czech_found') is False and proof.get('checked_source_count', 0) > 0
+            and proof.get('source_id') == selected.get('source_id')
+            and proof.get('source_url') == selected.get('url')
+            and proof.get('source_size_bytes') == selected.get('size_bytes')
+            and re.fullmatch('[a-f0-9]{64}', proof.get('checked_sources_sha256', '')) is not None)
+
+
+def audio_policy_fields(candidate):
+    return (dict(source_policy=SLOVAK_POLICY, language_selection=getattr(candidate, '_language_selection', {}))
+            if candidate.language_tier == LanguageTier.SLOVAK_AUDIO else {})
 
 
 def resolution_rank(width, height=0):
@@ -67,6 +106,8 @@ def above_sd(row):
 def upload_eligible(row):
     if row.get('quality_policy') != QUALITY_POLICY:
         return False
+    if row.get('source_policy') == SLOVAK_POLICY:
+        return slovak_eligible(row)
     if row.get('source_policy'):
         return subtitled_eligible(row)
     return row.get('selected', {}).get('language_tier') == 'czech_audio'
