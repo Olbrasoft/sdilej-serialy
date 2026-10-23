@@ -127,6 +127,16 @@ canonical catalog import. The observed S04E02 original had English audio and
 English subtitles only, so it must remain unqueued until full Czech text exists.
 No production database rows were added or modified.
 
+One S04E01 listing (35366844) returned a 2865732633-byte placeholder rather than
+readable video: its first and last 4096 bytes were zero-filled, with data in the
+middle. After two failed original probes, this policy can exclude only an original
+independently confirmed with zero-filled beginning and end at exact HTTP ranges
+(beginning, middle, end; 4096 bytes each). An ignored range, changed size, short
+read, nonzero byte in either end or network failure preserves the deferral.
+The selected-source record retains the public source ID, byte size and check time,
+never the signed address or media bytes. Earlier subtitle requests deferred by
+this old original check receive one recovery attempt; ordinary cooldowns remain.
+
 To avoid starving uploads when the reserve runs dry, search scheduling interleaves
 eight unseen episodes with two due retries, retaining IMDb/season order inside
 both groups. Old audio-bug records remain eligible for their one-time recovery.

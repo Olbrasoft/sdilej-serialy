@@ -11,7 +11,7 @@ from sdilej_to_prehrajto.language import LanguageDetectionError
 from sdilej_to_prehrajto.sdilej import SdilejError
 
 from .quality import resolution_rank
-from .subtitle_media import extract_original, normalize_srt, SubtitleUnavailable
+from .subtitle_media import extract_original, normalize_srt, SubtitleUnavailable, zero_original_evidence
 
 
 def subtitle_evidence(payload, candidate, provenance):
@@ -46,7 +46,7 @@ def discover_subtitled(provider, episode):
     if not candidates:
         provider.last_outcome = 'no_matches'
         return None
-    originals = []
+    originals, exclusions = [], []
     provider.last_outcome = 'transient_original'
     for candidate in candidates:
         original = None
@@ -58,6 +58,10 @@ def discover_subtitled(provider, episode):
                 break
             except (SdilejError, requests.RequestException):
                 if attempt:
+                    evidence = zero_original_evidence(provider.session, candidate, deadline=deadline)
+                    if evidence:
+                        exclusions.append(evidence)
+                        break
                     return None
         if original:
             originals.append(original)
@@ -80,6 +84,7 @@ def discover_subtitled(provider, episode):
             payload, provenance = extract_original(provider.session,
                 dict(source_id=checked.source_id, source_url=checked.url, source_filename=checked.filename), deadline=deadline)
             checked._subtitle_evidence = subtitle_evidence(payload, checked, provenance)
+            checked._source_exclusions = exclusions
         except SubtitleUnavailable as error:
             if str(error) in {'source_czech_text_missing', 'source_czech_full_text_unsupported', 'source_czech_full_text_missing'}:
                 continue

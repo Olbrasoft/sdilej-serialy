@@ -6,6 +6,7 @@ import re
 import subprocess
 import tempfile
 import time
+from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit
 
@@ -13,7 +14,7 @@ from bs4 import BeautifulSoup
 import requests
 
 from sdilej_to_prehrajto.models import Candidate
-from .source_detail import parse_detail_html
+from .source_detail import parse_detail_html, resolve_original
 
 MAX_SUBTITLE_BYTES = 8 * 1024 * 1024
 CZECH = {"cs", "cz", "ces", "cze", "czech", "čeština", "česky", "české"}
@@ -22,6 +23,40 @@ TEXT_CODECS = {"subrip", "srt", "ass", "ssa", "webvtt", "mov_text", "text"}
 
 class SubtitleUnavailable(RuntimeError):
     """A fixed, non-sensitive reason suitable for durable reports."""
+
+
+def zero_original_evidence(session, candidate, *, deadline=None):
+    """Exclude only a repeatedly unprobeable original with zero-filled ends."""
+    try:
+        page = session.get(candidate.url, timeout=extraction_timeout(45, deadline))
+        page.raise_for_status()
+        if urlsplit(page.url).path.split('/')[1:2] != [candidate.source_id]:
+            return None
+        original = resolve_original(session, parse_detail_html(page.text, candidate))
+        size = original.size_bytes
+        if not size or size < 16384:
+            return None
+        for start in (0, size // 2, size - 4096):
+            end = start + 4095
+            with session.get(original.download_url, headers={'Range': f'bytes={start}-{end}',
+                             'Referer': candidate.url}, stream=True,
+                             timeout=extraction_timeout(30, deadline)) as response:
+                if (response.status_code != 206
+                        or response.headers.get('Content-Range') != f'bytes {start}-{end}/{size}'):
+                    return None
+                payload = bytearray()
+                for chunk in response.iter_content(4096):
+                    payload.extend(chunk)
+                    if len(payload) >= 4096:
+                        break
+                if len(payload) != 4096 or (start != size // 2 and any(payload)):
+                    return None
+        return dict(source_id=candidate.source_id, size_bytes=size,
+                    reason='zero_header_tail_original', ranges_checked=3, zero_end_ranges=2,
+                    checked_at=datetime.now(UTC).isoformat())
+    except Exception:
+        # Lack of proof is never permission to skip an unresolved original.
+        return None
 
 
 def is_czech(value: str) -> bool:

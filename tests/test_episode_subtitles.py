@@ -17,6 +17,7 @@ from sdilej_serialy.subtitle_media import normalize_srt, choose_stream, Subtitle
 from sdilej_serialy.subtitle_target import Target
 from sdilej_serialy.git_state import CheckpointError
 from sdilej_serialy import subtitle_http
+from sdilej_serialy import subtitle_media
 
 
 def english_row():
@@ -82,6 +83,74 @@ def test_due_requested_season_precedes_broad_discovery_without_bypassing_episode
     available = lambda row: row != cooling
     result = list(replenish.reserve_order([ordinary, requested, cooling], {}, {}, {581}, available=available))
     assert result == [requested, ordinary]
+
+
+@pytest.mark.parametrize('failure', [None, 'head_nonzero', 'tail_nonzero', 'short', 'ignored', 'changed_size', 'network'])
+def test_incomplete_original_requires_two_zero_ends_and_exact_bounded_ranges(monkeypatch, failure):
+    _, candidate, _, _ = english_row()
+    size, calls = 16384, []
+    page = SimpleNamespace(url=candidate.url, text='', raise_for_status=lambda: None)
+    monkeypatch.setattr(subtitle_media, 'parse_detail_html', lambda *args: candidate)
+    monkeypatch.setattr(subtitle_media, 'resolve_original', lambda *args: SimpleNamespace(
+        size_bytes=size, download_url='https://original.invalid/private'))
+    class Response:
+        def __init__(self, start, end):
+            self.status_code = 200 if failure == 'ignored' else 206
+            self.headers = {'Content-Range': f'bytes {start}-{end}/{size + (failure == "changed_size")}'}
+            self.start = start
+        def __enter__(self): return self
+        def __exit__(self, *args): pass
+        def iter_content(self, chunk_size):
+            payload = b'x' * 4096 if self.start == size // 2 else bytes(4096)
+            if failure == 'head_nonzero' and self.start == 0: payload = b'x' + payload[1:]
+            if failure == 'tail_nonzero' and self.start == size - 4096: payload = b'x' + payload[1:]
+            yield payload[:-1] if failure == 'short' else payload
+    def get(url, **kwargs):
+        if url == candidate.url: return page
+        if failure == 'network': raise requests.Timeout()
+        start, end = map(int, kwargs['headers']['Range'][6:].split('-'))
+        calls.append((start, end))
+        return Response(start, end)
+    evidence = subtitle_media.zero_original_evidence(SimpleNamespace(get=get), candidate)
+    if failure is None:
+        assert evidence['source_id'] == candidate.source_id and evidence['size_bytes'] == size
+        assert evidence['zero_end_ranges'] == 2 and len(calls) == 3
+        assert 'private' not in json.dumps(evidence)
+    else:
+        assert evidence is None
+
+
+def test_only_confirmed_incomplete_original_is_skipped_after_two_failed_probes(monkeypatch):
+    from sdilej_to_prehrajto.sdilej import SdilejError
+    episode, base, _, payload = english_row()
+    broken = replace(base, source_id='9002')
+    attempts = []
+    def inspect(episode, candidate):
+        if candidate.source_id == broken.source_id:
+            attempts.append(True)
+            raise SdilejError('Original media metadata is incomplete')
+        return candidate
+    proof = dict(source_id=broken.source_id, reason='zero_header_tail_original', size_bytes=1000)
+    def confirm(*args, **kwargs):
+        assert len(attempts) == 2
+        return proof
+    monkeypatch.setattr(subtitle_policy, 'zero_original_evidence', confirm)
+    monkeypatch.setattr(subtitle_policy, 'extract_original', lambda *args, **kwargs: (payload, {}))
+    provider = SimpleNamespace(discovery_timeout_seconds=900, session=None, search=lambda episode: [base, broken],
+                               _inspect=inspect, _verify_language=lambda episode, candidate: candidate)
+    result = subtitle_policy.discover_subtitled(provider, episode)
+    assert result.source_id == base.source_id and result._source_exclusions == [proof]
+
+
+def test_old_subtitle_original_deferral_gets_one_recovery_attempt():
+    from datetime import UTC, datetime, timedelta
+    now = datetime.now(UTC)
+    record = dict(reason='transient_original', retry_after=(now + timedelta(hours=1)).isoformat())
+    metadata = dict(series_id=581, season=4)
+    assert replenish.preparation_due(record, metadata, None, now)
+    assert not replenish.preparation_due(dict(record, subtitle_verification_revision=1), metadata, None, now)
+    assert not replenish.preparation_due(record, dict(metadata, season=3), None, now)
+    assert not replenish.preparation_due(dict(record, reason='no_english_czech_subtitles'), metadata, None, now)
 
 
 def test_full_czech_text_is_required_and_forced_or_images_do_not_substitute():

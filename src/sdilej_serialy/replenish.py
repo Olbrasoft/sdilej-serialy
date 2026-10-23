@@ -68,6 +68,8 @@ def repaired_preparation(record, metadata=None, *, filename_recovery=False):
     return ((record.get('reason') == 'TypeError' and revision < 2)
             or (record.get('reason') == 'no_verified_czech_match' and revision < 3)
             or needs_short_audio_review(record, metadata)
+            or (subtitle_request(metadata or {}) and record.get('reason') == 'transient_original'
+                and record.get('subtitle_verification_revision', 0) < 1)
             or (filename_recovery and revision < 5 and record.get('status') == 'deferred'))
 
 
@@ -181,6 +183,8 @@ def inspect_preparation(provider, task):
     subtitled = subtitle_request(metadata)
     started = time.monotonic()
     record = {'at': now_iso(), 'status': 'deferred', 'preparation_revision': PREPARATION_REVISION}
+    if subtitled:
+        record['subtitle_verification_revision'] = 1
     repairing_source = bool(old_record.get('repair_fingerprint'))
     direct_review = not subtitled and not repairing_source and needs_saved_review(saved, old_record) and not low_resolution(saved)
     if legacy_czech(saved):
@@ -196,6 +200,7 @@ def inspect_preparation(provider, task):
         if subtitled and not repairing_source and saved and subtitled_eligible(saved):
             candidate = Candidate.from_dict(saved['selected'])
             candidate._subtitle_evidence = saved['subtitles']
+            candidate._source_exclusions = saved.get('source_exclusions', [])
             record['method'] = 'current_saved'
         elif not subtitled and not repairing_source and saved and saved.get('quality_policy') == QUALITY_POLICY:
             existing = Candidate.from_dict(saved['selected'])
@@ -217,6 +222,8 @@ def inspect_preparation(provider, task):
             if subtitled:
                 evidence = getattr(candidate, '_subtitle_evidence', None)
                 replacement.update(source_policy=SUBTITLE_POLICY, subtitles=evidence or {})
+                if getattr(candidate, '_source_exclusions', None):
+                    replacement['source_exclusions'] = candidate._source_exclusions
                 if not upload_eligible(replacement):
                     raise ValueError('English episode lacks verified original Czech subtitles')
                 replacement['display_name'] += ' (titulky čekají)'
