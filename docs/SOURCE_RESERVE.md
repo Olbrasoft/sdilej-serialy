@@ -152,6 +152,12 @@ at 60 seconds (clamped for short sources), rather than repeating the same slow
 the alternate offset has a separate cache key. Older inconclusive subtitle/audio
 records receive one recovery attempt. Ordinary Czech discovery is unchanged.
 
+Media-tool initialization in source preparation and subtitle follow-up has its
+own ten-minute limit. On October 23 a slow hosted runner spent over twenty minutes
+installing packages without preparing any source. Such initialization must not
+occupy the serialized publisher for its entire job timeout; the next scheduled
+run can start on a fresh runner. Active media relays use a separate group.
+
 To avoid starving uploads when the reserve runs dry, search scheduling interleaves
 eight unseen episodes with two due retries, retaining IMDb/season order inside
 both groups. Old audio-bug records remain eligible for their one-time recovery.

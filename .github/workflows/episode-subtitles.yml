@@ -43,6 +43,7 @@ jobs:
           echo "needed=$needed" >> "$GITHUB_OUTPUT"
       - name: Install bounded original subtitle extraction tools
         if: steps.work.outputs.needed == 'true'
+        timeout-minutes: 10
         run: |
           sudo apt-get update
           sudo apt-get install --yes ffmpeg

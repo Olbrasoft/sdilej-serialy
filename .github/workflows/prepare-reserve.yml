@@ -58,6 +58,7 @@ jobs:
           key: whisper-small-${{ runner.os }}-v1
       - name: Install original-media and Czech audio inspection tools
         if: steps.reserve.outputs.needed == 'true'
+        timeout-minutes: 10
         run: |
           sudo apt-get update
           sudo apt-get install --yes ffmpeg
