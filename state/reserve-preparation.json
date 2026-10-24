@@ -219272,14 +219272,66 @@
       "queue_rank": 27552
     },
     "9673:1:2": {
-      "at": "2026-10-15T07:35:11.666826+00:00",
+      "at": "2026-10-24T00:39:47.098761+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 41.58,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-16T07:35:53.245866+00:00"
+      "elapsed_seconds": 36.18,
+      "search_evidence": [
+        {
+          "path": "/chip-a-dale-rychla-rota-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 189808,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chip-n-dale-rescue-rangers-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 189871,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chip-a-dale-rychla-rota-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 189808,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chip-a-dale-rychla-rota/s/-6",
+          "status": 200,
+          "response_bytes": 189661,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chip-n-dale-rescue-rangers-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 189871,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chip-n-dale-rescue-rangers/s/-6",
+          "status": 200,
+          "response_bytes": 189724,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-25T00:40:23.281900+00:00"
     },
     "573:5:1": {
       "at": "2026-10-15T07:39:22.744892+00:00",
@@ -532392,9 +532444,54 @@
       "elapsed_seconds": 77.78,
       "consecutive_failures": 1,
       "retry_after": "2026-10-25T00:39:57.918044+00:00"
+    },
+    "1133:2:14": {
+      "at": "2026-10-24T00:39:58.381819+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ja",
+      "observed_language_probability": 0.9934771656990051,
+      "observed_source_id": "35137355",
+      "elapsed_seconds": 66.22,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T00:41:04.600829+00:00"
+    },
+    "1133:2:13": {
+      "at": "2026-10-24T00:39:53.974610+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ja",
+      "observed_language_probability": 0.9658651351928711,
+      "observed_source_id": "35137347",
+      "elapsed_seconds": 72.56,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T00:41:06.538432+00:00"
+    },
+    "1133:2:15": {
+      "at": "2026-10-24T00:40:16.852279+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ja",
+      "observed_language_probability": 0.9809209108352661,
+      "observed_source_id": "35137361",
+      "elapsed_seconds": 51.53,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T00:41:08.377490+00:00"
     }
   },
-  "updated_at": "2026-10-24T00:40:13.141180+00:00",
+  "updated_at": "2026-10-24T00:41:21.121782+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -547373,8 +547470,10 @@
       "updated_at": "2026-10-20T21:45:59.848015+00:00"
     },
     "9673": {
-      "misses": [],
-      "updated_at": "2026-10-23T23:13:13.985359+00:00"
+      "misses": [
+        "9673:1:2"
+      ],
+      "updated_at": "2026-10-24T00:40:23.281930+00:00"
     },
     "9856": {
       "misses": [
@@ -548199,10 +548298,12 @@
     },
     "1133": {
       "misses": [
-        "1133:2:11",
-        "1133:2:12"
+        "1133:2:14",
+        "1133:2:13",
+        "1133:2:15"
       ],
-      "updated_at": "2026-10-23T23:34:55.912029+00:00"
+      "updated_at": "2026-10-24T00:41:08.377516+00:00",
+      "retry_after": "2026-10-24T04:41:08.377516+00:00"
     },
     "2079": {
       "misses": [
@@ -549690,12 +549791,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9829,
+    "last_series": 1081,
     "last_series_order": [
       false,
-      -7.5,
-      -15392,
-      9829
+      -7.4,
+      -388857,
+      1081
     ]
   }
 }
