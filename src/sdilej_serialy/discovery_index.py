@@ -5,17 +5,18 @@ from collections import defaultdict, deque
 from datetime import datetime, timedelta
 
 from sdilej_to_prehrajto.models import MatchTier
-from sdilej_to_prehrajto.sdilej import audio_language_hint
 
 from .episodes import EPISODE_CODE_RE, episode_match, normalize, series_aliases
 from .models import Episode
 from .source_workers import DISPATCH_WAIT
+from .language_hints import audio_language_hint, search_hint_rank
 
 
 class CandidateIndex:
     def __init__(self, catalog):
         self.aliases = defaultdict(list)
         self.hints = {}
+        self.dubbed_hints = set()
         self.recovered_hints = set()
         self.seen = set()
         for metadata in catalog:
@@ -47,7 +48,9 @@ class CandidateIndex:
                     if evidence.get('single_episode_suffix'):
                         self.recovered_hints.add(episode.identity)
                     hint = audio_language_hint(row['title'])
-                    rank = 0 if hint == 'cs' else 1 if hint in (None, 'sk') else 2
+                    rank = search_hint_rank(row['title'])
+                    if hint in ('cs', 'sk'):
+                        self.dubbed_hints.add(episode.identity)
                     self.hints[episode.identity] = min(rank, self.hints.get(episode.identity, 3))
 
     def rank(self, identity):
@@ -56,7 +59,7 @@ class CandidateIndex:
 
 def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
                   productive_seasons=None, records=None, available=None, clock=time.monotonic,
-                  wait_for_changes=False):
+                  wait_for_changes=False, urgent=False):
     """Eight fresh probes (up to six prioritized) and two due retries per round.
 
     All lanes share one pending set. The exploration cursor survives restarts;
@@ -72,7 +75,7 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
             series_orders[row['series_id']] = (row.get('imdb_rating') is None, -(row.get('imdb_rating') or 0),
                                               -(row.get('imdb_votes') or 0), row['series_id'])
     groups, series, retries = defaultdict(deque), deque(), deque()
-    hinted, productive = deque(), deque()
+    hinted, productive, dubbed_retries = deque(), deque(), deque()
     refreshed = float('-inf')
 
     def exploration_lanes():
@@ -135,13 +138,22 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
                                         and productive_identity(i) and index.rank(i) != 2),
                                        key=lambda i: (index.rank(i), positions[i])))
             retries = deque(sorted((i for i in pending if i not in fresh_ids), key=retry_priority))
+            dubbed_retries = deque(sorted((i for i in pending if i not in fresh_ids
+                and i in index.dubbed_hints), key=retry_priority)) if urgent else deque()
             refreshed = clock()
-        emitted = hinted_count = 0
+        emitted = hinted_count = dubbed_count = 0
+        for _ in range(2):
+            row = take(dubbed_retries)
+            if row is None:
+                break
+            emitted += 1
+            dubbed_count += 1
+            yield row
         # Restore recently proven Czech seasons to the production scheduler,
         # not only its cache-less fallback. Keep room for other indexed hints,
         # unexplored series and bounded due retries in every round.
         for lane, budget in ((productive, 4), (hinted, 6)):
-            for _ in range(min(budget, 6 - hinted_count)):
+            for _ in range(min(budget, 6 - dubbed_count - hinted_count)):
                 row = take(lane)
                 if row is None:
                     break
@@ -149,7 +161,7 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
                 hinted_count += 1
                 yield row
         # Unused hint slots go to exploration, not more repeated old failures.
-        for _ in range(8 - hinted_count):
+        for _ in range(8 - dubbed_count - hinted_count):
             row = explore()
             if row is None:
                 break

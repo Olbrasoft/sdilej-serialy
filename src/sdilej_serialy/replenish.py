@@ -27,7 +27,7 @@ from .resilience import error_evidence
 from .reserve import LOW_WATER, TARGET_STOCK, should_prepare, stock
 from .source_cache import RequestGate, SourceCache
 from .source_workers import inspected_results, DISPATCH_WAIT
-from .requested_series import RequestedSeries, PROBE_REVISION
+from .requested_series import RequestedSeries, PROBE_REVISION, HINT_PROBE_REVISION
 from .source_repair import (REPAIR_SEARCH_REVISION, SourceRepairFeed, fingerprint,
                             repairable, repair_entry, repaired_row)
 from .discovery_index import (CandidateIndex, indexed_order, paused_series as saved_pauses,
@@ -37,6 +37,7 @@ PREPARATION_REVISION = 5
 SAVED_REVIEW_REVISION = 1
 AUDIO_POLICY_REVISION = 1
 SEARCH_RECOVERY_REVISION = 1
+AUDIO_SAMPLING_REVISION = 1
 MAX_SERIES_MISSES = 3
 
 
@@ -72,6 +73,8 @@ def repaired_preparation(record, metadata=None, *, filename_recovery=False, sour
     return ((record.get('reason') == 'TypeError' and revision < 2)
             or (record.get('reason') == 'no_verified_czech_match' and revision < 3)
             or needs_short_audio_review(record, metadata)
+            or (source_hint and record.get('reason') == 'inconclusive_audio'
+                and record.get('audio_sampling_revision', 0) < AUDIO_SAMPLING_REVISION)
             or ((metadata or {}).get('requested_audio_policy') == SLOVAK_POLICY
                 and record.get('audio_policy_revision', 0) < AUDIO_POLICY_REVISION
                 and record.get('reason') in ('verified_non_czech', 'no_verified_czech_match'))
@@ -107,7 +110,7 @@ def preparation_due(record, metadata, saved, now, *, filename_recovery=False, so
 
 
 def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, index=None, refresh=None,
-                  progress=None, available=None, requested=None):
+                  progress=None, available=None, requested=None, urgent=False):
     """Drain the known-source backlog before broad discovery, HD originals first."""
     dispatched_requests = set()
     for metadata in catalog:
@@ -115,6 +118,18 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
             dispatched_requests.add(Episode.from_dict(metadata).identity)
             yield metadata
     catalog = [metadata for metadata in catalog if Episode.from_dict(metadata).identity not in dispatched_requests]
+    if urgent and index is not None:
+        warmed, seen_series = set(), set()
+        for metadata in catalog:
+            identity = Episode.from_dict(metadata).identity
+            if (identity in index.dubbed_hints and metadata['series_id'] not in seen_series
+                    and metadata['series_id'] not in paused and (available is None or available(metadata))):
+                warmed.add(identity)
+                seen_series.add(metadata['series_id'])
+                yield metadata
+                if len(warmed) == 2:
+                    break
+        catalog = [m for m in catalog if Episode.from_dict(m).identity not in warmed]
     if requested and requested.series:
         pending = {Episode.from_dict(m).identity: m for m in catalog if m['series_id'] in requested.series}
         while pending:
@@ -147,11 +162,10 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
         fresh = {Episode.from_dict(m).identity for m in ordinary
                  if not records.get(Episode.from_dict(m).identity)
                  or repaired_preparation(records[Episode.from_dict(m).identity], m,
-                      filename_recovery=Episode.from_dict(m).identity in index.recovered_hints,
-                      source_hint=index.rank(Episode.from_dict(m).identity) < 2)}
+                      filename_recovery=Episode.from_dict(m).identity in index.recovered_hints)}
         yield from indexed_order(ordinary, fresh, paused, index, refresh, progress,
                                  productive_seasons=productive_seasons, records=records, available=available,
-                                 wait_for_changes=bool(requested and requested.series))
+                                 wait_for_changes=bool(requested and requested.series), urgent=urgent)
 
 
 def valid_czech(episode, candidate):
@@ -220,13 +234,16 @@ def inspect_preparation(provider, task):
     subtitled = subtitle_request(metadata)
     started = time.monotonic()
     record = {'at': now_iso(), 'status': 'deferred', 'preparation_revision': PREPARATION_REVISION,
-              'audio_policy_revision': AUDIO_POLICY_REVISION, 'search_recovery_revision': SEARCH_RECOVERY_REVISION}
+              'audio_policy_revision': AUDIO_POLICY_REVISION, 'search_recovery_revision': SEARCH_RECOVERY_REVISION,
+              'audio_sampling_revision': AUDIO_SAMPLING_REVISION}
     if subtitled:
         record['subtitle_verification_revision'] = 2
     repairing_source = bool(old_record.get('repair_fingerprint'))
     requested_probe = bool(metadata.get('requested_probe'))
     if requested_probe:
         record['request_probe_revision'] = PROBE_REVISION
+    if metadata.get('requested_hint_probe'):
+        record['request_hint_probe_revision'] = HINT_PROBE_REVISION
     checked_probe = bool(saved and saved.get('requested_audio_check', {}).get('revision') == PROBE_REVISION)
     fresh_probe = requested_probe and not checked_probe
     direct_review = not fresh_probe and not subtitled and not repairing_source and needs_saved_review(saved, old_record) and not low_resolution(saved)
@@ -371,6 +388,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
     def refresh_index():
         if index is not None and callable(getattr(cache, 'search_candidates', None)):
             index.observe(cache.search_candidates())
+            requested.observe_hints(index.dubbed_hints)
 
     refresh_index()
     checkpoint_paths = (manifest_path, additions_path, repairs_path, report_path) + ((cache.path,) if cache else ())
@@ -487,6 +505,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             print(f'source_workers_busy workers={workers} prepared={published} repaired={repaired}', flush=True)
 
     def available(metadata):
+        metadata = requested.decorate(metadata)
         identity = Episode.from_dict(metadata).identity
         return requested.available(metadata) and preparation_due(state['episodes'].get(identity, {}), metadata,
                                manifest.rows.get(identity), datetime.now(UTC),
@@ -496,7 +515,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
     def new_tasks():
         for metadata in reserve_order(eligible, state['episodes'], manifest.rows, paused_series, productive_seasons,
                 index=index, refresh=refresh_discovery, progress=state['discovery_progress'], available=available,
-                requested=requested):
+                requested=requested, urgent=initial_stock['ready'] < low_water):
             if metadata is DISPATCH_WAIT:
                 yield DISPATCH_WAIT
                 continue

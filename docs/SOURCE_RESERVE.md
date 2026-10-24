@@ -605,3 +605,27 @@ from the regional Azure Ubuntu mirror at under 60 kB/s. Preparation now uses
 the official Ubuntu archive over HTTPS, omits optional package recommendations,
 and bounds connection retries while retaining its ten-minute setup deadline
 and the Whisper decoder startup check.
+
+### Recover missing stock after October 24 checks
+
+An empty reserve left both upload accounts waiting while the source producer was
+still active. Later matching files labeled CZ/SK could not be sampled after the
+first three season samples failed. The producer now permits up to three additional
+exact, explicitly dubbed filename hints per season. This budget survives restarts;
+only verified original/audio evidence unlocks the other episodes. A verified later
+sample remains effective after its cache entry expires. Runtime and episode-range
+guards remain mandatory, including for paired cartoon files.
+
+Combined subtitle labels such as `CZ-SK tit` are no longer Czech audio hints, and
+explicit English/subtitle-only filenames no longer receive the same index priority
+as unknown-language sources. These filename hints only change dispatch and speech
+sampling preference. They cannot authorize an upload. When stock is low, a bounded
+two-slot lane prioritizes due CZ/SK hints while preserving exploration and ordinary
+retries; the four source workers and two uploads per account are unchanged.
+
+The second language attempt now uses an earlier valid offset instead of repeating
+the same failed sample when the detector supports it. A one-time, hint-scoped retry
+releases old inconclusive audio records without resetting other cooldowns. A live
+full-source check recovered Doktor Martin S01E05 as Czech at 1280x720 after its
+previous sample was inconclusive. No resolution, runtime or language-confidence
+threshold was lowered, and existing target records were retained.

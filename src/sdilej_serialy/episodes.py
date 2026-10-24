@@ -22,7 +22,6 @@ from sdilej_to_prehrajto.ranking import language_tier
 from sdilej_to_prehrajto.sdilej import (
     BASE_URL,
     SdilejError,
-    audio_language_hint,
     login,
     parse_search_html,
     probe_media,
@@ -30,6 +29,7 @@ from sdilej_to_prehrajto.sdilej import (
 )
 
 from .models import Episode
+from .language_hints import audio_language_hint
 from .source_detail import parse_detail_html, resolve_original, sampled_content_fingerprint
 from .quality import quality_acceptable, rank_candidates, resolution_label, resolution_rank, SLOVAK_POLICY
 from .numbering import mapped_episode_title
@@ -357,6 +357,8 @@ class EpisodeSourceProvider:
 
     def verify_language_retry(self, episode: Episode, detail: Candidate) -> Candidate:
         """Retry the same full-length sample at an earlier valid source offset."""
+        if not callable(getattr(self.detector, '_detect_at', None)):
+            return self._verify_language(episode, detail)
         return self._verify_language(episode, detail, sample_offset=60)
 
     def _verify_language(self, episode: Episode, detail: Candidate, *, sample_offset=None) -> Candidate:
@@ -487,7 +489,8 @@ class EpisodeSourceProvider:
                     if time.monotonic() >= deadline:
                         return None
                     try:
-                        detail = self._verify_language(episode, candidate)
+                        detail = (self.verify_language_retry(episode, candidate) if _attempt
+                                  else self._verify_language(episode, candidate))
                         verification_completed = True
                         break
                     except (SdilejError, LanguageDetectionError, requests.RequestException, subprocess.TimeoutExpired):
