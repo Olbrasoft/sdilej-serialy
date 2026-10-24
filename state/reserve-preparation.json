@@ -428780,14 +428780,17 @@
       "retry_after": "2026-10-23T10:59:25.840977+00:00"
     },
     "232:6:18": {
-      "at": "2026-10-22T10:58:28.275388+00:00",
+      "at": "2026-10-24T16:53:47.336163+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 61.99,
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 3656.37,
       "consecutive_failures": 1,
-      "retry_after": "2026-10-23T10:59:32.997184+00:00"
+      "retry_after": "2026-10-24T17:55:43.710931+00:00"
     },
     "593:5:6": {
       "at": "2026-10-22T10:58:52.552621+00:00",
@@ -634256,9 +634259,86 @@
       "elapsed_seconds": 956.37,
       "consecutive_failures": 0,
       "retry_after": "2026-10-24T17:24:19.752272+00:00"
+    },
+    "1402:23:9": {
+      "at": "2026-10-24T17:39:35.458193+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 900.89,
+      "search_evidence": [
+        {
+          "path": "/zakon-a-poradek-utvar-pro-zvlastni-obeti-s23e09/s/-6",
+          "status": 200,
+          "response_bytes": 219680,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T18:09:36.347629+00:00"
+    },
+    "1402:23:8": {
+      "at": "2026-10-24T17:24:32.809269+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 1809.44,
+      "search_evidence": [
+        {
+          "path": "/zakon-a-poradek-utvar-pro-zvlastni-obeti-s23e08/s/-6",
+          "status": 200,
+          "response_bytes": 190167,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T18:09:42.251514+00:00"
+    },
+    "1402:23:6": {
+      "at": "2026-10-24T17:09:20.251168+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 2725.42,
+      "search_evidence": [
+        {
+          "path": "/zakon-a-poradek-utvar-pro-zvlastni-obeti-s23e06/s/-6",
+          "status": 200,
+          "response_bytes": 190167,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zakon-a-poradek-utvar-pro-zvlastni-obeti-s23e06/s/-6",
+          "status": 200,
+          "response_bytes": 218069,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T18:09:45.676082+00:00"
     }
   },
-  "updated_at": "2026-10-24T17:53:44.345857+00:00",
+  "updated_at": "2026-10-24T17:54:47.695168+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -643199,8 +643279,13 @@
       "retry_after": "2026-10-24T20:51:50.616844+00:00"
     },
     "1402": {
-      "misses": [],
-      "updated_at": "2026-10-24T16:53:46.806607+00:00"
+      "misses": [
+        "1402:23:9",
+        "1402:23:8",
+        "1402:23:6"
+      ],
+      "updated_at": "2026-10-24T17:54:45.676105+00:00",
+      "retry_after": "2026-10-24T18:24:45.676105+00:00"
     },
     "7836": {
       "misses": [
