@@ -491405,17 +491405,27 @@
       "queue_rank": 29781
     },
     "4:2:1": {
-      "at": "2026-10-23T18:24:11.145140+00:00",
+      "at": "2026-10-24T18:58:21.480572+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
-      "request_probe_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_acceptable_original",
-      "elapsed_seconds": 108.18,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-24T18:25:59.324282+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 900.5,
+      "search_evidence": [
+        {
+          "path": "/tlapkova-patrola-s02e01/s/-6",
+          "status": 200,
+          "response_bytes": 224362,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-24T20:13:21.981913+00:00"
     },
     "10497:4:3": {
       "at": "2026-10-23T17:33:16.384225+00:00",
@@ -634417,7 +634427,7 @@
       "retry_after": "2026-10-24T18:09:42.251514+00:00"
     },
     "1402:23:6": {
-      "at": "2026-10-24T17:09:20.251168+00:00",
+      "at": "2026-10-24T18:58:23.470300+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -634425,27 +634435,19 @@
       "audio_sampling_revision": 1,
       "method": "discovery",
       "reason": "transient_search",
-      "elapsed_seconds": 2725.42,
+      "elapsed_seconds": 904.52,
       "search_evidence": [
         {
-          "path": "/zakon-a-poradek-utvar-pro-zvlastni-obeti-s23e06/s/-6",
+          "path": "/law-order-special-victims-unit-s23e06/s/-6",
           "status": 200,
-          "response_bytes": 190167,
+          "response_bytes": 217363,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
-        },
-        {
-          "path": "/zakon-a-poradek-utvar-pro-zvlastni-obeti-s23e06/s/-6",
-          "status": 200,
-          "response_bytes": 218069,
-          "boxes": 1,
-          "parsed_candidates": 1,
-          "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T18:09:45.676082+00:00"
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T19:43:27.995350+00:00"
     },
     "462:7:1": {
       "at": "2026-10-24T18:02:04.835985+00:00",
@@ -634846,9 +634848,63 @@
       "elapsed_seconds": 2461.17,
       "consecutive_failures": 0,
       "retry_after": "2026-10-24T19:13:16.956817+00:00"
+    },
+    "1688:1:29": {
+      "at": "2026-10-24T18:58:17.537369+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 907.84,
+      "search_evidence": [
+        {
+          "path": "/fireworks-of-my-heart-s01e29/s/-6",
+          "status": 200,
+          "response_bytes": 217240,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T19:28:25.373359+00:00"
+    },
+    "4226:2:11": {
+      "at": "2026-10-24T18:43:06.755272+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 1827.08,
+      "search_evidence": [
+        {
+          "path": "/the-fiery-priest-s02e11/s/-6",
+          "status": 200,
+          "response_bytes": 189663,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-fiery-priest-s02e11/s/-6",
+          "status": 200,
+          "response_bytes": 217047,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T19:28:33.840197+00:00"
     }
   },
-  "updated_at": "2026-10-24T19:12:42.280115+00:00",
+  "updated_at": "2026-10-24T19:13:48.324515+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -643732,8 +643788,10 @@
       "retry_after": "2026-10-24T20:51:50.616844+00:00"
     },
     "1402": {
-      "misses": [],
-      "updated_at": "2026-10-24T18:11:21.510221+00:00"
+      "misses": [
+        "1402:23:6"
+      ],
+      "updated_at": "2026-10-24T19:13:27.995367+00:00"
     },
     "7836": {
       "misses": [
@@ -646078,12 +646136,9 @@
     },
     "4226": {
       "misses": [
-        "4226:2:8",
-        "4226:2:9",
-        "4226:2:10"
+        "4226:2:11"
       ],
-      "updated_at": "2026-10-24T06:10:17.493059+00:00",
-      "retry_after": "2026-10-24T10:10:17.493059+00:00"
+      "updated_at": "2026-10-24T19:13:33.840221+00:00"
     },
     "6441": {
       "misses": [
@@ -646119,12 +646174,9 @@
     },
     "1688": {
       "misses": [
-        "1688:1:26",
-        "1688:1:27",
-        "1688:1:28"
+        "1688:1:29"
       ],
-      "updated_at": "2026-10-24T06:10:24.583699+00:00",
-      "retry_after": "2026-10-24T10:10:24.583699+00:00"
+      "updated_at": "2026-10-24T19:13:25.373377+00:00"
     },
     "6992": {
       "misses": [
@@ -652036,9 +652088,10 @@
     },
     "4": {
       "misses": [
-        "4:1:1"
+        "4:1:1",
+        "4:2:1"
       ],
-      "updated_at": "2026-10-24T14:09:35.200433+00:00"
+      "updated_at": "2026-10-24T19:13:21.981936+00:00"
     },
     "1138": {
       "misses": [
