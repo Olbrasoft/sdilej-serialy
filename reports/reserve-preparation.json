@@ -1,15 +1,15 @@
 {
   "generation": "pair-2026-09-25",
-  "attempted_this_run": 38,
+  "attempted_this_run": 39,
   "prepared_this_run": 3,
   "reserve_total": 21586,
   "queue_total": 30021,
-  "updated_at": "2026-10-24T11:36:18.877978+00:00",
+  "updated_at": "2026-10-24T11:37:28.500152+00:00",
   "workers": 4,
-  "elapsed_seconds": 6868.22,
-  "prepared_per_hour": 1.57,
+  "elapsed_seconds": 6937.84,
+  "prepared_per_hour": 1.56,
   "available_this_run": 3,
-  "available_per_hour": 1.57,
+  "available_per_hour": 1.56,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
@@ -22,8 +22,7 @@
     "categories": {
       "completed": 29984,
       "allocated": 25,
-      "in_flight": 2,
-      "failed": 10
+      "failed": 12
     },
     "completed_by_account": {
       "a": 14990,
@@ -34,14 +33,17 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "waiting_for_sources",
-    "starved_accounts": [],
+    "status": "starved",
+    "starved_accounts": [
+      "a",
+      "b"
+    ],
     "seconds_since_upload": {
-      "a": 2464,
-      "b": 6417
+      "a": 2533,
+      "b": 6486
     },
     "preparation_outcomes_last_hour": {
-      "source_search_unavailable": 3,
+      "source_search_unavailable": 4,
       "prepared": 1,
       "verified_non_czech": 5,
       "no_matches": 4,
@@ -61,7 +63,7 @@
   },
   "cache": {
     "search_miss": 109,
-    "search_seconds": 17923.92,
+    "search_seconds": 20336.63,
     "search_hit": 31,
     "media_miss": 36,
     "media_seconds": 164.99,
@@ -88,7 +90,7 @@
   },
   "statuses": {
     "prepared": 21586,
-    "deferred": 29350
+    "deferred": 29351
   },
   "requested_series": [
     {
@@ -2946,23 +2948,23 @@
   ],
   "search_health": {
     "status": "paused",
-    "consecutive_failures": 4,
-    "retry_seconds": 39,
-    "resume_after": "2026-10-24T11:36:57.852670+00:00",
+    "consecutive_failures": 5,
+    "retry_seconds": 878,
+    "resume_after": "2026-10-24T11:52:06.203060+00:00",
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
         "response_bytes": 189621,
         "parsed_candidates": 0,
-        "checked_at": "2026-10-24T11:07:01.145800+00:00"
+        "checked_at": "2026-10-24T11:37:12.335158+00:00"
       },
       {
         "path": "/doktor-martin/s/-6",
         "status": 200,
         "response_bytes": 189453,
         "parsed_candidates": 0,
-        "checked_at": "2026-10-24T11:21:57.852603+00:00"
+        "checked_at": "2026-10-24T11:37:10.207226+00:00"
       }
     ]
   }
