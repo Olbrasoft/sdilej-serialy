@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-24T09:01:28.676649+00:00",
+  "generation": "pair-2026-09-25",
+  "snapshot": "f0f5cd7e5bc64fb6abcdd50ecc108b4a5e99814a",
+  "code_commit": "155c880c731ab213f75b6f4b2debd87253568afa",
+  "target_statistics_before": {
+    "a": 14997,
+    "b": 14997
+  },
+  "target_statistics_after": {
+    "a": 15000,
+    "b": 15000
+  },
+  "new_series": 49,
+  "excluded_existing_series": 23,
+  "catalogued_requested_episodes": 4684,
+  "audio_preference": [
+    "cs",
+    "sk"
+  ],
+  "quality_order": [
+    "resolution_desc",
+    "size_bytes_asc"
+  ],
+  "recovered_uploads": [
+    {
+      "identity": "2685:1:4",
+      "target_account": "a",
+      "source_url": "https://sdilej.cz/34669953/r.j.decker.s01e04.1080p.cz.webrip.x265-kontrast.mkv",
+      "source": {
+        "source_id": "34669953",
+        "width": 1920,
+        "height": 1080,
+        "duration_sec": 2583,
+        "size_bytes": 1065867628,
+        "audio_language": "cs",
+        "language_probability": 0.990270733833313
+      },
+      "source_policy": null,
+      "upload": {
+        "target_video_id": "30476389",
+        "display_name": "R.J. Decker S01E04 - V domýšlivosti je pravda 1080p CZ Dabing",
+        "uploaded_at": "2026-10-24T08:59:09.017151+00:00"
+      },
+      "full_transfer": {
+        "commit": "3126218cc0fb9f8ab421a55e9be0ddda84f80607",
+        "receipt": {
+          "target_video_id": "30476389",
+          "size_bytes": 1065867628,
+          "source_bytes_read": 1065867628,
+          "http_status": 201
+        }
+      },
+      "cross_account_listing": [
+        {
+          "account": "a",
+          "id": "30476389",
+          "name": "R.J. Decker S01E04 - V domýšlivosti je pravda 1080p CZ Dabing.mkv",
+          "processing": false
+        }
+      ]
+    },
+    {
+      "identity": "695:3:5",
+      "target_account": "b",
+      "source_url": "https://sdilej.cz/35345830/el-chapo-03x05-volebni-podpora-juraison-.mkv",
+      "source": {
+        "source_id": "35345830",
+        "width": 1920,
+        "height": 1080,
+        "duration_sec": 2288,
+        "size_bytes": 507716190,
+        "audio_language": "cs",
+        "language_probability": 0.9727727174758911
+      },
+      "source_policy": null,
+      "upload": {
+        "target_video_id": "30476418",
+        "display_name": "Prcek S03E05 - 5. epizoda 1080p CZ Dabing",
+        "uploaded_at": "2026-10-24T09:00:27.169983+00:00"
+      },
+      "full_transfer": {
+        "commit": "f34c6be0641c7779686ce1d88d0fb43f2862a50f",
+        "receipt": {
+          "target_video_id": "30476418",
+          "size_bytes": 507716190,
+          "source_bytes_read": 507716190,
+          "http_status": 201
+        }
+      },
+      "cross_account_listing": [
+        {
+          "account": "b",
+          "id": "30476418",
+          "name": "Prcek S03E05 - 5. epizoda 1080p CZ Dabing (Zpracovává se)",
+          "processing": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "local_tests_passed": 526,
+    "github_test_run": 40079547361,
+    "github_tests_conclusion": "success",
+    "source_preparation_run": 40079573372,
+    "upload_run": 40066131676,
+    "media_uploads_per_account_limit": 2,
+    "source_workers": 4,
+    "baseline_snapshot": "f70e8e34220db02cb646d567f693ebc3b7486d9e",
+    "baseline_completed_uploads_preserved": 29969,
+    "baseline_allocated_target_ids_preserved": 24,
+    "frozen_manifest_unchanged": true,
+    "frozen_plan_unchanged": true,
+    "queue_append_only": true,
+    "fully_transferred_uploads": 2
+  },
+  "diagnosis": [
+    "Both account statistics were 14,997 with zero unused verified sources at the start.",
+    "An old producer returned zero rows for the Fresh Meat broad search while a fresh authenticated Actions diagnostic returned seven boxes for the same query.",
+    "Series-wide cooldowns blocked different exact dubbed candidates, including Super drbna until 12:07 UTC.",
+    "Non-Latin original aliases generated global episode-code and empty search queries."
+  ],
+  "changes": [
+    "Authenticated empty searches require a fresh known-positive control; failed controls trigger one login renewal and query replay, or a bounded transient network pause.",
+    "The in-memory broad search cache retains positive result pages only.",
+    "Low-stock exact CZ/SK hints with fewer than three consecutive failures may be checked inside a series pause; current episode backoff and requested-season gates still apply.",
+    "One versioned retry recovers old missing results with current positive cache hints; no upload history or allocation is reset.",
+    "Aliases that become an empty ASCII slug no longer create unrelated global searches."
+  ],
+  "diagnostic_runs": [
+    40078804181,
+    40078948145
+  ],
+  "source_account_check": {
+    "unlimited_downloading_active": true,
+    "original_download_resolved": true,
+    "original_size_matches_saved_evidence": true
+  },
+  "reserve_status": "Low; continuous preparation and uploading remain enabled."
+}
