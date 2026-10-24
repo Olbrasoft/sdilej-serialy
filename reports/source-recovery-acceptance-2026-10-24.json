@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-24T07:41:11.901222+00:00",
+  "generation": "pair-2026-09-25",
+  "snapshot": "a0fb71840f16ef4a478d75bcbd121a71abf95f69",
+  "code_commit": "a1ab489bc58aafbc7e1e05a93b64303fb4806df5",
+  "target_statistics_before": {
+    "a": 14984,
+    "b": 14984
+  },
+  "target_statistics_after": {
+    "a": 14986,
+    "b": 14986
+  },
+  "new_series": 49,
+  "excluded_existing_series": 23,
+  "catalogued_requested_episodes": 4684,
+  "audio_preference": [
+    "cs",
+    "sk"
+  ],
+  "quality_order": [
+    "resolution_desc",
+    "size_bytes_asc"
+  ],
+  "recovered_uploads": [
+    {
+      "identity": "1097:1:5",
+      "target_account": "b",
+      "source_url": "https://sdilej.cz/28251284/scrubs.s01e05.moji.dva.tatove.dvdrip.xvid.-ing.mkv",
+      "source": {
+        "source_id": "28251284",
+        "width": 576,
+        "height": 432,
+        "duration_sec": 1277,
+        "size_bytes": 64733730,
+        "audio_language": "cs",
+        "language_probability": 0.9836079478263855
+      },
+      "source_policy": null,
+      "upload": {
+        "target_video_id": "30475129",
+        "display_name": "Scrubs: Doktůrci S01E05 - Moji dva tátové SD CZ Dabing",
+        "uploaded_at": "2026-10-24T07:39:46.810790+00:00"
+      },
+      "full_transfer": {
+        "commit": "a4ce3eedfa8478240e365c4a821adc7638c1bdb7",
+        "receipt": {
+          "target_video_id": "30475129",
+          "size_bytes": 64733730,
+          "source_bytes_read": 64733730,
+          "http_status": 201
+        }
+      },
+      "cross_account_listing": [
+        {
+          "account": "b",
+          "id": "30475129",
+          "name": "Scrubs: Doktůrci S01E05 - Moji dva tátové SD CZ Dabing (Zpracovává se)",
+          "processing": true
+        }
+      ]
+    },
+    {
+      "identity": "1097:1:7",
+      "target_account": "a",
+      "source_url": "https://sdilej.cz/28251286/scrubs.s01e07.me.super-ego.dvdrip.xvid.-ing.mkv",
+      "source": {
+        "source_id": "28251286",
+        "width": 576,
+        "height": 432,
+        "duration_sec": 1249,
+        "size_bytes": 63203085,
+        "audio_language": "cs",
+        "language_probability": 0.9716945290565491
+      },
+      "source_policy": null,
+      "upload": {
+        "target_video_id": "30475116",
+        "display_name": "Scrubs: Doktůrci S01E07 - Mé super-ego SD CZ Dabing",
+        "uploaded_at": "2026-10-24T07:38:55.374780+00:00"
+      },
+      "full_transfer": {
+        "commit": "0918e4ea96d63e1f9ae0c4afbb99181b07419590",
+        "receipt": {
+          "target_video_id": "30475116",
+          "size_bytes": 63203085,
+          "source_bytes_read": 63203085,
+          "http_status": 201
+        }
+      },
+      "cross_account_listing": [
+        {
+          "account": "a",
+          "id": "30475116",
+          "name": "Scrubs: Doktůrci S01E07 - Mé super-ego SD CZ Dabing.mkv (Zpracovává se)",
+          "processing": true
+        }
+      ]
+    },
+    {
+      "identity": "2117:1:5",
+      "target_account": "b",
+      "source_url": "https://sdilej.cz/32237872/doktor-martin-01x05-zlomena-srdce.mkv",
+      "source": {
+        "source_id": "32237872",
+        "width": 1280,
+        "height": 720,
+        "duration_sec": 3089,
+        "size_bytes": 822573899,
+        "audio_language": "cs",
+        "language_probability": 0.9412528276443481
+      },
+      "source_policy": null,
+      "upload": {
+        "target_video_id": "30475096",
+        "display_name": "Doktor Martin S01E05 - Bolavé srdce 720p CZ Dabing",
+        "uploaded_at": "2026-10-24T07:40:06.366301+00:00"
+      },
+      "full_transfer": {
+        "commit": "50c6438261e3eb1a2601fe0a5468a17dea615432",
+        "receipt": {
+          "target_video_id": "30475096",
+          "size_bytes": 822573899,
+          "source_bytes_read": 822573899,
+          "http_status": 201
+        }
+      },
+      "cross_account_listing": [
+        {
+          "account": "b",
+          "id": "30475096",
+          "name": "Doktor Martin S01E05 - Bolavé srdce 720p CZ Dabing.mkv (Zpracovává se)",
+          "processing": true
+        }
+      ]
+    }
+  ],
+  "validation": {
+    "local_tests_passed": 515,
+    "github_test_run": 40074544971,
+    "source_preparation_run": 40074967200,
+    "upload_run": 40066131676,
+    "media_uploads_per_account_limit": 2,
+    "source_workers": 4,
+    "existing_uploads_preserved": true,
+    "fully_transferred_uploads": 3,
+    "processing_on_target": true
+  },
+  "diagnosis": [
+    "No unassigned verified stock remained; uploader waited for sources.",
+    "Failed initial season samples blocked later exact dubbed filename hints.",
+    "Czech subtitle labels were wrongly prioritized as Czech audio.",
+    "An inconclusive speech retry sampled the same offset again."
+  ],
+  "changes": [
+    "At most three additional exact dubbed filename probes per season; durable budget and full source/audio checks remain mandatory.",
+    "Subtitle-only and English labels no longer receive dubbed audio priority.",
+    "Low-stock scheduling prioritizes a bounded dubbed retry lane while preserving exploration.",
+    "A second language attempt samples an earlier valid offset; only hinted old inconclusive records receive a one-time recovery."
+  ]
+}
