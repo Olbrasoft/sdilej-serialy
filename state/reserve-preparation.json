@@ -2406,11 +2406,35 @@
       "retry_after": "2026-10-25T04:34:21.926724+00:00"
     },
     "1611:7:12": {
-      "at": "2026-10-01T23:31:54.824773+00:00",
+      "at": "2026-10-24T09:16:44.128532+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T23:31:55.587612+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 125.62,
+      "search_evidence": [
+        {
+          "path": "/the-joy-of-painting-s07e12/s/-6",
+          "status": 200,
+          "response_bytes": 189724,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting-s07e12/s/-6",
+          "status": 200,
+          "response_bytes": 189724,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T09:33:49.750095+00:00"
     },
     "1611:7:13": {
       "at": "2026-10-01T23:32:11.017354+00:00",
@@ -437592,14 +437616,35 @@
       "retry_after": "2026-10-23T16:13:22.178316+00:00"
     },
     "1923:4:1": {
-      "at": "2026-10-22T16:12:41.312642+00:00",
+      "at": "2026-10-24T09:17:04.172030+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 42.69,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T16:13:24.003838+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 123.85,
+      "search_evidence": [
+        {
+          "path": "/troufalky-s04e01/s/-6",
+          "status": 200,
+          "response_bytes": 189514,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/troufalky-s04e01/s/-6",
+          "status": 200,
+          "response_bytes": 189514,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T09:49:08.024332+00:00"
     },
     "1923:4:14": {
       "at": "2026-10-22T16:13:14.738549+00:00",
@@ -624729,7 +624774,7 @@
       "retry_after": "2026-10-24T09:32:59.781540+00:00"
     }
   },
-  "updated_at": "2026-10-24T09:18:05.372655+00:00",
+  "updated_at": "2026-10-24T09:19:12.491235+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -628825,12 +628870,9 @@
     },
     "1611": {
       "misses": [
-        "1611:7:9",
-        "1611:7:10",
-        "1611:7:11"
+        "1611:7:12"
       ],
-      "updated_at": "2026-10-24T04:34:21.926759+00:00",
-      "retry_after": "2026-10-24T08:34:21.926759+00:00"
+      "updated_at": "2026-10-24T09:18:49.750150+00:00"
     },
     "1265": {
       "misses": [
@@ -637654,12 +637696,9 @@
     },
     "1923": {
       "misses": [
-        "1923:2:7",
-        "1923:2:8",
-        "1923:3:7"
+        "1923:4:1"
       ],
-      "updated_at": "2026-10-24T05:00:51.464645+00:00",
-      "retry_after": "2026-10-24T09:00:51.464645+00:00"
+      "updated_at": "2026-10-24T09:19:08.024361+00:00"
     },
     "1628": {
       "misses": [
@@ -642085,12 +642124,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1611,
+    "last_series": 1344,
     "last_series_order": [
       false,
-      -9.3,
-      -7199,
-      1611
+      -8.8,
+      -388900,
+      1344
     ]
   }
 }
