@@ -205,6 +205,8 @@ def release_expired_pauses(records, paused, now):
 
 def record_series_result(records, episode, result, now):
     """A bounded scheduling cooldown, never a verdict on unsearched episodes."""
+    if result.get('reason') == 'source_search_unavailable':
+        return
     key = str(episode.series_id)
     previous = records.get(key, {})
     if result['status'] == 'prepared':

@@ -36,7 +36,7 @@ from .numbering import mapped_episode_title
 from .auth import login_with_retry
 from .source_cache import media_key, stable_url, search_url
 from .audio_pipeline import PipelinedLanguageDetector
-from .search_health import SearchHealth
+from .search_health import SearchHealth, SearchUnavailable
 
 
 # Underscores are filename separators, not letters adjoining an episode code.
@@ -189,6 +189,7 @@ class EpisodeSourceProvider:
         request_gate=None,
         audio_lock=None,
         session_factory=None,
+        search_circuit=None,
     ):
         self.session = session
         self.detector = detector or PipelinedLanguageDetector()
@@ -200,7 +201,7 @@ class EpisodeSourceProvider:
         self.audio_lock = audio_lock or threading.Lock()
         self.last_outcome = None
         self.session_factory = session_factory
-        self.search_health = SearchHealth() if session_factory is not None else None
+        self.search_health = SearchHealth(circuit=search_circuit) if session_factory is not None else None
 
     def fork_worker(self):
         """Independent cookies/connections, shared evidence and bounded audio CPU."""
@@ -211,10 +212,13 @@ class EpisodeSourceProvider:
                           request_gate=self.request_gate, audio_lock=self.audio_lock,
                           request_gap_seconds=self.request_gap_seconds,
                           discovery_timeout_seconds=self.discovery_timeout_seconds,
-                          session_factory=self.session_factory)
+                          session_factory=self.session_factory,
+                          search_circuit=self.search_health.circuit if self.search_health else None)
 
     @classmethod
     def authenticated(cls, email: str, password: str, **kwargs) -> "EpisodeSourceProvider":
+        if kwargs.get('search_circuit') is not None:
+            kwargs['search_circuit'].wait()
         factory = lambda: login_with_retry(login, email, password)
         return cls(factory(), session_factory=factory, **kwargs)
 
@@ -430,6 +434,10 @@ class EpisodeSourceProvider:
                     self._fresh_search = previous
                 if candidates:
                     break
+            except SearchUnavailable:
+                self.last_outcome = 'source_search_unavailable'
+                candidates = None
+                continue
             except (SdilejError, requests.RequestException):
                 candidates = None
                 continue

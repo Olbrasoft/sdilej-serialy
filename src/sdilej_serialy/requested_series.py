@@ -42,6 +42,7 @@ class RequestedSeries:
             key = self.identities.get(identity)
             if (key and identity not in self.samples[key]
                     and record.get('request_hint_probe_revision') == HINT_PROBE_REVISION
+                    and record.get('reason') != 'source_search_unavailable'
                     and len(self.extra_samples[key]) < MAX_HINT_PROBES):
                 self.extra_samples[key].append(identity)
         for identity, row in sources.items():
@@ -74,7 +75,9 @@ class RequestedSeries:
                     requested_hint_probe=identity in self.extra_samples[sid, season] and sampling)
 
     def checked(self, identity):
-        return self.records.get(identity, {}).get('request_probe_revision') == PROBE_REVISION
+        record = self.records.get(identity, {})
+        return (record.get('request_probe_revision') == PROBE_REVISION
+                and record.get('reason') != 'source_search_unavailable')
 
     def positive(self, sid, season):
         for identity in self.probe_identities(sid, season):

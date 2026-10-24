@@ -26,6 +26,7 @@ from .target import episode_key
 from .resilience import error_evidence
 from .reserve import LOW_WATER, TARGET_STOCK, should_prepare, stock
 from .source_cache import RequestGate, SourceCache
+from .search_health import SearchCircuit
 from .source_workers import inspected_results, DISPATCH_WAIT
 from .requested_series import RequestedSeries, PROBE_REVISION, HINT_PROBE_REVISION
 from .source_repair import (REPAIR_SEARCH_REVISION, SourceRepairFeed, fingerprint,
@@ -494,6 +495,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                           r['status'] for r in state['repairs'].values())),
                       statuses=dict(Counter(r['status'] for r in state['episodes'].values())))
         report['requested_series'] = requested.report()
+        source_health = getattr(provider, 'search_health', None)
+        report['search_health'] = source_health.circuit.snapshot() if source_health else {}
         atomic_json(report_path, report)
         if health['status'] == 'starved':
             print('::warning::An account has no ready source, active transfer or completed upload for 30 minutes; '
@@ -654,17 +657,21 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             else:
                 reason = record.get('reason', '')
                 previous = task[2]
-                failures = previous.get('consecutive_failures', 0) + 1
+                search_outage = reason == 'source_search_unavailable'
+                failures = previous.get('consecutive_failures', 0) + int(not search_outage)
                 record['consecutive_failures'] = failures
-                minutes = (1 if reason == 'uploader_upgrade_pending'
+                minutes = (1 if search_outage or reason == 'uploader_upgrade_pending'
                            else 30 if reason == 'no_english_czech_subtitles' else min(15 * 2 ** min(failures - 1, 2), 60)
                            if reason in ('transient_search', 'transient_original', 'SdilejError',
                                          'Timeout', 'ConnectionError', 'HTTPError', 'episode_active_or_completed')
                            or repairing_source and reason == 'no_matches'
                            else 60 if reason in ('inconclusive_audio', 'inconclusive_subtitles') else 24 * 60)
-                record['retry_after'] = (datetime.now(UTC) + timedelta(minutes=minutes)).isoformat()
-                series_misses[episode.series_id] += 1
-                if (not selected_ids and episode.series_id not in requested.series
+                shared_retry = (provider.search_health.circuit.snapshot().get('resume_after')
+                                if search_outage and getattr(provider, 'search_health', None) else None)
+                record['retry_after'] = shared_retry or (datetime.now(UTC) + timedelta(minutes=minutes)).isoformat()
+                if not search_outage:
+                    series_misses[episode.series_id] += 1
+                if (not search_outage and not selected_ids and episode.series_id not in requested.series
                         and series_misses[episode.series_id] >= MAX_SERIES_MISSES):
                     paused_series.add(episode.series_id)
             state['repairs' if repairing_source else 'episodes'][episode.identity] = record
@@ -707,9 +714,11 @@ def main():
     (root / 'state').mkdir(exist_ok=True)
     with (root / 'state/.reserve-preparation.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        report_path = root / 'reports/reserve-preparation.json'
+        previous = json.loads(report_path.read_text()).get('search_health') if report_path.exists() else None
         provider = AuditProvider.authenticated(os.environ['SDILEJ_EMAIL'], os.environ['SDILEJ_PASSWORD'],
             discovery_timeout_seconds=900, cache=SourceCache(root / 'state/source-evidence-cache.json'),
-            request_gate=RequestGate())
+            request_gate=RequestGate(), search_circuit=SearchCircuit(restored=previous))
         try:
             print(json.dumps(prepare(root, args.generation, provider, limit=args.limit,
                                     runtime_minutes=args.runtime_minutes, persist=args.persist_git_state,

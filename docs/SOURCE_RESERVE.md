@@ -653,3 +653,27 @@ still required. A positive cache hint receives one versioned retry of an old
 missing-source result across the full catalog; current retry records stay delayed.
 Aliases that produce an empty ASCII search slug are skipped, preventing Japanese
 original titles from turning into site-wide episode-code or empty search queries.
+
+### Coordinate recovery across all source workers
+
+The next live check found both accounts at 15,003 videos and an empty reserve.
+The completed producer log showed repeated failed search controls every 8–30
+seconds across four workers, despite each worker's individual one-minute delay.
+Renewing the login had not restored that producer's search results; a separate
+authenticated diagnostic still returned matching sources. This observation does
+not establish whether the cause was upstream throttling or another backend fault.
+
+Search recovery now shares one quiet window across every worker: five minutes,
+then ten, then fifteen for continued failures. Concurrent failures do not extend
+the same window, and successful in-flight requests cannot prematurely cancel it.
+Workers resume after the window and reset the delay after a positive control.
+Two unrelated control series are checked before declaring a shared outage, so
+one missing/filtered title cannot stop all discovery. Checkpoints retain only
+their public paths, HTTP status, byte/result counts and check timestamps.
+Checkpoints report the pause and retain its UTC deadline across job restarts,
+including before a new login. Cookies and session clients remain independent.
+
+A failed shared control is recorded as `source_search_unavailable`. It does not
+increase episode/series failure counts or consume requested-season sampling
+budgets. Its retry follows the shared recovery deadline. Episode identity,
+language, original quality and cross-account ownership checks remain mandatory.
