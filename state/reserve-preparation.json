@@ -307779,14 +307779,35 @@
       "retry_after": "2026-10-20T14:18:04.274317+00:00"
     },
     "9667:1:38": {
-      "at": "2026-10-19T14:16:07.367946+00:00",
+      "at": "2026-10-24T21:17:47.511643+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "inconclusive_audio",
-      "elapsed_seconds": 119.62,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T15:18:06.986197+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 1795.62,
+      "search_evidence": [
+        {
+          "path": "/ovecka-shaun-s01e38/s/-6",
+          "status": 200,
+          "response_bytes": 189579,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ovecka-shaun-s01e38/s/-6",
+          "status": 200,
+          "response_bytes": 219722,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T22:17:43.130434+00:00"
     },
     "1777:1:6": {
       "at": "2026-10-19T14:18:07.633301+00:00",
@@ -310281,14 +310302,18 @@
       "retry_after": "2026-10-20T16:12:38.282243+00:00"
     },
     "9667:1:40": {
-      "at": "2026-10-19T16:10:26.771641+00:00",
+      "at": "2026-10-24T21:32:31.013476+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "inconclusive_audio",
-      "elapsed_seconds": 145.32,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T17:12:52.088031+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 948.58,
+      "search_evidence": [],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T22:18:19.594610+00:00"
     },
     "1126:3:3": {
       "at": "2026-10-19T16:12:38.873350+00:00",
@@ -634901,7 +634926,7 @@
       "retry_after": "2026-10-24T19:13:16.956817+00:00"
     },
     "462:7:26": {
-      "at": "2026-10-24T18:17:21.741282+00:00",
+      "at": "2026-10-24T21:02:36.949233+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -634909,9 +634934,9 @@
       "audio_sampling_revision": 1,
       "method": "discovery",
       "reason": "source_search_unavailable",
-      "elapsed_seconds": 2461.17,
+      "elapsed_seconds": 2697.72,
       "consecutive_failures": 0,
-      "retry_after": "2026-10-24T19:13:16.956817+00:00"
+      "retry_after": "2026-10-24T21:48:34.667625+00:00"
     },
     "1688:1:29": {
       "at": "2026-10-24T18:58:17.537369+00:00",
@@ -636377,9 +636402,22 @@
       "elapsed_seconds": 2415.29,
       "consecutive_failures": 0,
       "retry_after": "2026-10-24T21:47:30.301439+00:00"
+    },
+    "462:8:22": {
+      "at": "2026-10-24T21:33:13.619926+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 900.32,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T22:03:13.941296+00:00"
     }
   },
-  "updated_at": "2026-10-24T21:47:29.682708+00:00",
+  "updated_at": "2026-10-24T21:48:36.973675+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -641451,9 +641489,12 @@
     },
     "9667": {
       "misses": [
-        "9667:1:36"
+        "9667:1:36",
+        "9667:1:38",
+        "9667:1:40"
       ],
-      "updated_at": "2026-10-24T20:46:50.073138+00:00"
+      "updated_at": "2026-10-24T21:48:19.594641+00:00",
+      "retry_after": "2026-10-24T22:18:19.594641+00:00"
     },
     "7803": {
       "misses": [
@@ -645363,9 +645404,10 @@
     },
     "462": {
       "misses": [
-        "462:8:11"
+        "462:8:11",
+        "462:8:22"
       ],
-      "updated_at": "2026-10-24T21:33:12.922646+00:00"
+      "updated_at": "2026-10-24T21:48:13.941320+00:00"
     },
     "69": {
       "misses": [
@@ -653626,12 +653668,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3183,
+    "last_series": 18,
     "last_series_order": [
       false,
       -7.9,
-      -24391,
-      3183
+      -22292,
+      18
     ]
   }
 }
