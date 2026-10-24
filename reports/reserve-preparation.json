@@ -4,12 +4,12 @@
   "prepared_this_run": 57,
   "reserve_total": 21732,
   "queue_total": 30167,
-  "updated_at": "2026-10-24T17:29:20.662140+00:00",
+  "updated_at": "2026-10-24T17:30:43.929108+00:00",
   "workers": 4,
-  "elapsed_seconds": 5428.16,
-  "prepared_per_hour": 37.8,
+  "elapsed_seconds": 5511.43,
+  "prepared_per_hour": 37.23,
   "available_this_run": 57,
-  "available_per_hour": 37.8,
+  "available_per_hour": 37.23,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
@@ -22,7 +22,8 @@
     "categories": {
       "completed": 30130,
       "allocated": 25,
-      "failed": 12
+      "failed": 10,
+      "in_flight": 2
     },
     "completed_by_account": {
       "a": 15063,
@@ -33,17 +34,15 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "starved",
-    "starved_accounts": [
-      "b"
-    ],
+    "status": "waiting_for_sources",
+    "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 1729,
-      "b": 1806
+      "a": 1812,
+      "b": 1890
     },
     "preparation_outcomes_last_hour": {
-      "verified_non_czech": 17,
-      "prepared": 23,
+      "prepared": 21,
+      "verified_non_czech": 13,
       "transient_original": 1,
       "source_search_unavailable": 3,
       "no_acceptable_original": 3,
@@ -2942,7 +2941,7 @@
   "search_health": {
     "status": "paused",
     "consecutive_failures": 4,
-    "retry_seconds": 612,
+    "retry_seconds": 529,
     "resume_after": "2026-10-24T17:39:32.333438+00:00",
     "controls": [
       {
