@@ -173,3 +173,13 @@ def test_sampling_recovery_stays_in_the_bounded_retry_lane():
              for n in range(1,11)}
     result=list(replenish.reserve_order(rows,records,{},set(),index=index,refresh=lambda:None,progress={}))
     assert [r['series_id'] for r in result[:10]]==list(range(11,19))+[1,2]
+
+
+def test_empty_stock_does_not_let_requested_series_starve_the_rest_of_the_catalog():
+    rows=[metadata(series=s,number=n) for s in (1,2) for n in range(1,13)]
+    index=CandidateIndex(rows)
+    result=list(replenish.reserve_order(rows,{}, {},set(),index=index,refresh=lambda:None,
+        progress={},requested=SimpleNamespace(series={1}),urgent=True))
+    assert [r['series_id'] for r in result[:4]]==[1]*4
+    assert 2 in [r['series_id'] for r in result[:8]]
+    assert len(result)==len({Episode.from_dict(r).identity for r in result})==24

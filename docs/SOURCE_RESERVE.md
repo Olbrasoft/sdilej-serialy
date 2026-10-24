@@ -622,6 +622,10 @@ as unknown-language sources. These filename hints only change dispatch and speec
 sampling preference. They cannot authorize an upload. When stock is low, a bounded
 two-slot lane prioritizes due CZ/SK hints while preserving exploration and ordinary
 retries; the four source workers and two uploads per account are unchanged.
+When stock is low, requested series receive only four initial priority checks
+before their remaining episodes share the indexed scheduler with the rest of the
+catalog. This prevents a large requested series from monopolizing discovery while
+other known dubbed sources wait. Every requested season gate still applies.
 
 The second language attempt now uses an earlier valid offset instead of repeating
 the same failed sample when the detector supports it. A one-time, hint-scoped retry

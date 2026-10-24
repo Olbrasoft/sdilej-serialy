@@ -132,7 +132,8 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
         catalog = [m for m in catalog if Episode.from_dict(m).identity not in warmed]
     if requested and requested.series:
         pending = {Episode.from_dict(m).identity: m for m in catalog if m['series_id'] in requested.series}
-        while pending:
+        prioritized = 0
+        while pending and (not urgent or prioritized < 4):
             emitted = False
             seen_series = set()
             for identity, metadata in list(pending.items()):
@@ -141,6 +142,9 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
                     del pending[identity]
                     emitted = True
                     yield metadata
+                    prioritized += 1
+                    if urgent and prioritized >= 4:
+                        break
             if not emitted:
                 break
         catalog = [m for m in catalog if m['series_id'] not in requested.series
