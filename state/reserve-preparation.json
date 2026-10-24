@@ -435707,14 +435707,16 @@
       "retry_after": "2026-10-23T15:16:54.184680+00:00"
     },
     "1143:3:13": {
-      "at": "2026-10-22T15:15:54.757166+00:00",
-      "status": "deferred",
+      "at": "2026-10-24T07:53:10.767137+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 61.42,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T15:16:56.176795+00:00"
+      "elapsed_seconds": 60.88,
+      "source_id": "22267497",
+      "queue_rank": 29989
     },
     "1246:3:1": {
       "at": "2026-10-22T15:16:12.848989+00:00",
@@ -615056,9 +615058,82 @@
       "elapsed_seconds": 66.46,
       "consecutive_failures": 1,
       "retry_after": "2026-10-25T07:53:32.027990+00:00"
+    },
+    "4:3:13": {
+      "at": "2026-10-24T07:53:43.316794+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 66.89,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T07:54:50.211415+00:00"
+    },
+    "4:3:12": {
+      "at": "2026-10-24T07:53:32.625769+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 82.66,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T07:54:55.286728+00:00"
+    },
+    "1153:3:8": {
+      "at": "2026-10-24T07:54:55.855313+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 14.14,
+      "search_evidence": [
+        {
+          "path": "/turn-washington-s-spies-s03e08/s/-6",
+          "status": 200,
+          "response_bytes": 217199,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/turn-washington-s-spies/s/-6",
+          "status": 200,
+          "response_bytes": 217131,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/turn-washington-s-spies-s03e08/s/-6",
+          "status": 200,
+          "response_bytes": 217244,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/turn-washington-s-spies/s/-6",
+          "status": 200,
+          "response_bytes": 217109,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T07:55:09.999565+00:00"
     }
   },
-  "updated_at": "2026-10-24T07:54:13.913216+00:00",
+  "updated_at": "2026-10-24T07:55:30.207231+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -624375,12 +624450,9 @@
     },
     "1153": {
       "misses": [
-        "1153:3:5",
-        "1153:3:6",
-        "1153:3:7"
+        "1153:3:8"
       ],
-      "updated_at": "2026-10-24T03:12:07.207920+00:00",
-      "retry_after": "2026-10-24T07:12:07.207920+00:00"
+      "updated_at": "2026-10-24T07:55:09.999592+00:00"
     },
     "5698": {
       "misses": [
@@ -626654,7 +626726,7 @@
     },
     "1143": {
       "misses": [],
-      "updated_at": "2026-10-24T07:53:42.708386+00:00"
+      "updated_at": "2026-10-24T07:54:25.622359+00:00"
     },
     "594": {
       "misses": [
@@ -632675,10 +632747,12 @@
     },
     "4": {
       "misses": [
-        "4:3:9",
-        "4:3:10"
+        "4:3:10",
+        "4:3:13",
+        "4:3:12"
       ],
-      "updated_at": "2026-10-24T07:53:32.028018+00:00"
+      "updated_at": "2026-10-24T07:54:55.286847+00:00",
+      "retry_after": "2026-10-24T11:54:55.286847+00:00"
     },
     "1138": {
       "misses": [
@@ -632688,12 +632762,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2307,
+    "last_series": 1186,
     "last_series_order": [
       false,
       -8.1,
-      -26381,
-      2307
+      -24498,
+      1186
     ]
   }
 }
