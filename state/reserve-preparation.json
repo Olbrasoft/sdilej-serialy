@@ -129770,14 +129770,17 @@
       "retry_after": "2026-10-19T17:45:08.236593+00:00"
     },
     "1191:1:4": {
-      "at": "2026-10-16T05:56:15.199030+00:00",
+      "at": "2026-10-24T08:08:05.731091+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 231.32,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-17T06:00:06.518497+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 128.39,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-24T09:10:15.870656+00:00"
     },
     "1191:1:5": {
       "at": "2026-10-16T05:56:23.041584+00:00",
@@ -470530,14 +470533,16 @@
       "retry_after": "2026-10-24T07:58:14.057461+00:00"
     },
     "1065:11:5": {
-      "at": "2026-10-23T07:58:12.772360+00:00",
-      "status": "deferred",
+      "at": "2026-10-24T08:10:15.870770+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 41.34,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T07:58:54.114350+00:00"
+      "elapsed_seconds": 37.39,
+      "source_id": "27228410",
+      "queue_rank": 30005
     },
     "1428:3:3": {
       "at": "2026-10-23T07:58:20.457166+00:00",
@@ -615719,9 +615724,72 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-25T08:10:00.842629+00:00"
+    },
+    "2175:3:7": {
+      "at": "2026-10-24T08:10:00.681027+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 12.64,
+      "search_evidence": [
+        {
+          "path": "/sestricka-jackie-s03e07/s/-6",
+          "status": 200,
+          "response_bytes": 217085,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nurse-jackie-s03e07/s/-6",
+          "status": 200,
+          "response_bytes": 216963,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sestricka-jackie-s03e07/s/-6",
+          "status": 200,
+          "response_bytes": 217029,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sestricka-jackie/s/-6",
+          "status": 200,
+          "response_bytes": 225952,
+          "boxes": 8,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nurse-jackie-s03e07/s/-6",
+          "status": 200,
+          "response_bytes": 216965,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nurse-jackie/s/-6",
+          "status": 200,
+          "response_bytes": 222477,
+          "boxes": 5,
+          "parsed_candidates": 5,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T08:10:15.871161+00:00"
     }
   },
-  "updated_at": "2026-10-24T08:10:03.409284+00:00",
+  "updated_at": "2026-10-24T08:11:28.033426+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -627394,12 +627462,9 @@
     },
     "2175": {
       "misses": [
-        "2175:3:4",
-        "2175:3:5",
-        "2175:3:6"
+        "2175:3:7"
       ],
-      "updated_at": "2026-10-24T03:18:59.278867+00:00",
-      "retry_after": "2026-10-24T07:18:59.278867+00:00"
+      "updated_at": "2026-10-24T08:10:15.871175+00:00"
     },
     "3728": {
       "misses": [
@@ -629591,7 +629656,7 @@
     },
     "1065": {
       "misses": [],
-      "updated_at": "2026-10-24T08:08:42.387568+00:00"
+      "updated_at": "2026-10-24T08:10:53.258668+00:00"
     },
     "210": {
       "misses": [],
@@ -632633,9 +632698,11 @@
     "1191": {
       "misses": [
         "1191:1:2",
-        "1191:1:1"
+        "1191:1:1",
+        "1191:1:4"
       ],
-      "updated_at": "2026-10-24T07:56:33.493917+00:00"
+      "updated_at": "2026-10-24T08:10:15.870687+00:00",
+      "retry_after": "2026-10-24T08:40:15.870687+00:00"
     },
     "931": {
       "misses": [],
