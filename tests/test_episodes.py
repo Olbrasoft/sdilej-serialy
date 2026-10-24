@@ -47,6 +47,18 @@ def test_mash_search_includes_compact_acronym(monkeypatch):
     assert any('/mash-s02e23/' in url for url in urls)
 
 
+def test_non_latin_alias_never_creates_a_global_episode_or_empty_search(monkeypatch):
+    from types import SimpleNamespace
+    p = EpisodeSourceProvider(None, detector=object())
+    urls = []
+    monkeypatch.setattr(p, '_get', lambda url: urls.append(url) or SimpleNamespace(text=''))
+    ep = Episode(episode_id=1, series_id=1191, series_title='Solo Leveling',
+                 series_original_title='俺だけレベルアップな件', season=1, number=3)
+    assert p.search(ep) == []
+    assert urls == ['https://sdilej.cz/solo-leveling-s01e03/s/-6',
+                    'https://sdilej.cz/solo-leveling/s/-6']
+
+
 @pytest.mark.parametrize('title', ['The Big Bang Theory S01E01-02', 'The Big Bang Theory S01E01+E02'])
 def test_episode_ranges_are_not_single_episodes(title):
     assert episode_match(episode(), title)[0] == MatchTier.REJECT

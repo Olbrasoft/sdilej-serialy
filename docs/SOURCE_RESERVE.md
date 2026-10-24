@@ -651,3 +651,5 @@ does not release the whole series, skip a current episode cooldown, unlock a
 requested season or authorize publication. Every original/audio/identity check is
 still required. A positive cache hint receives one versioned retry of an old
 missing-source result across the full catalog; current retry records stay delayed.
+Aliases that produce an empty ASCII search slug are skipped, preventing Japanese
+original titles from turning into site-wide episode-code or empty search queries.

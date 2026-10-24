@@ -242,7 +242,7 @@ class EpisodeSourceProvider:
         candidates: dict[str, Candidate] = {}
         deadline = time.monotonic() + self.discovery_timeout_seconds
         for title in series_aliases(episode):
-            if not title:
+            if not title or not slugify(title):
                 continue
             # Also search the series title alone: exact-code queries miss
             # release numbering aliases. Identity checks still apply to every
