@@ -1,12 +1,12 @@
 {
   "generation": "pair-2026-09-25",
-  "attempted_this_run": 2,
+  "attempted_this_run": 4,
   "prepared_this_run": 0,
   "reserve_total": 21805,
   "queue_total": 30240,
-  "updated_at": "2026-10-24T22:32:29.391401+00:00",
+  "updated_at": "2026-10-24T22:33:43.848598+00:00",
   "workers": 4,
-  "elapsed_seconds": 65.34,
+  "elapsed_seconds": 139.8,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -20,34 +20,33 @@
       "b": 0
     },
     "categories": {
-      "completed": 30202,
-      "allocated": 26,
+      "completed": 30203,
+      "allocated": 25,
       "failed": 12
     },
     "completed_by_account": {
       "a": 15099,
-      "b": 15103
+      "b": 15104
     },
-    "uploads_last_24h": 394,
-    "uploads_per_hour_24h": 16.42,
+    "uploads_last_24h": 395,
+    "uploads_per_hour_24h": 16.46,
     "stock_hours_24h": 0.0
   },
   "health": {
     "status": "waiting_for_sources",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 666,
-      "b": 711
+      "a": 741,
+      "b": 666
     },
     "preparation_outcomes_last_hour": {
       "prepared": 31,
+      "transient_original": 3,
       "verified_non_czech": 4,
       "inconclusive_audio": 5,
-      "transient_search": 1,
-      "source_search_unavailable": 4,
+      "source_search_unavailable": 5,
       "no_english_czech_subtitles": 1,
       "no_acceptable_original": 9,
-      "transient_original": 3,
       "no_matches": 15
     }
   },
@@ -62,10 +61,10 @@
     ]
   },
   "cache": {
-    "search_miss": 17,
+    "search_miss": 25,
     "search_hit": 3,
-    "search_seconds": 118.55,
-    "media_hit": 5,
+    "search_seconds": 232.28,
+    "media_hit": 10,
     "audio_hit": 1
   },
   "audio_pipeline": {},
@@ -2287,14 +2286,12 @@
         {
           "season": 2,
           "episodes": 10,
-          "status": "needs_subtitles",
+          "status": "sampling",
           "checked_samples": [
-            "133:2:1",
             "133:2:2",
             "133:2:3"
           ],
           "foreign_audio_samples": [
-            "133:2:1",
             "133:2:2",
             "133:2:3"
           ],
@@ -2924,17 +2921,24 @@
     }
   ],
   "search_health": {
-    "status": "healthy",
-    "consecutive_failures": 0,
-    "retry_seconds": 0,
-    "resume_after": null,
+    "status": "paused",
+    "consecutive_failures": 1,
+    "retry_seconds": 275,
+    "resume_after": "2026-10-24T22:38:18.287586+00:00",
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
-        "response_bytes": 723720,
-        "parsed_candidates": 411,
-        "checked_at": "2026-10-24T22:31:50.780086+00:00"
+        "response_bytes": 189619,
+        "parsed_candidates": 0,
+        "checked_at": "2026-10-24T22:33:16.259865+00:00"
+      },
+      {
+        "path": "/doktor-martin/s/-6",
+        "status": 200,
+        "response_bytes": 189451,
+        "parsed_candidates": 0,
+        "checked_at": "2026-10-24T22:33:24.274227+00:00"
       }
     ]
   }
