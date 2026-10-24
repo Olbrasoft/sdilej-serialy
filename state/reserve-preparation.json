@@ -355108,14 +355108,20 @@
       "retry_after": "2026-10-21T21:28:39.550926+00:00"
     },
     "1328:1:11": {
-      "at": "2026-10-20T21:27:52.242868+00:00",
+      "at": "2026-10-24T12:46:54.740188+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 61.31,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-21T21:28:53.552468+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ja",
+      "observed_language_probability": 0.9934965372085571,
+      "observed_source_id": "33835374",
+      "elapsed_seconds": 191.14,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-25T12:50:05.875994+00:00"
     },
     "1650:2:1": {
       "at": "2026-10-20T21:28:40.258569+00:00",
@@ -629570,9 +629576,127 @@
       "elapsed_seconds": 70.56,
       "source_id": "33711041",
       "queue_rank": 30034
+    },
+    "912:4:43": {
+      "at": "2026-10-24T12:48:48.321201+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 59.3,
+      "source_id": "33710846",
+      "queue_rank": 30035
+    },
+    "912:4:45": {
+      "at": "2026-10-24T12:48:51.516593+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 63.58,
+      "source_id": "33710856",
+      "queue_rank": 30036
+    },
+    "4401:1:29": {
+      "at": "2026-10-24T12:50:02.394187+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 22.86,
+      "search_evidence": [
+        {
+          "path": "/while-you-were-sleeping-s01e29/s/-6",
+          "status": 200,
+          "response_bytes": 217158,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/while-you-were-sleeping/s/-6",
+          "status": 200,
+          "response_bytes": 219767,
+          "boxes": 3,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/while-you-were-sleeping-s01e29/s/-6",
+          "status": 200,
+          "response_bytes": 217166,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/while-you-were-sleeping/s/-6",
+          "status": 200,
+          "response_bytes": 219783,
+          "boxes": 3,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T12:50:25.251296+00:00"
+    },
+    "476:2:10": {
+      "at": "2026-10-24T12:50:03.131574+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 24.01,
+      "search_evidence": [
+        {
+          "path": "/to-your-eternity-s02e10/s/-6",
+          "status": 200,
+          "response_bytes": 217102,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/to-your-eternity/s/-6",
+          "status": 200,
+          "response_bytes": 217106,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/to-your-eternity-s02e10/s/-6",
+          "status": 200,
+          "response_bytes": 217060,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/to-your-eternity/s/-6",
+          "status": 200,
+          "response_bytes": 217073,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T12:50:27.141282+00:00"
     }
   },
-  "updated_at": "2026-10-24T12:49:51.589482+00:00",
+  "updated_at": "2026-10-24T12:50:30.066896+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -637354,12 +637478,12 @@
     },
     "1328": {
       "misses": [
-        "1328:4:18",
         "1328:4:20",
-        "1328:4:19"
+        "1328:4:19",
+        "1328:1:11"
       ],
-      "updated_at": "2026-10-24T12:47:39.520250+00:00",
-      "retry_after": "2026-10-24T16:47:39.520250+00:00"
+      "updated_at": "2026-10-24T12:50:05.876021+00:00",
+      "retry_after": "2026-10-24T16:50:05.876021+00:00"
     },
     "1371": {
       "misses": [
@@ -637921,9 +638045,10 @@
     },
     "4401": {
       "misses": [
-        "4401:1:28"
+        "4401:1:28",
+        "4401:1:29"
       ],
-      "updated_at": "2026-10-24T07:20:30.600809+00:00"
+      "updated_at": "2026-10-24T12:50:25.251323+00:00"
     },
     "4870": {
       "misses": [],
@@ -637947,12 +638072,9 @@
     },
     "476": {
       "misses": [
-        "476:2:7",
-        "476:2:8",
-        "476:2:9"
+        "476:2:10"
       ],
-      "updated_at": "2026-10-24T05:13:20.463186+00:00",
-      "retry_after": "2026-10-24T09:13:20.463186+00:00"
+      "updated_at": "2026-10-24T12:50:27.141307+00:00"
     },
     "123": {
       "misses": [],
@@ -644422,7 +644544,7 @@
     },
     "912": {
       "misses": [],
-      "updated_at": "2026-10-24T12:48:50.790236+00:00"
+      "updated_at": "2026-10-24T12:50:01.651764+00:00"
     },
     "1168": {
       "misses": [
@@ -646929,12 +647051,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2340,
+    "last_series": 476,
     "last_series_order": [
       false,
       -8.2,
-      -23578,
-      2340
+      -13286,
+      476
     ]
   }
 }
