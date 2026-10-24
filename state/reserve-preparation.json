@@ -310372,14 +310372,17 @@
       "retry_after": "2026-10-24T22:52:12.836520+00:00"
     },
     "9667:2:36": {
-      "at": "2026-10-19T16:13:59.235643+00:00",
+      "at": "2026-10-24T21:53:52.801473+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
       "reason": "inconclusive_audio",
-      "elapsed_seconds": 234.22,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T17:19:19.027148+00:00"
+      "elapsed_seconds": 133.18,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T22:56:57.454291+00:00"
     },
     "1126:3:6": {
       "at": "2026-10-19T16:16:39.189496+00:00",
@@ -636787,9 +636790,92 @@
       "elapsed_seconds": 101.79,
       "source_id": "35326721",
       "queue_rank": 30214
+    },
+    "462:9:8": {
+      "at": "2026-10-24T21:55:29.775739+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 96.84,
+      "source_id": "35326722",
+      "queue_rank": 30217
+    },
+    "462:9:10": {
+      "at": "2026-10-24T21:55:48.659868+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 84.89,
+      "source_id": "35326727",
+      "queue_rank": 30218
+    },
+    "4007:3:13": {
+      "at": "2026-10-24T21:57:07.323321+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 28.33,
+      "search_evidence": [
+        {
+          "path": "/a-million-little-things-s03e13/s/-6",
+          "status": 200,
+          "response_bytes": 217187,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/a-million-little-things/s/-6",
+          "status": 200,
+          "response_bytes": 217128,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/a-million-little-things-s03e13/s/-6",
+          "status": 200,
+          "response_bytes": 217204,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/a-million-little-things/s/-6",
+          "status": 200,
+          "response_bytes": 217072,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T21:57:35.658246+00:00"
+    },
+    "462:9:11": {
+      "at": "2026-10-24T21:56:03.133942+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 100.1,
+      "source_id": "35326728",
+      "queue_rank": 30219
     }
   },
-  "updated_at": "2026-10-24T21:56:07.605298+00:00",
+  "updated_at": "2026-10-24T21:57:45.982698+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -641861,12 +641947,12 @@
     },
     "9667": {
       "misses": [
-        "9667:2:3",
         "9667:2:4",
-        "9667:3:15"
+        "9667:3:15",
+        "9667:2:36"
       ],
-      "updated_at": "2026-10-24T21:56:02.418785+00:00",
-      "retry_after": "2026-10-24T22:26:02.418785+00:00"
+      "updated_at": "2026-10-24T21:56:57.454332+00:00",
+      "retry_after": "2026-10-24T22:26:57.454332+00:00"
     },
     "7803": {
       "misses": [
@@ -645773,7 +645859,7 @@
     },
     "462": {
       "misses": [],
-      "updated_at": "2026-10-24T21:55:47.938167+00:00"
+      "updated_at": "2026-10-24T21:57:43.238984+00:00"
     },
     "69": {
       "misses": [
@@ -648533,9 +648619,10 @@
     },
     "4007": {
       "misses": [
-        "4007:3:11"
+        "4007:3:11",
+        "4007:3:13"
       ],
-      "updated_at": "2026-10-24T08:21:20.651716+00:00"
+      "updated_at": "2026-10-24T21:57:35.658274+00:00"
     },
     "356": {
       "misses": [
@@ -654038,12 +654125,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9671,
+    "last_series": 11,
     "last_series_order": [
       false,
       -7.9,
-      -18757,
-      9671
+      -14291,
+      11
     ]
   }
 }
