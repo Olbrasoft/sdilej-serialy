@@ -633,3 +633,21 @@ releases old inconclusive audio records without resetting other cooldowns. A liv
 full-source check recovered Doktor Martin S01E05 as Czech at 1280x720 after its
 previous sample was inconclusive. No resolution, runtime or language-confidence
 threshold was lowered, and existing target records were retained.
+
+### Recover long-running search sessions and hinted episodes in paused series
+
+The next check found both accounts at 14,997 videos and no unused verified stock.
+The old producer returned empty HTTP-200 broad searches while a fresh authenticated
+Actions diagnostic returned results for the same query. Before accepting an empty
+search as absence, authenticated workers now check a fresh known-positive query.
+If that control is empty, the worker renews its login once and replays the original
+query. A failed control remains transient, with a one-minute network backoff and
+bounded failed login renewal. Empty broad pages are no longer kept in the in-memory
+audit cache. Credentials, HTML and authenticated URLs never enter checkpoints.
+
+During low stock, a paused series may still yield an exact CZ/SK filename hint for
+a different episode with fewer than three consecutive failures. This exception
+does not release the whole series, skip a current episode cooldown, unlock a
+requested season or authorize publication. Every original/audio/identity check is
+still required. A positive cache hint receives one versioned retry of an old
+missing-source result across the full catalog; current retry records stay delayed.

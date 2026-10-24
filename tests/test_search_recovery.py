@@ -80,7 +80,7 @@ def test_positive_hint_releases_only_one_old_requested_missing_result():
     metadata=dict(source(number=2)['episode'],requested_audio_policy=SLOVAK_POLICY,requested_probe=False)
     assert not replenish.preparation_due(record,metadata,None,now,source_hint=False)
     assert replenish.preparation_due(record,metadata,None,now,source_hint=True)
-    assert not replenish.preparation_due(record,source(number=2)['episode'],None,now,source_hint=True)
+    assert replenish.preparation_due(record,source(number=2)['episode'],None,now,source_hint=True)
     record['search_recovery_revision']=replenish.SEARCH_RECOVERY_REVISION
     assert not replenish.preparation_due(record,metadata,None,now,source_hint=True)
 
@@ -108,5 +108,5 @@ def test_publisher_recovers_cached_neighbor_without_replaying_uploaded_queue(tmp
     assert (directory/'manifest.jsonl').read_bytes()==original
     assert SourceManifest(tmp_path/'manifests/selected-episodes.jsonl').rows['1:1:5']['requested_audio_check']
     after=json.loads((tmp_path/'state/reserve-preparation.json').read_text())
-    assert after['episodes']['1:1:6']['search_recovery_revision']==1
+    assert after['episodes']['1:1:6']['search_recovery_revision']==replenish.SEARCH_RECOVERY_REVISION
     assert replenish.prepare(tmp_path,'test',provider,runtime_minutes=0)['attempted_this_run']==0

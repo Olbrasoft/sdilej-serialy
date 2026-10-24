@@ -31,12 +31,12 @@ from .requested_series import RequestedSeries, PROBE_REVISION, HINT_PROBE_REVISI
 from .source_repair import (REPAIR_SEARCH_REVISION, SourceRepairFeed, fingerprint,
                             repairable, repair_entry, repaired_row)
 from .discovery_index import (CandidateIndex, indexed_order, paused_series as saved_pauses,
-                              record_series_result, release_expired_pauses)
+                              record_series_result, release_expired_pauses, series_probe_allowed)
 
 PREPARATION_REVISION = 5
 SAVED_REVIEW_REVISION = 1
 AUDIO_POLICY_REVISION = 1
-SEARCH_RECOVERY_REVISION = 1
+SEARCH_RECOVERY_REVISION = 2
 AUDIO_SAMPLING_REVISION = 1
 MAX_SERIES_MISSES = 3
 
@@ -78,8 +78,7 @@ def repaired_preparation(record, metadata=None, *, filename_recovery=False, sour
             or ((metadata or {}).get('requested_audio_policy') == SLOVAK_POLICY
                 and record.get('audio_policy_revision', 0) < AUDIO_POLICY_REVISION
                 and record.get('reason') in ('verified_non_czech', 'no_verified_czech_match'))
-            or ((metadata or {}).get('requested_audio_policy') == SLOVAK_POLICY and source_hint
-                and record.get('reason') == 'no_matches'
+            or (source_hint and record.get('reason') == 'no_matches'
                 and record.get('search_recovery_revision', 0) < SEARCH_RECOVERY_REVISION)
             or (subtitle_request(metadata or {}) and record.get('reason') == 'transient_original'
                 and record.get('subtitle_verification_revision', 0) < 1)
@@ -123,7 +122,8 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
         for metadata in catalog:
             identity = Episode.from_dict(metadata).identity
             if (identity in index.dubbed_hints and metadata['series_id'] not in seen_series
-                    and metadata['series_id'] not in paused and (available is None or available(metadata))):
+                    and series_probe_allowed(metadata, paused, index, records, urgent=urgent)
+                    and (available is None or available(metadata))):
                 warmed.add(identity)
                 seen_series.add(metadata['series_id'])
                 yield metadata
@@ -158,7 +158,8 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
         else:
             ordinary.append(metadata)
     for metadata in fast + low:
-        if metadata['series_id'] not in paused and (available is None or available(metadata)):
+        if (series_probe_allowed(metadata, paused, index, records, urgent=urgent)
+                and (available is None or available(metadata))):
             yield metadata
     if index is None:
         yield from preparation_order(ordinary, records, paused, productive_seasons, available=available)

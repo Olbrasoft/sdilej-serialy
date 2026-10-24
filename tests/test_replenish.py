@@ -107,7 +107,8 @@ def test_filename_recovery_is_hint_scoped_once_and_keeps_other_episode_backoff(t
     path = tmp_path / 'state/reserve-preparation.json'
     later = (datetime.now(UTC) + timedelta(hours=23)).isoformat()
     records = {f'1:1:{n}': dict(status='deferred', reason='no_matches',
-                              preparation_revision=4, retry_after=later) for n in (5, 6)}
+                              preparation_revision=4, retry_after=later,
+                              search_recovery_revision=replenish.SEARCH_RECOVERY_REVISION) for n in (5, 6)}
     pipeline.atomic_json(path, dict(schema_version=1, episodes=records,
                                    series_discovery={'1': dict(retry_after=later)}))
     cache = SourceCache(tmp_path / 'state/source-evidence-cache.json')

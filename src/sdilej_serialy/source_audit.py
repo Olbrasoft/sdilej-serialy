@@ -14,6 +14,7 @@ from urllib.parse import urlsplit
 
 from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
 from sdilej_to_prehrajto.ranking import language_tier
+from sdilej_to_prehrajto.sdilej import parse_search_html
 
 from .catalog import load_jsonl
 from .episodes import EpisodeSourceProvider, display_name, episode_match, runtime_acceptable
@@ -115,7 +116,7 @@ class AuditProvider(EpisodeSourceProvider):
             self.search_pages.move_to_end(url)
             return self.search_pages[url]
         response = super()._get(url, session=session)
-        if cacheable:
+        if cacheable and parse_search_html(response.text, query=''):
             self.search_pages[url] = response
             if len(self.search_pages) > 512:
                 self.search_pages.popitem(last=False)

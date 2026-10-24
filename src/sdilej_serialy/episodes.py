@@ -36,6 +36,7 @@ from .numbering import mapped_episode_title
 from .auth import login_with_retry
 from .source_cache import media_key, stable_url, search_url
 from .audio_pipeline import PipelinedLanguageDetector
+from .search_health import SearchHealth
 
 
 # Underscores are filename separators, not letters adjoining an episode code.
@@ -187,6 +188,7 @@ class EpisodeSourceProvider:
         cache=None,
         request_gate=None,
         audio_lock=None,
+        session_factory=None,
     ):
         self.session = session
         self.detector = detector or PipelinedLanguageDetector()
@@ -197,6 +199,8 @@ class EpisodeSourceProvider:
         self.request_gate = request_gate
         self.audio_lock = audio_lock or threading.Lock()
         self.last_outcome = None
+        self.session_factory = session_factory
+        self.search_health = SearchHealth() if session_factory is not None else None
 
     def fork_worker(self):
         """Independent cookies/connections, shared evidence and bounded audio CPU."""
@@ -206,13 +210,17 @@ class EpisodeSourceProvider:
         return type(self)(session, detector=self.detector, cache=self.cache,
                           request_gate=self.request_gate, audio_lock=self.audio_lock,
                           request_gap_seconds=self.request_gap_seconds,
-                          discovery_timeout_seconds=self.discovery_timeout_seconds)
+                          discovery_timeout_seconds=self.discovery_timeout_seconds,
+                          session_factory=self.session_factory)
 
     @classmethod
     def authenticated(cls, email: str, password: str, **kwargs) -> "EpisodeSourceProvider":
-        return cls(login_with_retry(login, email, password), **kwargs)
+        factory = lambda: login_with_retry(login, email, password)
+        return cls(factory(), session_factory=factory, **kwargs)
 
     def _get(self, url: str, *, session: requests.Session | None = None) -> requests.Response:
+        if session is None and self.search_health is not None:
+            self.search_health.wait()
         active_session = session or self.session
         if session is None and self.request_gate is not None:
             self.request_gate.wait()
@@ -269,23 +277,28 @@ class EpisodeSourceProvider:
 
     def _search_page(self, url, query):
         def fetch():
-            response = self._get(url)
-            html = response.text
-            soup = BeautifulSoup(html, 'html.parser')
-            next_page = soup.select_one('a[rel~="next"][href]')
-            next_url = urljoin(url, next_page['href']) if next_page else None
-            if next_url and not search_url(next_url):
-                raise SdilejError('Unexpected search pagination address')
-            fields = ('source_id', 'url', 'title', 'size_bytes', 'duration_sec', 'width', 'height')
-            rows = [{key: getattr(candidate, key) for key in fields}
-                    for candidate in parse_search_html(html, query=query)]
-            trace = getattr(self, 'last_search_evidence', [])
-            trace.append(dict(path=urlsplit(url).path, status=getattr(response, 'status_code', None),
-                response_bytes=len(html.encode('utf-8')), boxes=len(soup.select('div.videobox')),
-                parsed_candidates=len(rows), heading_matches_query=bool(soup.h1
-                    and normalize(soup.h1.get_text(' ', strip=True)) == normalize(query))))
-            self.last_search_evidence = trace[-12:]
-            return dict(candidates=rows, next=next_url)
+            renewed = False
+            while True:
+                response = self._get(url)
+                html = response.text
+                soup = BeautifulSoup(html, 'html.parser')
+                next_page = soup.select_one('a[rel~="next"][href]')
+                next_url = urljoin(url, next_page['href']) if next_page else None
+                if next_url and not search_url(next_url):
+                    raise SdilejError('Unexpected search pagination address')
+                fields = ('source_id', 'url', 'title', 'size_bytes', 'duration_sec', 'width', 'height')
+                rows = [{key: getattr(candidate, key) for key in fields}
+                        for candidate in parse_search_html(html, query=query)]
+                trace = getattr(self, 'last_search_evidence', [])
+                trace.append(dict(path=urlsplit(url).path, status=getattr(response, 'status_code', None),
+                    response_bytes=len(html.encode('utf-8')), boxes=len(soup.select('div.videobox')),
+                    parsed_candidates=len(rows), heading_matches_query=bool(soup.h1
+                        and normalize(soup.h1.get_text(' ', strip=True)) == normalize(query))))
+                self.last_search_evidence = trace[-12:]
+                if not rows and self.search_health is not None and self.search_health.verify_empty(self) and not renewed:
+                    renewed = True
+                    continue
+                return dict(candidates=rows, next=next_url)
         if self.cache is None:
             return fetch()
         # Parsed public search records only: never HTML, cookies or fast links.

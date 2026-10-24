@@ -203,7 +203,9 @@ def test_uncertain_upload_never_switches_source(tmp_path, monkeypatch):
 def test_cached_search_pages_do_not_cache_detail_pages_or_exact_episode_queries():
     visited = []
     session = SimpleNamespace(get=lambda url, **kwargs: (
-        visited.append(url) or SimpleNamespace(text='results', raise_for_status=lambda: None)))
+        visited.append(url) or SimpleNamespace(
+            text='<div class="videobox"><a href="/123/source.mp4">Source</a></div>',
+            raise_for_status=lambda: None)))
     provider = source_audit.AuditProvider(session, detector=object(), request_gap_seconds=0)
     for _ in range(2):
         provider._get('https://sdilej.cz/test/s/-6')

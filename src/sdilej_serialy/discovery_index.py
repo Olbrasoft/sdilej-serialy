@@ -57,6 +57,15 @@ class CandidateIndex:
         return self.hints.get(identity, 3)
 
 
+def series_probe_allowed(row, paused, index=None, records=None, *, urgent=False):
+    """A series-wide miss cannot disprove a different exact dubbed source."""
+    if row['series_id'] not in paused:
+        return True
+    identity = Episode.from_dict(row).identity
+    return (urgent and index is not None and identity in index.dubbed_hints
+            and (records or {}).get(identity, {}).get('consecutive_failures', 0) < 3)
+
+
 def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
                   productive_seasons=None, records=None, available=None, clock=time.monotonic,
                   wait_for_changes=False, urgent=False):
@@ -109,7 +118,7 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
         while lane:
             identity = lane.popleft()
             row = pending.get(identity)
-            if (row is not None and row['series_id'] not in paused
+            if (row is not None and series_probe_allowed(row, paused, index, records, urgent=urgent)
                     and (available is None or available(row))):
                 del pending[identity]
                 return row
