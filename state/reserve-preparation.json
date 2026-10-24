@@ -437606,14 +437606,35 @@
       "retry_after": "2026-10-23T16:12:40.782291+00:00"
     },
     "1923:4:12": {
-      "at": "2026-10-22T16:12:41.722034+00:00",
+      "at": "2026-10-24T09:17:33.561212+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 40.46,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T16:13:22.178316+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 125.74,
+      "search_evidence": [
+        {
+          "path": "/troufalky-s04e12/s/-6",
+          "status": 200,
+          "response_bytes": 189514,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/troufalky-s04e12/s/-6",
+          "status": 200,
+          "response_bytes": 189514,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T09:49:39.304133+00:00"
     },
     "1923:4:1": {
       "at": "2026-10-24T09:17:04.172030+00:00",
@@ -601533,14 +601554,15 @@
       "retry_after": "2026-10-25T05:31:13.195089+00:00"
     },
     "2690:2:22": {
-      "at": "2026-10-24T05:30:16.231885+00:00",
+      "at": "2026-10-24T09:18:00.635688+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 60.53,
+      "reason": "transient_search",
+      "elapsed_seconds": 123.7,
       "search_evidence": [
         {
           "path": "/rodinka-na-kousky-s02e22/s/-6",
@@ -601551,64 +601573,16 @@
           "heading_matches_query": true
         },
         {
-          "path": "/rodinka-na-kousky/s/-6",
-          "status": 200,
-          "response_bytes": 189535,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/life-in-pieces-s02e22/s/-6",
-          "status": 200,
-          "response_bytes": 189619,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/life-in-pieces/s/-6",
-          "status": 200,
-          "response_bytes": 189472,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
           "path": "/rodinka-na-kousky-s02e22/s/-6",
           "status": 200,
           "response_bytes": 189682,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
-        },
-        {
-          "path": "/rodinka-na-kousky/s/-6",
-          "status": 200,
-          "response_bytes": 189535,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/life-in-pieces-s02e22/s/-6",
-          "status": 200,
-          "response_bytes": 189619,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/life-in-pieces/s/-6",
-          "status": 200,
-          "response_bytes": 189472,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-25T05:31:21.516391+00:00"
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T09:50:04.336797+00:00"
     },
     "2209:4:3": {
       "at": "2026-10-24T05:30:47.827604+00:00",
@@ -624774,7 +624748,7 @@
       "retry_after": "2026-10-24T09:32:59.781540+00:00"
     }
   },
-  "updated_at": "2026-10-24T09:19:12.491235+00:00",
+  "updated_at": "2026-10-24T09:20:19.778281+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -635388,12 +635362,12 @@
     },
     "2690": {
       "misses": [
-        "2690:3:1",
         "2690:3:3",
-        "2690:3:4"
+        "2690:3:4",
+        "2690:2:22"
       ],
-      "updated_at": "2026-10-24T06:09:02.839570+00:00",
-      "retry_after": "2026-10-24T10:09:02.839570+00:00"
+      "updated_at": "2026-10-24T09:20:04.336829+00:00",
+      "retry_after": "2026-10-24T09:50:04.336829+00:00"
     },
     "1641": {
       "misses": [
@@ -637696,9 +637670,10 @@
     },
     "1923": {
       "misses": [
-        "1923:4:1"
+        "1923:4:1",
+        "1923:4:12"
       ],
-      "updated_at": "2026-10-24T09:19:08.024361+00:00"
+      "updated_at": "2026-10-24T09:19:39.304162+00:00"
     },
     "1628": {
       "misses": [
@@ -642124,12 +642099,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1344,
+    "last_series": 1122,
     "last_series_order": [
       false,
-      -8.8,
-      -388900,
-      1344
+      -8.7,
+      -136559,
+      1122
     ]
   }
 }
