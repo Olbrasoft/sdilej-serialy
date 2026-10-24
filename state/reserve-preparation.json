@@ -477210,14 +477210,35 @@
       "queue_rank": 29687
     },
     "1143:4:4": {
-      "at": "2026-10-23T11:53:01.969982+00:00",
+      "at": "2026-10-24T09:07:31.457792+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 14.67,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T11:54:00.190595+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 123.83,
+      "search_evidence": [
+        {
+          "path": "/dokonaly-podraz-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 189640,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/dokonaly-podraz-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 189640,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T09:39:35.285943+00:00"
     },
     "1318:4:4": {
       "at": "2026-10-23T11:54:00.189267+00:00",
@@ -513923,43 +513944,20 @@
       "retry_after": "2026-10-24T20:39:50.081414+00:00"
     },
     "1143:4:14": {
-      "at": "2026-10-23T20:38:53.342823+00:00",
+      "at": "2026-10-24T09:07:35.680455+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 59.18,
+      "reason": "transient_search",
+      "elapsed_seconds": 123.69,
       "search_evidence": [
         {
           "path": "/dokonaly-podraz-s04e14/s/-6",
           "status": 200,
-          "response_bytes": 189642,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/dokonaly-podraz/s/-6",
-          "status": 200,
-          "response_bytes": 189495,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/leverage-s04e14/s/-6",
-          "status": 200,
-          "response_bytes": 189495,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/leverage/s/-6",
-          "status": 200,
-          "response_bytes": 189348,
+          "response_bytes": 189640,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -513967,38 +513965,14 @@
         {
           "path": "/dokonaly-podraz-s04e14/s/-6",
           "status": 200,
-          "response_bytes": 189642,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/dokonaly-podraz/s/-6",
-          "status": 200,
-          "response_bytes": 189495,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/leverage-s04e14/s/-6",
-          "status": 200,
-          "response_bytes": 189495,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/leverage/s/-6",
-          "status": 200,
-          "response_bytes": 189348,
+          "response_bytes": 189640,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T20:39:52.518623+00:00"
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T09:39:39.374027+00:00"
     },
     "912:3:32": {
       "at": "2026-10-23T20:39:51.688366+00:00",
@@ -624555,7 +624529,7 @@
       "retry_after": "2026-10-24T09:23:43.702776+00:00"
     }
   },
-  "updated_at": "2026-10-24T09:09:04.323235+00:00",
+  "updated_at": "2026-10-24T09:10:15.815977+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -636136,10 +636110,12 @@
     },
     "1143": {
       "misses": [
-        "1143:5:11",
-        "1143:2:2"
+        "1143:2:2",
+        "1143:4:4",
+        "1143:4:14"
       ],
-      "updated_at": "2026-10-24T08:20:20.220610+00:00"
+      "updated_at": "2026-10-24T09:09:39.374060+00:00",
+      "retry_after": "2026-10-24T09:39:39.374060+00:00"
     },
     "594": {
       "misses": [
