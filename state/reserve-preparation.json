@@ -264350,14 +264350,20 @@
       "queue_rank": 27693
     },
     "1095:4:8": {
-      "at": "2026-10-17T13:52:48.421975+00:00",
+      "at": "2026-10-24T09:37:25.289909+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 42.86,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-18T13:53:31.283374+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.8243565782904625,
+      "observed_source_id": "34329806",
+      "elapsed_seconds": 90.41,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-25T09:38:55.699521+00:00"
     },
     "1349:2:9": {
       "at": "2026-10-17T13:53:29.990956+00:00",
@@ -403227,14 +403233,35 @@
       "retry_after": "2026-10-24T07:27:32.666866+00:00"
     },
     "1980:3:12": {
-      "at": "2026-10-21T23:25:52.518356+00:00",
+      "at": "2026-10-24T09:38:53.813849+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 47.86,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-22T23:26:42.607714+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 70.83,
+      "search_evidence": [
+        {
+          "path": "/fotbalovy-talent-s03e12/s/-6",
+          "status": 200,
+          "response_bytes": 189661,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fotbalovy-talent-s03e12/s/-6",
+          "status": 200,
+          "response_bytes": 189661,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T10:10:04.643400+00:00"
     },
     "1980:3:19": {
       "at": "2026-10-23T09:56:53.391619+00:00",
@@ -625663,9 +625690,87 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-25T09:38:36.889984+00:00"
+    },
+    "2117:6:3": {
+      "at": "2026-10-24T09:38:28.124002+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 73.06,
+      "search_evidence": [
+        {
+          "path": "/doktor-martin-s06e03/s/-6",
+          "status": 200,
+          "response_bytes": 189598,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/doktor-martin-s06e03/s/-6",
+          "status": 200,
+          "response_bytes": 189598,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T09:54:41.180080+00:00"
+    },
+    "1968:2:4": {
+      "at": "2026-10-24T09:38:37.498343+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 74.7,
+      "search_evidence": [
+        {
+          "path": "/lovci-trolu-od-guillerma-del-toro-s02e04/s/-6",
+          "status": 200,
+          "response_bytes": 190018,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/lovci-trolu-od-guillerma-del-toro/s/-6",
+          "status": 200,
+          "response_bytes": 189871,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/trollhunters-tales-of-arcadia-s02e04/s/-6",
+          "status": 200,
+          "response_bytes": 189934,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/lovci-trolu-od-guillerma-del-toro-s02e04/s/-6",
+          "status": 200,
+          "response_bytes": 190018,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T09:54:52.199624+00:00"
     }
   },
-  "updated_at": "2026-10-24T09:38:47.838149+00:00",
+  "updated_at": "2026-10-24T09:40:07.497402+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -631488,9 +631593,10 @@
     },
     "2117": {
       "misses": [
-        "2117:2:1"
+        "2117:2:1",
+        "2117:6:3"
       ],
-      "updated_at": "2026-10-24T08:53:52.223793+00:00"
+      "updated_at": "2026-10-24T09:39:41.180121+00:00"
     },
     "1582": {
       "misses": [
@@ -631511,9 +631617,11 @@
     "1968": {
       "misses": [
         "1968:2:2",
-        "1968:2:3"
+        "1968:2:3",
+        "1968:2:4"
       ],
-      "updated_at": "2026-10-24T07:10:57.322594+00:00"
+      "updated_at": "2026-10-24T09:39:52.199651+00:00",
+      "retry_after": "2026-10-24T10:09:52.199651+00:00"
     },
     "10010": {
       "misses": [
@@ -631918,12 +632026,12 @@
     },
     "1095": {
       "misses": [
-        "1095:4:5",
         "1095:4:6",
-        "1095:4:7"
+        "1095:4:7",
+        "1095:4:8"
       ],
-      "updated_at": "2026-10-24T09:38:45.021446+00:00",
-      "retry_after": "2026-10-24T13:38:45.021446+00:00"
+      "updated_at": "2026-10-24T09:38:55.699549+00:00",
+      "retry_after": "2026-10-24T13:38:55.699549+00:00"
     },
     "1332": {
       "misses": [
@@ -640894,12 +641002,12 @@
     },
     "1980": {
       "misses": [
-        "1980:2:5",
         "1980:2:8",
-        "1980:2:14"
+        "1980:2:14",
+        "1980:3:12"
       ],
-      "updated_at": "2026-10-24T09:37:40.795399+00:00",
-      "retry_after": "2026-10-24T13:37:40.795399+00:00"
+      "updated_at": "2026-10-24T09:40:04.643431+00:00",
+      "retry_after": "2026-10-24T10:10:04.643431+00:00"
     },
     "446": {
       "misses": [
