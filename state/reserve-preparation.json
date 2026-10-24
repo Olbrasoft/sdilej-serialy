@@ -159353,14 +159353,14 @@
       "retry_after": "2026-10-13T16:45:17.946137+00:00"
     },
     "2657:1:1": {
-      "at": "2026-10-23T22:33:39.404499+00:00",
+      "at": "2026-10-24T06:18:15.255785+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 1,
       "method": "discovery",
-      "reason": "transient_search",
-      "elapsed_seconds": 31.67,
+      "reason": "no_matches",
+      "elapsed_seconds": 30.01,
       "search_evidence": [
         {
           "path": "/silk-s01e01/s/-6",
@@ -159395,8 +159395,8 @@
           "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-23T23:04:11.076511+00:00"
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-25T06:18:45.270877+00:00"
     },
     "1410:5:15": {
       "at": "2026-10-17T07:45:35.888207+00:00",
@@ -165443,14 +165443,50 @@
       "retry_after": "2026-10-20T03:56:20.283191+00:00"
     },
     "6126:4:2": {
-      "at": "2026-10-21T20:40:10.630937+00:00",
+      "at": "2026-10-24T06:18:13.577709+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 28.45,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-22T20:40:39.076236+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 25.8,
+      "search_evidence": [
+        {
+          "path": "/cadfael-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 189472,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/cadfael/s/-6",
+          "status": 200,
+          "response_bytes": 189325,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/cadfael-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 189472,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/cadfael/s/-6",
+          "status": 200,
+          "response_bytes": 189325,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-24T07:18:39.373154+00:00"
     },
     "2399:1:1": {
       "at": "2026-10-12T21:23:21.453947+00:00",
@@ -597455,9 +597491,54 @@
       "elapsed_seconds": 49.89,
       "consecutive_failures": 1,
       "retry_after": "2026-10-25T06:17:41.696491+00:00"
+    },
+    "1410:4:23": {
+      "at": "2026-10-24T06:16:52.492330+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.991881787776947,
+      "observed_source_id": "34450898",
+      "elapsed_seconds": 53.27,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T06:18:12.792097+00:00"
+    },
+    "1410:4:24": {
+      "at": "2026-10-24T06:17:01.539310+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9947645664215088,
+      "observed_source_id": "34450890",
+      "elapsed_seconds": 50.26,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T06:18:12.792203+00:00"
+    },
+    "1410:4:25": {
+      "at": "2026-10-24T06:17:23.552497+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.98911452293396,
+      "observed_source_id": "34450887",
+      "elapsed_seconds": 33.8,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T06:18:12.792287+00:00"
     }
   },
-  "updated_at": "2026-10-24T06:17:45.762331+00:00",
+  "updated_at": "2026-10-24T06:18:47.981522+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -605442,9 +605523,12 @@
     },
     "1410": {
       "misses": [
-        "1410:4:22"
+        "1410:4:23",
+        "1410:4:24",
+        "1410:4:25"
       ],
-      "updated_at": "2026-10-24T06:17:41.696524+00:00"
+      "updated_at": "2026-10-24T06:18:12.792298+00:00",
+      "retry_after": "2026-10-24T10:18:12.792298+00:00"
     },
     "2053": {
       "misses": [
@@ -607591,12 +607675,9 @@
     },
     "6126": {
       "misses": [
-        "6126:4:1",
-        "6126:4:3",
         "6126:4:2"
       ],
-      "updated_at": "2026-10-21T20:40:39.076259+00:00",
-      "retry_after": "2026-10-22T00:40:39.076259+00:00"
+      "updated_at": "2026-10-24T06:18:39.373185+00:00"
     },
     "4794": {
       "misses": [
@@ -608643,12 +608724,9 @@
     },
     "2657": {
       "misses": [
-        "2657:1:2",
-        "2657:1:3",
-        "2657:3:3"
+        "2657:1:1"
       ],
-      "updated_at": "2026-10-23T22:36:47.061725+00:00",
-      "retry_after": "2026-10-23T23:06:47.061725+00:00"
+      "updated_at": "2026-10-24T06:18:45.270905+00:00"
     },
     "8023": {
       "misses": [
