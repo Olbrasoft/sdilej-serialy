@@ -1,44 +1,43 @@
 {
   "generation": "pair-2026-09-25",
-  "attempted_this_run": 111,
-  "prepared_this_run": 43,
+  "attempted_this_run": 2,
+  "prepared_this_run": 0,
   "reserve_total": 21805,
   "queue_total": 30240,
-  "updated_at": "2026-10-24T22:21:22.345320+00:00",
+  "updated_at": "2026-10-24T22:32:29.391401+00:00",
   "workers": 4,
-  "elapsed_seconds": 6646.99,
-  "prepared_per_hour": 23.29,
-  "available_this_run": 43,
-  "available_per_hour": 23.29,
+  "elapsed_seconds": 65.34,
+  "prepared_per_hour": 0.0,
+  "available_this_run": 0,
+  "available_per_hour": 0.0,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
     "queue_total": 30240,
-    "ready": 1,
+    "ready": 0,
     "ready_by_account": {
       "a": 0,
-      "b": 1
+      "b": 0
     },
     "categories": {
-      "completed": 30199,
-      "allocated": 28,
-      "failed": 12,
-      "ready": 1
+      "completed": 30202,
+      "allocated": 26,
+      "failed": 12
     },
     "completed_by_account": {
-      "a": 15098,
-      "b": 15101
+      "a": 15099,
+      "b": 15103
     },
-    "uploads_last_24h": 393,
-    "uploads_per_hour_24h": 16.38,
-    "stock_hours_24h": 0.06
+    "uploads_last_24h": 394,
+    "uploads_per_hour_24h": 16.42,
+    "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "buffered",
+    "status": "waiting_for_sources",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 69,
-      "b": 259
+      "a": 666,
+      "b": 711
     },
     "preparation_outcomes_last_hour": {
       "prepared": 31,
@@ -46,12 +45,13 @@
       "inconclusive_audio": 5,
       "transient_search": 1,
       "source_search_unavailable": 4,
+      "no_english_czech_subtitles": 1,
       "no_acceptable_original": 9,
       "transient_original": 3,
-      "no_matches": 14
+      "no_matches": 15
     }
   },
-  "indexed_candidates_in_scan": 1146,
+  "indexed_candidates_in_scan": 820,
   "discovery_progress": {
     "last_series": 3357,
     "last_series_order": [
@@ -62,23 +62,14 @@
     ]
   },
   "cache": {
-    "search_miss": 321,
-    "search_seconds": 17437.2,
-    "search_hit": 148,
-    "media_miss": 359,
-    "media_seconds": 1607.95,
-    "media_hit": 19,
-    "audio_hit": 1,
-    "audio_miss": 103,
-    "audio_seconds": 1852.2
+    "search_miss": 17,
+    "search_hit": 3,
+    "search_seconds": 118.55,
+    "media_hit": 5,
+    "audio_hit": 1
   },
-  "audio_pipeline": {
-    "sample_count": 163,
-    "download_seconds": 1376.52,
-    "inference_wait_seconds": 28.08,
-    "inference_seconds": 446.71
-  },
-  "productive_seasons": 135,
+  "audio_pipeline": {},
+  "productive_seasons": 134,
   "series_paused_this_run": 4,
   "saved_reviewed_this_run": 0,
   "saved_prepared_this_run": 0,
@@ -199,11 +190,7 @@
             "10494:1:2"
           ],
           "foreign_audio_samples": [],
-          "hinted_samples": [
-            "10494:1:4",
-            "10494:1:5",
-            "10494:1:6"
-          ]
+          "hinted_samples": []
         }
       ]
     },
@@ -2540,8 +2527,7 @@
           ],
           "foreign_audio_samples": [],
           "hinted_samples": [
-            "2685:1:4",
-            "2685:1:5"
+            "2685:1:4"
           ]
         },
         {
@@ -2751,8 +2737,8 @@
           "foreign_audio_samples": [],
           "hinted_samples": [
             "4:2:4",
-            "4:2:6",
-            "4:2:7"
+            "4:2:5",
+            "4:2:6"
           ]
         },
         {
@@ -2938,24 +2924,17 @@
     }
   ],
   "search_health": {
-    "status": "paused",
-    "consecutive_failures": 2,
-    "retry_seconds": 591,
-    "resume_after": "2026-10-24T22:31:13.026423+00:00",
+    "status": "healthy",
+    "consecutive_failures": 0,
+    "retry_seconds": 0,
+    "resume_after": null,
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
-        "response_bytes": 189619,
-        "parsed_candidates": 0,
-        "checked_at": "2026-10-24T22:21:11.028632+00:00"
-      },
-      {
-        "path": "/doktor-martin/s/-6",
-        "status": 200,
-        "response_bytes": 189451,
-        "parsed_candidates": 0,
-        "checked_at": "2026-10-24T22:21:19.027733+00:00"
+        "response_bytes": 723720,
+        "parsed_candidates": 411,
+        "checked_at": "2026-10-24T22:31:50.780086+00:00"
       }
     ]
   }
