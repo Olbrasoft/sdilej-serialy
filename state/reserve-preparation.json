@@ -437737,14 +437737,35 @@
       "retry_after": "2026-10-24T09:49:08.024332+00:00"
     },
     "1923:4:14": {
-      "at": "2026-10-22T16:13:14.738549+00:00",
+      "at": "2026-10-24T09:22:09.600968+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 26.09,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T16:13:40.833239+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 123.86,
+      "search_evidence": [
+        {
+          "path": "/troufalky-s04e14/s/-6",
+          "status": 200,
+          "response_bytes": 189514,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/troufalky-s04e14/s/-6",
+          "status": 200,
+          "response_bytes": 189514,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T09:54:13.462883+00:00"
     },
     "1923:5:6": {
       "at": "2026-10-22T16:13:37.425929+00:00",
@@ -624908,9 +624929,40 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-24T09:38:19.045080+00:00"
+    },
+    "1996:5:3": {
+      "at": "2026-10-24T09:21:44.563654+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 123.87,
+      "search_evidence": [
+        {
+          "path": "/mestecko-schitt-s-creek-s05e03/s/-6",
+          "status": 200,
+          "response_bytes": 189808,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mestecko-schitt-s-creek-s05e03/s/-6",
+          "status": 200,
+          "response_bytes": 189808,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T09:38:48.431868+00:00"
     }
   },
-  "updated_at": "2026-10-24T09:23:43.619763+00:00",
+  "updated_at": "2026-10-24T09:24:50.901477+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -629382,9 +629434,11 @@
     "1996": {
       "misses": [
         "1996:5:1",
-        "1996:5:2"
+        "1996:5:2",
+        "1996:5:3"
       ],
-      "updated_at": "2026-10-24T07:07:42.430097+00:00"
+      "updated_at": "2026-10-24T09:23:48.431902+00:00",
+      "retry_after": "2026-10-24T09:53:48.431902+00:00"
     },
     "5212": {
       "misses": [
@@ -637818,9 +637872,11 @@
     "1923": {
       "misses": [
         "1923:4:1",
-        "1923:4:12"
+        "1923:4:12",
+        "1923:4:14"
       ],
-      "updated_at": "2026-10-24T09:19:39.304162+00:00"
+      "updated_at": "2026-10-24T09:24:13.462911+00:00",
+      "retry_after": "2026-10-24T09:54:13.462911+00:00"
     },
     "1628": {
       "misses": [
@@ -642246,12 +642302,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1996,
+    "last_series": 2246,
     "last_series_order": [
       false,
       -8.5,
-      -177227,
-      1996
+      -58531,
+      2246
     ]
   }
 }
