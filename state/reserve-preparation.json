@@ -547314,9 +547314,100 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-25T02:20:07.296069+00:00"
+    },
+    "1143:5:1": {
+      "at": "2026-10-24T02:20:07.302171+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 70.99,
+      "source_id": "22267590",
+      "queue_rank": 29927
+    },
+    "1143:5:2": {
+      "at": "2026-10-24T02:20:08.085198+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 77.26,
+      "source_id": "22267596",
+      "queue_rank": 29928
+    },
+    "1143:5:3": {
+      "at": "2026-10-24T02:20:08.865224+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 121.38,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T03:22:25.401114+00:00"
+    },
+    "1143:5:4": {
+      "at": "2026-10-24T02:20:09.622818+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 80.54,
+      "source_id": "22267601",
+      "queue_rank": 29929
+    },
+    "3183:4:15": {
+      "at": "2026-10-24T02:22:28.005446+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 27.27,
+      "search_evidence": [
+        {
+          "path": "/crazy-ex-girlfriend-s04e15/s/-6",
+          "status": 200,
+          "response_bytes": 217138,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/crazy-ex-girlfriend/s/-6",
+          "status": 200,
+          "response_bytes": 217176,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/crazy-ex-girlfriend-s04e15/s/-6",
+          "status": 200,
+          "response_bytes": 189724,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/crazy-ex-girlfriend/s/-6",
+          "status": 200,
+          "response_bytes": 189577,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-25T02:22:55.278059+00:00"
     }
   },
-  "updated_at": "2026-10-24T02:21:11.194434+00:00",
+  "updated_at": "2026-10-24T02:22:58.119684+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -558911,10 +559002,8 @@
       "updated_at": "2026-10-12T18:33:01.435236+00:00"
     },
     "1143": {
-      "misses": [
-        "1143:4:5"
-      ],
-      "updated_at": "2026-10-24T02:18:17.449088+00:00"
+      "misses": [],
+      "updated_at": "2026-10-24T02:22:25.703252+00:00"
     },
     "594": {
       "misses": [
@@ -559090,9 +559179,11 @@
     "3183": {
       "misses": [
         "3183:4:12",
-        "3183:4:13"
+        "3183:4:13",
+        "3183:4:15"
       ],
-      "updated_at": "2026-10-23T22:45:35.972035+00:00"
+      "updated_at": "2026-10-24T02:22:55.278089+00:00",
+      "retry_after": "2026-10-24T06:22:55.278089+00:00"
     },
     "18": {
       "misses": [
@@ -564811,12 +564902,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1296,
+    "last_series": 3183,
     "last_series_order": [
       false,
       -7.9,
-      -32877,
-      1296
+      -24391,
+      3183
     ]
   }
 }
