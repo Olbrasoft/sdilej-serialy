@@ -21814,10 +21814,35 @@
       "retry_after": "2026-10-25T04:34:24.848929+00:00"
     },
     "1344:5:19": {
-      "at": "2026-10-01T15:03:44.029160+00:00",
+      "at": "2026-10-24T09:19:08.746347+00:00",
       "status": "deferred",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T15:03:44.742053+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 125.72,
+      "search_evidence": [
+        {
+          "path": "/seinfeld-s05e19/s/-6",
+          "status": 200,
+          "response_bytes": 189493,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld-s05e19/s/-6",
+          "status": 200,
+          "response_bytes": 189493,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-24T09:36:14.470795+00:00"
     },
     "1344:5:20": {
       "at": "2026-10-01T15:04:01.579694+00:00",
@@ -229900,14 +229925,35 @@
       "queue_rank": 22851
     },
     "1095:4:4": {
-      "at": "2026-10-15T11:20:47.536616+00:00",
+      "at": "2026-10-24T09:18:50.448921+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 113.08,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-16T11:22:40.612798+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 123.85,
+      "search_evidence": [
+        {
+          "path": "/agenti-s-h-i-e-l-d-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 189703,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/agenti-s-h-i-e-l-d-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 189703,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-24T09:50:54.296717+00:00"
     },
     "1150:1:4": {
       "at": "2026-10-15T11:27:24.672748+00:00",
@@ -624748,7 +624794,7 @@
       "retry_after": "2026-10-24T09:32:59.781540+00:00"
     }
   },
-  "updated_at": "2026-10-24T09:20:19.778281+00:00",
+  "updated_at": "2026-10-24T09:21:27.357422+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -628895,12 +628941,9 @@
     },
     "1344": {
       "misses": [
-        "1344:5:16",
-        "1344:5:17",
-        "1344:5:18"
+        "1344:5:19"
       ],
-      "updated_at": "2026-10-24T04:34:24.848961+00:00",
-      "retry_after": "2026-10-24T08:34:24.848961+00:00"
+      "updated_at": "2026-10-24T09:21:14.470819+00:00"
     },
     "2844": {
       "misses": [
@@ -631014,12 +631057,12 @@
     },
     "1095": {
       "misses": [
-        "1095:6:6",
         "1095:6:10",
-        "1095:6:11"
+        "1095:6:11",
+        "1095:4:4"
       ],
-      "updated_at": "2026-10-24T09:12:52.840733+00:00",
-      "retry_after": "2026-10-24T09:42:52.840733+00:00"
+      "updated_at": "2026-10-24T09:20:54.296746+00:00",
+      "retry_after": "2026-10-24T09:50:54.296746+00:00"
     },
     "1332": {
       "misses": [
@@ -642099,12 +642142,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1122,
+    "last_series": 1709,
     "last_series_order": [
       false,
-      -8.7,
-      -136559,
-      1122
+      -8.6,
+      -36127,
+      1709
     ]
   }
 }
