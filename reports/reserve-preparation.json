@@ -1,12 +1,12 @@
 {
   "generation": "pair-2026-09-25",
-  "attempted_this_run": 2,
+  "attempted_this_run": 3,
   "prepared_this_run": 0,
   "reserve_total": 21546,
   "queue_total": 29981,
-  "updated_at": "2026-10-24T07:30:37.242963+00:00",
+  "updated_at": "2026-10-24T07:31:46.338364+00:00",
   "workers": 4,
-  "elapsed_seconds": 63.59,
+  "elapsed_seconds": 132.69,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -22,8 +22,7 @@
     "categories": {
       "completed": 29944,
       "allocated": 25,
-      "failed": 8,
-      "in_flight": 4
+      "failed": 12
     },
     "completed_by_account": {
       "a": 14970,
@@ -34,19 +33,22 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "waiting_for_sources",
-    "starved_accounts": [],
+    "status": "starved",
+    "starved_accounts": [
+      "b"
+    ],
     "seconds_since_upload": {
-      "a": 1002,
-      "b": 2123
+      "a": 1071,
+      "b": 2192
     },
     "preparation_outcomes_last_hour": {
-      "no_matches": 236,
-      "verified_non_czech": 22,
-      "prepared": 3,
+      "no_matches": 232,
+      "verified_non_czech": 21,
+      "prepared": 2,
       "transient_search": 13,
       "inconclusive_audio": 1,
-      "no_english_czech_subtitles": 1
+      "no_english_czech_subtitles": 1,
+      "transient_original": 1
     }
   },
   "indexed_candidates_in_scan": 1423,
@@ -60,15 +62,22 @@
     ]
   },
   "cache": {
-    "search_miss": 18,
-    "search_hit": 7,
-    "search_seconds": 108.62,
-    "media_hit": 5,
-    "audio_hit": 1
+    "search_miss": 20,
+    "search_hit": 8,
+    "search_seconds": 120.04,
+    "media_hit": 22,
+    "audio_hit": 1,
+    "audio_miss": 2,
+    "audio_seconds": 42.63
   },
-  "audio_pipeline": {},
+  "audio_pipeline": {
+    "sample_count": 5,
+    "download_seconds": 45.32,
+    "inference_wait_seconds": 0.0,
+    "inference_seconds": 7.52
+  },
   "productive_seasons": 147,
-  "series_paused_this_run": 207,
+  "series_paused_this_run": 203,
   "saved_reviewed_this_run": 0,
   "saved_prepared_this_run": 0,
   "repaired_this_run": 0,
