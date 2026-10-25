@@ -475259,14 +475259,20 @@
       "retry_after": "2026-10-24T09:38:18.885543+00:00"
     },
     "1133:2:8": {
-      "at": "2026-10-23T09:37:26.065783+00:00",
+      "at": "2026-10-25T23:39:13.703721+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 59.09,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T09:38:25.158468+00:00"
+      "observed_audio_language": "ja",
+      "observed_language_probability": 0.9521344304084778,
+      "observed_source_id": "33556270",
+      "elapsed_seconds": 126.59,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-26T23:41:20.289866+00:00"
     },
     "1124:3:8": {
       "at": "2026-10-23T09:39:01.291177+00:00",
@@ -654880,9 +654886,80 @@
       "elapsed_seconds": 128.49,
       "source_id": "35326773",
       "queue_rank": 30445
+    },
+    "462:10:19": {
+      "at": "2026-10-25T23:39:17.058260+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 115.0,
+      "source_id": "35326784",
+      "queue_rank": 30446
+    },
+    "1780:2:13": {
+      "at": "2026-10-25T23:41:20.768500+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 19.85,
+      "search_evidence": [
+        {
+          "path": "/code-black-s02e13/s/-6",
+          "status": 200,
+          "response_bytes": 216919,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/code-black/s/-6",
+          "status": 200,
+          "response_bytes": 274729,
+          "boxes": 68,
+          "parsed_candidates": 20,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/code-black-s02e13/s/-6",
+          "status": 200,
+          "response_bytes": 216926,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/code-black/s/-6",
+          "status": 200,
+          "response_bytes": 274686,
+          "boxes": 68,
+          "parsed_candidates": 20,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T23:41:40.621824+00:00"
+    },
+    "462:11:3": {
+      "at": "2026-10-25T23:39:43.764453+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 117.89,
+      "source_id": "35326804",
+      "queue_rank": 30447
     }
   },
-  "updated_at": "2026-10-25T23:40:46.014686+00:00",
+  "updated_at": "2026-10-25T23:42:01.335510+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -663753,7 +663830,7 @@
     },
     "462": {
       "misses": [],
-      "updated_at": "2026-10-25T23:39:16.588105+00:00"
+      "updated_at": "2026-10-25T23:41:41.651549+00:00"
     },
     "69": {
       "misses": [
@@ -664324,12 +664401,9 @@
     },
     "1780": {
       "misses": [
-        "1780:2:11",
-        "1780:1:1",
-        "1780:2:12"
+        "1780:2:13"
       ],
-      "updated_at": "2026-10-24T16:08:41.668860+00:00",
-      "retry_after": "2026-10-24T20:08:41.668860+00:00"
+      "updated_at": "2026-10-25T23:41:40.621850+00:00"
     },
     "3229": {
       "misses": [
@@ -670532,12 +670606,12 @@
     },
     "1133": {
       "misses": [
-        "1133:2:5",
         "1133:2:6",
-        "1133:2:7"
+        "1133:2:7",
+        "1133:2:8"
       ],
-      "updated_at": "2026-10-25T23:40:29.528887+00:00",
-      "retry_after": "2026-10-26T03:40:29.528887+00:00"
+      "updated_at": "2026-10-25T23:41:20.289896+00:00",
+      "retry_after": "2026-10-26T03:41:20.289896+00:00"
     },
     "2079": {
       "misses": [
@@ -672005,12 +672079,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9667,
+    "last_series": 9708,
     "last_series_order": [
       false,
       -8.1,
-      -20481,
-      9667
+      -11033,
+      9708
     ]
   }
 }
