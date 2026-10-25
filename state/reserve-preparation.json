@@ -562463,27 +562463,17 @@
       "retry_after": "2026-10-26T06:21:11.193126+00:00"
     },
     "4:9:21": {
-      "at": "2026-10-25T05:46:22.910091+00:00",
+      "at": "2026-10-25T08:38:42.737739+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "transient_search",
-      "elapsed_seconds": 1810.02,
-      "search_evidence": [
-        {
-          "path": "/paw-patrol-s09e21/s/-6",
-          "status": 200,
-          "response_bytes": 189535,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        }
-      ],
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-25T06:46:32.929878+00:00"
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 71.44,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-26T08:39:54.180975+00:00"
     },
     "4:9:23": {
       "at": "2026-10-25T07:30:11.973101+00:00",
@@ -646220,9 +646210,104 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-26T08:38:56.679266+00:00"
+    },
+    "1589:2:6": {
+      "at": "2026-10-25T08:38:10.120805+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 57.67,
+      "search_evidence": [
+        {
+          "path": "/zivot-beze-slov-s02e06/s/-6",
+          "status": 200,
+          "response_bytes": 217169,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zivot-beze-slov/s/-6",
+          "status": 200,
+          "response_bytes": 216972,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/speechless-s02e06/s/-6",
+          "status": 200,
+          "response_bytes": 216955,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/speechless/s/-6",
+          "status": 200,
+          "response_bytes": 215763,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zivot-beze-slov-s02e06/s/-6",
+          "status": 200,
+          "response_bytes": 217016,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zivot-beze-slov/s/-6",
+          "status": 200,
+          "response_bytes": 217065,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/speechless-s02e06/s/-6",
+          "status": 200,
+          "response_bytes": 216913,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/speechless/s/-6",
+          "status": 200,
+          "response_bytes": 215865,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T08:39:07.794406+00:00"
+    },
+    "1410:4:28": {
+      "at": "2026-10-25T08:38:09.566643+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9958879351615906,
+      "observed_source_id": "34450868",
+      "elapsed_seconds": 59.1,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T08:39:08.665296+00:00"
     }
   },
-  "updated_at": "2026-10-25T08:38:59.480741+00:00",
+  "updated_at": "2026-10-25T08:40:14.278673+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -654149,9 +654234,10 @@
     },
     "1410": {
       "misses": [
-        "1410:1:10"
+        "1410:1:10",
+        "1410:4:28"
       ],
-      "updated_at": "2026-10-25T02:56:52.827798+00:00"
+      "updated_at": "2026-10-25T08:39:08.665312+00:00"
     },
     "2053": {
       "misses": [
@@ -661657,12 +661743,9 @@
     },
     "1589": {
       "misses": [
-        "1589:2:3",
-        "1589:2:4",
-        "1589:2:5"
+        "1589:2:6"
       ],
-      "updated_at": "2026-10-24T06:54:24.740186+00:00",
-      "retry_after": "2026-10-24T10:54:24.740186+00:00"
+      "updated_at": "2026-10-25T08:39:07.794432+00:00"
     },
     "9580": {
       "misses": [
@@ -663440,12 +663523,12 @@
     },
     "4": {
       "misses": [
-        "4:3:26",
         "4:8:46",
-        "4:8:47"
+        "4:8:47",
+        "4:9:21"
       ],
-      "updated_at": "2026-10-25T08:38:56.679291+00:00",
-      "retry_after": "2026-10-25T12:38:56.679291+00:00"
+      "updated_at": "2026-10-25T08:39:54.181000+00:00",
+      "retry_after": "2026-10-25T12:39:54.181000+00:00"
     },
     "1138": {
       "misses": [
