@@ -304337,14 +304337,17 @@
       "retry_after": "2026-10-25T02:32:27.518667+00:00"
     },
     "9667:1:30": {
-      "at": "2026-10-23T10:17:36.419401+00:00",
+      "at": "2026-10-25T01:31:34.044968+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 55.89,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-24T10:18:32.305618+00:00"
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 127.43,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-25T02:33:41.473229+00:00"
     },
     "1276:2:13": {
       "at": "2026-10-21T20:23:10.312690+00:00",
@@ -639607,9 +639610,82 @@
       "elapsed_seconds": 17.28,
       "consecutive_failures": 1,
       "retry_after": "2026-10-26T01:33:06.620017+00:00"
+    },
+    "4:8:12": {
+      "at": "2026-10-25T01:32:38.695396+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 32.37,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T01:33:24.201939+00:00"
+    },
+    "2432:2:15": {
+      "at": "2026-10-25T01:33:24.952052+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 14.5,
+      "search_evidence": [
+        {
+          "path": "/newhart-s02e15/s/-6",
+          "status": 200,
+          "response_bytes": 217311,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/newhart/s/-6",
+          "status": 200,
+          "response_bytes": 347006,
+          "boxes": 110,
+          "parsed_candidates": 95,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/newhart-s02e15/s/-6",
+          "status": 200,
+          "response_bytes": 217245,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/newhart/s/-6",
+          "status": 200,
+          "response_bytes": 346997,
+          "boxes": 110,
+          "parsed_candidates": 95,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T01:33:39.450351+00:00"
+    },
+    "4:8:16": {
+      "at": "2026-10-25T01:33:24.207367+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 21.51,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T01:33:45.713194+00:00"
     }
   },
-  "updated_at": "2026-10-25T01:33:09.375512+00:00",
+  "updated_at": "2026-10-25T01:34:27.483287+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -644681,12 +644757,12 @@
     },
     "9667": {
       "misses": [
-        "9667:1:21",
         "9667:1:26",
-        "9667:1:28"
+        "9667:1:28",
+        "9667:1:30"
       ],
-      "updated_at": "2026-10-25T01:32:27.518696+00:00",
-      "retry_after": "2026-10-25T02:02:27.518696+00:00"
+      "updated_at": "2026-10-25T01:33:41.473256+00:00",
+      "retry_after": "2026-10-25T02:03:41.473256+00:00"
     },
     "7803": {
       "misses": [
@@ -652799,9 +652875,10 @@
     },
     "2432": {
       "misses": [
-        "2432:2:14"
+        "2432:2:14",
+        "2432:2:15"
       ],
-      "updated_at": "2026-10-24T08:37:19.004128+00:00"
+      "updated_at": "2026-10-25T01:33:39.450384+00:00"
     },
     "6884": {
       "misses": [
@@ -656841,12 +656918,12 @@
     },
     "4": {
       "misses": [
-        "4:8:10",
-        "4:8:11",
-        "4:8:14"
+        "4:8:14",
+        "4:8:12",
+        "4:8:16"
       ],
-      "updated_at": "2026-10-25T01:33:06.620049+00:00",
-      "retry_after": "2026-10-25T05:33:06.620049+00:00"
+      "updated_at": "2026-10-25T01:33:45.713220+00:00",
+      "retry_after": "2026-10-25T05:33:45.713220+00:00"
     },
     "1138": {
       "misses": [
@@ -656856,12 +656933,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9952,
+    "last_series": 2023,
     "last_series_order": [
       false,
       -7.8,
-      -10850,
-      9952
+      -9095,
+      2023
     ]
   }
 }
