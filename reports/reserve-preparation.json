@@ -4,12 +4,12 @@
   "prepared_this_run": 1,
   "reserve_total": 21889,
   "queue_total": 30324,
-  "updated_at": "2026-10-25T08:01:38.011999+00:00",
+  "updated_at": "2026-10-25T08:02:49.851423+00:00",
   "workers": 4,
-  "elapsed_seconds": 2165.64,
-  "prepared_per_hour": 1.66,
+  "elapsed_seconds": 2237.48,
+  "prepared_per_hour": 1.61,
   "available_this_run": 1,
-  "available_per_hour": 1.66,
+  "available_per_hour": 1.61,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
@@ -22,24 +22,23 @@
     "categories": {
       "completed": 30287,
       "allocated": 25,
-      "failed": 12
+      "failed": 9,
+      "in_flight": 3
     },
     "completed_by_account": {
       "a": 15141,
       "b": 15146
     },
-    "uploads_last_24h": 333,
-    "uploads_per_hour_24h": 13.88,
+    "uploads_last_24h": 332,
+    "uploads_per_hour_24h": 13.83,
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "starved",
-    "starved_accounts": [
-      "a"
-    ],
+    "status": "waiting_for_sources",
+    "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 5695,
-      "b": 1684
+      "a": 5767,
+      "b": 1756
     },
     "preparation_outcomes_last_hour": {
       "transient_original": 3,
@@ -2933,24 +2932,24 @@
     }
   ],
   "search_health": {
-    "status": "paused",
+    "status": "probe_due",
     "consecutive_failures": 3,
-    "retry_seconds": 47,
-    "resume_after": "2026-10-25T08:02:24.654356+00:00",
+    "retry_seconds": 0,
+    "resume_after": null,
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
         "response_bytes": 189619,
         "parsed_candidates": 0,
-        "checked_at": "2026-10-25T07:37:25.913289+00:00"
+        "checked_at": "2026-10-25T08:02:49.295105+00:00"
       },
       {
         "path": "/doktor-martin/s/-6",
         "status": 200,
         "response_bytes": 189451,
         "parsed_candidates": 0,
-        "checked_at": "2026-10-25T07:47:24.654300+00:00"
+        "checked_at": "2026-10-25T08:02:47.170235+00:00"
       }
     ]
   }
