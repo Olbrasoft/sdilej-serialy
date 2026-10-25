@@ -1,12 +1,12 @@
 {
   "generation": "pair-2026-09-25",
-  "attempted_this_run": 3,
+  "attempted_this_run": 4,
   "prepared_this_run": 0,
   "reserve_total": 21809,
   "queue_total": 30244,
-  "updated_at": "2026-10-25T00:45:30.970518+00:00",
+  "updated_at": "2026-10-25T00:46:44.138133+00:00",
   "workers": 4,
-  "elapsed_seconds": 143.51,
+  "elapsed_seconds": 216.68,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -22,8 +22,7 @@
     "categories": {
       "completed": 30207,
       "allocated": 25,
-      "failed": 9,
-      "in_flight": 3
+      "failed": 12
     },
     "completed_by_account": {
       "a": 15101,
@@ -34,18 +33,21 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "waiting_for_sources",
-    "starved_accounts": [],
+    "status": "starved",
+    "starved_accounts": [
+      "a",
+      "b"
+    ],
     "seconds_since_upload": {
-      "a": 3705,
-      "b": 3620
+      "a": 3778,
+      "b": 3693
     },
     "preparation_outcomes_last_hour": {
       "transient_original": 1,
       "transient_search": 2,
       "no_english_czech_subtitles": 1,
-      "source_search_unavailable": 4,
-      "no_matches": 1
+      "no_matches": 2,
+      "source_search_unavailable": 2
     }
   },
   "indexed_candidates_in_scan": 638,
@@ -59,15 +61,21 @@
     ]
   },
   "cache": {
-    "search_miss": 35,
+    "search_miss": 39,
     "search_hit": 1,
-    "search_seconds": 257.24,
-    "media_hit": 11,
+    "search_seconds": 300.95,
+    "media_hit": 19,
     "audio_hit": 1,
-    "media_miss": 3,
-    "media_seconds": 10.6
+    "media_miss": 9,
+    "media_seconds": 31.23,
+    "audio_miss": 1
   },
-  "audio_pipeline": {},
+  "audio_pipeline": {
+    "sample_count": 1,
+    "download_seconds": 9.43,
+    "inference_wait_seconds": 0.0,
+    "inference_seconds": 3.83
+  },
   "productive_seasons": 131,
   "series_paused_this_run": 2,
   "saved_reviewed_this_run": 0,
@@ -118,8 +126,9 @@
         {
           "season": 1,
           "episodes": 23,
-          "status": "sampling",
+          "status": "samples_checked_no_verified_dub",
           "checked_samples": [
+            "893:1:1",
             "893:1:2",
             "893:1:3"
           ],
@@ -2925,9 +2934,9 @@
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
-        "response_bytes": 723729,
+        "response_bytes": 723765,
         "parsed_candidates": 411,
-        "checked_at": "2026-10-25T00:45:27.493774+00:00"
+        "checked_at": "2026-10-25T00:46:03.523688+00:00"
       }
     ]
   }
