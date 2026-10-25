@@ -21869,10 +21869,51 @@
       "retry_after": "2026-10-24T09:36:14.470795+00:00"
     },
     "1344:5:20": {
-      "at": "2026-10-01T15:04:01.579694+00:00",
+      "at": "2026-10-25T14:19:25.709528+00:00",
       "status": "deferred",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T15:04:02.366548+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 19.17,
+      "search_evidence": [
+        {
+          "path": "/seinfeld-s05e20/s/-6",
+          "status": 200,
+          "response_bytes": 216844,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld/s/-6",
+          "status": 200,
+          "response_bytes": 261393,
+          "boxes": 29,
+          "parsed_candidates": 29,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld-s05e20/s/-6",
+          "status": 200,
+          "response_bytes": 217014,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld/s/-6",
+          "status": 200,
+          "response_bytes": 261251,
+          "boxes": 29,
+          "parsed_candidates": 29,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T14:19:54.689032+00:00"
     },
     "1344:5:21": {
       "at": "2026-10-01T15:04:20.176401+00:00",
@@ -112297,12 +112338,51 @@
       "retry_after": "2026-10-11T12:48:04.601536+00:00"
     },
     "2844:16:5": {
-      "at": "2026-10-08T15:22:45.510931+00:00",
+      "at": "2026-10-25T14:19:55.259570+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-09T15:23:00.772892+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 20.66,
+      "search_evidence": [
+        {
+          "path": "/it-s-always-sunny-in-philadelphia-s16e05/s/-6",
+          "status": 200,
+          "response_bytes": 217519,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/it-s-always-sunny-in-philadelphia/s/-6",
+          "status": 200,
+          "response_bytes": 217588,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/it-s-always-sunny-in-philadelphia-s16e05/s/-6",
+          "status": 200,
+          "response_bytes": 217396,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/it-s-always-sunny-in-philadelphia/s/-6",
+          "status": 200,
+          "response_bytes": 217627,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T14:20:15.922358+00:00"
     },
     "2844:16:6": {
       "at": "2026-10-08T15:23:07.907499+00:00",
@@ -648079,9 +648159,21 @@
       "elapsed_seconds": 107.37,
       "source_id": "34613248",
       "queue_rank": 30339
+    },
+    "1787:8:5": {
+      "at": "2026-10-25T14:17:27.488559+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 146.52,
+      "source_id": "34611725",
+      "queue_rank": 30340
     }
   },
-  "updated_at": "2026-10-25T14:19:44.565474+00:00",
+  "updated_at": "2026-10-25T14:20:57.442571+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -652186,15 +652278,17 @@
     },
     "1344": {
       "misses": [
-        "1344:5:19"
+        "1344:5:19",
+        "1344:5:20"
       ],
-      "updated_at": "2026-10-24T09:21:14.470819+00:00"
+      "updated_at": "2026-10-25T14:19:54.689051+00:00"
     },
     "2844": {
       "misses": [
-        "2844:16:4"
+        "2844:16:4",
+        "2844:16:5"
       ],
-      "updated_at": "2026-10-24T09:21:43.859327+00:00"
+      "updated_at": "2026-10-25T14:20:15.922387+00:00"
     },
     "1643": {
       "misses": [
@@ -664288,7 +664382,7 @@
     },
     "1787": {
       "misses": [],
-      "updated_at": "2026-10-25T14:19:25.147801+00:00"
+      "updated_at": "2026-10-25T14:19:54.688940+00:00"
     },
     "899": {
       "misses": [
@@ -665230,12 +665324,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1344,
+    "last_series": 2844,
     "last_series_order": [
       false,
       -8.8,
-      -388900,
-      1344
+      -285339,
+      2844
     ]
   }
 }
