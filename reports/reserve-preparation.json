@@ -1,15 +1,15 @@
 {
   "generation": "pair-2026-09-25",
-  "attempted_this_run": 98,
+  "attempted_this_run": 99,
   "prepared_this_run": 15,
   "reserve_total": 22147,
   "queue_total": 30582,
-  "updated_at": "2026-10-26T22:09:19.345193+00:00",
+  "updated_at": "2026-10-26T22:10:26.871385+00:00",
   "workers": 4,
-  "elapsed_seconds": 7333.53,
-  "prepared_per_hour": 7.36,
+  "elapsed_seconds": 7401.05,
+  "prepared_per_hour": 7.3,
   "available_this_run": 15,
-  "available_per_hour": 7.36,
+  "available_per_hour": 7.3,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
@@ -33,17 +33,19 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "waiting_for_sources",
-    "starved_accounts": [],
+    "status": "starved",
+    "starved_accounts": [
+      "b"
+    ],
     "seconds_since_upload": {
-      "a": 1722,
-      "b": 1769
+      "a": 1790,
+      "b": 1837
     },
     "preparation_outcomes_last_hour": {
+      "source_search_unavailable": 4,
       "verified_non_czech": 15,
       "prepared": 2,
       "no_matches": 22,
-      "source_search_unavailable": 3,
       "transient_search": 4
     }
   },
@@ -59,7 +61,7 @@
   },
   "cache": {
     "search_miss": 380,
-    "search_seconds": 18183.19,
+    "search_seconds": 19974.95,
     "search_hit": 98,
     "media_miss": 158,
     "media_seconds": 724.88,
@@ -2908,24 +2910,24 @@
     }
   ],
   "search_health": {
-    "status": "probe_due",
-    "consecutive_failures": 3,
-    "retry_seconds": 0,
-    "resume_after": null,
+    "status": "paused",
+    "consecutive_failures": 4,
+    "retry_seconds": 840,
+    "resume_after": "2026-10-26T22:24:26.383102+00:00",
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
         "response_bytes": 189619,
         "parsed_candidates": 0,
-        "checked_at": "2026-10-26T22:09:18.918373+00:00"
+        "checked_at": "2026-10-26T22:09:30.499272+00:00"
       },
       {
         "path": "/doktor-martin/s/-6",
         "status": 200,
-        "response_bytes": 189453,
+        "response_bytes": 189451,
         "parsed_candidates": 0,
-        "checked_at": "2026-10-26T21:54:16.036678+00:00"
+        "checked_at": "2026-10-26T22:09:28.490272+00:00"
       }
     ]
   }
