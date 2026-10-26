@@ -309728,14 +309728,16 @@
       "retry_after": "2026-10-20T15:25:51.237845+00:00"
     },
     "1787:3:24": {
-      "at": "2026-10-19T15:25:24.137314+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-10-26T05:17:28.642745+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 32.75,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-20T15:25:56.889270+00:00"
+      "elapsed_seconds": 85.59,
+      "source_id": "34597336",
+      "queue_rank": 30481
     },
     "1132:2:1": {
       "at": "2026-10-19T15:25:39.036494+00:00",
@@ -638327,7 +638329,7 @@
       "retry_after": "2026-10-26T01:17:17.119993+00:00"
     },
     "4:6:7": {
-      "at": "2026-10-25T01:16:04.589782+00:00",
+      "at": "2026-10-26T05:16:52.496235+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -638335,12 +638337,12 @@
       "audio_sampling_revision": 1,
       "method": "discovery",
       "reason": "no_acceptable_original",
-      "elapsed_seconds": 79.91,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-26T01:17:24.499196+00:00"
+      "elapsed_seconds": 95.8,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-27T05:18:28.298792+00:00"
     },
     "4:6:8": {
-      "at": "2026-10-25T01:16:09.745215+00:00",
+      "at": "2026-10-26T05:17:26.425178+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -638348,9 +638350,9 @@
       "audio_sampling_revision": 1,
       "method": "discovery",
       "reason": "no_acceptable_original",
-      "elapsed_seconds": 87.15,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-26T01:17:36.900045+00:00"
+      "elapsed_seconds": 82.38,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-27T05:18:48.807320+00:00"
     },
     "4:6:12": {
       "at": "2026-10-25T01:18:17.117716+00:00",
@@ -658107,9 +658109,88 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-27T05:17:43.841848+00:00"
+    },
+    "3357:3:6": {
+      "at": "2026-10-26T05:18:29.052733+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 20.59,
+      "search_evidence": [
+        {
+          "path": "/do-neznama-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 218428,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/do-neznama/s/-6",
+          "status": 200,
+          "response_bytes": 503042,
+          "boxes": 248,
+          "parsed_candidates": 228,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/south-of-nowhere-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 217037,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/south-of-nowhere/s/-6",
+          "status": 200,
+          "response_bytes": 216884,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/do-neznama-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 218362,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/do-neznama/s/-6",
+          "status": 200,
+          "response_bytes": 502949,
+          "boxes": 248,
+          "parsed_candidates": 228,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/south-of-nowhere-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 217088,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/south-of-nowhere/s/-6",
+          "status": 200,
+          "response_bytes": 216943,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-27T05:18:49.643602+00:00"
     }
   },
-  "updated_at": "2026-10-26T05:17:54.394588+00:00",
+  "updated_at": "2026-10-26T05:19:03.968656+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -670340,9 +670421,11 @@
     "3357": {
       "misses": [
         "3357:3:4",
-        "3357:3:5"
+        "3357:3:5",
+        "3357:3:6"
       ],
-      "updated_at": "2026-10-24T22:15:19.469589+00:00"
+      "updated_at": "2026-10-26T05:18:49.643634+00:00",
+      "retry_after": "2026-10-26T09:18:49.643634+00:00"
     },
     "6860": {
       "misses": [
@@ -674340,10 +674423,8 @@
       "updated_at": "2026-10-25T17:25:43.718696+00:00"
     },
     "1787": {
-      "misses": [
-        "1787:3:23"
-      ],
-      "updated_at": "2026-10-26T05:16:26.603657+00:00"
+      "misses": [],
+      "updated_at": "2026-10-26T05:18:54.231326+00:00"
     },
     "899": {
       "misses": [
@@ -675272,12 +675353,12 @@
     },
     "4": {
       "misses": [
-        "4:4:25",
-        "4:6:6",
-        "4:6:5"
+        "4:6:5",
+        "4:6:7",
+        "4:6:8"
       ],
-      "updated_at": "2026-10-26T05:15:56.018529+00:00",
-      "retry_after": "2026-10-26T05:45:56.018529+00:00"
+      "updated_at": "2026-10-26T05:18:48.807346+00:00",
+      "retry_after": "2026-10-26T09:18:48.807346+00:00"
     },
     "1138": {
       "misses": [
@@ -675287,12 +675368,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2165,
+    "last_series": 1117,
     "last_series_order": [
       false,
-      -7.9,
-      -5994,
-      2165
+      -7.8,
+      -266199,
+      1117
     ]
   }
 }
