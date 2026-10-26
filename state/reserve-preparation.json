@@ -345149,14 +345149,16 @@
       "retry_after": "2026-10-21T13:46:13.755628+00:00"
     },
     "1787:5:20": {
-      "at": "2026-10-22T07:55:20.170543+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-10-26T05:42:27.591700+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 15.16,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-23T07:55:35.328098+00:00"
+      "elapsed_seconds": 105.67,
+      "source_id": "34605887",
+      "queue_rank": 30512
     },
     "1787:5:21": {
       "at": "2026-10-26T05:42:28.456090+00:00",
@@ -659732,9 +659734,88 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-27T05:42:26.540400+00:00"
+    },
+    "1888:4:3": {
+      "at": "2026-10-26T05:43:14.148566+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "es",
+      "observed_language_probability": 0.9770960211753845,
+      "observed_source_id": "30936532",
+      "elapsed_seconds": 28.27,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-27T05:43:42.420559+00:00"
+    },
+    "45:4:4": {
+      "at": "2026-10-26T05:43:20.484848+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9679797291755676,
+      "observed_source_id": "6113686",
+      "elapsed_seconds": 25.53,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-27T05:43:46.019697+00:00"
+    },
+    "531:3:9": {
+      "at": "2026-10-26T05:43:46.920693+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 37.78,
+      "search_evidence": [
+        {
+          "path": "/buh-zehnej-tomuto-nadhernemu-svetu-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 217401,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/buh-zehnej-tomuto-nadhernemu-svetu/s/-6",
+          "status": 200,
+          "response_bytes": 217320,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/buh-zehnej-tomuto-nadhernemu-svetu-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 217526,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/buh-zehnej-tomuto-nadhernemu-svetu/s/-6",
+          "status": 200,
+          "response_bytes": 217299,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-27T05:44:24.696124+00:00"
     }
   },
-  "updated_at": "2026-10-26T05:43:30.504845+00:00",
+  "updated_at": "2026-10-26T05:44:45.937561+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -672540,12 +672621,12 @@
     },
     "1888": {
       "misses": [
-        "1888:3:3",
         "1888:3:4",
-        "1888:3:5"
+        "1888:3:5",
+        "1888:4:3"
       ],
-      "updated_at": "2026-10-26T05:35:31.848883+00:00",
-      "retry_after": "2026-10-26T09:35:31.848883+00:00"
+      "updated_at": "2026-10-26T05:43:42.420592+00:00",
+      "retry_after": "2026-10-26T09:43:42.420592+00:00"
     },
     "9699": {
       "misses": [
@@ -672592,12 +672673,12 @@
     },
     "45": {
       "misses": [
-        "45:3:9",
         "45:3:10",
-        "45:3:11"
+        "45:3:11",
+        "45:4:4"
       ],
-      "updated_at": "2026-10-26T05:38:17.342950+00:00",
-      "retry_after": "2026-10-26T09:38:17.342950+00:00"
+      "updated_at": "2026-10-26T05:43:46.019727+00:00",
+      "retry_after": "2026-10-26T09:43:46.019727+00:00"
     },
     "7": {
       "misses": [
@@ -672713,9 +672794,11 @@
     "531": {
       "misses": [
         "531:3:7",
-        "531:3:8"
+        "531:3:8",
+        "531:3:9"
       ],
-      "updated_at": "2026-10-25T01:23:15.624497+00:00"
+      "updated_at": "2026-10-26T05:44:24.696157+00:00",
+      "retry_after": "2026-10-26T09:44:24.696157+00:00"
     },
     "3093": {
       "misses": [],
@@ -676070,7 +676153,7 @@
     },
     "1787": {
       "misses": [],
-      "updated_at": "2026-10-26T05:43:19.666165+00:00"
+      "updated_at": "2026-10-26T05:44:13.447938+00:00"
     },
     "899": {
       "misses": [
@@ -677014,12 +677097,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1923,
+    "last_series": 1919,
     "last_series_order": [
       false,
       -7.8,
-      -26369,
-      1923
+      -19036,
+      1919
     ]
   }
 }
