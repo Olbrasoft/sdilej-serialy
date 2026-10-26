@@ -442545,14 +442545,27 @@
       "queue_rank": 29409
     },
     "1179:1:18": {
-      "at": "2026-10-22T17:37:04.211581+00:00",
+      "at": "2026-10-26T14:01:53.838033+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 27.43,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T17:37:31.644318+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 900.59,
+      "search_evidence": [
+        {
+          "path": "/fire-force-s01e18/s/-6",
+          "status": 200,
+          "response_bytes": 218507,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-26T14:46:54.425234+00:00"
     },
     "1089:7:18": {
       "at": "2026-10-22T17:37:03.213940+00:00",
@@ -639158,17 +639171,17 @@
       "retry_after": "2026-10-27T13:15:35.473279+00:00"
     },
     "4:8:9": {
-      "at": "2026-10-25T01:29:57.160372+00:00",
+      "at": "2026-10-26T13:46:28.936853+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "no_acceptable_original",
-      "elapsed_seconds": 31.48,
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 1830.47,
       "consecutive_failures": 1,
-      "retry_after": "2026-10-26T01:30:28.637965+00:00"
+      "retry_after": "2026-10-26T14:31:59.408683+00:00"
     },
     "4:8:10": {
       "at": "2026-10-25T01:29:58.014371+00:00",
@@ -664987,9 +665000,32 @@
       "elapsed_seconds": 929.27,
       "consecutive_failures": 0,
       "retry_after": "2026-10-26T14:16:53.358885+00:00"
+    },
+    "105:2:26": {
+      "at": "2026-10-26T14:01:57.718759+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 907.86,
+      "search_evidence": [
+        {
+          "path": "/alfred-hitchcock-uvadi-s02e26/s/-6",
+          "status": 200,
+          "response_bytes": 217195,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T14:32:05.582305+00:00"
     }
   },
-  "updated_at": "2026-10-26T14:16:02.716395+00:00",
+  "updated_at": "2026-10-26T14:17:09.148946+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -669673,9 +669709,11 @@
     "105": {
       "misses": [
         "105:2:24",
-        "105:2:25"
+        "105:2:25",
+        "105:2:26"
       ],
-      "updated_at": "2026-10-25T16:44:32.206014+00:00"
+      "updated_at": "2026-10-26T14:17:05.582327+00:00",
+      "retry_after": "2026-10-26T14:47:05.582327+00:00"
     },
     "5596": {
       "misses": [
@@ -680133,12 +680171,12 @@
     },
     "1179": {
       "misses": [
-        "1179:1:13",
         "1179:1:14",
-        "1179:1:16"
+        "1179:1:16",
+        "1179:1:18"
       ],
-      "updated_at": "2026-10-26T13:22:38.098023+00:00",
-      "retry_after": "2026-10-26T17:22:38.098023+00:00"
+      "updated_at": "2026-10-26T14:16:54.425265+00:00",
+      "retry_after": "2026-10-26T14:46:54.425265+00:00"
     },
     "2245": {
       "misses": [
@@ -682407,12 +682445,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2108,
+    "last_series": 2820,
     "last_series_order": [
       false,
       -8.5,
-      -18777,
-      2108
+      -7419,
+      2820
     ]
   }
 }
