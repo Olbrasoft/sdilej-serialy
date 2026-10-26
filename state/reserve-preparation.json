@@ -574943,19 +574943,27 @@
       "retry_after": "2026-10-25T03:14:34.664336+00:00"
     },
     "1179:2:11": {
-      "at": "2026-10-24T03:13:42.407541+00:00",
+      "at": "2026-10-26T16:57:46.171658+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "observed_audio_language": "ja",
-      "observed_language_probability": 0.9864146113395691,
-      "observed_source_id": "35125119",
-      "elapsed_seconds": 65.27,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-25T03:14:53.442811+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 900.21,
+      "search_evidence": [
+        {
+          "path": "/fire-force-s02e11/s/-6",
+          "status": 200,
+          "response_bytes": 218468,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-26T17:42:46.380646+00:00"
     },
     "1908:3:10": {
       "at": "2026-10-24T03:14:35.404901+00:00",
@@ -667519,9 +667527,55 @@
       "elapsed_seconds": 2763.57,
       "consecutive_failures": 0,
       "retry_after": "2026-10-26T17:12:45.394062+00:00"
+    },
+    "1055:9:9": {
+      "at": "2026-10-26T16:57:48.138300+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 902.25,
+      "search_evidence": [
+        {
+          "path": "/cerna-listina-s09e09/s/-6",
+          "status": 200,
+          "response_bytes": 220092,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T17:27:50.388788+00:00"
+    },
+    "1055:9:19": {
+      "at": "2026-10-26T16:57:50.165817+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 902.05,
+      "search_evidence": [
+        {
+          "path": "/cerna-listina-s09e19/s/-6",
+          "status": 200,
+          "response_bytes": 219823,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T17:27:52.216310+00:00"
     }
   },
-  "updated_at": "2026-10-26T17:12:20.523530+00:00",
+  "updated_at": "2026-10-26T17:13:29.823566+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -679004,12 +679058,10 @@
     },
     "1055": {
       "misses": [
-        "1055:8:17",
-        "1055:8:22",
-        "1055:8:21"
+        "1055:9:9",
+        "1055:9:19"
       ],
-      "updated_at": "2026-10-26T12:41:52.308690+00:00",
-      "retry_after": "2026-10-26T16:41:52.308690+00:00"
+      "updated_at": "2026-10-26T17:12:52.216380+00:00"
     },
     "257": {
       "misses": [
@@ -682683,12 +682735,12 @@
     },
     "1179": {
       "misses": [
-        "1179:2:5",
         "1179:2:6",
-        "1179:2:7"
+        "1179:2:7",
+        "1179:2:11"
       ],
-      "updated_at": "2026-10-26T15:56:29.891638+00:00",
-      "retry_after": "2026-10-26T19:56:29.891638+00:00"
+      "updated_at": "2026-10-26T17:12:46.380678+00:00",
+      "retry_after": "2026-10-26T17:42:46.380678+00:00"
     },
     "2245": {
       "misses": [
@@ -684957,12 +685009,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 566,
+    "last_series": 1375,
     "last_series_order": [
       false,
       -8.2,
-      -177510,
-      566
+      -163041,
+      1375
     ]
   }
 }
