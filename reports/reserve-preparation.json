@@ -1,12 +1,12 @@
 {
   "generation": "pair-2026-09-25",
-  "attempted_this_run": 49,
+  "attempted_this_run": 50,
   "prepared_this_run": 3,
   "reserve_total": 22119,
   "queue_total": 30554,
-  "updated_at": "2026-10-26T15:34:14.725029+00:00",
+  "updated_at": "2026-10-26T15:34:30.193105+00:00",
   "workers": 4,
-  "elapsed_seconds": 8692.24,
+  "elapsed_seconds": 8707.7,
   "prepared_per_hour": 1.24,
   "available_this_run": 3,
   "available_per_hour": 1.24,
@@ -22,7 +22,8 @@
     "categories": {
       "completed": 30517,
       "allocated": 25,
-      "failed": 12
+      "failed": 10,
+      "in_flight": 2
     },
     "completed_by_account": {
       "a": 15256,
@@ -33,16 +34,14 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "starved",
-    "starved_accounts": [
-      "a",
-      "b"
-    ],
+    "status": "waiting_for_sources",
+    "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 8218,
-      "b": 8166
+      "a": 8233,
+      "b": 8182
     },
     "preparation_outcomes_last_hour": {
+      "transient_search": 1,
       "source_search_unavailable": 2
     }
   },
@@ -58,7 +57,7 @@
   },
   "cache": {
     "search_miss": 148,
-    "search_seconds": 24993.32,
+    "search_seconds": 27707.34,
     "search_hit": 25,
     "media_hit": 15,
     "media_miss": 30,
@@ -2916,10 +2915,10 @@
     }
   ],
   "search_health": {
-    "status": "paused",
-    "consecutive_failures": 5,
-    "retry_seconds": 10,
-    "resume_after": "2026-10-26T15:34:24.527887+00:00",
+    "status": "healthy",
+    "consecutive_failures": 0,
+    "retry_seconds": 0,
+    "resume_after": null,
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
@@ -2931,9 +2930,9 @@
       {
         "path": "/doktor-martin/s/-6",
         "status": 200,
-        "response_bytes": 189453,
-        "parsed_candidates": 0,
-        "checked_at": "2026-10-26T15:19:24.527823+00:00"
+        "response_bytes": 648404,
+        "parsed_candidates": 358,
+        "checked_at": "2026-10-26T15:34:27.151479+00:00"
       }
     ]
   }
