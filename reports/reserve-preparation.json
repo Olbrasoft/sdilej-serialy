@@ -1,15 +1,15 @@
 {
   "generation": "pair-2026-09-25",
-  "attempted_this_run": 42,
+  "attempted_this_run": 44,
   "prepared_this_run": 8,
   "reserve_total": 22128,
   "queue_total": 30563,
-  "updated_at": "2026-10-26T18:45:26.898159+00:00",
+  "updated_at": "2026-10-26T18:46:35.222738+00:00",
   "workers": 4,
-  "elapsed_seconds": 3733.64,
-  "prepared_per_hour": 7.71,
+  "elapsed_seconds": 3801.96,
+  "prepared_per_hour": 7.58,
   "available_this_run": 8,
-  "available_per_hour": 7.71,
+  "available_per_hour": 7.58,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
@@ -33,18 +33,21 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "waiting_for_sources",
-    "starved_accounts": [],
+    "status": "starved",
+    "starved_accounts": [
+      "a",
+      "b"
+    ],
     "seconds_since_upload": {
-      "a": 1733,
-      "b": 1756
+      "a": 1801,
+      "b": 1825
     },
     "preparation_outcomes_last_hour": {
-      "no_matches": 16,
-      "verified_non_czech": 7,
-      "source_search_unavailable": 2,
+      "source_search_unavailable": 4,
+      "verified_non_czech": 6,
       "no_acceptable_original": 2,
-      "prepared": 8
+      "prepared": 8,
+      "no_matches": 15
     }
   },
   "indexed_candidates_in_scan": 1510,
@@ -58,8 +61,8 @@
     ]
   },
   "cache": {
-    "search_miss": 187,
-    "search_seconds": 3861.24,
+    "search_miss": 189,
+    "search_seconds": 8994.44,
     "search_hit": 29,
     "media_miss": 60,
     "media_seconds": 270.6,
@@ -2919,24 +2922,24 @@
     }
   ],
   "search_health": {
-    "status": "probe_due",
-    "consecutive_failures": 4,
-    "retry_seconds": 0,
-    "resume_after": null,
+    "status": "paused",
+    "consecutive_failures": 5,
+    "retry_seconds": 834,
+    "resume_after": "2026-10-26T19:00:29.345700+00:00",
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
         "response_bytes": 189621,
         "parsed_candidates": 0,
-        "checked_at": "2026-10-26T18:30:32.809390+00:00"
+        "checked_at": "2026-10-26T18:45:35.179628+00:00"
       },
       {
         "path": "/doktor-martin/s/-6",
         "status": 200,
         "response_bytes": 189453,
         "parsed_candidates": 0,
-        "checked_at": "2026-10-26T18:30:26.843502+00:00"
+        "checked_at": "2026-10-26T18:45:33.266165+00:00"
       }
     ]
   }
