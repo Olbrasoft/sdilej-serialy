@@ -591892,19 +591892,35 @@
       "retry_after": "2026-10-25T04:45:48.817384+00:00"
     },
     "1133:2:20": {
-      "at": "2026-10-24T04:44:53.819773+00:00",
+      "at": "2026-10-26T00:19:29.981766+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "observed_audio_language": "ja",
-      "observed_language_probability": 0.9669206142425537,
-      "observed_source_id": "35137402",
-      "elapsed_seconds": 56.03,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-25T04:45:49.854582+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 2720.98,
+      "search_evidence": [
+        {
+          "path": "/sword-art-online-s02e20/s/-6",
+          "status": 200,
+          "response_bytes": 189661,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sword-art-online-s02e20/s/-6",
+          "status": 200,
+          "response_bytes": 218544,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-26T01:34:50.957755+00:00"
     },
     "1133:2:21": {
       "at": "2026-10-24T04:46:16.145381+00:00",
@@ -655658,9 +655674,94 @@
       "elapsed_seconds": 1854.16,
       "consecutive_failures": 0,
       "retry_after": "2026-10-26T00:49:25.305697+00:00"
+    },
+    "193:5:1": {
+      "at": "2026-10-26T00:49:44.330934+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 905.05,
+      "search_evidence": [
+        {
+          "path": "/for-all-mankind-s05e01/s/-6",
+          "status": 200,
+          "response_bytes": 247792,
+          "boxes": 25,
+          "parsed_candidates": 25,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T01:19:49.380304+00:00"
+    },
+    "462:11:23": {
+      "at": "2026-10-26T00:34:25.833317+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 1829.4,
+      "search_evidence": [
+        {
+          "path": "/zenaty-se-zavazky-s11e23/s/-6",
+          "status": 200,
+          "response_bytes": 189682,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zenaty-se-zavazky-s11e23/s/-6",
+          "status": 200,
+          "response_bytes": 225172,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T01:19:55.230360+00:00"
+    },
+    "193:4:10": {
+      "at": "2026-10-26T00:34:27.859892+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 1829.32,
+      "search_evidence": [
+        {
+          "path": "/for-all-mankind-s04e10/s/-6",
+          "status": 200,
+          "response_bytes": 189640,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/for-all-mankind-s04e10/s/-6",
+          "status": 200,
+          "response_bytes": 241212,
+          "boxes": 19,
+          "parsed_candidates": 19,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T01:19:57.177046+00:00"
     }
   },
-  "updated_at": "2026-10-26T01:04:09.911831+00:00",
+  "updated_at": "2026-10-26T01:04:59.176851+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -664596,8 +664697,10 @@
       "updated_at": "2026-10-12T07:54:29.745147+00:00"
     },
     "462": {
-      "misses": [],
-      "updated_at": "2026-10-26T00:04:01.476602+00:00"
+      "misses": [
+        "462:11:23"
+      ],
+      "updated_at": "2026-10-26T01:04:55.230382+00:00"
     },
     "69": {
       "misses": [
@@ -664618,10 +664721,12 @@
     },
     "193": {
       "misses": [
-        "193:4:8",
-        "193:4:9"
+        "193:4:9",
+        "193:5:1",
+        "193:4:10"
       ],
-      "updated_at": "2026-10-25T23:37:57.861795+00:00"
+      "updated_at": "2026-10-26T01:04:57.177072+00:00",
+      "retry_after": "2026-10-26T01:34:57.177072+00:00"
     },
     "452": {
       "misses": [
@@ -671384,12 +671489,12 @@
     },
     "1133": {
       "misses": [
-        "1133:2:16",
         "1133:2:18",
-        "1133:2:17"
+        "1133:2:17",
+        "1133:2:20"
       ],
-      "updated_at": "2026-10-26T00:01:32.522554+00:00",
-      "retry_after": "2026-10-26T04:01:32.522554+00:00"
+      "updated_at": "2026-10-26T01:04:50.957782+00:00",
+      "retry_after": "2026-10-26T01:34:50.957782+00:00"
     },
     "2079": {
       "misses": [
