@@ -342850,14 +342850,16 @@
       "retry_after": "2026-10-21T12:39:36.780238+00:00"
     },
     "1787:5:11": {
-      "at": "2026-10-21T00:23:56.759521+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-10-26T05:38:12.007683+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "inconclusive_audio",
-      "elapsed_seconds": 136.58,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-21T01:26:13.339570+00:00"
+      "elapsed_seconds": 208.76,
+      "source_id": "34605704",
+      "queue_rank": 30509
     },
     "2592:2:22": {
       "at": "2026-10-22T14:57:15.254337+00:00",
@@ -659457,9 +659459,120 @@
       "elapsed_seconds": 96.89,
       "consecutive_failures": 1,
       "retry_after": "2026-10-27T05:38:49.785865+00:00"
+    },
+    "1783:10:5": {
+      "at": "2026-10-26T05:40:09.000148+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9657043218612671,
+      "observed_source_id": "15834471",
+      "elapsed_seconds": 74.3,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-27T05:41:23.299690+00:00"
+    },
+    "1783:8:6": {
+      "at": "2026-10-26T05:41:24.093593+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 12.82,
+      "search_evidence": [
+        {
+          "path": "/smrt-v-raji-s08e06/s/-6",
+          "status": 200,
+          "response_bytes": 217514,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/death-in-paradise-s08e06/s/-6",
+          "status": 200,
+          "response_bytes": 217073,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/smrt-v-raji-s08e06/s/-6",
+          "status": 200,
+          "response_bytes": 217508,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/smrt-v-raji/s/-6",
+          "status": 200,
+          "response_bytes": 491667,
+          "boxes": 207,
+          "parsed_candidates": 207,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/death-in-paradise-s08e06/s/-6",
+          "status": 200,
+          "response_bytes": 217116,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/death-in-paradise/s/-6",
+          "status": 200,
+          "response_bytes": 313305,
+          "boxes": 78,
+          "parsed_candidates": 77,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-27T05:41:36.917161+00:00"
+    },
+    "1783:10:6": {
+      "at": "2026-10-26T05:40:44.014930+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.8461929559707642,
+      "observed_source_id": "24335354",
+      "elapsed_seconds": 62.76,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-27T05:41:46.773318+00:00"
+    },
+    "1783:10:4": {
+      "at": "2026-10-26T05:40:01.008227+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.8575398772954941,
+      "observed_source_id": "15679207",
+      "elapsed_seconds": 116.6,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-27T05:41:57.603771+00:00"
     }
   },
-  "updated_at": "2026-10-26T05:41:03.027222+00:00",
+  "updated_at": "2026-10-26T05:42:00.554494+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -672231,9 +672344,12 @@
     },
     "1783": {
       "misses": [
-        "1783:10:2"
+        "1783:8:6",
+        "1783:10:6",
+        "1783:10:4"
       ],
-      "updated_at": "2026-10-26T05:38:49.785902+00:00"
+      "updated_at": "2026-10-26T05:41:57.603799+00:00",
+      "retry_after": "2026-10-26T09:41:57.603799+00:00"
     },
     "5376": {
       "misses": [
@@ -675789,7 +675905,7 @@
     },
     "1787": {
       "misses": [],
-      "updated_at": "2026-10-26T05:40:43.251757+00:00"
+      "updated_at": "2026-10-26T05:41:41.340281+00:00"
     },
     "899": {
       "misses": [
@@ -676733,12 +676849,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 7,
+    "last_series": 1923,
     "last_series_order": [
       false,
       -7.8,
-      -26631,
-      7
+      -26369,
+      1923
     ]
   }
 }
