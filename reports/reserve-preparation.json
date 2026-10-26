@@ -4,9 +4,9 @@
   "prepared_this_run": 0,
   "reserve_total": 22091,
   "queue_total": 30526,
-  "updated_at": "2026-10-26T11:58:35.953557+00:00",
+  "updated_at": "2026-10-26T11:59:44.308395+00:00",
   "workers": 4,
-  "elapsed_seconds": 2554.11,
+  "elapsed_seconds": 2622.46,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -22,8 +22,7 @@
     "categories": {
       "completed": 30489,
       "allocated": 25,
-      "failed": 10,
-      "in_flight": 2
+      "failed": 12
     },
     "completed_by_account": {
       "a": 15242,
@@ -34,11 +33,14 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "waiting_for_sources",
-    "starved_accounts": [],
+    "status": "starved",
+    "starved_accounts": [
+      "a",
+      "b"
+    ],
     "seconds_since_upload": {
-      "a": 8893,
-      "b": 9808
+      "a": 8962,
+      "b": 9877
     },
     "preparation_outcomes_last_hour": {
       "transient_original": 3,
@@ -2922,7 +2924,7 @@
   "search_health": {
     "status": "paused",
     "consecutive_failures": 4,
-    "retry_seconds": 449,
+    "retry_seconds": 380,
     "resume_after": "2026-10-26T12:06:04.487687+00:00",
     "controls": [
       {
