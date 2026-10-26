@@ -632166,20 +632166,17 @@
       "retry_after": "2026-10-26T21:27:10.559763+00:00"
     },
     "1328:4:22": {
-      "at": "2026-10-24T16:26:32.190706+00:00",
+      "at": "2026-10-26T20:28:14.042540+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "observed_audio_language": "ja",
-      "observed_language_probability": 0.9486616551876068,
-      "observed_source_id": "35126488",
-      "elapsed_seconds": 144.08,
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 3545.54,
       "consecutive_failures": 1,
-      "retry_after": "2026-10-25T16:29:02.076457+00:00"
+      "retry_after": "2026-10-26T21:28:19.578658+00:00"
     },
     "1328:4:23": {
       "at": "2026-10-24T16:26:53.660718+00:00",
@@ -670942,9 +670939,86 @@
       "elapsed_seconds": 573.45,
       "consecutive_failures": 1,
       "retry_after": "2026-10-27T20:28:13.611390+00:00"
+    },
+    "1056:11:14": {
+      "at": "2026-10-26T20:57:00.895046+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 1816.87,
+      "search_evidence": [
+        {
+          "path": "/chicago-fire-s11e14/s/-6",
+          "status": 200,
+          "response_bytes": 189579,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T21:42:17.765971+00:00"
+    },
+    "2621:4:4": {
+      "at": "2026-10-26T21:12:11.046059+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 910.82,
+      "search_evidence": [
+        {
+          "path": "/r-jako-rodina-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 217032,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T21:42:21.864616+00:00"
+    },
+    "1669:5:4": {
+      "at": "2026-10-26T20:42:03.788781+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 2719.95,
+      "search_evidence": [
+        {
+          "path": "/status-nezadouci-s05e04/s/-6",
+          "status": 200,
+          "response_bytes": 189663,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/status-nezadouci-s05e04/s/-6",
+          "status": 200,
+          "response_bytes": 217075,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-26T21:42:23.743793+00:00"
     }
   },
-  "updated_at": "2026-10-26T21:26:40.967448+00:00",
+  "updated_at": "2026-10-26T21:27:46.131956+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -681327,16 +681401,20 @@
     "1669": {
       "misses": [
         "1669:5:2",
-        "1669:5:3"
+        "1669:5:3",
+        "1669:5:4"
       ],
-      "updated_at": "2026-10-25T23:59:22.642964+00:00"
+      "updated_at": "2026-10-26T21:27:23.743818+00:00",
+      "retry_after": "2026-10-26T21:57:23.743818+00:00"
     },
     "1056": {
       "misses": [
         "1056:11:12",
-        "1056:11:13"
+        "1056:11:13",
+        "1056:11:14"
       ],
-      "updated_at": "2026-10-26T00:09:36.872786+00:00"
+      "updated_at": "2026-10-26T21:27:17.765985+00:00",
+      "retry_after": "2026-10-26T21:57:17.765985+00:00"
     },
     "600": {
       "misses": [
@@ -681387,9 +681465,10 @@
     },
     "2621": {
       "misses": [
-        "2621:4:2"
+        "2621:4:2",
+        "2621:4:4"
       ],
-      "updated_at": "2026-10-24T16:29:21.288784+00:00"
+      "updated_at": "2026-10-26T21:27:21.864636+00:00"
     },
     "2379": {
       "misses": [
@@ -688375,12 +688454,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2621,
+    "last_series": 3105,
     "last_series_order": [
       false,
       -8.0,
-      -44915,
-      2621
+      -30889,
+      3105
     ]
   }
 }
