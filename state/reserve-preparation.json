@@ -203122,20 +203122,21 @@
       "queue_rank": 21141
     },
     "1948:2:8": {
-      "at": "2026-10-26T21:36:51.419670+00:00",
+      "at": "2026-10-27T23:45:51.375689+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.8093255311250687,
+      "observed_language_probability": 0.808816634118557,
       "observed_source_id": "12591238",
-      "elapsed_seconds": 106.02,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-27T21:38:37.443401+00:00"
+      "elapsed_seconds": 86.27,
+      "consecutive_failures": 4,
+      "retry_after": "2026-10-28T23:47:17.648005+00:00"
     },
     "162:4:12": {
       "at": "2026-10-14T03:49:28.626197+00:00",
@@ -448154,14 +448155,68 @@
       "retry_after": "2026-10-23T19:29:34.323040+00:00"
     },
     "2690:2:13": {
-      "at": "2026-10-22T19:28:46.802542+00:00",
+      "at": "2026-10-27T23:45:34.682319+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 57.52,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T19:29:44.324188+00:00"
+      "elapsed_seconds": 49.53,
+      "search_evidence": [
+        {
+          "path": "/rodinka-na-kousky-s02e13/s/-6",
+          "status": 200,
+          "response_bytes": 217488,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/life-in-pieces-s02e13/s/-6",
+          "status": 200,
+          "response_bytes": 217149,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/rodinka-na-kousky-s02e13/s/-6",
+          "status": 200,
+          "response_bytes": 189682,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/rodinka-na-kousky/s/-6",
+          "status": 200,
+          "response_bytes": 189535,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/life-in-pieces-s02e13/s/-6",
+          "status": 200,
+          "response_bytes": 189619,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/life-in-pieces/s/-6",
+          "status": 200,
+          "response_bytes": 189472,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-28T23:46:30.789409+00:00"
     },
     "1537:2:8": {
       "at": "2026-10-22T19:29:34.882085+00:00",
@@ -700454,9 +700509,26 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-28T23:45:50.443038+00:00"
+    },
+    "2217:4:7": {
+      "at": "2026-10-27T23:45:33.306320+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9964072108268738,
+      "observed_source_id": "34785305",
+      "elapsed_seconds": 62.35,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-28T23:46:35.660989+00:00"
     }
   },
-  "updated_at": "2026-10-27T23:46:21.710698+00:00",
+  "updated_at": "2026-10-27T23:47:38.022446+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -707547,9 +707619,11 @@
     "1948": {
       "misses": [
         "1948:5:4",
-        "1948:2:7"
+        "1948:2:7",
+        "1948:2:8"
       ],
-      "updated_at": "2026-10-27T23:45:32.605813+00:00"
+      "updated_at": "2026-10-27T23:47:17.648028+00:00",
+      "retry_after": "2026-10-28T03:47:17.648028+00:00"
     },
     "5746": {
       "misses": [
@@ -711114,9 +711188,10 @@
     },
     "2690": {
       "misses": [
-        "2690:2:12"
+        "2690:2:12",
+        "2690:2:13"
       ],
-      "updated_at": "2026-10-27T23:46:18.333917+00:00"
+      "updated_at": "2026-10-27T23:46:30.789433+00:00"
     },
     "1641": {
       "misses": [
@@ -713290,9 +713365,11 @@
     "2217": {
       "misses": [
         "2217:4:5",
-        "2217:4:6"
+        "2217:4:6",
+        "2217:4:7"
       ],
-      "updated_at": "2026-10-27T16:29:01.192101+00:00"
+      "updated_at": "2026-10-27T23:46:35.661014+00:00",
+      "retry_after": "2026-10-28T03:46:35.661014+00:00"
     },
     "4546": {
       "misses": [
@@ -717846,12 +717923,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2217,
+    "last_series": 1587,
     "last_series_order": [
       false,
       -7.8,
-      -37946,
-      2217
+      -32967,
+      1587
     ]
   }
 }
