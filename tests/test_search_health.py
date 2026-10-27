@@ -163,6 +163,45 @@ def test_one_empty_control_series_cannot_block_a_healthy_search_backend():
     assert session.calls==[QUERY_URL,CONTROL_URL,FALLBACK_URL]
 
 
+@pytest.mark.parametrize('status', [None, 502])
+def test_one_control_transport_failure_does_not_pause_all_workers(status):
+    def response(url):
+        if url == CONTROL_URL:
+            if status is None:
+                raise requests.Timeout('private-password signed-url')
+            result = requests.Response()
+            result.status_code = status
+            raise requests.HTTPError('private-password signed-url', response=result)
+        return POSITIVE if url == FALLBACK_URL else EMPTY
+    session = Session(response)
+    p = EpisodeSourceProvider(session, detector=object(), request_gap_seconds=0,
+        session_factory=lambda: pytest.fail('Healthy fallback must prevent a new login'))
+    assert not p._search_page(QUERY_URL, 'Series')['candidates']
+    report = p.search_health.circuit.snapshot()
+    assert report['status'] == 'healthy' and report['consecutive_failures'] == 0
+    assert report['control_requests'] == 2
+    assert report['controls'][0]['status'] == status
+    assert 'private-password' not in str(report) and 'signed-url' not in str(report)
+    assert session.calls == [QUERY_URL, CONTROL_URL, FALLBACK_URL]
+
+
+def test_explicit_control_throttle_never_probes_again_before_quiet_window():
+    def response(url):
+        if url == CONTROL_URL:
+            result = requests.Response()
+            result.status_code = 429
+            raise requests.HTTPError('private-token', response=result)
+        return EMPTY
+    session = Session(response)
+    p = EpisodeSourceProvider(session, detector=object(), request_gap_seconds=0,
+        session_factory=lambda: pytest.fail('Throttling must not trigger another login'))
+    with pytest.raises(SearchUnavailable):
+        p._search_page(QUERY_URL, 'Series')
+    report = p.search_health.circuit.snapshot()
+    assert report['status'] == 'paused' and report['controls'][0]['status'] == 429
+    assert session.calls == [QUERY_URL, CONTROL_URL]
+
+
 def test_persistent_empty_control_is_transient_and_backs_off_without_repeated_logins(tmp_path):
     old, fresh = Session(lambda _: EMPTY), Session(lambda _: EMPTY)
     renewed, delays, now = [], [], [100]

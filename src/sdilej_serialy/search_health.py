@@ -99,6 +99,25 @@ class SearchCircuit:
                 unexpected_origin=response_url.netloc != urlsplit(BASE_URL).netloc,
                 checked_at=datetime.fromtimestamp(self.wall_clock(), UTC).isoformat())
 
+    def record_control_error(self, url, error):
+        # Keep diagnostic types/status only, never authenticated URLs or the
+        # exception message. _get wraps the original requests exception.
+        kinds, statuses, seen = [], [], set()
+        while error is not None and id(error) not in seen and len(kinds) < 8:
+            seen.add(id(error))
+            kinds.append(type(error).__name__)
+            status = getattr(getattr(error, 'response', None), 'status_code', None)
+            if isinstance(status, int):
+                statuses.append(status)
+            error = error.__cause__ or error.__context__
+        with self.lock:
+            self.probe_count += 1
+            self.controls[url.removeprefix(BASE_URL)] = dict(
+                status=statuses[-1] if statuses else None, error_types=kinds,
+                response_bytes=None, parsed_candidates=0,
+                checked_at=datetime.fromtimestamp(self.wall_clock(), UTC).isoformat())
+        return statuses
+
     def snapshot(self):
         with self.lock:
             remaining = max(0, self.retry_at - self.clock())
@@ -128,7 +147,18 @@ class SearchHealth:
         provider._fresh_search = True
         try:
             for url,query in ((CONTROL_URL,CONTROL_QUERY),(FALLBACK_URL,FALLBACK_QUERY)):
-                response = provider._get(url)
+                try:
+                    response = provider._get(url)
+                except (SdilejError, requests.RequestException) as error:
+                    statuses = self.circuit.record_control_error(url, error)
+                    if 429 in statuses:
+                        # Explicit throttling starts the shared quiet window;
+                        # do not send an alternative probe or another login.
+                        raise
+                    # A failed request alone does not establish a backend-wide
+                    # outage. Use the existing second control before pausing
+                    # every worker or renewing the authenticated session.
+                    continue
                 count = len(parse_search_html(response.text, query=query))
                 self.circuit.record_control(url, response, count)
                 if count:

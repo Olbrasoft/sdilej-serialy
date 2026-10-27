@@ -12,6 +12,10 @@ across all discovery workers. Concurrent forced searches share a result only
 when another caller computed it after they started waiting; an older snapshot
 still cannot satisfy a forced refresh. Empty responses remain uncached. This
 reduces repeated requests while preserving fresh full-search quality checks.
+A single failed control GET now tries the existing alternative control before
+declaring a shared outage. HTTP 429 immediately opens the quiet window without
+another probe or login. Reports retain only error classes and HTTP status, never
+exception text, so transport failures are distinguishable from empty HTTP 200 pages.
 When the reserve is low, the first two hinted probes prefer recently productive
 seasons, including two neighboring episodes from one proven season. Subsequent
 bounded requested-series, exploration and retry lanes continue normally.
