@@ -1,30 +1,30 @@
 {
   "generation": "pair-2026-09-25",
   "run_id": "40593542160",
-  "attempted_this_run": 37,
-  "prepared_this_run": 5,
-  "reserve_total": 22304,
-  "queue_total": 30739,
-  "updated_at": "2026-10-27T23:06:09.351537+00:00",
+  "attempted_this_run": 39,
+  "prepared_this_run": 6,
+  "reserve_total": 22305,
+  "queue_total": 30740,
+  "updated_at": "2026-10-27T23:07:27.339589+00:00",
   "workers": 4,
-  "elapsed_seconds": 1384.17,
-  "prepared_per_hour": 13.0,
-  "available_this_run": 5,
-  "available_per_hour": 13.0,
+  "elapsed_seconds": 1462.16,
+  "prepared_per_hour": 14.77,
+  "available_this_run": 6,
+  "available_per_hour": 14.77,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
-    "queue_total": 30739,
-    "ready": 1,
+    "queue_total": 30740,
+    "ready": 2,
     "ready_by_account": {
       "a": 1,
-      "b": 0
+      "b": 1
     },
     "categories": {
       "completed": 30699,
       "allocated": 27,
       "failed": 12,
-      "ready": 1
+      "ready": 2
     },
     "completed_by_account": {
       "a": 15347,
@@ -32,26 +32,26 @@
     },
     "uploads_last_24h": 154,
     "uploads_per_hour_24h": 6.42,
-    "stock_hours_24h": 0.16
+    "stock_hours_24h": 0.31
   },
   "health": {
     "status": "buffered",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 494,
-      "b": 290
+      "a": 572,
+      "b": 369
     },
     "preparation_outcomes_last_hour": {
-      "prepared": 10,
+      "prepared": 11,
       "verified_non_czech": 24,
       "no_acceptable_original": 6,
       "inconclusive_audio": 1,
       "no_matches": 38,
       "no_english_czech_subtitles": 1,
-      "source_search_unavailable": 4
+      "source_search_unavailable": 5
     }
   },
-  "indexed_candidates_in_scan": 1516,
+  "indexed_candidates_in_scan": 1530,
   "discovery_progress": {
     "last_series": 11,
     "last_series_order": [
@@ -62,24 +62,24 @@
     ]
   },
   "cache": {
-    "search_miss": 197,
-    "search_seconds": 2973.38,
-    "search_hit": 32,
+    "search_miss": 201,
+    "search_seconds": 2996.48,
+    "search_hit": 36,
     "media_miss": 29,
     "media_seconds": 118.44,
     "audio_miss": 33,
-    "audio_seconds": 601.85,
+    "audio_seconds": 611.9,
     "media_hit": 14,
     "audio_hit": 10
   },
   "audio_pipeline": {
-    "sample_count": 53,
-    "download_seconds": 446.53,
+    "sample_count": 54,
+    "download_seconds": 453.41,
     "inference_wait_seconds": 9.17,
-    "inference_seconds": 146.11
+    "inference_seconds": 149.29
   },
   "productive_seasons": 53,
-  "series_paused_this_run": 43,
+  "series_paused_this_run": 42,
   "saved_reviewed_this_run": 0,
   "saved_prepared_this_run": 0,
   "repaired_this_run": 0,
@@ -88,7 +88,7 @@
     "deferred": 33
   },
   "statuses": {
-    "prepared": 22304,
+    "prepared": 22305,
     "deferred": 30576
   },
   "requested_series": [
@@ -2913,23 +2913,32 @@
     }
   ],
   "search_health": {
-    "status": "healthy",
-    "consecutive_failures": 0,
-    "retry_seconds": 0,
-    "failed_cycles_this_run": 0,
-    "control_requests": 14,
-    "request_gap_seconds": 2,
+    "status": "paused",
+    "consecutive_failures": 1,
+    "retry_seconds": 237,
+    "failed_cycles_this_run": 1,
+    "control_requests": 18,
+    "request_gap_seconds": 4,
     "restart_required": false,
-    "resume_after": null,
+    "resume_after": "2026-10-27T23:11:24.102984+00:00",
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
-        "response_bytes": 723769,
-        "parsed_candidates": 411,
+        "response_bytes": 189619,
+        "parsed_candidates": 0,
         "response_path": "/teorie-velkeho-tresku/s/-6",
         "unexpected_origin": false,
-        "checked_at": "2026-10-27T23:05:11.608176+00:00"
+        "checked_at": "2026-10-27T23:06:21.515639+00:00"
+      },
+      {
+        "path": "/doktor-martin/s/-6",
+        "status": 200,
+        "response_bytes": 189451,
+        "parsed_candidates": 0,
+        "response_path": "/doktor-martin/s/-6",
+        "unexpected_origin": false,
+        "checked_at": "2026-10-27T23:06:24.102885+00:00"
       }
     ]
   }
