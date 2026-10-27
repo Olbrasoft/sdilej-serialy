@@ -1,15 +1,15 @@
 {
   "generation": "pair-2026-09-25",
-  "attempted_this_run": 25,
+  "attempted_this_run": 26,
   "prepared_this_run": 1,
   "reserve_total": 22155,
   "queue_total": 30590,
-  "updated_at": "2026-10-27T04:40:05.552673+00:00",
+  "updated_at": "2026-10-27T04:41:13.776689+00:00",
   "workers": 4,
-  "elapsed_seconds": 5736.39,
-  "prepared_per_hour": 0.63,
+  "elapsed_seconds": 5804.61,
+  "prepared_per_hour": 0.62,
   "available_this_run": 1,
-  "available_per_hour": 0.63,
+  "available_per_hour": 0.62,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
@@ -22,8 +22,7 @@
     "categories": {
       "completed": 30553,
       "allocated": 25,
-      "failed": 10,
-      "in_flight": 2
+      "failed": 12
     },
     "completed_by_account": {
       "a": 15274,
@@ -34,18 +33,21 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "waiting_for_sources",
-    "starved_accounts": [],
+    "status": "starved",
+    "starved_accounts": [
+      "a",
+      "b"
+    ],
     "seconds_since_upload": {
-      "a": 12865,
-      "b": 1812
+      "a": 12933,
+      "b": 1880
     },
     "preparation_outcomes_last_hour": {
       "verified_non_czech": 3,
       "no_matches": 4,
       "transient_search": 1,
       "prepared": 1,
-      "source_search_unavailable": 3
+      "source_search_unavailable": 4
     }
   },
   "indexed_candidates_in_scan": 576,
@@ -59,8 +61,8 @@
     ]
   },
   "cache": {
-    "search_miss": 89,
-    "search_seconds": 18113.54,
+    "search_miss": 90,
+    "search_seconds": 19642.48,
     "search_hit": 16,
     "media_miss": 8,
     "media_hit": 7,
@@ -2905,24 +2907,24 @@
     }
   ],
   "search_health": {
-    "status": "probe_due",
-    "consecutive_failures": 3,
-    "retry_seconds": 0,
-    "resume_after": null,
+    "status": "paused",
+    "consecutive_failures": 4,
+    "retry_seconds": 834,
+    "resume_after": "2026-10-27T04:55:07.192136+00:00",
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
         "response_bytes": 189619,
         "parsed_candidates": 0,
-        "checked_at": "2026-10-27T04:25:08.651574+00:00"
+        "checked_at": "2026-10-27T04:40:13.153046+00:00"
       },
       {
         "path": "/doktor-martin/s/-6",
         "status": 200,
         "response_bytes": 189451,
         "parsed_candidates": 0,
-        "checked_at": "2026-10-27T04:25:06.518815+00:00"
+        "checked_at": "2026-10-27T04:40:07.192078+00:00"
       }
     ]
   }
