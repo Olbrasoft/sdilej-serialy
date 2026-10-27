@@ -436010,35 +436010,17 @@
       "retry_after": "2026-10-24T01:12:06.357214+00:00"
     },
     "1787:6:10": {
-      "at": "2026-10-26T10:29:26.452111+00:00",
-      "status": "deferred",
+      "at": "2026-10-27T22:58:52.922403+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
-      "reason": "transient_search",
-      "elapsed_seconds": 2709.65,
-      "search_evidence": [
-        {
-          "path": "/havaj-5-0-s06e10/s/-6",
-          "status": 200,
-          "response_bytes": 189516,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/havaj-5-0-s06e10/s/-6",
-          "status": 200,
-          "response_bytes": 216990,
-          "boxes": 1,
-          "parsed_candidates": 1,
-          "heading_matches_query": true
-        }
-      ],
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-26T12:14:36.105516+00:00"
+      "elapsed_seconds": 187.12,
+      "source_id": "34605992",
+      "queue_rank": 30738
     },
     "1787:6:11": {
       "at": "2026-10-26T12:22:03.994819+00:00",
@@ -698745,9 +698727,74 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-28T23:00:16.480563+00:00"
+    },
+    "1214:4:21": {
+      "at": "2026-10-27T23:00:17.629446+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9993271827697754,
+      "observed_source_id": "32219324",
+      "elapsed_seconds": 112.98,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-28T23:02:10.607652+00:00"
+    },
+    "1610:3:8": {
+      "at": "2026-10-27T23:02:00.955580+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 35.71,
+      "search_evidence": [
+        {
+          "path": "/masters-of-sex-s03e08/s/-6",
+          "status": 200,
+          "response_bytes": 217058,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/masters-of-sex/s/-6",
+          "status": 200,
+          "response_bytes": 222659,
+          "boxes": 5,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/masters-of-sex-s03e08/s/-6",
+          "status": 200,
+          "response_bytes": 216986,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/masters-of-sex/s/-6",
+          "status": 200,
+          "response_bytes": 222672,
+          "boxes": 5,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-28T23:02:36.666382+00:00"
     }
   },
-  "updated_at": "2026-10-27T23:01:34.347939+00:00",
+  "updated_at": "2026-10-27T23:02:48.550520+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -710370,12 +710417,9 @@
     },
     "1214": {
       "misses": [
-        "1214:4:17",
-        "1214:4:18",
-        "1214:4:20"
+        "1214:4:21"
       ],
-      "updated_at": "2026-10-27T14:17:16.722462+00:00",
-      "retry_after": "2026-10-27T18:17:16.722462+00:00"
+      "updated_at": "2026-10-27T23:02:10.607676+00:00"
     },
     "4102": {
       "misses": [
@@ -710411,9 +710455,11 @@
     "1610": {
       "misses": [
         "1610:3:6",
-        "1610:3:7"
+        "1610:3:7",
+        "1610:3:8"
       ],
-      "updated_at": "2026-10-27T14:17:55.818158+00:00"
+      "updated_at": "2026-10-27T23:02:36.666413+00:00",
+      "retry_after": "2026-10-28T03:02:36.666413+00:00"
     },
     "9828": {
       "misses": [
@@ -715201,7 +715247,7 @@
     },
     "1787": {
       "misses": [],
-      "updated_at": "2026-10-27T23:01:24.529500+00:00"
+      "updated_at": "2026-10-27T23:02:00.211041+00:00"
     },
     "899": {
       "misses": [
@@ -716131,12 +716177,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9828,
+    "last_series": 3646,
     "last_series_order": [
       false,
       -7.9,
-      -41207,
-      9828
+      -37878,
+      3646
     ]
   }
 }
