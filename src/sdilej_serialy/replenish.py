@@ -39,6 +39,7 @@ SAVED_REVIEW_REVISION = 1
 AUDIO_POLICY_REVISION = 1
 SEARCH_RECOVERY_REVISION = 2
 AUDIO_SAMPLING_REVISION = 1
+AUDIO_CONSENSUS_REVISION = 1
 MAX_SERIES_MISSES = 3
 
 
@@ -75,7 +76,8 @@ def repaired_preparation(record, metadata=None, *, filename_recovery=False, sour
             or (record.get('reason') == 'no_verified_czech_match' and revision < 3)
             or needs_short_audio_review(record, metadata)
             or (source_hint and record.get('reason') == 'inconclusive_audio'
-                and record.get('audio_sampling_revision', 0) < AUDIO_SAMPLING_REVISION)
+                and (record.get('audio_sampling_revision', 0) < AUDIO_SAMPLING_REVISION
+                     or record.get('audio_consensus_revision', 0) < AUDIO_CONSENSUS_REVISION))
             or ((metadata or {}).get('requested_audio_policy') == SLOVAK_POLICY
                 and record.get('audio_policy_revision', 0) < AUDIO_POLICY_REVISION
                 and record.get('reason') in ('verified_non_czech', 'no_verified_czech_match'))
@@ -258,7 +260,8 @@ def inspect_preparation(provider, task):
     started = time.monotonic()
     record = {'at': now_iso(), 'status': 'deferred', 'preparation_revision': PREPARATION_REVISION,
               'audio_policy_revision': AUDIO_POLICY_REVISION, 'search_recovery_revision': SEARCH_RECOVERY_REVISION,
-              'audio_sampling_revision': AUDIO_SAMPLING_REVISION}
+              'audio_sampling_revision': AUDIO_SAMPLING_REVISION,
+              'audio_consensus_revision': AUDIO_CONSENSUS_REVISION}
     if subtitled:
         record['subtitle_verification_revision'] = 2
     repairing_source = bool(old_record.get('repair_fingerprint'))

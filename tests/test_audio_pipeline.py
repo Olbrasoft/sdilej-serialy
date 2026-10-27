@@ -9,7 +9,7 @@ import pytest
 from sdilej_serialy.audio_pipeline import PipelinedLanguageDetector
 from sdilej_serialy.episodes import EpisodeSourceProvider
 from sdilej_to_prehrajto.language import LanguageDetectionError
-from sdilej_to_prehrajto.models import Candidate
+from sdilej_to_prehrajto.models import Candidate, MatchTier
 from test_episodes import episode
 
 
@@ -97,6 +97,29 @@ def test_weak_majority_still_cannot_pass_provider_language_verification(monkeypa
     with pytest.raises(LanguageDetectionError, match='confidence'):
         provider._verify_language(episode(), Candidate('1', 'url', 'title',
             filename='Episode CZ dabing.mkv', sample_url='sample', duration_sec=2500))
+
+
+def test_consensus_allows_search_to_reach_the_next_czech_original(monkeypatch):
+    detector = PipelinedLanguageDetector()
+    first = Candidate('1', 'detail-1', 'Episode CZ', filename='Episode CZ.mp4',
+        sample_url='first', width=1280, height=720, duration_sec=2535, size_bytes=500000000,
+        match_tier=MatchTier.STRONG)
+    second = Candidate('2', 'detail-2', 'Episode CZ dabing', filename='Episode CZ dabing.mkv',
+        sample_url='second', width=720, height=576, duration_sec=2417, size_bytes=522785178,
+        match_tier=MatchTier.STRONG)
+    samples = iter([('sk', .7415), ('sk', .6167), ('sk', .7867), ('cs', .6267)])
+    checked = []
+    def detect(url, offset):
+        checked.append(url)
+        return next(samples) if url == 'first' else ('cs', .974)
+    monkeypatch.setattr(detector, '_detect_at', detect)
+    provider = EpisodeSourceProvider(None, detector=detector)
+    monkeypatch.setattr(provider, 'search', lambda _: [first, second])
+    monkeypatch.setattr(provider, '_inspect', lambda _episode, candidate: candidate)
+    selected = provider.discover(episode())
+    assert selected.source_id == '2' and selected.audio_language == 'cs'
+    assert selected.language_probability >= .65
+    assert checked == ['first'] * 4 + ['second']
 
 
 @pytest.mark.parametrize('duration,expected', [(420, [105, 210, 315]), (100, [0, 12]), (30, [])])

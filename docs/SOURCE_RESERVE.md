@@ -771,6 +771,11 @@ mean-confidence rule applies. Weak majorities remain rejected. Czech still wins
 when sufficiently supported, and Slovak publication still requires the complete
 Czech-source search and the existing original-quality checks.
 
+Preparation records carry `audio_consensus_revision`. Older inconclusive audio
+checks with an exact positive source hint get one scoped review under the fixed
+consensus. They remain in the bounded retry lane; unrelated cooldowns and the
+existing uploaded/allocated episode guards are unchanged.
+
 A failed shared control is recorded as `source_search_unavailable`. It does not
 increase episode/series failure counts or consume requested-season sampling
 budgets. Its retry follows the shared recovery deadline. Episode identity,
