@@ -761,6 +761,16 @@ subtitles remains supported. This changes discovery hints and unnecessary sample
 requests only; original quality, speech confidence and episode ownership checks
 still decide whether a source can be published.
 
+The same investigation reproduced a speech-consensus failure on Havaj 5-0
+S03E21: three Slovak samples scored .742, .617 and .787, but a single .627 Czech
+sample won solely because the filename suggested Czech. The SDK's .55 preferred
+language override then failed the pipeline's .65 acceptance requirement, so
+repeating the episode never produced a usable result. Consensus now requires
+the preferred language to meet .65 as well; otherwise the existing majority and
+mean-confidence rule applies. Weak majorities remain rejected. Czech still wins
+when sufficiently supported, and Slovak publication still requires the complete
+Czech-source search and the existing original-quality checks.
+
 A failed shared control is recorded as `source_search_unavailable`. It does not
 increase episode/series failure counts or consume requested-season sampling
 budgets. Its retry follows the shared recovery deadline. Episode identity,

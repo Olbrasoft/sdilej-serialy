@@ -68,6 +68,37 @@ def test_consensus_keeps_sdk_offsets_votes_and_confidence(monkeypatch):
     assert offsets == [400, 800, 1200]
 
 
+@pytest.mark.parametrize('duration', [420, 2535, None])
+def test_weak_filename_preference_does_not_hide_confident_slovak_majority(monkeypatch, duration):
+    detector = PipelinedLanguageDetector()
+    samples = iter([('sk', .6167), ('sk', .7867), ('cs', .6267)])
+    monkeypatch.setattr(detector, '_detect_at', lambda *a: next(samples))
+    language, confidence = detector.detect_consensus(
+        'sample', duration, initial=('sk', .7415), preferred_language='cs')
+    assert language == 'sk'
+    assert confidence == pytest.approx((.7415 + .6167 + .7867) / 3)
+    assert confidence >= .65
+
+
+@pytest.mark.parametrize('confidence,expected', [(.649, 'sk'), (.65, 'cs')])
+def test_czech_preference_requires_the_publication_threshold(monkeypatch, confidence, expected):
+    detector = PipelinedLanguageDetector()
+    samples = iter([('sk', .9), ('sk', .9), ('cs', confidence)])
+    monkeypatch.setattr(detector, '_detect_at', lambda *a: next(samples))
+    language, probability = detector.detect_consensus(
+        'sample', 2000, initial=('sk', .9), preferred_language='cs')
+    assert language == expected and probability >= .65
+
+
+def test_weak_majority_still_cannot_pass_provider_language_verification(monkeypatch):
+    detector = PipelinedLanguageDetector()
+    monkeypatch.setattr(detector, '_detect_at', lambda *a: ('cs', .63))
+    provider = EpisodeSourceProvider(None, detector=detector)
+    with pytest.raises(LanguageDetectionError, match='confidence'):
+        provider._verify_language(episode(), Candidate('1', 'url', 'title',
+            filename='Episode CZ dabing.mkv', sample_url='sample', duration_sec=2500))
+
+
 @pytest.mark.parametrize('duration,expected', [(420, [105, 210, 315]), (100, [0, 12]), (30, [])])
 def test_short_episode_consensus_never_seeks_past_end_or_duplicates_initial(monkeypatch, duration, expected):
     detector = PipelinedLanguageDetector()

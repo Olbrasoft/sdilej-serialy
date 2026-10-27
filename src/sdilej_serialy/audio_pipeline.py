@@ -38,26 +38,28 @@ class PipelinedLanguageDetector(WhisperLanguageDetector):
 
     def detect_consensus(self, media_url, duration_sec, *, initial=None, preferred_language=None):
         if not duration_sec or duration_sec >= 900:
-            return super().detect_consensus(media_url, duration_sec, initial=initial,
-                                            preferred_language=preferred_language)
-        # The SDK assumes a minimum 15-minute movie. That seeks beyond the end
-        # of short episodes, turning a valid Czech sample into a decoder error.
-        maximum = max(0, int(duration_sec) - self.seconds)
-        offsets = ([0, maximum // 2, maximum] if duration_sec < 2 * self.seconds else
-                   [min(int(duration_sec * fraction), maximum) for fraction in (.25, .5, .75)])
+            duration = max(int(duration_sec or 0), 900)
+            offsets = [int(duration * fraction) for fraction in (.25, .5, .75)]
+        else:
+            # The SDK assumes a minimum 15-minute movie. That seeks beyond the
+            # end of short episodes, turning valid samples into decoder errors.
+            maximum = max(0, int(duration_sec) - self.seconds)
+            offsets = ([0, maximum // 2, maximum] if duration_sec < 2 * self.seconds else
+                       [min(int(duration_sec * fraction), maximum) for fraction in (.25, .5, .75)])
         used = {self.initial_offset(duration_sec)} if initial else set()
         samples = [initial] if initial else []
         for offset in offsets:
             if offset not in used:
                 samples.append(self._detect_at(media_url, offset))
                 used.add(offset)
-        # Preserve the SDK's confidence/preferred-language rule; repeated
-        # clamped offsets must not count as independent consensus votes.
+        # Repeated/clamped offsets are not independent votes. A filename's
+        # preferred language must meet the same .65 threshold as publication;
+        # the SDK's .55 override can hide a valid majority behind a weak guess.
         grouped = defaultdict(list)
         for language, probability in samples:
             grouped[language.lower()].append(float(probability))
         preferred = (preferred_language or '').lower()
-        if preferred in grouped and max(grouped[preferred]) >= .55:
+        if preferred in grouped and max(grouped[preferred]) >= .65:
             return preferred, max(grouped[preferred])
         winner, probabilities = max(grouped.items(), key=lambda item: (len(item[1]), sum(item[1]), item[0]))
         return winner, sum(probabilities) / len(probabilities)
