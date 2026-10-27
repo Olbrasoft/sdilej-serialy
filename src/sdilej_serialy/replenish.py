@@ -129,7 +129,9 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
             if records.get(identity, {}).get('consecutive_failures', 0) >= 3:
                 continue
             proven_season = (metadata['series_id'], metadata['season']) in (productive_seasons or set())
-            known_source = identity in index.dubbed_hints or proven_season and index.rank(identity) < 2
+            # An exact unlabelled source is a useful fresh probe too. Language
+            # is still verified from the original before anything is published.
+            known_source = index.rank(identity) < 2
             if (known_source and (metadata['series_id'] not in seen_series or proven_season)
                     and series_probe_allowed(metadata, paused, index, records, urgent=urgent)
                     and (available is None or available(metadata))):
@@ -151,6 +153,8 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
             emitted = False
             seen_series = set()
             for identity, metadata in list(pending.items()):
+                if urgent and records.get(identity, {}).get('consecutive_failures', 0) >= 3:
+                    continue
                 if metadata['series_id'] not in seen_series and (available is None or available(metadata)):
                     seen_series.add(metadata['series_id'])
                     del pending[identity]

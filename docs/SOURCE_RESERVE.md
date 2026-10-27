@@ -27,6 +27,10 @@ Episodes with three or more consecutive failures retain the bounded retry lane;
 they cannot monopolize startup slots again after every producer restart.
 Among remaining hints, episodes without previous failed verification precede
 retries, even when a rejected source has a more promising filename label.
+Fresh exact unlabelled sources can use these probe slots too; they still need
+complete original/media/audio verification. Requested-series priority also leaves
+episodes with three or more failures in the bounded retry lane while stock is low,
+so old requests cannot occupy all four workers ahead of new positive evidence.
 
 `pipeline-health` checks both serialized lanes every ten minutes and after a
 producer/uploader/audit finishes. It dispatches a missing enabled lane, respects

@@ -229,3 +229,28 @@ def test_fresh_proven_episodes_precede_previously_rejected_czech_filename_hints(
                   index=index, refresh=lambda: None, progress={}, urgent=True))
     assert [Episode.from_dict(row).identity for row in result[:2]] == ['3:1:1', '3:1:2']
     assert len(result) == 4
+
+
+def test_fresh_unlabelled_hints_are_probed_before_known_foreign_filename_hints():
+    rows = [metadata(series=s) for s in (1, 2, 3, 4)]
+    index = CandidateIndex(rows)
+    index.observe([candidate(f'Series {s} S01E01 {"CZ" if s < 3 else "720p"}', str(s))
+                   for s in (1, 2, 3, 4)])
+    records = {f'{s}:1:1': dict(reason='verified_non_czech', preparation_revision=5,
+                              consecutive_failures=2) for s in (1, 2)}
+    result = list(replenish.reserve_order(rows, records, {}, set(), {(1, 1), (2, 1)},
+                  index=index, refresh=lambda: None, progress={}, urgent=True))
+    assert [row['series_id'] for row in result[:2]] == [3, 4]
+    assert len(result) == 4
+
+
+def test_old_requested_failures_remain_in_bounded_retry_lane_during_starvation():
+    rows = [metadata(series=s, number=n) for s in (1, 2) for n in range(1, 13)]
+    index = CandidateIndex(rows)
+    records = {f'1:1:{n}': dict(reason='inconclusive_audio', preparation_revision=5,
+                               consecutive_failures=40) for n in range(1, 13)}
+    result = list(replenish.reserve_order(rows, records, {}, set(), index=index,
+                  refresh=lambda: None, progress={}, requested=SimpleNamespace(series={1}), urgent=True))
+    assert [row['series_id'] for row in result[:8]] == [2] * 8
+    assert [row['series_id'] for row in result[8:10]] == [1] * 2
+    assert len(result) == len({Episode.from_dict(row).identity for row in result}) == 24
