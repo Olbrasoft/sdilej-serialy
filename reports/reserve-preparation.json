@@ -1,13 +1,13 @@
 {
   "generation": "pair-2026-09-25",
   "run_id": "40549098142",
-  "attempted_this_run": 2,
+  "attempted_this_run": 3,
   "prepared_this_run": 0,
   "reserve_total": 22247,
   "queue_total": 30682,
-  "updated_at": "2026-10-27T17:51:21.917512+00:00",
+  "updated_at": "2026-10-27T17:52:34.925813+00:00",
   "workers": 4,
-  "elapsed_seconds": 134.53,
+  "elapsed_seconds": 207.54,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -23,7 +23,8 @@
     "categories": {
       "completed": 30645,
       "allocated": 25,
-      "failed": 12
+      "in_flight": 4,
+      "failed": 8
     },
     "completed_by_account": {
       "a": 15320,
@@ -37,8 +38,8 @@
     "status": "waiting_for_sources",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 843,
-      "b": 874
+      "a": 915,
+      "b": 946
     },
     "preparation_outcomes_last_hour": {
       "prepared": 29,
@@ -46,7 +47,7 @@
       "source_search_unavailable": 4,
       "no_matches": 14,
       "transient_search": 2,
-      "verified_non_czech": 12,
+      "verified_non_czech": 13,
       "no_acceptable_original": 2
     }
   },
@@ -61,13 +62,20 @@
     ]
   },
   "cache": {
-    "search_miss": 15,
-    "search_seconds": 366.04,
+    "search_miss": 21,
+    "search_seconds": 540.67,
     "search_hit": 4,
-    "media_miss": 1,
-    "media_seconds": 4.8
+    "media_miss": 2,
+    "media_seconds": 6.76,
+    "audio_miss": 1,
+    "audio_seconds": 10.46
   },
-  "audio_pipeline": {},
+  "audio_pipeline": {
+    "sample_count": 1,
+    "download_seconds": 7.88,
+    "inference_wait_seconds": 0.0,
+    "inference_seconds": 2.58
+  },
   "productive_seasons": 45,
   "series_paused_this_run": 28,
   "saved_reviewed_this_run": 0,
@@ -2911,7 +2919,7 @@
     "consecutive_failures": 0,
     "retry_seconds": 0,
     "failed_cycles_this_run": 0,
-    "control_requests": 1,
+    "control_requests": 2,
     "request_gap_seconds": 8,
     "restart_required": false,
     "resume_after": null,
@@ -2919,11 +2927,11 @@
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
-        "response_bytes": 723756,
+        "response_bytes": 723704,
         "parsed_candidates": 411,
         "response_path": "/teorie-velkeho-tresku/s/-6",
         "unexpected_origin": false,
-        "checked_at": "2026-10-27T17:49:50.583579+00:00"
+        "checked_at": "2026-10-27T17:51:57.994918+00:00"
       }
     ]
   }
