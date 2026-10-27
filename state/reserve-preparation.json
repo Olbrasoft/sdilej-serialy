@@ -449135,14 +449135,17 @@
       "retry_after": "2026-10-23T19:58:29.822075+00:00"
     },
     "2592:5:5": {
-      "at": "2026-10-22T19:57:52.411247+00:00",
-      "status": "deferred",
+      "at": "2026-10-27T22:24:56.323918+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 61.59,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T19:58:54.000794+00:00"
+      "elapsed_seconds": 87.3,
+      "source_id": "30571078",
+      "queue_rank": 30734
     },
     "1697:2:4": {
       "at": "2026-10-22T19:58:12.473863+00:00",
@@ -698253,9 +698256,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-28T22:26:09.940682+00:00"
+    },
+    "2140:7:2": {
+      "at": "2026-10-27T22:26:25.124281+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 14.33,
+      "search_evidence": [
+        {
+          "path": "/voltron-legendary-defender-s07e02/s/-6",
+          "status": 200,
+          "response_bytes": 217324,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/voltron-legendary-defender/s/-6",
+          "status": 200,
+          "response_bytes": 283292,
+          "boxes": 49,
+          "parsed_candidates": 49,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/voltron-legendary-defender-s07e02/s/-6",
+          "status": 200,
+          "response_bytes": 217275,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/voltron-legendary-defender/s/-6",
+          "status": 200,
+          "response_bytes": 283375,
+          "boxes": 49,
+          "parsed_candidates": 49,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-28T22:26:39.457999+00:00"
     }
   },
-  "updated_at": "2026-10-27T22:26:14.571907+00:00",
+  "updated_at": "2026-10-27T22:27:29.138526+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -709081,12 +709132,9 @@
     },
     "2140": {
       "misses": [
-        "2140:6:5",
-        "2140:6:7",
-        "2140:7:1"
+        "2140:7:2"
       ],
-      "updated_at": "2026-10-27T14:08:48.297268+00:00",
-      "retry_after": "2026-10-27T18:08:48.297268+00:00"
+      "updated_at": "2026-10-27T22:26:39.458023+00:00"
     },
     "4951": {
       "misses": [
@@ -711037,13 +711085,8 @@
       "retry_after": "2026-10-21T09:39:08.058071+00:00"
     },
     "2592": {
-      "misses": [
-        "2592:5:3",
-        "2592:5:4",
-        "2592:5:6"
-      ],
-      "updated_at": "2026-10-27T22:25:46.365097+00:00",
-      "retry_after": "2026-10-28T02:25:46.365097+00:00"
+      "misses": [],
+      "updated_at": "2026-10-27T22:26:23.952644+00:00"
     },
     "1382": {
       "misses": [
@@ -715631,12 +715674,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3533,
+    "last_series": 3027,
     "last_series_order": [
       false,
       -8.0,
-      -15460,
-      3533
+      -10436,
+      3027
     ]
   }
 }
