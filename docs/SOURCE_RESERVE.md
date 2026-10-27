@@ -26,6 +26,9 @@ ten-minute restart backoff. Running and pending workflows prevent duplicate
 dispatches. The existing concurrency groups remain the final serialization
 guard. Disable the corresponding repository enable variables to stop automatic
 restart, including the watchdog. Source reports now identify their Actions run.
+If the workflow API still says `in_progress` after its jobs finished, the watchdog
+requires the complete jobs listing before treating that run as completed. An
+incomplete jobs page or any running job keeps it protected from duplicate dispatch.
 
 The watchdog uses only the repository token, with Actions dispatch permission;
 it receives no source, target-account or production-database credentials. It

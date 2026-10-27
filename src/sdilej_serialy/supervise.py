@@ -76,6 +76,24 @@ def github(repository, path, *, payload=None):
     return json.loads(result.stdout) if result.stdout.strip() else None
 
 
+def settle_runs(repository, runs):
+    """Workflow status can lag after all jobs have released their runner."""
+    settled = []
+    for run in runs:
+        if run['status'] == 'in_progress':
+            payload = github(repository, f'actions/runs/{run["id"]}/jobs?filter=latest&per_page=100')
+            jobs = payload['jobs']
+            if (jobs and len(jobs) == payload['total_count']
+                    and all(job['status'] == 'completed' and job.get('completed_at') for job in jobs)):
+                conclusions = {job.get('conclusion') for job in jobs}
+                conclusion = ('success' if conclusions <= {'success', 'skipped'}
+                              else 'cancelled' if conclusions <= {'success', 'skipped', 'cancelled'} else 'failure')
+                run = dict(run, status='completed', conclusion=conclusion,
+                           updated_at=max(job['completed_at'] for job in jobs))
+        settled.append(run)
+    return settled
+
+
 def main():
     import argparse
     from .dual import load
@@ -99,7 +117,7 @@ def main():
     result = dict(checked_at=now.isoformat(), stock=metrics, decisions={})
     for kind, workflow in WORKFLOWS.items():
         payload = github(repository, f'actions/workflows/{workflow}/runs?per_page=50&branch=main')
-        runs = payload['workflow_runs']
+        runs = settle_runs(repository, payload['workflow_runs'])
         enabled = (os.environ.get('SOURCE_PREPARATION_ENABLED') == 'true' if kind == 'source'
                    else os.environ.get('DUAL_ENABLED') == 'true' and os.environ.get('DUAL_FULL_ENABLED') == 'true')
         chosen = decision(kind, enabled=enabled, runs=runs, now=now,

@@ -2,7 +2,7 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
-from sdilej_serialy.supervise import decision, github
+from sdilej_serialy.supervise import decision, github, settle_runs
 
 NOW = datetime(2026, 10, 27, 15, tzinfo=UTC)
 
@@ -84,3 +84,16 @@ def test_uncertain_dispatch_is_not_repeated_or_logged_with_secrets(monkeypatch):
         github('owner/repo', 'actions/workflows/dual.yml/dispatches', payload={'ref': 'main'})
     assert len(calls) == 1
     assert 'private-token' not in str(exc.value) and 'signed-address' not in str(exc.value)
+
+
+@pytest.mark.parametrize('total,status,expected', [(1, 'completed', 'completed'),
+                                                (2, 'completed', 'in_progress'),
+                                                (1, 'in_progress', 'in_progress')])
+def test_lagging_run_status_requires_every_job_to_be_confirmed_finished(monkeypatch, total, status, expected):
+    from sdilej_serialy import supervise
+    monkeypatch.setattr(supervise, 'github', lambda *a: dict(total_count=total, jobs=[dict(
+        status=status, conclusion='success', completed_at=NOW.isoformat())]))
+    settled = settle_runs('owner/repo', [run('in_progress')])
+    assert settled[0]['status'] == expected
+    if expected == 'completed':
+        assert settled[0]['conclusion'] == 'success' and settled[0]['updated_at'] == NOW.isoformat()
