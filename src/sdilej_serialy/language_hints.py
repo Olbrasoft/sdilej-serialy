@@ -6,6 +6,8 @@ from sdilej_to_prehrajto.sdilej import audio_language_hint as sdk_audio_hint
 
 _CODES = r'cz|cs|cze|czech|cesky|sk|svk|slovak|slovensky'
 _SUBTITLE = r'tit(?:ulky)?|subs?|subtitles?'
+_SUBTITLE_LABEL = rf'\b(?:{_CODES})(?:\s+(?:{_CODES}))*\s+(?:{_SUBTITLE})\b'
+_AUDIO = r'dabing|dubbing|dab|audio'
 
 
 def _words(title):
@@ -18,7 +20,16 @@ def _words(title):
 def audio_language_hint(title):
     words = _words(title)
     # CZ-SK tit labels two subtitle languages, not two dubbed audio tracks.
-    words = re.sub(rf'\b(?:{_CODES})(?:\s+(?:{_CODES}))*\s+(?:{_SUBTITLE})\b', ' ', words)
+    subtitled = bool(re.search(_SUBTITLE_LABEL, words))
+    words = re.sub(_SUBTITLE_LABEL, ' ', words)
+    if subtitled:
+        # Community/release tags such as "CZ tit (Anime CZ SK)" repeat bare
+        # language codes. Only an explicit audio label can override subtitles;
+        # otherwise these tags trigger false priority and redundant consensus.
+        labels = re.findall(
+            rf'\b(?:{_CODES})(?:\s+(?:{_CODES}))*\s+(?:{_AUDIO})\b'
+            rf'|\b(?:{_AUDIO})\s+(?:{_CODES})(?:\s+(?:{_CODES}))*\b', words)
+        words = ' '.join(labels)
     words = re.sub(r'\bcs\b', 'cz', words)
     words = re.sub(r'\bslovensky\b', 'sk', words)
     return sdk_audio_hint(words)
@@ -31,7 +42,7 @@ def search_hint_rank(title):
     if hint == 'sk':
         return 1
     words = _words(title)
-    if (re.search(rf'\b(?:{_CODES})(?:\s+(?:{_CODES}))*\s+(?:{_SUBTITLE})\b', words)
+    if (re.search(_SUBTITLE_LABEL, words)
             or re.search(r'\b(?:eng|english|en|jpn|japanese|ger|german)(?:\d+p)?\b', words)):
         return 2
     return 1

@@ -745,6 +745,22 @@ their public paths, HTTP status, byte/result counts and check timestamps.
 Checkpoints report the pause and retain its UTC deadline across job restarts,
 including before a new login. Cookies and session clients remain independent.
 
+### Do not interpret subtitle community tags as dubbed audio (2026-10-27)
+
+An empty reserve coincided with repeated verification of foreign anime sources.
+Names such as `CZ tit (Anime CZ SK)` lost the subtitle label during hint parsing,
+then the remaining community tag incorrectly became a Czech-audio hint. This
+both prioritized those episodes and forced extra speech samples against the
+misleading Czech preference. The live search cache contained 435 affected source
+filenames when the issue was diagnosed.
+
+When a filename explicitly labels CZ/SK subtitles, only an explicit audio or
+dubbing label may additionally claim CZ/SK speech. Bare language codes elsewhere
+in that filename are not dubbed evidence. Explicit Czech/Slovak dubbing alongside
+subtitles remains supported. This changes discovery hints and unnecessary sample
+requests only; original quality, speech confidence and episode ownership checks
+still decide whether a source can be published.
+
 A failed shared control is recorded as `source_search_unavailable`. It does not
 increase episode/series failure counts or consume requested-season sampling
 budgets. Its retry follows the shared recovery deadline. Episode identity,

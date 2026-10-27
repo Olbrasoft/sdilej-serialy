@@ -25,6 +25,12 @@ from test_episodes import provider_with, episode
     ('Series S01E01 CZ-SKTit',None,2),
     ('Series S01E01 CZ titulky',None,2),
     ('Series S01E01 SKtit',None,2),
+    ('Fire Force S01E06 1080p CZ tit (Anime CZ SK) mkv',None,2),
+    ('Series S01E01 CZtit [CZ SK] release',None,2),
+    ('Series S01E01 SK subtitles CZ SK',None,2),
+    ('Series S01E01 CZ titulky SK dabing (Anime CZ SK)','sk',1),
+    ('Series S01E01 CZ tit (Anime CZ SK) CZ dabing','cs',0),
+    ('Series S01E01 CZ-SK tit audio SK','sk',1),
     ('Series S01E01 CZ Dabing','cs',0),
     ('Series S01E01 CZDAB','cs',0),
     ('Series S01E01 SK dabing CZ titulky','sk',1),
@@ -48,6 +54,36 @@ def test_index_retains_only_exact_dubbed_hints_for_extra_samples():
         candidate('Series 1 S01E04-05 CZ','4'),candidate('Other Series 1 S01E05 CZ','5')])
     assert index.dubbed_hints=={'1:1:2','1:1:3'}
     assert index.rank('1:1:1')==2
+
+
+def test_community_language_tags_do_not_unlock_dubbed_priority_or_series_pause():
+    from sdilej_serialy.discovery_index import series_probe_allowed
+    rows = [metadata(number=n) for n in (1, 2)]
+    index = CandidateIndex(rows)
+    index.observe([candidate('Series 1 S01E01 CZ tit (Anime CZ SK)', '1'),
+                   candidate('Series 1 S01E02 CZ dabing (Anime CZ SK)', '2')])
+    assert index.dubbed_hints == {'1:1:2'}
+    assert index.rank('1:1:1') == 2
+    assert not series_probe_allowed(rows[0], {1}, index, {}, urgent=True)
+    assert series_probe_allowed(rows[1], {1}, index, {}, urgent=True)
+
+
+def test_subtitle_community_tag_does_not_trigger_extra_audio_downloads():
+    from sdilej_serialy.episodes import EpisodeSourceProvider
+    import requests
+    calls = []
+    def detect(_url):
+        calls.append('sample')
+        return 'ja', .99
+    def consensus(*args, **kwargs):
+        pytest.fail('A subtitle-only filename must not force Czech consensus samples')
+    provider = EpisodeSourceProvider(requests.Session(), detector=SimpleNamespace(
+        detect=detect, detect_consensus=consensus))
+    selected = Candidate.from_dict(source()['selected'])
+    selected.filename = 'Series 1 S01E01 CZ tit (Anime CZ SK) mkv'
+    result = provider._verify_language(Episode.from_dict(source()['episode']), selected)
+    assert result.audio_language == 'ja' and result.language_tier == LanguageTier.FOREIGN_AUDIO
+    assert calls == ['sample']
 
 
 def failed_sample():
