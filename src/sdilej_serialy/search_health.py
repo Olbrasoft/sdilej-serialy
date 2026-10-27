@@ -34,6 +34,9 @@ class SearchCircuit:
         self.healthy_until = 0
         self.probe_count = 0
         self.failures = max(0, int((restored or {}).get('consecutive_failures', 0)))
+        self.request_gap_seconds = min(8, max(2, float((restored or {}).get(
+            'request_gap_seconds', 2 * 2 ** min(self.failures, 2)))))
+        self.stable_since = None
         self.retry_at = 0
         self.verified = False
         self.controls = {}
@@ -66,8 +69,10 @@ class SearchCircuit:
                 self.failures += 1
                 self.failed_cycles_this_run += 1
                 self.retry_at = now + min(300 * 2 ** min(self.failures - 1, 2), 900)
+                self.request_gap_seconds = min(8, self.request_gap_seconds * 2)
             self.verified = False
             self.healthy_until = 0
+            self.stable_since = None
             return retry_seconds(self.retry_at - now)
 
     def success(self):
@@ -80,6 +85,22 @@ class SearchCircuit:
             self.failed_cycles_this_run = 0
             self.verified = True
             self.healthy_until = self.clock() + 60
+            if self.stable_since is None:
+                self.stable_since = self.clock()
+
+    def _request_gap(self):
+        # After a real outage, resume gently rather than immediately recreate
+        # the same request pressure. Healthy operation gradually restores the
+        # normal rate; one successful probe alone is not sustained recovery.
+        if (self.verified and self.stable_since is not None
+                and self.clock() - self.stable_since >= 600):
+            self.request_gap_seconds = max(2, self.request_gap_seconds / 2)
+            self.stable_since = self.clock()
+        return self.request_gap_seconds
+
+    def request_gap(self):
+        with self.lock:
+            return self._request_gap()
 
     def _restart_required(self):
         return bool(self.max_failed_cycles and self.failed_cycles_this_run >= self.max_failed_cycles)
@@ -126,6 +147,7 @@ class SearchCircuit:
                 consecutive_failures=self.failures, retry_seconds=retry_seconds(remaining),
                 failed_cycles_this_run=self.failed_cycles_this_run,
                 control_requests=self.probe_count,
+                request_gap_seconds=self._request_gap(),
                 restart_required=self._restart_required(),
                 resume_after=(datetime.fromtimestamp(self.wall_clock() + remaining, UTC).isoformat()
                               if remaining else None),

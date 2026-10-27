@@ -34,6 +34,47 @@ def test_large_monotonic_timestamp_does_not_add_a_phantom_retry_second():
     assert circuit.snapshot()['retry_seconds'] == 300
 
 
+def test_request_pacing_survives_restart_and_recovers_only_after_sustained_health():
+    now = [100]
+    circuit = SearchCircuit(clock=lambda: now[0])
+    assert circuit.request_gap() == 2
+    for _ in range(4):
+        circuit.failure()
+    assert circuit.request_gap() == 4
+    now[0] += 300
+    circuit.failure()
+    snapshot = circuit.snapshot()
+    assert snapshot['request_gap_seconds'] == 8
+    resumed = SearchCircuit(clock=lambda: now[0], restored=snapshot)
+    assert resumed.request_gap() == 8
+    now[0] += 1000
+    resumed.success()
+    assert resumed.request_gap() == 8
+    now[0] += 599
+    assert resumed.request_gap() == 8
+    now[0] += 1
+    assert resumed.request_gap() == 4
+    now[0] += 600
+    assert resumed.request_gap() == 2
+
+
+def test_shared_request_gate_uses_adaptive_pacing_without_ever_speeding_up(monkeypatch):
+    from sdilej_serialy import source_cache
+    now, delays, pace = [100], [], [8]
+    def sleep(seconds):
+        delays.append(seconds)
+        now[0] += seconds
+    monkeypatch.setattr(source_cache.time, 'monotonic', lambda: now[0])
+    monkeypatch.setattr(source_cache.time, 'sleep', sleep)
+    gate = source_cache.RequestGate(pace=lambda: pace[0])
+    gate.wait()
+    gate.wait()
+    pace[0] = 1
+    gate.wait()
+    gate.wait()
+    assert delays == [8, 8, 2]
+
+
 def test_repeated_failed_recovery_retires_only_current_runner_and_preserves_quiet_deadline():
     now, wall = [100], [1800000000]
     circuit = SearchCircuit(clock=lambda: now[0], wall_clock=lambda: wall[0], max_failed_cycles=2)

@@ -738,9 +738,10 @@ def main():
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         report_path = root / 'reports/reserve-preparation.json'
         previous = json.loads(report_path.read_text()).get('search_health') if report_path.exists() else None
+        circuit = SearchCircuit(restored=previous, max_failed_cycles=2)
         provider = AuditProvider.authenticated(os.environ['SDILEJ_EMAIL'], os.environ['SDILEJ_PASSWORD'],
             discovery_timeout_seconds=900, cache=SourceCache(root / 'state/source-evidence-cache.json'),
-            request_gate=RequestGate(), search_circuit=SearchCircuit(restored=previous, max_failed_cycles=2))
+            request_gate=RequestGate(pace=circuit.request_gap), search_circuit=circuit)
         try:
             print(json.dumps(prepare(root, args.generation, provider, limit=args.limit,
                                     runtime_minutes=args.runtime_minutes, persist=args.persist_git_state,

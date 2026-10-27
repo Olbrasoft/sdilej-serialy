@@ -133,8 +133,9 @@ class SourceCache:
 
 class RequestGate:
     """Keep the existing site-wide request spacing across source workers."""
-    def __init__(self, gap_seconds=2):
+    def __init__(self, gap_seconds=2, *, pace=None):
         self.gap_seconds = gap_seconds
+        self.pace = pace
         self.lock = threading.Lock()
         self.next_request = 0.0
 
@@ -143,4 +144,5 @@ class RequestGate:
             delay = self.next_request - time.monotonic()
             if delay > 0:
                 time.sleep(delay)
-            self.next_request = time.monotonic() + self.gap_seconds
+            gap = max(self.gap_seconds, self.pace()) if self.pace else self.gap_seconds
+            self.next_request = time.monotonic() + gap

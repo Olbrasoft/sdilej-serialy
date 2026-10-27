@@ -16,6 +16,10 @@ A single failed control GET now tries the existing alternative control before
 declaring a shared outage. HTTP 429 immediately opens the quiet window without
 another probe or login. Reports retain only error classes and HTTP status, never
 exception text, so transport failures are distinguishable from empty HTTP 200 pages.
+After a confirmed outage, shared request spacing increases from two to four,
+then at most eight seconds, including across runner restarts. It halves only
+after ten minutes of healthy operation, down to the original two-second floor.
+This is a conservative recovery measure; the upstream cause is still unconfirmed.
 When the reserve is low, the first two hinted probes prefer recently productive
 seasons, including two neighboring episodes from one proven season. Subsequent
 bounded requested-series, exploration and retry lanes continue normally.
