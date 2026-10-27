@@ -5,9 +5,9 @@
   "prepared_this_run": 0,
   "reserve_total": 22249,
   "queue_total": 30684,
-  "updated_at": "2026-10-27T19:26:45.177646+00:00",
+  "updated_at": "2026-10-27T19:27:54.006644+00:00",
   "workers": 4,
-  "elapsed_seconds": 2544.35,
+  "elapsed_seconds": 2613.17,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -40,12 +40,12 @@
       "b"
     ],
     "seconds_since_upload": {
-      "a": 4774,
-      "b": 3480
+      "a": 4843,
+      "b": 3549
     },
     "preparation_outcomes_last_hour": {
-      "no_matches": 66,
-      "verified_non_czech": 32,
+      "no_matches": 62,
+      "verified_non_czech": 30,
       "source_search_unavailable": 5
     }
   },
@@ -2913,23 +2913,27 @@
     }
   ],
   "search_health": {
-    "status": "paused",
+    "status": "probe_due",
     "consecutive_failures": 1,
-    "retry_seconds": 20,
+    "retry_seconds": 0,
     "failed_cycles_this_run": 1,
-    "control_requests": 30,
+    "control_requests": 31,
     "request_gap_seconds": 4,
     "restart_required": false,
-    "resume_after": "2026-10-27T19:27:04.666221+00:00",
+    "resume_after": null,
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
-        "status": 200,
-        "response_bytes": 189621,
+        "status": null,
+        "error_types": [
+          "SdilejError",
+          "ReadTimeout",
+          "ReadTimeoutError",
+          "TimeoutError"
+        ],
+        "response_bytes": null,
         "parsed_candidates": 0,
-        "response_path": "/teorie-velkeho-tresku/s/-6",
-        "unexpected_origin": false,
-        "checked_at": "2026-10-27T19:22:02.561865+00:00"
+        "checked_at": "2026-10-27T19:27:53.714978+00:00"
       },
       {
         "path": "/doktor-martin/s/-6",
