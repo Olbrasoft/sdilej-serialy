@@ -308244,17 +308244,20 @@
       "queue_rank": 28386
     },
     "1133:1:5": {
-      "at": "2026-10-27T11:25:30.448475+00:00",
+      "at": "2026-10-27T13:53:30.498600+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 940.51,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-27T11:56:10.961749+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ja",
+      "observed_language_probability": 0.9644601345062256,
+      "observed_source_id": "33556433",
+      "elapsed_seconds": 159.31,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-28T13:56:12.722066+00:00"
     },
     "1356:7:5": {
       "at": "2026-10-19T14:02:25.291099+00:00",
@@ -402063,17 +402066,17 @@
       "retry_after": "2026-10-24T04:46:56.786664+00:00"
     },
     "2592:6:9": {
-      "at": "2026-10-27T13:17:40.202807+00:00",
+      "at": "2026-10-27T13:55:32.684495+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 951.13,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-27T13:48:31.329463+00:00"
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 41.2,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-28T13:56:13.932175+00:00"
     },
     "2592:6:11": {
       "at": "2026-10-26T12:39:53.440770+00:00",
@@ -683806,9 +683809,88 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-28T13:55:32.036734+00:00"
+    },
+    "2069:4:2": {
+      "at": "2026-10-27T13:55:31.516829+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 40.59,
+      "search_evidence": [
+        {
+          "path": "/nutne-k-preziti-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 217044,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nutne-k-preziti/s/-6",
+          "status": 200,
+          "response_bytes": 218536,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/man-vs-wild-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 216977,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/man-vs-wild/s/-6",
+          "status": 200,
+          "response_bytes": 216779,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nutne-k-preziti-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 217037,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nutne-k-preziti/s/-6",
+          "status": 200,
+          "response_bytes": 218398,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/man-vs-wild-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 216950,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/man-vs-wild/s/-6",
+          "status": 200,
+          "response_bytes": 216900,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-28T13:56:12.722171+00:00"
     }
   },
-  "updated_at": "2026-10-27T13:56:00.825118+00:00",
+  "updated_at": "2026-10-27T13:57:16.050026+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -693223,9 +693305,10 @@
     },
     "2069": {
       "misses": [
-        "2069:4:1"
+        "2069:4:1",
+        "2069:4:2"
       ],
-      "updated_at": "2026-10-26T20:17:43.126610+00:00"
+      "updated_at": "2026-10-27T13:56:12.722183+00:00"
     },
     "1186": {
       "misses": [
@@ -696609,9 +696692,11 @@
     "2592": {
       "misses": [
         "2592:6:10",
-        "2592:6:7"
+        "2592:6:7",
+        "2592:6:9"
       ],
-      "updated_at": "2026-10-27T13:17:40.203302+00:00"
+      "updated_at": "2026-10-27T13:56:13.932203+00:00",
+      "retry_after": "2026-10-27T17:56:13.932203+00:00"
     },
     "1382": {
       "misses": [
@@ -699728,9 +699813,11 @@
     "1133": {
       "misses": [
         "1133:1:1",
-        "1133:1:2"
+        "1133:1:2",
+        "1133:1:5"
       ],
-      "updated_at": "2026-10-27T13:53:59.969665+00:00"
+      "updated_at": "2026-10-27T13:56:12.722102+00:00",
+      "retry_after": "2026-10-27T17:56:12.722102+00:00"
     },
     "2079": {
       "misses": [
