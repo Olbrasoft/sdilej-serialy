@@ -103642,14 +103642,17 @@
       "retry_after": "2026-10-19T21:56:24.285594+00:00"
     },
     "1122:1:7": {
-      "at": "2026-10-19T02:44:35.064207+00:00",
+      "at": "2026-10-27T14:35:57.470147+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
       "method": "discovery",
       "reason": "no_acceptable_original",
-      "elapsed_seconds": 24.65,
-      "consecutive_failures": 5,
-      "retry_after": "2026-10-20T02:44:59.716039+00:00"
+      "elapsed_seconds": 32.6,
+      "consecutive_failures": 6,
+      "retry_after": "2026-10-28T14:36:30.074554+00:00"
     },
     "1122:1:8": {
       "at": "2026-10-18T15:08:24.034030+00:00",
@@ -481964,7 +481967,7 @@
       "queue_rank": 30364
     },
     "581:4:2": {
-      "at": "2026-10-27T13:49:11.500411+00:00",
+      "at": "2026-10-27T14:35:56.099316+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -481972,10 +481975,44 @@
       "audio_sampling_revision": 1,
       "subtitle_verification_revision": 2,
       "method": "discovery",
-      "reason": "no_english_czech_subtitles",
-      "elapsed_seconds": 136.38,
-      "consecutive_failures": 49,
-      "retry_after": "2026-10-27T14:21:27.876365+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 30.83,
+      "search_evidence": [
+        {
+          "path": "/kral-tulsy-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 216977,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kral-tulsy/s/-6",
+          "status": 200,
+          "response_bytes": 558514,
+          "boxes": 279,
+          "parsed_candidates": 276,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tulsa-king-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 189537,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tulsa-king/s/-6",
+          "status": 200,
+          "response_bytes": 189390,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 50,
+      "retry_after": "2026-10-27T15:36:26.933277+00:00"
     },
     "581:4:1": {
       "at": "2026-10-23T13:24:49.190050+00:00",
@@ -686342,7 +686379,7 @@
       "retry_after": "2026-10-27T14:35:39.074783+00:00"
     }
   },
-  "updated_at": "2026-10-27T14:25:45.532785+00:00",
+  "updated_at": "2026-10-27T14:36:58.648966+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -690662,9 +690699,10 @@
     },
     "1122": {
       "misses": [
-        "1122:1:5"
+        "1122:1:5",
+        "1122:1:7"
       ],
-      "updated_at": "2026-10-27T13:49:45.821602+00:00"
+      "updated_at": "2026-10-27T14:36:30.074612+00:00"
     },
     "21": {
       "misses": [
@@ -703364,7 +703402,7 @@
       "misses": [
         "581:4:2"
       ],
-      "updated_at": "2026-10-27T13:51:27.876398+00:00"
+      "updated_at": "2026-10-27T14:36:26.933307+00:00"
     },
     "10498": {
       "misses": [],
