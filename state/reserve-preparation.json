@@ -355985,14 +355985,21 @@
       "retry_after": "2026-10-28T22:57:54.741339+00:00"
     },
     "2592:5:8": {
-      "at": "2026-10-22T15:23:09.127123+00:00",
+      "at": "2026-10-27T22:57:52.748068+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 44.24,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-23T15:23:58.207126+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9945229291915894,
+      "observed_source_id": "30574832",
+      "elapsed_seconds": 59.46,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-28T22:58:52.204410+00:00"
     },
     "2592:6:2": {
       "at": "2026-10-26T17:17:27.992706+00:00",
@@ -698677,7 +698684,7 @@
       "retry_after": "2026-10-28T22:57:51.545558+00:00"
     }
   },
-  "updated_at": "2026-10-27T22:58:05.756779+00:00",
+  "updated_at": "2026-10-27T22:59:16.943524+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -700643,21 +700650,22 @@
       "queue_rank": 6696
     },
     "1553:1:15": {
-      "at": "2026-10-27T18:03:05.085875+00:00",
+      "at": "2026-10-27T22:57:24.126700+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "source_repair",
       "source_repair_revision": 2,
-      "reason": "transient_search",
-      "elapsed_seconds": 125.02,
+      "reason": "no_matches",
+      "elapsed_seconds": 108.2,
       "search_evidence": [
         {
           "path": "/fresh-prince-s01e15/s/-6",
           "status": 200,
-          "response_bytes": 217001,
+          "response_bytes": 216990,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -700665,7 +700673,7 @@
         {
           "path": "/fresh-prince/s/-6",
           "status": 200,
-          "response_bytes": 374101,
+          "response_bytes": 374094,
           "boxes": 137,
           "parsed_candidates": 127,
           "heading_matches_query": true
@@ -700673,7 +700681,7 @@
         {
           "path": "/the-fresh-prince-of-bel-air-s01e15/s/-6",
           "status": 200,
-          "response_bytes": 217299,
+          "response_bytes": 217355,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -700681,7 +700689,7 @@
         {
           "path": "/the-fresh-prince-of-bel-air/s/-6",
           "status": 200,
-          "response_bytes": 237122,
+          "response_bytes": 237154,
           "boxes": 17,
           "parsed_candidates": 14,
           "heading_matches_query": true
@@ -700689,7 +700697,7 @@
         {
           "path": "/fresh-prince-s01e15/s/-6",
           "status": 200,
-          "response_bytes": 217058,
+          "response_bytes": 216927,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -700697,7 +700705,7 @@
         {
           "path": "/fresh-prince/s/-6",
           "status": 200,
-          "response_bytes": 374017,
+          "response_bytes": 374073,
           "boxes": 137,
           "parsed_candidates": 127,
           "heading_matches_query": true
@@ -700705,15 +700713,23 @@
         {
           "path": "/the-fresh-prince-of-bel-air-s01e15/s/-6",
           "status": 200,
-          "response_bytes": 217258,
+          "response_bytes": 217346,
           "boxes": 0,
           "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-fresh-prince-of-bel-air/s/-6",
+          "status": 200,
+          "response_bytes": 237104,
+          "boxes": 17,
+          "parsed_candidates": 14,
           "heading_matches_query": true
         }
       ],
       "repair_fingerprint": "e8174774d282d4a1765ac49e2d18f5bc77d56e1a1e6ff3ef21185d2a7cfd599e",
-      "consecutive_failures": 68,
-      "retry_after": "2026-10-27T19:05:10.106033+00:00"
+      "consecutive_failures": 69,
+      "retry_after": "2026-10-27T23:59:12.330208+00:00"
     },
     "1553:1:16": {
       "at": "2026-10-27T18:10:02.891161+00:00",
@@ -703390,12 +703406,9 @@
     },
     "1553": {
       "misses": [
-        "1553:1:15",
-        "1553:1:16",
-        "1553:2:13"
+        "1553:1:15"
       ],
-      "updated_at": "2026-10-27T18:14:25.470738+00:00",
-      "retry_after": "2026-10-27T22:14:25.470738+00:00"
+      "updated_at": "2026-10-27T22:59:12.330237+00:00"
     },
     "2108": {
       "misses": [
@@ -711463,9 +711476,10 @@
     },
     "2592": {
       "misses": [
-        "2592:5:7"
+        "2592:5:7",
+        "2592:5:8"
       ],
-      "updated_at": "2026-10-27T22:57:54.741365+00:00"
+      "updated_at": "2026-10-27T22:58:52.204435+00:00"
     },
     "1382": {
       "misses": [
@@ -716053,12 +716067,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1055,
+    "last_series": 1553,
     "last_series_order": [
       false,
       -7.9,
-      -304309,
-      1055
+      -154415,
+      1553
     ]
   }
 }
