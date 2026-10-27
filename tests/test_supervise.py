@@ -2,7 +2,7 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
-from sdilej_serialy.supervise import decision, github, settle_runs
+from sdilej_serialy.supervise import decision, github, settle_runs, finishing_run
 
 NOW = datetime(2026, 10, 27, 15, tzinfo=UTC)
 
@@ -106,3 +106,41 @@ def test_pending_time_cannot_exhaust_actual_source_worker_startup_grace(monkeypa
     monkeypatch.setattr(supervise, 'github', lambda *a: dict(total_count=len(jobs), jobs=jobs))
     settled = settle_runs('owner/repo', [run('in_progress', minutes=120)])
     assert decision('source', enabled=True, runs=settled, now=NOW)['action'] == 'wait'
+
+
+@pytest.mark.parametrize('kind', ['source', 'upload'])
+def test_finishing_work_enqueues_successor_only_when_no_peer_is_scheduled(kind):
+    current = run('in_progress')
+    report = dict(run_id=123, prepared_this_run=1)
+    runs = finishing_run([current], '123', NOW)
+    assert current['status'] == 'in_progress'
+    assert decision(kind, enabled=True, runs=runs, now=NOW, report=report)['action'] == 'dispatch'
+    pending = dict(run('pending'), id=124)
+    runs = finishing_run([current, pending], '123', NOW)
+    assert decision(kind, enabled=True, runs=runs, now=NOW, report=report)['action'] == 'wait'
+
+
+def test_handoff_retains_empty_run_backoff_and_rejects_unknown_caller():
+    cancelled_peer = dict(run(minutes=1), id=124, conclusion='cancelled')
+    runs = finishing_run([run('in_progress'), cancelled_peer], '123', NOW)
+    assert decision('source', enabled=True, runs=runs, now=NOW,
+                    report=dict(run_id=123, prepared_this_run=0))['reason'] == 'restart_backoff'
+    for caller in (None, '999'):
+        with pytest.raises(ValueError):
+            finishing_run([run('in_progress')], caller, NOW)
+
+
+@pytest.mark.parametrize('push_status,attempts', [(0, 1), (1, 5)])
+def test_upload_cleanup_requires_confirmed_push_before_successful_handoff(push_status, attempts):
+    import os
+    import subprocess
+    import textwrap
+    from pathlib import Path
+    workflow = Path('.github/workflows/dual.yml').read_text()
+    step = workflow.split('      - name: Preserve progress after interruption\n', 1)[1].split('\n      - ', 1)[0]
+    script = textwrap.dedent(step.split('        run: |\n', 1)[1])
+    fake_git = 'git() { if [[ "$1" == push ]]; then echo push; return "$PUSH_STATUS"; fi; return 0; }\nsleep() { :; }\n'
+    result = subprocess.run(['bash', '-c', fake_git + script], capture_output=True, text=True,
+                            env=dict(os.environ, DUAL_GENERATION='test', PUSH_STATUS=str(push_status)))
+    assert result.returncode == push_status
+    assert result.stdout.splitlines() == ['push'] * attempts

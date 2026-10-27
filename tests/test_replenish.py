@@ -485,6 +485,7 @@ def test_preparation_workflow_passes_validated_batch_identities(requested, expec
     import textwrap
     workflow = Path('.github/workflows/prepare-reserve.yml').read_text()
     step = workflow.split('      - name: Prepare new originals from cached catalog and append reserve\n', 1)[1]
+    step = step.split('\n      - ', 1)[0]
     script = textwrap.dedent(step.split('        run: |\n', 1)[1])
     result = subprocess.run(['bash', '-c', 'python() { printf "%s\\0" "$@"; }\n' + script],
                             env=dict(os.environ, DUAL_GENERATION='test', SOURCE_DISCOVERY_WORKERS='4',

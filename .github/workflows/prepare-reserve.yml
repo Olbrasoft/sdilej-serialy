@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: sdilej-serialy-source-preparation
@@ -92,3 +93,10 @@ jobs:
             done
           fi
           python -m sdilej_serialy.replenish "${preparation_options[@]}"
+      - name: Hand off completed preparation without waiting for cron
+        if: success() && steps.reserve.outputs.needed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DUAL_ENABLED: ${{ vars.DUAL_ENABLED }}
+          DUAL_FULL_ENABLED: ${{ vars.DUAL_FULL_ENABLED }}
+        run: python -m sdilej_serialy.supervise --generation "$DUAL_GENERATION" --handoff source --apply

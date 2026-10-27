@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: sdilej-serialy-target-transfer
@@ -84,3 +85,11 @@ jobs:
             git pull --rebase origin main && git push && exit 0
             sleep $((attempt * 2))
           done
+          exit 1
+      - name: Hand off completed upload work without waiting for cron
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_PREPARATION_ENABLED: ${{ vars.SOURCE_PREPARATION_ENABLED }}
+          DUAL_FULL_ENABLED: ${{ vars.DUAL_FULL_ENABLED }}
+        run: python -m sdilej_serialy.supervise --generation "$DUAL_GENERATION" --handoff upload --apply

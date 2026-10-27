@@ -49,7 +49,7 @@ def decision(kind, *, enabled, runs, now, needed=True, halted=False, report=None
         return dict(action='wait', reason='already_scheduled', run_ids=[run['id'] for run in active])
     if not needed:
         return dict(action='wait', reason='reserve_sufficient')
-    latest = max(runs, key=lambda run: run.get('created_at', ''), default=None)
+    latest = max(runs, key=lambda run: run.get('updated_at') or run.get('created_at', ''), default=None)
     if latest:
         finished = timestamp(latest.get('updated_at'))
         report_matches = str((report or {}).get('run_id')) == str(latest['id'])
@@ -102,6 +102,14 @@ def settle_runs(repository, runs):
     return settled
 
 
+def finishing_run(runs, run_id, now):
+    """Only the caller's completed work may enqueue its serialized successor."""
+    if not run_id or not any(str(run['id']) == str(run_id) for run in runs):
+        raise ValueError('Finishing run is absent from this workflow')
+    return [dict(run, status='completed', conclusion='success', updated_at=now.isoformat())
+            if str(run['id']) == str(run_id) else run for run in runs]
+
+
 def main():
     import argparse
     from .dual import load
@@ -109,6 +117,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--generation', required=True)
     parser.add_argument('--apply', action='store_true')
+    parser.add_argument('--handoff', choices=WORKFLOWS,
+                        help='Called only after this workflow has durably finished its work')
     args = parser.parse_args()
     repository = os.environ['GITHUB_REPOSITORY']
     if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+', repository):
@@ -126,6 +136,8 @@ def main():
     for kind, workflow in WORKFLOWS.items():
         payload = github(repository, f'actions/workflows/{workflow}/runs?per_page=50&branch=main')
         runs = settle_runs(repository, payload['workflow_runs'])
+        if args.handoff == kind:
+            runs = finishing_run(runs, os.environ.get('GITHUB_RUN_ID'), now)
         enabled = (os.environ.get('SOURCE_PREPARATION_ENABLED') == 'true' if kind == 'source'
                    else os.environ.get('DUAL_ENABLED') == 'true' and os.environ.get('DUAL_FULL_ENABLED') == 'true')
         chosen = decision(kind, enabled=enabled, runs=runs, now=now,

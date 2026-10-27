@@ -50,6 +50,11 @@ checks out `main`, never code/artifacts from the triggering workflow. GitHub
 documents both [workflow dispatch with the repository token](https://docs.github.com/en/actions/concepts/security/github_token)
 and [scheduled/workflow-completion events](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows).
 The periodic check also covers missed completion events and delayed schedules.
+Successful producer/uploader jobs also call the supervisor after their durable
+final checkpoint, marking only their own work finished for that decision. They
+can enqueue one successor behind the existing concurrency group without relying
+on a completion event. Existing peers, disabled flags, integrity halts and empty
+source-run backoff still prevent dispatch. Failed jobs use the periodic watchdog.
 
 If both positive search controls still fail after a shared recovery pause, the
 producer checkpoints all finished work, drains its read-only workers and yields
