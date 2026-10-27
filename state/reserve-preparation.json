@@ -355968,14 +355968,21 @@
       "retry_after": "2026-10-20T22:06:09.373795+00:00"
     },
     "2592:5:7": {
-      "at": "2026-10-22T15:23:07.866840+00:00",
+      "at": "2026-10-27T22:56:45.678084+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
-      "reason": "transient_original",
-      "elapsed_seconds": 44.95,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-22T15:53:52.822389+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9893099069595337,
+      "observed_source_id": "30571608",
+      "elapsed_seconds": 69.06,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-28T22:57:54.741339+00:00"
     },
     "2592:5:8": {
       "at": "2026-10-22T15:23:09.127123+00:00",
@@ -698571,9 +698578,106 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-28T22:55:46.663215+00:00"
+    },
+    "3038:4:8": {
+      "at": "2026-10-27T22:55:08.835522+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 135.29,
+      "search_evidence": [
+        {
+          "path": "/looney-tunes-animaky-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 217110,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-animaky/s/-6",
+          "status": 200,
+          "response_bytes": 226000,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-cartoons-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 217136,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-cartoons/s/-6",
+          "status": 200,
+          "response_bytes": 223777,
+          "boxes": 6,
+          "parsed_candidates": 6,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-animaky-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 217095,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-animaky/s/-6",
+          "status": 200,
+          "response_bytes": 225928,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-cartoons-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 217161,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-cartoons/s/-6",
+          "status": 200,
+          "response_bytes": 223910,
+          "boxes": 6,
+          "parsed_candidates": 6,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-28T22:57:24.126133+00:00"
+    },
+    "15:11:4": {
+      "at": "2026-10-27T22:55:47.401645+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9602713584899902,
+      "observed_source_id": "35148133",
+      "elapsed_seconds": 124.14,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-28T22:57:51.545558+00:00"
     }
   },
-  "updated_at": "2026-10-27T22:56:51.514024+00:00",
+  "updated_at": "2026-10-27T22:58:05.756779+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -710022,9 +710126,10 @@
     },
     "3038": {
       "misses": [
-        "3038:4:5"
+        "3038:4:5",
+        "3038:4:8"
       ],
-      "updated_at": "2026-10-27T14:15:21.150482+00:00"
+      "updated_at": "2026-10-27T22:57:24.126165+00:00"
     },
     "5346": {
       "misses": [
@@ -710051,9 +710156,11 @@
     "15": {
       "misses": [
         "15:11:2",
-        "15:11:3"
+        "15:11:3",
+        "15:11:4"
       ],
-      "updated_at": "2026-10-27T14:15:51.191851+00:00"
+      "updated_at": "2026-10-27T22:57:51.545582+00:00",
+      "retry_after": "2026-10-28T02:57:51.545582+00:00"
     },
     "1055": {
       "misses": [
@@ -711355,8 +711462,10 @@
       "retry_after": "2026-10-21T09:39:08.058071+00:00"
     },
     "2592": {
-      "misses": [],
-      "updated_at": "2026-10-27T22:26:23.952644+00:00"
+      "misses": [
+        "2592:5:7"
+      ],
+      "updated_at": "2026-10-27T22:57:54.741365+00:00"
     },
     "1382": {
       "misses": [
