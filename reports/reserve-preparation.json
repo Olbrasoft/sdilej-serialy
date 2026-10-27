@@ -4,12 +4,12 @@
   "prepared_this_run": 4,
   "reserve_total": 22173,
   "queue_total": 30608,
-  "updated_at": "2026-10-27T11:20:29.202219+00:00",
+  "updated_at": "2026-10-27T11:21:39.611730+00:00",
   "workers": 4,
-  "elapsed_seconds": 4789.14,
-  "prepared_per_hour": 3.01,
+  "elapsed_seconds": 4859.55,
+  "prepared_per_hour": 2.96,
   "available_this_run": 4,
-  "available_per_hour": 3.01,
+  "available_per_hour": 2.96,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
@@ -22,8 +22,7 @@
     "categories": {
       "completed": 30571,
       "allocated": 25,
-      "failed": 9,
-      "in_flight": 3
+      "failed": 12
     },
     "completed_by_account": {
       "a": 15283,
@@ -34,16 +33,17 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "waiting_for_sources",
-    "starved_accounts": [],
+    "status": "starved",
+    "starved_accounts": [
+      "a",
+      "b"
+    ],
     "seconds_since_upload": {
-      "a": 3389,
-      "b": 3482
+      "a": 3460,
+      "b": 3553
     },
     "preparation_outcomes_last_hour": {
       "source_search_unavailable": 8,
-      "verified_non_czech": 2,
-      "no_matches": 2,
       "transient_search": 3
     }
   },
@@ -2905,7 +2905,7 @@
   "search_health": {
     "status": "paused",
     "consecutive_failures": 5,
-    "retry_seconds": 178,
+    "retry_seconds": 107,
     "resume_after": "2026-10-27T11:23:26.577120+00:00",
     "controls": [
       {
