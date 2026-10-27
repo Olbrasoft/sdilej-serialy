@@ -118,6 +118,7 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
         # Refill empty accounts first from seasons that actually produced a
         # verified original. A filename hint alone is weaker scheduling evidence.
         warm_order = sorted(catalog, key=lambda m: (
+            records.get(Episode.from_dict(m).identity, {}).get('consecutive_failures', 0) > 0,
             (m['series_id'], m['season']) not in (productive_seasons or set()),
             index.rank(Episode.from_dict(m).identity)))
         for metadata in warm_order:

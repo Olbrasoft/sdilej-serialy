@@ -216,3 +216,16 @@ def test_repeated_source_failures_cannot_take_both_startup_slots_again():
     assert [row['series_id'] for row in result[:2]] == [3, 4]
     assert sorted(row['series_id'] for row in result) == [1, 2, 3, 4]
     assert all(record['consecutive_failures'] == 4 for record in records.values())
+
+
+def test_fresh_proven_episodes_precede_previously_rejected_czech_filename_hints():
+    rows = [metadata(series=s, number=n) for s, n in ((1, 1), (2, 1), (3, 1), (3, 2))]
+    index = CandidateIndex(rows)
+    index.observe([candidate(f'Series {s} S01E{n:02d} {"CZ" if s < 3 else "720p"}', str(k))
+                   for k, (s, n) in enumerate(((1, 1), (2, 1), (3, 1), (3, 2)))])
+    records = {f'{s}:1:1': dict(reason='verified_non_czech', preparation_revision=5,
+                              consecutive_failures=2) for s in (1, 2)}
+    result = list(replenish.reserve_order(rows, records, {}, set(), {(1, 1), (2, 1), (3, 1)},
+                  index=index, refresh=lambda: None, progress={}, urgent=True))
+    assert [Episode.from_dict(row).identity for row in result[:2]] == ['3:1:1', '3:1:2']
+    assert len(result) == 4
