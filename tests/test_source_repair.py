@@ -13,6 +13,38 @@ from test_dual import setup_plan, source
 from test_replenish import setup
 
 
+def test_slow_repair_refresh_keeps_last_verified_snapshot_readable(tmp_path, monkeypatch):
+    import threading
+    directory, plan, rows = setup_plan(tmp_path, monkeypatch)
+    reading, release, observed = threading.Event(), threading.Event(), threading.Event()
+    def read():
+        reading.set()
+        assert release.wait(3)
+        return ''
+    feed = SourceRepairFeed(plan, rows, read)
+    errors = []
+    def refresh():
+        try:
+            feed.refresh(force=True)
+        except Exception as error:
+            errors.append(error)
+    worker = threading.Thread(target=refresh)
+    worker.start()
+    assert reading.wait(3)
+    def snapshot():
+        assert feed.ready_tokens({'episodes': {}}) == {}
+        observed.set()
+    reader = threading.Thread(target=snapshot)
+    reader.start()
+    try:
+        assert observed.wait(1), 'Network read blocked durable repair snapshot'
+    finally:
+        release.set()
+        worker.join(3)
+        reader.join(3)
+    assert not errors and not worker.is_alive() and not reader.is_alive()
+
+
 def replacement(base, source_id='999', height=1080):
     ep = Episode.from_dict(base['episode'])
     candidate = replace(Candidate.from_dict(base['selected']), source_id=source_id,

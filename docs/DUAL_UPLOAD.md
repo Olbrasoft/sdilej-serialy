@@ -1,5 +1,23 @@
 # Ranked two-account upload
 
+Continuity hardening on October 27 keeps a fully receipted transfer pending when
+its owned listing/statistics are temporarily not visible. A later batch confirms
+that same target ID without another POST; the delayed listing does not halt both
+accounts. Missing receipts and account/identity violations retain their existing
+guards. Temporary queue-read or checkpoint outages drain the current batch and
+retry durable state; they do not become a permanent integrity halt. Uncertain
+allocations are never discarded to resume throughput.
+
+Remote reserve and repair-feed reads run outside the shared upload-state lock.
+Repair readers can use the last validated snapshot while a refresh is in flight.
+Git commands have a 120-second limit and a checkpoint push/rebase round has a
+five-minute budget (plus the bounded final command). A lost push response still
+requires normal fetch/rebase/push reconciliation before success is reported.
+These bounds prevent a stalled Git connection from indefinitely holding all
+upload workers. The pipeline watchdog described in `SOURCE_RESERVE.md` starts
+missing enabled workflows while preserving two workers per account and the
+shared target-transfer concurrency group.
+
 The dual generation is independent of all previous upload history. It uses only
 saved `original-media-v4` Czech sources (confirmed `cs`, confidence >= 0.65),
 deduplicates semantic episodes, and keeps the best resolution / smallest file

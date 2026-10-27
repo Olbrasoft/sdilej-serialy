@@ -80,10 +80,13 @@ class SourceCache:
         # Failed/inconclusive work is not cached and must be retried next time.
         with self.lock:
             flight = self.flights.setdefault(digest, threading.Lock())
+            observed = self.entries.get(digest)
         with flight:
             with self.lock:
                 entry = self.entries.get(digest)
-                if (not force and entry and entry['expires_at'] > self.clock()
+                # A forced refresh must bypass the old snapshot, but can share
+                # a fresh result computed by a concurrent caller while waiting.
+                if ((not force or entry is not observed) and entry and entry['expires_at'] > self.clock()
                         and safe_value(namespace, entry['value']) and cacheable(entry['value'])):
                     self.stats[f'{namespace}_hit'] += 1
                     return json.loads(json.dumps(entry['value']))

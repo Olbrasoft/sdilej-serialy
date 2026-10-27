@@ -16,7 +16,7 @@ from sdilej_to_prehrajto.models import Candidate
 
 from .catalog import load_jsonl
 from .continuous import SourceUnavailable, upload_continuously, uploaded_identities
-from .git_state import GitCheckpointPersister
+from .git_state import GitCheckpointPersister, CheckpointError
 from .manifest import SourceManifest
 from .models import Episode
 from .pipeline import EpisodeState, atomic_json, now_iso, target_session
@@ -175,7 +175,7 @@ class LiveReserve:
         self.last_read = float('-inf')
 
     def take(self, alias):
-        with self.lock, self.state._lock:
+        with self.lock:
             if self.dispatched[alias] >= self.limit:
                 return None
             if time.monotonic() - self.last_read >= 15:
@@ -186,34 +186,41 @@ class LiveReserve:
                 _, _, latest = load(self.root, self.generation, additions_payload=payload)
                 if latest[:len(self.rows)] != self.rows:
                     raise ValueError('Live reserve changed existing queue rows')
-                self.state.assignments.update({r['identity']: r['target_account'] for r in latest})
-                self.rows[:] = latest
+                with self.state._lock:
+                    self.state.assignments.update({r['identity']: r['target_account'] for r in latest})
+                    self.rows[:] = latest
                 if getattr(self.state, 'source_repairs', None):
                     self.state.source_repairs.refresh(force=True)
                 self.last_read = time.monotonic()
-            tokens = (self.state.source_repairs.ready_tokens(self.state.data)
-                      if getattr(self.state, 'source_repairs', None) else {})
-            fresh = set(tokens)
-            renewed = {identity for identity, token in tokens.items()
-                       if (identity, token) not in self.versions[alias]}
-            blocked = (uploaded_identities(self.state) | self.state.retry_deferred_identities()
-                       | (self.delivered[alias] - renewed))
-            # Retain uncertain allocations, and do not open a new retry lane
-            # beyond the two SourceUnavailable retries selected at batch start.
-            blocked.update(identity for identity, record in self.state.data['episodes'].items()
-                           if (record.get('prepared_target') and not receipt_matches(record))
-                           or (identity not in fresh and not record.get('prepared_target') and record.get('attempts')
-                               and record['attempts'][-1]['error'] == 'SourceUnavailable'))
-            chosen = account_batch(self.rows, self.state, blocked, alias,
-                                   self.limit - self.dispatched[alias], fresh)
-            self.delivered[alias].update(r['identity'] for r in chosen)
-            self.versions[alias].update((r['identity'], tokens.get(r['identity'])) for r in chosen)
-            self.dispatched[alias] += len(chosen)
-            # A dispatch token permits one retry of a newly verified source,
-            # not replay of an allocated/uploaded episode. Select the actual
-            # replacement only after the global claim, as for initial rows.
-            return [dict(r, _dispatch_repair_token=tokens[r['identity']])
-                    if r['identity'] in tokens else r for r in chosen]
+            with self.state._lock:
+                return self._take_validated(alias)
+
+    def _take_validated(self, alias):
+        # Caller holds the reserve and state locks. Remote fetches above do
+        # not hold the state lock, so receipts and claims can be persisted.
+        tokens = (self.state.source_repairs.ready_tokens(self.state.data)
+                  if getattr(self.state, 'source_repairs', None) else {})
+        fresh = set(tokens)
+        renewed = {identity for identity, token in tokens.items()
+                   if (identity, token) not in self.versions[alias]}
+        blocked = (uploaded_identities(self.state) | self.state.retry_deferred_identities()
+                   | (self.delivered[alias] - renewed))
+        # Retain uncertain allocations, and do not open a new retry lane
+        # beyond the two SourceUnavailable retries selected at batch start.
+        blocked.update(identity for identity, record in self.state.data['episodes'].items()
+                       if (record.get('prepared_target') and not receipt_matches(record))
+                       or (identity not in fresh and not record.get('prepared_target') and record.get('attempts')
+                           and record['attempts'][-1]['error'] == 'SourceUnavailable'))
+        chosen = account_batch(self.rows, self.state, blocked, alias,
+                               self.limit - self.dispatched[alias], fresh)
+        self.delivered[alias].update(r['identity'] for r in chosen)
+        self.versions[alias].update((r['identity'], tokens.get(r['identity'])) for r in chosen)
+        self.dispatched[alias] += len(chosen)
+        # A dispatch token permits one retry of a newly verified source,
+        # not replay of an allocated/uploaded episode. Select the actual
+        # replacement only after the global claim, as for initial rows.
+        return [dict(r, _dispatch_repair_token=tokens[r['identity']])
+                if r['identity'] in tokens else r for r in chosen]
 
 
 class SharedState(EpisodeState):
@@ -400,7 +407,16 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
         if mode == 'pilot' and all(state.uploaded(Episode.from_dict(r['episode'])) for r in rows[:4]):
             verify_pilot(rows, state, sessions)
     except Exception as error:
-        if transient_http(error) and not stop.is_set():
+        if isinstance(error, CheckpointError):
+            # Every claim/allocation intent remains in this shared state.
+            # A successful durable retry permits a later batch; a repeated
+            # storage failure propagates without turning a network outage
+            # into a permanent account/integrity halt.
+            transient_pause.set()
+            state.data['last_checkpoint_error'] = dict(at=now_iso(), **error_evidence(error))
+            state.save()
+            print('checkpoint_batch_deferred', flush=True)
+        elif transient_http(error) and not stop.is_set():
             transient_pause.set()
             state.data['last_transient_error'] = dict(at=now_iso(), **error_evidence(error))
             state.save()
@@ -413,7 +429,8 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
             raise
     finally:
         completed = Counter(r['target_account'] for r in state.data['episodes'].values() if r.get('upload'))
-        report = dict(generation=generation, total=len(rows), completed=sum(completed.values()),
+        report = dict(generation=generation, run_id=os.environ.get('GITHUB_RUN_ID'),
+                      total=len(rows), completed=sum(completed.values()),
                       completed_by_account={a: completed[a] for a in ACCOUNTS},
                       remaining=len(rows) - sum(completed.values()), accounts=results,
                       halted=bool(state.data.get('halted_at')), updated_at=now_iso())

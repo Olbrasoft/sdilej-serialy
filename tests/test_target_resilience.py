@@ -78,6 +78,44 @@ def run_transfer(rows, state, stop, pause):
         recover_source_errors=True, recover_target_errors=True, stop_event=stop, transient_pause=pause)
 
 
+def test_accepted_transfer_waits_for_eventual_listing_without_halting_or_reposting(tmp_path, monkeypatch):
+    stub_transfer(monkeypatch, lambda c, **kw: c)
+    row = source()
+    episode = Episode.from_dict(row['episode'])
+    state = pipeline.EpisodeState(tmp_path / 'state.json')
+    calls = []
+    def relay(*args, on_prepared, **kwargs):
+        calls.append(1)
+        on_prepared('555', 100)
+        state.row(episode)['transfer_receipt'] = dict(target_video_id='555', size_bytes=100,
+                                                     source_bytes_read=100, http_status=201)
+        state.save()
+        return SimpleNamespace(video_id='555')
+    monkeypatch.setattr(continuous.prehrajto, 'relay_upload', relay)
+    monkeypatch.setattr(continuous, 'target_confirmed', lambda *a: False)
+    stop, pause = Event(), Event()
+    run_transfer([row], state, stop, pause)
+    assert not stop.is_set() and not state.uploaded(episode)
+    assert resilience.receipt_matches(state.row(episode))
+    state.row(episode)['attempts'][-1]['at'] = (datetime.now(UTC) - timedelta(minutes=16)).isoformat()
+    monkeypatch.setattr(continuous, 'target_confirmed', lambda *a: True)
+    run_transfer([row], state, Event(), Event())
+    assert calls == [1] and state.row(episode)['upload']['target_video_id'] == '555'
+
+
+def test_batch_checkpoint_outage_does_not_set_permanent_integrity_halt(tmp_path, monkeypatch):
+    directory, _, _ = setup_plan(tmp_path, monkeypatch)
+    stub_live(monkeypatch)
+    def unavailable(*args, **kwargs):
+        raise CheckpointError('Storage temporarily unavailable')
+    monkeypatch.setattr(dual, 'upload_continuously', unavailable)
+    report = dual.run(tmp_path, 'test', 'pilot')
+    assert not report['halted'] and report['transient_pause']
+    saved = pipeline.EpisodeState(directory / 'state.json').data
+    assert saved['last_checkpoint_error']['type'] == 'CheckpointError'
+    assert not saved.get('halted_at')
+
+
 def test_allocated_504_pauses_without_halt_or_replay(tmp_path, monkeypatch):
     stub_transfer(monkeypatch, lambda c, **kw: c)
     rows = [source(number=1), source(number=2)]

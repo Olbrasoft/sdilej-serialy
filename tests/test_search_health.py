@@ -15,6 +15,19 @@ EMPTY = '<h1>Empty search</h1>'
 QUERY_URL = 'https://sdilej.cz/series/s/-6'
 
 
+def test_parallel_empty_queries_use_one_shared_positive_control():
+    from concurrent.futures import ThreadPoolExecutor
+    circuit = SearchCircuit()
+    sessions = [Session(lambda url: POSITIVE if url == CONTROL_URL else EMPTY) for _ in range(4)]
+    providers = [EpisodeSourceProvider(session, detector=object(), request_gap_seconds=0,
+                 session_factory=lambda: pytest.fail('Healthy backend'), search_circuit=circuit)
+                 for session in sessions]
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        assert list(pool.map(lambda p: p._search_page(QUERY_URL, 'Series')['candidates'], providers)) == [[], [], [], []]
+    assert sum(session.calls.count(CONTROL_URL) for session in sessions) == 1
+    assert circuit.snapshot()['control_requests'] == 1
+
+
 def test_large_monotonic_timestamp_does_not_add_a_phantom_retry_second():
     circuit = SearchCircuit(clock=lambda: 2 ** 22 - 1e-9)
     assert circuit.failure() == 300

@@ -26,12 +26,15 @@ def persist_source_checkpoint(persister, path):
 
 
 class GitCheckpointPersister:
-    def __init__(self, root: Path, extra_paths: tuple[Path, ...] = (), *, min_interval_seconds=0):
+    def __init__(self, root: Path, extra_paths: tuple[Path, ...] = (), *, min_interval_seconds=0,
+                 command_timeout_seconds=120, checkpoint_timeout_seconds=300):
         self.root = root
         self.extra_paths = extra_paths
         self.lock = threading.RLock()
         self.min_interval_seconds = min_interval_seconds
         self.last_pushed_at = None
+        self.command_timeout_seconds = command_timeout_seconds
+        self.checkpoint_timeout_seconds = checkpoint_timeout_seconds
 
     def __call__(self, path: Path) -> None:
         paths = (path, *self.extra_paths)
@@ -61,7 +64,10 @@ class GitCheckpointPersister:
             # retries are not enough even though there is no content conflict.
             # Keep rebasing until that short burst settles.
             rebase_conflicts = 0
+            deadline = time.monotonic() + self.checkpoint_timeout_seconds
             for attempt in range(40):
+                if time.monotonic() >= deadline:
+                    raise CheckpointError('Checkpoint deadline exceeded; retaining unpublished state')
                 if self._run("push", "origin", "HEAD:main", check=False).returncode == 0:
                     self.last_pushed_at = time.monotonic()
                     return
@@ -88,7 +94,16 @@ class GitCheckpointPersister:
             return result.stdout
 
     def _run(self, *args: str, check: bool = True):
-        result = subprocess.run(["git", *args], cwd=self.root, text=True, capture_output=True, check=False)
+        try:
+            result = subprocess.run(["git", *args], cwd=self.root, text=True, capture_output=True,
+                                    check=False, timeout=self.command_timeout_seconds)
+        except subprocess.TimeoutExpired:
+            # A push may have succeeded remotely before its response was lost.
+            # Return failure to the existing fetch/rebase/push reconciliation;
+            # never assume success or expose captured authenticated output.
+            if check:
+                raise CheckpointError(f'git {args[0]} timed out') from None
+            return subprocess.CompletedProcess(['git', *args], 124, stdout='', stderr='')
         if check and result.returncode:
             raise CheckpointError(f"git {args[0]} failed")
         return result

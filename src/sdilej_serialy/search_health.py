@@ -3,6 +3,7 @@ import time
 import math
 import threading
 from datetime import UTC, datetime
+from urllib.parse import urlsplit
 
 import requests
 from sdilej_to_prehrajto.sdilej import BASE_URL, SdilejError, parse_search_html
@@ -29,6 +30,9 @@ class SearchCircuit:
                  restored=None, max_failed_cycles=0):
         self.clock, self.sleep, self.wall_clock = clock, sleep, wall_clock
         self.lock = threading.Lock()
+        self.probe_lock = threading.Lock()
+        self.healthy_until = 0
+        self.probe_count = 0
         self.failures = max(0, int((restored or {}).get('consecutive_failures', 0)))
         self.retry_at = 0
         self.verified = False
@@ -63,6 +67,7 @@ class SearchCircuit:
                 self.failed_cycles_this_run += 1
                 self.retry_at = now + min(300 * 2 ** min(self.failures - 1, 2), 900)
             self.verified = False
+            self.healthy_until = 0
             return retry_seconds(self.retry_at - now)
 
     def success(self):
@@ -74,6 +79,7 @@ class SearchCircuit:
             self.failures = self.retry_at = 0
             self.failed_cycles_this_run = 0
             self.verified = True
+            self.healthy_until = self.clock() + 60
 
     def _restart_required(self):
         return bool(self.max_failed_cycles and self.failed_cycles_this_run >= self.max_failed_cycles)
@@ -84,9 +90,13 @@ class SearchCircuit:
 
     def record_control(self, url, response, count):
         with self.lock:
+            self.probe_count += 1
+            response_url = urlsplit(getattr(response, 'url', url))
             self.controls[url.removeprefix(BASE_URL)] = dict(
                 status=getattr(response, 'status_code', None),
                 response_bytes=len(response.text.encode('utf-8')), parsed_candidates=count,
+                response_path=response_url.path if response_url.netloc == urlsplit(BASE_URL).netloc else None,
+                unexpected_origin=response_url.netloc != urlsplit(BASE_URL).netloc,
                 checked_at=datetime.fromtimestamp(self.wall_clock(), UTC).isoformat())
 
     def snapshot(self):
@@ -96,6 +106,7 @@ class SearchCircuit:
                         else 'healthy' if self.verified else 'unverified',
                 consecutive_failures=self.failures, retry_seconds=retry_seconds(remaining),
                 failed_cycles_this_run=self.failed_cycles_this_run,
+                control_requests=self.probe_count,
                 restart_required=self._restart_required(),
                 resume_after=(datetime.fromtimestamp(self.wall_clock() + remaining, UTC).isoformat()
                               if remaining else None),
@@ -128,8 +139,14 @@ class SearchHealth:
 
     def verify_empty(self, provider):
         """Return True only if a renewed session requires replaying the query."""
+        # Only one worker diagnoses or renews the shared backend at a time.
+        # Peers reuse the fresh positive control instead of sending four copies.
+        with self.circuit.probe_lock:
+            return self._verify_empty(provider)
+
+    def _verify_empty(self, provider):
         waited = self.circuit.wait()
-        if self.clock() < self.healthy_until:
+        if self.clock() < max(self.healthy_until, self.circuit.healthy_until):
             return waited
         refreshed = False
         try:

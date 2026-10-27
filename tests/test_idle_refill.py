@@ -9,6 +9,53 @@ from sdilej_serialy.pipeline import EpisodeState
 from test_dual import source
 
 
+def test_remote_queue_read_does_not_hold_the_upload_state_lock(tmp_path, monkeypatch):
+    from sdilej_serialy.dual import LiveReserve, SharedState
+    from test_dual import setup_plan
+    directory, _, rows = setup_plan(tmp_path, monkeypatch)
+    state = SharedState(directory / 'state.json', {r['identity']: r['target_account'] for r in rows})
+    reading, release, saved = threading.Event(), threading.Event(), threading.Event()
+    def read(*args, **kwargs):
+        reading.set()
+        assert release.wait(3)
+        return ''
+    reserve = LiveReserve(tmp_path, 'test', rows, state, {'a': [], 'b': []}, 25,
+                          SimpleNamespace(read_remote_file=read))
+    errors = []
+    def poll():
+        try:
+            reserve.take('a')
+        except Exception as error:
+            errors.append(error)
+    reader = threading.Thread(target=poll)
+    reader.start()
+    assert reading.wait(3)
+    def checkpoint():
+        with state._lock:
+            state.save()
+            saved.set()
+    writer = threading.Thread(target=checkpoint)
+    writer.start()
+    try:
+        assert saved.wait(1), 'Remote read blocked upload checkpoints'
+    finally:
+        release.set()
+        reader.join(3)
+        writer.join(3)
+    assert not errors and not reader.is_alive() and not writer.is_alive()
+
+
+def test_temporary_queue_read_failure_pauses_without_permanent_stop(tmp_path, monkeypatch):
+    from sdilej_serialy.git_state import CheckpointError
+    options = stub(monkeypatch)
+    stop, pause = threading.Event(), threading.Event()
+    def unavailable():
+        raise CheckpointError('Temporary read failure')
+    report = continuous.upload_continuously([], EpisodeState(tmp_path / 'state.json'),
+        refill_rows=unavailable, stop_event=stop, transient_pause=pause, recover_target_errors=True, **options)
+    assert not stop.is_set() and pause.is_set() and report['uploaded_or_reconciled'] == 0
+
+
 def stub(monkeypatch):
     provider = SimpleNamespace(session=object(), refresh=lambda c, **kw: c)
     monkeypatch.setattr(continuous, 'EpisodeSourceProvider', SimpleNamespace(authenticated=lambda *a: provider))

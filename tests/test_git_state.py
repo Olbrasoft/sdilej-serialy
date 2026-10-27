@@ -8,6 +8,38 @@ from sdilej_serialy import git_state
 from sdilej_serialy.git_state import GitCheckpointPersister
 
 
+def test_hung_git_is_bounded_and_never_leaks_transport_output(monkeypatch, tmp_path):
+    calls = []
+    def timeout(*args, **kwargs):
+        calls.append(kwargs['timeout'])
+        raise subprocess.TimeoutExpired('private-token', kwargs['timeout'], output='signed-url')
+    monkeypatch.setattr(git_state.subprocess, 'run', timeout)
+    persister = GitCheckpointPersister(tmp_path, command_timeout_seconds=12)
+    with pytest.raises(git_state.CheckpointError, match='git fetch timed out') as exc:
+        persister._run('fetch', 'origin', 'main')
+    assert 'private-token' not in str(exc.value) and 'signed-url' not in str(exc.value)
+    assert persister._run('push', 'origin', 'HEAD:main', check=False).returncode == 124
+    assert calls == [12, 12]
+
+
+def test_repeated_slow_git_failures_have_a_total_checkpoint_deadline(monkeypatch, tmp_path):
+    path = tmp_path / 'state.json'
+    path.write_text('{}')
+    now, pushes = [100], []
+    persister = GitCheckpointPersister(tmp_path, checkpoint_timeout_seconds=5)
+    def run(*args, **kwargs):
+        if args[0] == 'push':
+            pushes.append(1)
+            now[0] += 3
+        return SimpleNamespace(returncode=int(args[0] == 'push'), stdout='')
+    monkeypatch.setattr(persister, '_run', run)
+    monkeypatch.setattr(git_state.time, 'monotonic', lambda: now[0])
+    monkeypatch.setattr(git_state.time, 'sleep', lambda _: None)
+    with pytest.raises(git_state.CheckpointError, match='deadline exceeded'):
+        persister(path)
+    assert len(pushes) == 2 and persister.last_pushed_at is None
+
+
 def test_checkpoint_survives_busy_remote_branch(monkeypatch, tmp_path: Path):
     state = tmp_path / "state.json"
     state.write_text("{}", encoding="utf-8")

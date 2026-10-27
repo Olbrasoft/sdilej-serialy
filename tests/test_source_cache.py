@@ -16,6 +16,39 @@ def media(width=1920):
     return dict(video_codec='h264', width=width, height=1080, duration_sec=1400)
 
 
+def test_parallel_forced_refreshes_share_only_the_new_result(tmp_path):
+    cache = SourceCache(tmp_path / 'cache.json')
+    cache.remember('media', 'same', lambda: media(1280))
+    entered, release, queued = threading.Event(), threading.Event(), threading.Event()
+    class ObservedLock:
+        def __init__(self):
+            self.lock, self.counter_lock, self.count = threading.Lock(), threading.Lock(), 0
+        def __enter__(self):
+            with self.counter_lock:
+                self.count += 1
+                if self.count == 4:
+                    queued.set()
+            self.lock.acquire()
+        def __exit__(self, *args):
+            self.lock.release()
+    cache.flights[next(iter(cache.flights))] = ObservedLock()
+    calls = []
+    def inspect():
+        calls.append(1)
+        entered.set()
+        assert release.wait(3)
+        return media()
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        first = pool.submit(cache.remember, 'media', 'same', inspect, force=True)
+        assert entered.wait(3)
+        peers = [pool.submit(cache.remember, 'media', 'same', inspect, force=True) for _ in range(3)]
+        assert queued.wait(3)
+        release.set()
+        assert [future.result() for future in [first, *peers]] == [media()] * 4
+    assert len(calls) == 1
+    assert cache.remember('media', 'same', lambda: media(1440), force=True) == media(1440)
+
+
 def test_cache_survives_restart_expires_and_invalidates_changed_original(tmp_path):
     now = [100]
     path = tmp_path / 'cache.json'

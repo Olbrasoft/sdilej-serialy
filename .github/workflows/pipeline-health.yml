@@ -1,0 +1,41 @@
+name: pipeline-health
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '7,17,27,37,47,57 * * * *'
+  workflow_run:
+    workflows: [prepare-source-reserve, dual-sync, source-quality-audit]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: sdilej-serialy-pipeline-health
+  cancel-in-progress: false
+
+jobs:
+  check:
+    if: vars.SOURCE_PREPARATION_ENABLED == 'true' || vars.DUAL_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install .
+      - name: Check both lanes and schedule missing work
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_PREPARATION_ENABLED: ${{ vars.SOURCE_PREPARATION_ENABLED }}
+          DUAL_ENABLED: ${{ vars.DUAL_ENABLED }}
+          DUAL_FULL_ENABLED: ${{ vars.DUAL_FULL_ENABLED }}
+          DUAL_GENERATION: ${{ vars.DUAL_GENERATION }}
+        run: python -m sdilej_serialy.supervise --generation "$DUAL_GENERATION" --apply

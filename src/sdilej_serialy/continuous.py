@@ -157,6 +157,16 @@ def upload_continuously(
                     try:
                         fresh_rows = refill_rows()
                     except Exception as error:
+                        if recover_target_errors and isinstance(error, CheckpointError):
+                            # A failed read of the append-only feed is not an
+                            # integrity violation. Drain current relays and
+                            # retry the same durable queue in the next batch.
+                            if transient_pause is not None:
+                                transient_pause.set()
+                            with queue_condition:
+                                refilling = False
+                                queue_condition.notify_all()
+                            return None
                         if not transient_http(error):
                             # A bad live queue/checkpoint is an integrity failure,
                             # not an empty reserve. Wake peers and fail closed.
@@ -278,6 +288,8 @@ def upload_continuously(
                         if not receipt_matches(state.row(episode)):
                             raise TargetPending('Relay returned without a complete accepted-transfer receipt')
                     if not target_confirmed(target, result.video_id, row["display_name"]):
+                        if recover_target_errors and receipt_matches(state.row(episode)):
+                            raise TargetPending('Accepted transfer awaits matching target listing and statistics')
                         raise RuntimeError("Target listing and statistics did not confirm the uploaded episode")
                     state.success(episode, result.video_id, row["display_name"])
                     completed += 1

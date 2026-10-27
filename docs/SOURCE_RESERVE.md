@@ -1,5 +1,39 @@
 # Continuous source reserve
 
+The October 27 continuity review found three separate causes of empty periods:
+the source backend returning empty HTTP 200 search pages, slow first results
+after producer restart, and reliance on the next scheduled job after a worker
+exits. In one observed run, 21 sources were prepared before search failed at
+13:18 UTC; no more appeared before that worker was replaced at 13:47 UTC. The
+underlying upstream cause of those empty responses remains unconfirmed.
+
+Positive controls now have one shared leader and a 60-second validity window
+across all discovery workers. Concurrent forced searches share a result only
+when another caller computed it after they started waiting; an older snapshot
+still cannot satisfy a forced refresh. Empty responses remain uncached. This
+reduces repeated requests while preserving fresh full-search quality checks.
+When the reserve is low, the first two hinted probes prefer recently productive
+seasons, including two neighboring episodes from one proven season. Subsequent
+bounded requested-series, exploration and retry lanes continue normally.
+
+`pipeline-health` checks both serialized lanes every ten minutes and after a
+producer/uploader/audit finishes. It dispatches a missing enabled lane, respects
+upload integrity halts, and never cancels media transfers. A source worker older
+than 30 minutes whose heartbeat is missing for 20 minutes may be replaced; its
+published queue/history is retained. A fresh legacy heartbeat is accepted during
+rollout. Setup failures and successful source runs with no output have a
+ten-minute restart backoff. Running and pending workflows prevent duplicate
+dispatches. The existing concurrency groups remain the final serialization
+guard. Disable the corresponding repository enable variables to stop automatic
+restart, including the watchdog. Source reports now identify their Actions run.
+
+The watchdog uses only the repository token, with Actions dispatch permission;
+it receives no source, target-account or production-database credentials. It
+checks out `main`, never code/artifacts from the triggering workflow. GitHub
+documents both [workflow dispatch with the repository token](https://docs.github.com/en/actions/concepts/security/github_token)
+and [scheduled/workflow-completion events](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows).
+The periodic check also covers missed completion events and delayed schedules.
+
 If both positive search controls still fail after a shared recovery pause, the
 producer checkpoints all finished work, drains its read-only workers and yields
 its concurrency slot to the next scheduled run. The runner-local failure budget

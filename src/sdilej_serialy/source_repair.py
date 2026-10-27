@@ -82,10 +82,11 @@ class SourceRepairFeed:
         self.plan, self.rows, self.read_payload = plan, rows, read_payload
         self.entries = {}
         self.lock = threading.RLock()
+        self.refresh_lock = threading.Lock()
         self.last_read = float('-inf')
 
     def refresh(self, *, force=False):
-        with self.lock:
+        with self.refresh_lock:
             if not force and time.monotonic() - self.last_read < 15:
                 return
             entries = {}
@@ -104,8 +105,9 @@ class SourceRepairFeed:
                     raise ValueError('One repaired source is assigned to multiple episodes')
                 used[source_id] = identity
                 entries[identity] = row
-            self.entries = entries
-            self.last_read = time.monotonic()
+            with self.lock:
+                self.entries = entries
+                self.last_read = time.monotonic()
 
     def ready_tokens(self, target_state):
         with self.lock:

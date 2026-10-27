@@ -113,16 +113,17 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
                   progress=None, available=None, requested=None, urgent=False):
     """Drain the known-source backlog before broad discovery, HD originals first."""
     dispatched_requests = set()
-    for metadata in catalog:
-        if subtitle_request(metadata) and (available is None or available(metadata)):
-            dispatched_requests.add(Episode.from_dict(metadata).identity)
-            yield metadata
-    catalog = [metadata for metadata in catalog if Episode.from_dict(metadata).identity not in dispatched_requests]
     if urgent and index is not None:
         warmed, seen_series = set(), set()
-        for metadata in catalog:
+        # Refill empty accounts first from seasons that actually produced a
+        # verified original. A filename hint alone is weaker scheduling evidence.
+        warm_order = sorted(catalog, key=lambda m: (
+            (m['series_id'], m['season']) not in (productive_seasons or set()),
+            index.rank(Episode.from_dict(m).identity)))
+        for metadata in warm_order:
             identity = Episode.from_dict(metadata).identity
-            if (identity in index.dubbed_hints and metadata['series_id'] not in seen_series
+            proven_season = (metadata['series_id'], metadata['season']) in (productive_seasons or set())
+            if (identity in index.dubbed_hints and (metadata['series_id'] not in seen_series or proven_season)
                     and series_probe_allowed(metadata, paused, index, records, urgent=urgent)
                     and (available is None or available(metadata))):
                 warmed.add(identity)
@@ -131,6 +132,11 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
                 if len(warmed) == 2:
                     break
         catalog = [m for m in catalog if Episode.from_dict(m).identity not in warmed]
+    for metadata in catalog:
+        if subtitle_request(metadata) and (available is None or available(metadata)):
+            dispatched_requests.add(Episode.from_dict(metadata).identity)
+            yield metadata
+    catalog = [metadata for metadata in catalog if Episode.from_dict(metadata).identity not in dispatched_requests]
     if requested and requested.series:
         pending = {Episode.from_dict(m).identity: m for m in catalog if m['series_id'] in requested.series}
         prioritized = 0
@@ -476,7 +482,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         state['updated_at'] = now_iso()
         atomic_json(state_path, state)
         elapsed = max(time.monotonic() - started, .001)
-        report = dict(generation=generation, attempted_this_run=attempted, prepared_this_run=published,
+        report = dict(generation=generation, run_id=os.environ.get('GITHUB_RUN_ID'),
+                      attempted_this_run=attempted, prepared_this_run=published,
                       reserve_total=len(additions), queue_total=len(queue), updated_at=now_iso(),
                       workers=workers, elapsed_seconds=round(elapsed, 2),
                       prepared_per_hour=round(published * 3600 / elapsed, 2),

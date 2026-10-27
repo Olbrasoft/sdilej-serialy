@@ -183,3 +183,23 @@ def test_empty_stock_does_not_let_requested_series_starve_the_rest_of_the_catalo
     assert [r['series_id'] for r in result[:4]]==[1]*4
     assert 2 in [r['series_id'] for r in result[:8]]
     assert len(result)==len({Episode.from_dict(r).identity for r in result})==24
+
+
+def test_empty_stock_warms_proven_seasons_before_unproven_filename_hints():
+    rows = [metadata(series=s) for s in (1, 2, 3, 4)]
+    index = CandidateIndex(rows)
+    index.observe([candidate(f'Series {s} S01E01 CZ Dabing', str(s)) for s in (1, 2, 3, 4)])
+    result = list(replenish.reserve_order(rows, {}, {}, set(), {(3, 1), (4, 1)},
+                  index=index, refresh=lambda: None, progress={}, urgent=True))
+    assert [row['series_id'] for row in result[:2]] == [3, 4]
+    assert {row['series_id'] for row in result} == {1, 2, 3, 4}
+
+
+def test_two_proven_neighboring_episodes_can_fill_both_empty_accounts():
+    rows = [metadata(series=1), metadata(series=2), metadata(series=3), metadata(series=3, number=2)]
+    index = CandidateIndex(rows)
+    index.observe([candidate(f'Series {r["series_id"]} S01E{r["episode"]:02d} CZ', str(n + 1))
+                   for n, r in enumerate(rows)])
+    result = list(replenish.reserve_order(rows, {}, {}, set(), {(3, 1)},
+                  index=index, refresh=lambda: None, progress={}, urgent=True))
+    assert [Episode.from_dict(row).identity for row in result[:2]] == ['3:1:1', '3:1:2']
