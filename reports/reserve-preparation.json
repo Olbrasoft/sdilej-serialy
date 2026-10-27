@@ -1,12 +1,12 @@
 {
   "generation": "pair-2026-09-25",
-  "attempted_this_run": 2,
+  "attempted_this_run": 3,
   "prepared_this_run": 0,
   "reserve_total": 22194,
   "queue_total": 30629,
-  "updated_at": "2026-10-27T13:50:14.146874+00:00",
+  "updated_at": "2026-10-27T13:51:23.473277+00:00",
   "workers": 4,
-  "elapsed_seconds": 64.74,
+  "elapsed_seconds": 134.07,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -33,18 +33,21 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "waiting_for_sources",
-    "starved_accounts": [],
+    "status": "starved",
+    "starved_accounts": [
+      "a",
+      "b"
+    ],
     "seconds_since_upload": {
-      "a": 1776,
-      "b": 1763
+      "a": 1844,
+      "b": 1832
     },
     "preparation_outcomes_last_hour": {
       "no_acceptable_original": 1,
       "prepared": 17,
-      "verified_non_czech": 39,
+      "verified_non_czech": 37,
       "source_search_unavailable": 2,
-      "no_matches": 33,
+      "no_matches": 34,
       "transient_search": 2,
       "transient_original": 1
     }
@@ -60,15 +63,20 @@
     ]
   },
   "cache": {
-    "search_miss": 20,
+    "search_miss": 33,
     "search_hit": 5,
-    "search_seconds": 133.43,
-    "media_miss": 2,
-    "media_hit": 2,
-    "audio_miss": 1,
-    "media_seconds": 2.6
+    "search_seconds": 190.57,
+    "media_miss": 8,
+    "media_hit": 6,
+    "audio_miss": 2,
+    "media_seconds": 20.65,
+    "audio_hit": 4
   },
-  "audio_pipeline": {},
+  "audio_pipeline": {
+    "sample_count": 1,
+    "download_seconds": 6.96,
+    "inference_wait_seconds": 0.0
+  },
   "productive_seasons": 41,
   "series_paused_this_run": 33,
   "saved_reviewed_this_run": 0,
@@ -2905,9 +2913,9 @@
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
-        "response_bytes": 723698,
+        "response_bytes": 723763,
         "parsed_candidates": 411,
-        "checked_at": "2026-10-27T13:49:35.923954+00:00"
+        "checked_at": "2026-10-27T13:50:50.401356+00:00"
       }
     ]
   }
