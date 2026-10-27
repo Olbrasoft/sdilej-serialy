@@ -21,12 +21,9 @@ from .pipeline import EpisodeState, target_session
 from .target import existing_episode
 from .quality import upload_eligible
 from .git_state import CheckpointError
+from .source_transfer import FreshSourceSession, SourceUnavailable
 from .resilience import (TargetPending, error_evidence, receipt_matches,
                          receipt_requester, transient_http)
-
-
-class SourceUnavailable(RuntimeError):
-    """A source-only operation failed before any target allocation."""
 
 
 def prepare_source(provider, candidate, require_original_size):
@@ -220,6 +217,7 @@ def upload_continuously(
                 if row is None:
                     return completed
                 upload_request = None
+                source_request = None
                 try:
                     if not upload_eligible(row):
                         print(f"upload_deferred=quality_review identity={row['identity']}", flush=True)
@@ -278,7 +276,11 @@ def upload_continuously(
                     # reconcile the accepted full transfer against the saved ID.
                     options = {'upload_requester': upload_request,
                                'confirmation_timeout_seconds': 0} if upload_request else {}
-                    result = prehrajto.relay_upload(target, provider.session, refreshed, row["display_name"], episode.description,
+                    # Checkpoints and the SDK's statistics can outlive a media
+                    # URL. Resolve again at its actual GET and retain that stream.
+                    source_request = FreshSourceSession(provider, candidate,
+                                                        require_original_size=require_original_size)
+                    result = prehrajto.relay_upload(target, source_request, refreshed, row["display_name"], episode.description,
                                                    on_prepared=prepared, **options)
                     if upload_request:
                         # The SDK may return from its monitor while the POST is
@@ -294,6 +296,14 @@ def upload_continuously(
                     state.success(episode, result.video_id, row["display_name"])
                     completed += 1
                 except Exception as error:
+                    if source_request is not None and source_request.failure_before_return is error:
+                        with state._lock:
+                            record = state.row(episode)
+                            if record.get('prepared_target') == {'creation_intent': True} and not record.get('transfer_receipt'):
+                                # The source GET failed before the SDK could
+                                # allocate anything. Persist removal with failure;
+                                # never remove an ID or an older uncertain intent.
+                                record.pop('prepared_target')
                     if upload_request and not upload_request.finished.is_set():
                         # The relay monitor can fail before its HTTP thread ends.
                         # Do not let a new batch exceed the two-transfer limit.

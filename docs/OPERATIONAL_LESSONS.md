@@ -293,3 +293,27 @@ Czech SD source 30412322 (856x480, 263122354 bytes). A separate full discovery
 for The Wonder Years S03E22 confirmed its existing Czech SD choice 26792333
 (768x576, 315820032 bytes); no better Czech candidate was selected. Existing
 target videos were not modified or deleted.
+
+## Resolve the original at stream open (2026-10-27)
+
+Refreshing a media URL before the durable creation-intent checkpoint is not
+enough: that checkpoint and the relay SDK's baseline statistics can delay the
+actual source GET. Keep the early source preflight, then use a per-transfer
+`FreshSourceSession` at the SDK's source GET. It reads the authenticated stable
+detail again, follows its current fast-download link and validates the full
+stream's status, content type, byte range and expected original size. The same
+open response supplies the relay; there is no intervening checkpoint or target
+statistics request between final detail resolution and opening that response.
+
+Before returning a stream, retry source failures up to three times, resolving
+the detail again each time and closing rejected responses. After returning it,
+never retry the upload automatically. Only an exception proven to originate in
+this attempt's source opener may clear an ID-less creation intent. An allocated
+target, a receipt or an older uncertain intent always retains its replay guard.
+The manifest and source evidence continue to exclude authenticated media URLs.
+
+Regression coverage exercises the pinned SDK itself, expires links during both
+checkpoint and statistics reads, rotates the download address after HTTP 403,
+checks complete accepted multipart bytes, and distinguishes source-only failures
+from uncertain target allocation. Stream-open logs contain source ID and size,
+never authenticated URLs.
