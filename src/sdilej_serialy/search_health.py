@@ -13,6 +13,12 @@ FALLBACK_QUERY = 'Doktor Martin'
 FALLBACK_URL = BASE_URL + '/doktor-martin/s/-6'
 
 
+def retry_seconds(remaining):
+    # Adding/subtracting a large monotonic timestamp can produce 300.0000000005.
+    # Do not turn that rounding noise into a spurious additional retry second.
+    return max(0, math.ceil(round(remaining, 6)))
+
+
 class SearchUnavailable(SdilejError):
     """The shared search backend has not passed its positive control."""
 
@@ -57,7 +63,7 @@ class SearchCircuit:
                 self.failed_cycles_this_run += 1
                 self.retry_at = now + min(300 * 2 ** min(self.failures - 1, 2), 900)
             self.verified = False
-            return max(0, math.ceil(self.retry_at - now))
+            return retry_seconds(self.retry_at - now)
 
     def success(self):
         with self.lock:
@@ -88,7 +94,7 @@ class SearchCircuit:
             remaining = max(0, self.retry_at - self.clock())
             return dict(status='paused' if remaining else 'probe_due' if self.failures
                         else 'healthy' if self.verified else 'unverified',
-                consecutive_failures=self.failures, retry_seconds=math.ceil(remaining),
+                consecutive_failures=self.failures, retry_seconds=retry_seconds(remaining),
                 failed_cycles_this_run=self.failed_cycles_this_run,
                 restart_required=self._restart_required(),
                 resume_after=(datetime.fromtimestamp(self.wall_clock() + remaining, UTC).isoformat()

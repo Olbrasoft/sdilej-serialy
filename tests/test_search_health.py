@@ -15,6 +15,12 @@ EMPTY = '<h1>Empty search</h1>'
 QUERY_URL = 'https://sdilej.cz/series/s/-6'
 
 
+def test_large_monotonic_timestamp_does_not_add_a_phantom_retry_second():
+    circuit = SearchCircuit(clock=lambda: 2 ** 22 - 1e-9)
+    assert circuit.failure() == 300
+    assert circuit.snapshot()['retry_seconds'] == 300
+
+
 def test_repeated_failed_recovery_retires_only_current_runner_and_preserves_quiet_deadline():
     now, wall = [100], [1800000000]
     circuit = SearchCircuit(clock=lambda: now[0], wall_clock=lambda: wall[0], max_failed_cycles=2)
