@@ -19,6 +19,8 @@ exception text, so transport failures are distinguishable from empty HTTP 200 pa
 When the reserve is low, the first two hinted probes prefer recently productive
 seasons, including two neighboring episodes from one proven season. Subsequent
 bounded requested-series, exploration and retry lanes continue normally.
+Episodes with three or more consecutive failures retain the bounded retry lane;
+they cannot monopolize startup slots again after every producer restart.
 
 `pipeline-health` checks both serialized lanes every ten minutes and after a
 producer/uploader/audit finishes. It dispatches a missing enabled lane, respects

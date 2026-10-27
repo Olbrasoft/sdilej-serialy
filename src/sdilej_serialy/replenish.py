@@ -122,6 +122,11 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
             index.rank(Episode.from_dict(m).identity)))
         for metadata in warm_order:
             identity = Episode.from_dict(metadata).identity
+            # Startup slots are for likely immediate supply. Repeatedly failed
+            # sources keep their bounded retry lane instead of taking both
+            # warmup slots again on every short-lived producer restart.
+            if records.get(identity, {}).get('consecutive_failures', 0) >= 3:
+                continue
             proven_season = (metadata['series_id'], metadata['season']) in (productive_seasons or set())
             known_source = identity in index.dubbed_hints or proven_season and index.rank(identity) < 2
             if (known_source and (metadata['series_id'] not in seen_series or proven_season)

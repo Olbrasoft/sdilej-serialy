@@ -203,3 +203,16 @@ def test_two_proven_neighboring_episodes_can_fill_both_empty_accounts():
     result = list(replenish.reserve_order(rows, {}, {}, set(), {(3, 1)},
                   index=index, refresh=lambda: None, progress={}, urgent=True))
     assert [Episode.from_dict(row).identity for row in result[:2]] == ['3:1:1', '3:1:2']
+
+
+def test_repeated_source_failures_cannot_take_both_startup_slots_again():
+    rows = [metadata(series=s) for s in (1, 2, 3, 4)]
+    index = CandidateIndex(rows)
+    index.observe([candidate(f'Series {s} S01E01 CZ Dabing', str(s)) for s in (1, 2, 3, 4)])
+    records = {f'{s}:1:1': dict(reason='inconclusive_audio', preparation_revision=5,
+                              consecutive_failures=4) for s in (1, 2)}
+    result = list(replenish.reserve_order(rows, records, {}, set(), {(1, 1), (2, 1)},
+                  index=index, refresh=lambda: None, progress={}, urgent=True))
+    assert [row['series_id'] for row in result[:2]] == [3, 4]
+    assert sorted(row['series_id'] for row in result) == [1, 2, 3, 4]
+    assert all(record['consecutive_failures'] == 4 for record in records.values())
