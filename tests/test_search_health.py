@@ -5,7 +5,7 @@ import requests
 from sdilej_to_prehrajto.sdilej import SdilejError
 
 from sdilej_serialy.episodes import EpisodeSourceProvider
-from sdilej_serialy.search_health import CONTROL_URL, FALLBACK_URL, SearchHealth, SearchCircuit
+from sdilej_serialy.search_health import CONTROL_URL, FALLBACK_URL, SearchHealth, SearchCircuit, SearchUnavailable
 from sdilej_serialy.source_audit import AuditProvider
 from sdilej_serialy.source_cache import SourceCache
 from test_episodes import episode
@@ -13,6 +13,88 @@ from test_episodes import episode
 POSITIVE = '<div class="videobox"><a href="/123/source.mp4">Source</a></div>'
 EMPTY = '<h1>Empty search</h1>'
 QUERY_URL = 'https://sdilej.cz/series/s/-6'
+
+
+def test_repeated_failed_recovery_retires_only_current_runner_and_preserves_quiet_deadline():
+    now, wall = [100], [1800000000]
+    circuit = SearchCircuit(clock=lambda: now[0], wall_clock=lambda: wall[0], max_failed_cycles=2)
+    assert [circuit.failure() for _ in range(4)] == [300] * 4
+    assert not circuit.restart_required()
+    now[0] += 300
+    wall[0] += 300
+    assert circuit.failure() == 600
+    assert circuit.restart_required()
+    with pytest.raises(SearchUnavailable):
+        circuit.wait()
+    snapshot = circuit.snapshot()
+    delays = []
+    def sleep(seconds):
+        delays.append(seconds)
+        now[0] += seconds
+    fresh = SearchCircuit(clock=lambda: now[0], wall_clock=lambda: wall[0], sleep=sleep,
+                          restored=snapshot, max_failed_cycles=2)
+    assert not fresh.restart_required()
+    assert fresh.wait() and sum(delays) == 600
+    fresh.success()
+    assert fresh.snapshot()['status'] == 'healthy'
+    assert fresh.snapshot()['failed_cycles_this_run'] == 0
+
+
+def test_publisher_yields_after_failed_recovery_without_marking_unsearched_episodes(tmp_path, monkeypatch):
+    import json
+    from sdilej_serialy import replenish
+    from test_replenish import setup
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    original = {name: (directory / name).read_bytes() for name in ('state.json', 'plan.json', 'manifest.jsonl')}
+    now, calls = [100], []
+    circuit = SearchCircuit(clock=lambda: now[0], max_failed_cycles=2)
+    def discover(episode):
+        calls.append(episode.identity)
+        circuit.failure()
+        now[0] += 300
+        circuit.failure()
+        raise SearchUnavailable('Failed control after recovery')
+    provider = SimpleNamespace(discover=discover, search_health=SimpleNamespace(circuit=circuit))
+    result = replenish.prepare(tmp_path, 'test', provider, runtime_minutes=0, maintain_reserve=True)
+    assert result['restart_required'] and calls == ['1:1:5']
+    state = json.loads((tmp_path / 'state/reserve-preparation.json').read_text())
+    assert set(state['episodes']) == {'1:1:5'}
+    assert state['episodes']['1:1:5']['reason'] == 'source_search_unavailable'
+    assert state['episodes']['1:1:5']['consecutive_failures'] == 0
+    report = json.loads((tmp_path / 'reports/reserve-preparation.json').read_text())
+    assert report['search_health']['restart_required']
+    for name, value in original.items():
+        assert (directory / name).read_bytes() == value
+
+
+def test_parallel_worker_retirement_drains_completed_results_and_stops_dispatch():
+    import threading
+    from sdilej_serialy.source_workers import inspected_results
+    release = threading.Event()
+    closed, submitted = [], []
+    provider = SimpleNamespace(fork_worker=lambda: SimpleNamespace(
+        session=SimpleNamespace(close=lambda: closed.append(True))))
+    stopped = [False]
+    def inspect(worker, item):
+        submitted.append(item)
+        release.wait(5)
+        return item
+    def items():
+        yield 1
+        yield 2
+        release.set()
+        yield 3
+        yield 4
+    # The stop flag can be raised by any shared worker while peers finish.
+    def stop():
+        if len(submitted) == 2:
+            stopped[0] = True
+            release.set()
+        return stopped[0]
+    result = list(inspected_results(items(), provider, inspect, workers=2, limit=4,
+                                   deadline=float('inf'), tick=lambda: None, stop=stop))
+    assert sorted(result) == [(1, 1), (2, 2)]
+    assert sorted(submitted) == [1, 2] and closed
 
 
 class Session:

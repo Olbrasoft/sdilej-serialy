@@ -6,10 +6,10 @@ from concurrent.futures import FIRST_COMPLETED, ThreadPoolExecutor, wait
 DISPATCH_WAIT = object()
 
 
-def inspected_results(items, provider, inspect, *, workers, limit, deadline, tick):
+def inspected_results(items, provider, inspect, *, workers, limit, deadline, tick, stop=lambda: False):
     if workers == 1:
         for index, item in enumerate(items):
-            if item is DISPATCH_WAIT or index >= limit or time.monotonic() >= deadline:
+            if item is DISPATCH_WAIT or index >= limit or time.monotonic() >= deadline or stop():
                 break
             yield item, inspect(provider, item)
         return
@@ -31,7 +31,8 @@ def inspected_results(items, provider, inspect, *, workers, limit, deadline, tic
     blocked = False
     try:
         while True:
-            while not blocked and len(futures) < workers and submitted < limit and time.monotonic() < deadline:
+            while (not blocked and not stop() and len(futures) < workers
+                   and submitted < limit and time.monotonic() < deadline):
                 item = next(iterator, None)
                 if item is None:
                     break

@@ -20,13 +20,15 @@ class SearchUnavailable(SdilejError):
 class SearchCircuit:
     """One quiet recovery window shared by every discovery session."""
     def __init__(self, *, clock=time.monotonic, sleep=time.sleep, wall_clock=time.time,
-                 restored=None):
+                 restored=None, max_failed_cycles=0):
         self.clock, self.sleep, self.wall_clock = clock, sleep, wall_clock
         self.lock = threading.Lock()
         self.failures = max(0, int((restored or {}).get('consecutive_failures', 0)))
         self.retry_at = 0
         self.verified = False
         self.controls = {}
+        self.max_failed_cycles = max_failed_cycles
+        self.failed_cycles_this_run = 0
         resume = (restored or {}).get('resume_after')
         if resume:
             remaining = datetime.fromisoformat(resume).timestamp() - self.wall_clock()
@@ -37,6 +39,8 @@ class SearchCircuit:
         waited = False
         while True:
             with self.lock:
+                if self._restart_required():
+                    raise SearchUnavailable('Source worker must yield after repeated failed recovery')
                 delay = self.retry_at - self.clock()
             if delay <= 0:
                 return waited
@@ -50,6 +54,7 @@ class SearchCircuit:
             now = self.clock()
             if now >= self.retry_at:
                 self.failures += 1
+                self.failed_cycles_this_run += 1
                 self.retry_at = now + min(300 * 2 ** min(self.failures - 1, 2), 900)
             self.verified = False
             return max(0, math.ceil(self.retry_at - now))
@@ -61,7 +66,15 @@ class SearchCircuit:
             if self.clock() < self.retry_at:
                 return
             self.failures = self.retry_at = 0
+            self.failed_cycles_this_run = 0
             self.verified = True
+
+    def _restart_required(self):
+        return bool(self.max_failed_cycles and self.failed_cycles_this_run >= self.max_failed_cycles)
+
+    def restart_required(self):
+        with self.lock:
+            return self._restart_required()
 
     def record_control(self, url, response, count):
         with self.lock:
@@ -76,6 +89,8 @@ class SearchCircuit:
             return dict(status='paused' if remaining else 'probe_due' if self.failures
                         else 'healthy' if self.verified else 'unverified',
                 consecutive_failures=self.failures, retry_seconds=math.ceil(remaining),
+                failed_cycles_this_run=self.failed_cycles_this_run,
+                restart_required=self._restart_required(),
                 resume_after=(datetime.fromtimestamp(self.wall_clock() + remaining, UTC).isoformat()
                               if remaining else None),
                 controls=[dict(path=path, **value) for path,value in self.controls.items()])

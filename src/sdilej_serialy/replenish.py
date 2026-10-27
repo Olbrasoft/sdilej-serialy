@@ -26,7 +26,7 @@ from .target import episode_key
 from .resilience import error_evidence
 from .reserve import LOW_WATER, TARGET_STOCK, should_prepare, stock
 from .source_cache import RequestGate, SourceCache
-from .search_health import SearchCircuit
+from .search_health import SearchCircuit, SearchUnavailable
 from .source_workers import inspected_results, DISPATCH_WAIT
 from .requested_series import RequestedSeries, PROBE_REVISION, HINT_PROBE_REVISION
 from .source_repair import (REPAIR_SEARCH_REVISION, SourceRepairFeed, fingerprint,
@@ -324,7 +324,8 @@ def inspect_preparation(provider, task):
                               observed_language_probability=candidate.language_probability,
                               observed_source_id=candidate.source_id)
     except Exception as error:
-        record['reason'] = type(error).__name__
+        record['reason'] = ('source_search_unavailable' if isinstance(error, SearchUnavailable)
+                            else type(error).__name__)
         record['error'] = error_evidence(error)
         fatal_error = isinstance(error, (TypeError, AttributeError, ImportError))
     record['elapsed_seconds'] = round(time.monotonic() - started, 2)
@@ -580,8 +581,12 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                     except StopIteration:
                         active[lane_index] = False
 
+    def source_restart_required():
+        health = getattr(provider, 'search_health', None)
+        return bool(health and health.circuit.restart_required())
+
     results = inspected_results(tasks(), provider, inspect_preparation, workers=workers,
-                                limit=limit, deadline=deadline, tick=tick)
+                                limit=limit, deadline=deadline, tick=tick, stop=source_restart_required)
     try:
         for task, (record, replacement, fatal_error) in results:
             episode = Episode.from_dict(task[0])
@@ -689,8 +694,12 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
         results.close()
     if pending_checkpoint or maintain_reserve:
         checkpoint()
+    if source_restart_required():
+        print('::warning::Source search failed after a shared recovery pause; '
+              'all results are checkpointed and this worker is yielding to the next scheduled run.', flush=True)
     return dict(attempted_this_run=attempted, prepared_this_run=published, repaired_this_run=repaired, reserve_total=len(additions),
-                saved_reviewed_this_run=saved_reviewed, saved_prepared_this_run=saved_published)
+                saved_reviewed_this_run=saved_reviewed, saved_prepared_this_run=saved_published,
+                restart_required=source_restart_required())
 
 
 def main():
@@ -718,7 +727,7 @@ def main():
         previous = json.loads(report_path.read_text()).get('search_health') if report_path.exists() else None
         provider = AuditProvider.authenticated(os.environ['SDILEJ_EMAIL'], os.environ['SDILEJ_PASSWORD'],
             discovery_timeout_seconds=900, cache=SourceCache(root / 'state/source-evidence-cache.json'),
-            request_gate=RequestGate(), search_circuit=SearchCircuit(restored=previous))
+            request_gate=RequestGate(), search_circuit=SearchCircuit(restored=previous, max_failed_cycles=2))
         try:
             print(json.dumps(prepare(root, args.generation, provider, limit=args.limit,
                                     runtime_minutes=args.runtime_minutes, persist=args.persist_git_state,

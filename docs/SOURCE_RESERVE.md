@@ -1,5 +1,13 @@
 # Continuous source reserve
 
+If both positive search controls still fail after a shared recovery pause, the
+producer checkpoints all finished work, drains its read-only workers and yields
+its concurrency slot to the next scheduled run. The runner-local failure budget
+starts afresh in that run; the persisted UTC quiet deadline is still respected.
+This bounds an unhealthy worker's lifetime instead of letting it hold an empty
+reserve for the full 110 minutes. Completed uploads, reservations, source policy
+and episode retry history are preserved. A successful control resets the budget.
+
 The `prepare-source-reserve` workflow reads the saved 2,000-series catalog in
 `backlog/series-episodes.jsonl.gz`; it does not access the production database or
 hold target-account credentials. It is gated by `SOURCE_PREPARATION_ENABLED=true`
