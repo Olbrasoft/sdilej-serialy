@@ -1,5 +1,9 @@
 # Continuous source reserve
 
+The [October 27 acceptance report](../reports/pipeline-continuity-acceptance-2026-10-27.json)
+records four full-transfer receipts (two per account), cross-account uniqueness,
+preserved history, tested recovery behavior and the remaining upstream limitation.
+
 The October 27 continuity review found three separate causes of empty periods:
 the source backend returning empty HTTP 200 search pages, slow first results
 after producer restart, and reliance on the next scheduled job after a worker
