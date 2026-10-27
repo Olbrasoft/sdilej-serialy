@@ -1,0 +1,413 @@
+{
+  "acceptance_criteria": "Both lifetime uploaded-video counters increased, and each recorded upload has an exact full-byte HTTP 200/201 receipt; current listings are recorded separately.",
+  "listing_scope": "Latest account listing page only. An individual title-search query returned repeated HTTP 504 responses, so final observations use one normal listing GET per account.",
+  "post_upload_observation": "Two initial new uploads disappeared from listings while deleted counters increased by one on each account. Cause not established. Per user clarification, deletions do not invalidate the lifetime upload progress; no re-upload was performed.",
+  "targeted_preparation": {
+    "run_id": "40570955405",
+    "updated_at": "2026-10-27T19:56:20.255053+00:00",
+    "attempted_this_run": 10,
+    "prepared_this_run": 9,
+    "elapsed_seconds": 854.38,
+    "workers": 4,
+    "stock": {
+      "queue_total": 30693,
+      "ready": 3,
+      "ready_by_account": {
+        "a": 2,
+        "b": 1
+      },
+      "categories": {
+        "completed": 30652,
+        "allocated": 25,
+        "failed": 12,
+        "in_flight": 1,
+        "ready": 3
+      },
+      "completed_by_account": {
+        "a": 15324,
+        "b": 15328
+      },
+      "uploads_last_24h": 122,
+      "uploads_per_hour_24h": 5.08,
+      "stock_hours_24h": 0.59
+    },
+    "health": {
+      "status": "buffered",
+      "starved_accounts": [],
+      "seconds_since_upload": {
+        "a": 68,
+        "b": 64
+      },
+      "preparation_outcomes_last_hour": {
+        "no_matches": 54,
+        "prepared": 9,
+        "verified_non_czech": 24,
+        "source_search_unavailable": 5,
+        "inconclusive_audio": 1
+      }
+    },
+    "search_health": {
+      "status": "healthy",
+      "consecutive_failures": 0,
+      "retry_seconds": 0,
+      "failed_cycles_this_run": 0,
+      "control_requests": 7,
+      "request_gap_seconds": 4.0,
+      "restart_required": false,
+      "resume_after": null,
+      "controls": [
+        {
+          "path": "/teorie-velkeho-tresku/s/-6",
+          "status": 200,
+          "response_bytes": 723714,
+          "parsed_candidates": 411,
+          "response_path": "/teorie-velkeho-tresku/s/-6",
+          "unexpected_origin": false,
+          "checked_at": "2026-10-27T19:55:14.506821+00:00"
+        }
+      ]
+    }
+  },
+  "verified_at": "2026-10-27T20:01:34.565952+00:00",
+  "snapshot": "063a96aedb96bcae640ddbad6a3917ab0b4af8de",
+  "deployed_fix": "43154f00f89d689ecb43d1e76df2831bd56faee9",
+  "local_tests_passed": 618,
+  "ci_run": 40571696188,
+  "ci_tests_passed": 617,
+  "ci_tests_skipped": 1,
+  "preparation_run": 40570955405,
+  "upload_run": 40567826283,
+  "diagnosis": [
+    "No verified unused sources remained; uploader was waiting without a fatal halt.",
+    "Subtitle filenames repeating CZ/SK in community tags incorrectly received dubbed priority and extra audio checks; 435 cached source filenames were affected.",
+    "A weak filename-preferred language could override a confident sample majority, then fail the unchanged publication confidence threshold."
+  ],
+  "fixes": [
+    "Require explicit dubbing/audio labels to override an explicit CZ/SK subtitle label.",
+    "Require filename-preferred speech to meet the same .65 confidence as publication; otherwise use the existing majority/mean.",
+    "One scoped retry of old inconclusive speech checks with exact source hints; retain bounded retries."
+  ],
+  "account_statistics": [
+    {
+      "account": "a",
+      "email": "pavel-spata@email.cz",
+      "before": 15336,
+      "after": 15340
+    },
+    {
+      "account": "b",
+      "email": "zdenek-starek@post.cz",
+      "before": 15336,
+      "after": 15339
+    }
+  ],
+  "accepted_uploads": [
+    {
+      "identity": "566:3:9",
+      "account": "a",
+      "upload": {
+        "target_video_id": "30571206",
+        "display_name": "Gilmorova děvčata S03E09 - Díkůvzdání SD SK Dabing",
+        "uploaded_at": "2026-10-27T19:49:23.853425+00:00"
+      },
+      "source": {
+        "source_id": "28101762",
+        "source_url": "https://sdilej.cz/28101762/gilmore.girls.s03e09.dvdrip.xvid.sk-snf.avi",
+        "source_title": "Gilmore.Girls.S03E09.DVDRip.XviD.SK-Snf.avi",
+        "source_filename": "Gilmore.Girls.S03E09.DVDRip.XviD.SK-Snf.avi",
+        "size_bytes": 354512896,
+        "duration_sec": 2392,
+        "width": 640,
+        "height": 480,
+        "audio_language": "sk",
+        "language_probability": 0.9084438681602478,
+        "language_tier": "slovak_audio",
+        "match_evidence": {
+          "expected_episode": "S03E09",
+          "episode_code_match": true,
+          "series_alias_match": true,
+          "unmatched_series_prefix": "",
+          "episode_codes_found": [
+            "S03E09"
+          ]
+        },
+        "display_name": "Gilmorova děvčata S03E09 - Díkůvzdání SD SK Dabing",
+        "prepared_at": "2026-10-27T19:48:32.179562+00:00"
+      },
+      "transfer_receipt": {
+        "target_video_id": "30571206",
+        "size_bytes": 354512896,
+        "source_bytes_read": 354512896,
+        "http_status": 201
+      },
+      "receipt_commit": "565cc329a46ae43c1253099fa902f6a2d567ff5f",
+      "target_ready": false,
+      "listing_status": "processing",
+      "account_listing_counts": {
+        "a": 1,
+        "b": 0
+      }
+    },
+    {
+      "identity": "566:4:1",
+      "account": "a",
+      "upload": {
+        "target_video_id": "30571261",
+        "display_name": "Gilmorova děvčata S04E01 - Společenský tanec a Italské sušenky SD SK Dabing",
+        "uploaded_at": "2026-10-27T19:52:54.413954+00:00"
+      },
+      "source": {
+        "source_id": "28101820",
+        "source_url": "https://sdilej.cz/28101820/gilmore.girls.s04e01.dvdrip.xvid.sk-snf.avi",
+        "source_title": "Gilmore.Girls.S04E01.DVDRip.XviD.SK-Snf.avi",
+        "source_filename": "Gilmore.Girls.S04E01.DVDRip.XviD.SK-Snf.avi",
+        "size_bytes": 351514624,
+        "duration_sec": 2517,
+        "width": 640,
+        "height": 448,
+        "audio_language": "sk",
+        "language_probability": 0.8466596603393555,
+        "language_tier": "slovak_audio",
+        "match_evidence": {
+          "expected_episode": "S04E01",
+          "episode_code_match": true,
+          "series_alias_match": true,
+          "unmatched_series_prefix": "",
+          "episode_codes_found": [
+            "S04E01"
+          ]
+        },
+        "display_name": "Gilmorova děvčata S04E01 - Společenský tanec a Italské sušenky SD SK Dabing",
+        "prepared_at": "2026-10-27T19:51:23.012522+00:00"
+      },
+      "transfer_receipt": {
+        "target_video_id": "30571261",
+        "size_bytes": 351514624,
+        "source_bytes_read": 351514624,
+        "http_status": 201
+      },
+      "receipt_commit": "d6acec3afe1742ead27a462f961d2a02ae4ac52a",
+      "listing_status": "not_in_recent_listing_after_completed_transfer",
+      "target_ready": null,
+      "account_listing_counts": {
+        "a": 0,
+        "b": 0
+      }
+    },
+    {
+      "identity": "1405:3:19",
+      "account": "a",
+      "upload": {
+        "target_video_id": "30571289",
+        "display_name": "Námořní vyšetřovací služba S03E19 - U ledu 1080p CZ Dabing",
+        "uploaded_at": "2026-10-27T19:55:10.624461+00:00"
+      },
+      "source": {
+        "source_id": "30835198",
+        "source_url": "https://sdilej.cz/30835198/namorni-vysetrovaci-sluzba-s03e19-1-.mkv",
+        "source_title": "Námořní Vyšetřovací Služba S03e19 (1).mkv",
+        "source_filename": "Námořní Vyšetřovací Služba S03e19 (1).mkv",
+        "size_bytes": 600601059,
+        "duration_sec": 2531,
+        "width": 1920,
+        "height": 1080,
+        "audio_language": "cs",
+        "language_probability": 0.9618279933929443,
+        "language_tier": "czech_audio",
+        "match_evidence": {
+          "expected_episode": "S03E19",
+          "episode_code_match": true,
+          "series_alias_match": true,
+          "unmatched_series_prefix": "",
+          "episode_codes_found": [
+            "S03E19"
+          ]
+        },
+        "display_name": "Námořní vyšetřovací služba S03E19 - U ledu 1080p CZ Dabing",
+        "prepared_at": "2026-10-27T19:53:56.256632+00:00"
+      },
+      "transfer_receipt": {
+        "target_video_id": "30571289",
+        "size_bytes": 600601059,
+        "source_bytes_read": 600601059,
+        "http_status": 201
+      },
+      "receipt_commit": "8ee9fe14812efb02620e4c90b0dd89e4ce36b358",
+      "target_ready": false,
+      "listing_status": "processing",
+      "account_listing_counts": {
+        "a": 1,
+        "b": 0
+      }
+    },
+    {
+      "identity": "566:3:15",
+      "account": "b",
+      "upload": {
+        "target_video_id": "30571228",
+        "display_name": "Gilmorova děvčata S03E15 - Konfrontace SD SK Dabing",
+        "uploaded_at": "2026-10-27T19:50:44.380320+00:00"
+      },
+      "source": {
+        "source_id": "28101784",
+        "source_url": "https://sdilej.cz/28101784/gilmore.girls.s03e15.dvdrip.xvid.sk-snf.avi",
+        "source_title": "Gilmore.Girls.S03E15.DVDRip.XviD.SK-Snf.avi",
+        "source_filename": "Gilmore.Girls.S03E15.DVDRip.XviD.SK-Snf.avi",
+        "size_bytes": 350621696,
+        "duration_sec": 2545,
+        "width": 640,
+        "height": 480,
+        "audio_language": "sk",
+        "language_probability": 0.7373965978622437,
+        "language_tier": "slovak_audio",
+        "match_evidence": {
+          "expected_episode": "S03E15",
+          "episode_code_match": true,
+          "series_alias_match": true,
+          "unmatched_series_prefix": "",
+          "episode_codes_found": [
+            "S03E15"
+          ]
+        },
+        "display_name": "Gilmorova děvčata S03E15 - Konfrontace SD SK Dabing",
+        "prepared_at": "2026-10-27T19:49:57.018061+00:00"
+      },
+      "transfer_receipt": {
+        "target_video_id": "30571228",
+        "size_bytes": 350621696,
+        "source_bytes_read": 350621696,
+        "http_status": 201
+      },
+      "receipt_commit": "4626249aa61a02e68f4dd6ec384c477bdce44c66",
+      "account_listing_counts": {
+        "a": 0,
+        "b": 0
+      },
+      "listing_status": "not_in_recent_listing_after_completed_transfer",
+      "target_ready": null
+    },
+    {
+      "identity": "1787:3:21",
+      "account": "b",
+      "upload": {
+        "target_video_id": "30571290",
+        "display_name": "Havaj 5-0 S03E21 - Pohled do duše SD CZ Dabing",
+        "uploaded_at": "2026-10-27T19:55:15.390935+00:00"
+      },
+      "source": {
+        "source_id": "25776087",
+        "source_url": "https://sdilej.cz/25776087/havaj-5-0-s03e21-cz-dabing-hawaii-five-0.mkv",
+        "source_title": "Havaj 5-0 S03E21 CZ dabing HAWAII FIVE-0.mkv",
+        "source_filename": "Havaj 5-0 S03E21 CZ dabing HAWAII FIVE-0.mkv",
+        "size_bytes": 522785178,
+        "duration_sec": 2417,
+        "width": 720,
+        "height": 576,
+        "audio_language": "cs",
+        "language_probability": 0.9731008410453796,
+        "language_tier": "czech_audio",
+        "match_evidence": {
+          "expected_episode": "S03E21",
+          "episode_code_match": true,
+          "series_alias_match": true,
+          "unmatched_series_prefix": "",
+          "episode_codes_found": [
+            "S03E21"
+          ]
+        },
+        "display_name": "Havaj 5-0 S03E21 - Pohled do duše SD CZ Dabing",
+        "prepared_at": "2026-10-27T19:54:01.208918+00:00"
+      },
+      "transfer_receipt": {
+        "target_video_id": "30571290",
+        "size_bytes": 522785178,
+        "source_bytes_read": 522785178,
+        "http_status": 201
+      },
+      "receipt_commit": "cf104a7c19ce40270cb1177f7bf1153671ddff82",
+      "account_listing_counts": {
+        "a": 0,
+        "b": 1
+      },
+      "target_ready": true,
+      "listing_status": "available"
+    }
+  ],
+  "preserved_completed": 30647,
+  "preserved_allocations": 25,
+  "frozen_plan_and_manifest_unchanged": true,
+  "additions_append_only": true,
+  "globally_unique_queue_validated": true,
+  "workers_per_account": 2,
+  "source_preparation": {
+    "run_id": "40571567349",
+    "attempted_this_run": 1,
+    "prepared_this_run": 0,
+    "updated_at": "2026-10-27T20:00:14.136007+00:00",
+    "workers": 4,
+    "stock": {
+      "queue_total": 30693,
+      "ready": 0,
+      "ready_by_account": {
+        "a": 0,
+        "b": 0
+      },
+      "categories": {
+        "completed": 30652,
+        "allocated": 27,
+        "failed": 14
+      },
+      "completed_by_account": {
+        "a": 15324,
+        "b": 15328
+      },
+      "uploads_last_24h": 122,
+      "uploads_per_hour_24h": 5.08,
+      "stock_hours_24h": 0.0
+    },
+    "health": {
+      "status": "waiting_for_sources",
+      "starved_accounts": [],
+      "seconds_since_upload": {
+        "a": 303,
+        "b": 298
+      },
+      "preparation_outcomes_last_hour": {
+        "no_matches": 50,
+        "prepared": 9,
+        "verified_non_czech": 22,
+        "source_search_unavailable": 5,
+        "inconclusive_audio": 1
+      }
+    },
+    "search_health": {
+      "status": "healthy",
+      "consecutive_failures": 0,
+      "retry_seconds": 0,
+      "failed_cycles_this_run": 0,
+      "control_requests": 2,
+      "request_gap_seconds": 4.0,
+      "restart_required": false,
+      "resume_after": null,
+      "controls": [
+        {
+          "path": "/teorie-velkeho-tresku/s/-6",
+          "status": 200,
+          "response_bytes": 723786,
+          "parsed_candidates": 411,
+          "response_path": "/teorie-velkeho-tresku/s/-6",
+          "unexpected_origin": false,
+          "checked_at": "2026-10-27T19:59:44.840878+00:00"
+        }
+      ]
+    }
+  },
+  "workflow_observation": {
+    "upload_run": 40567826283,
+    "upload_status": "in_progress",
+    "targeted_preparation_run": 40570955405,
+    "targeted_preparation_status": "success",
+    "successor_preparation_run": 40571567349,
+    "successor_preparation_status": "in_progress"
+  }
+}
