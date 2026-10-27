@@ -198,7 +198,7 @@ def test_empty_stock_warms_proven_seasons_before_unproven_filename_hints():
 def test_two_proven_neighboring_episodes_can_fill_both_empty_accounts():
     rows = [metadata(series=1), metadata(series=2), metadata(series=3), metadata(series=3, number=2)]
     index = CandidateIndex(rows)
-    index.observe([candidate(f'Series {r["series_id"]} S01E{r["episode"]:02d} CZ', str(n + 1))
+    index.observe([candidate(f'Series {r["series_id"]} S01E{r["episode"]:02d} 720p', str(n + 1))
                    for n, r in enumerate(rows)])
     result = list(replenish.reserve_order(rows, {}, {}, set(), {(3, 1)},
                   index=index, refresh=lambda: None, progress={}, urgent=True))

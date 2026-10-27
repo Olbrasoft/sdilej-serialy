@@ -123,7 +123,8 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
         for metadata in warm_order:
             identity = Episode.from_dict(metadata).identity
             proven_season = (metadata['series_id'], metadata['season']) in (productive_seasons or set())
-            if (identity in index.dubbed_hints and (metadata['series_id'] not in seen_series or proven_season)
+            known_source = identity in index.dubbed_hints or proven_season and index.rank(identity) < 2
+            if (known_source and (metadata['series_id'] not in seen_series or proven_season)
                     and series_probe_allowed(metadata, paused, index, records, urgent=urgent)
                     and (available is None or available(metadata))):
                 warmed.add(identity)
