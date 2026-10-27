@@ -265352,20 +265352,21 @@
       "queue_rank": 27693
     },
     "1095:4:8": {
-      "at": "2026-10-24T09:37:25.289909+00:00",
+      "at": "2026-10-27T20:38:58.686198+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
       "observed_language_probability": 0.8243565782904625,
       "observed_source_id": "34329806",
-      "elapsed_seconds": 90.41,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-25T09:38:55.699521+00:00"
+      "elapsed_seconds": 136.9,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-28T20:41:15.587042+00:00"
     },
     "1349:2:9": {
       "at": "2026-10-17T13:53:29.990956+00:00",
@@ -694378,9 +694379,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-28T20:38:58.089976+00:00"
+    },
+    "3133:2:16": {
+      "at": "2026-10-27T20:40:32.417930+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 42.23,
+      "search_evidence": [
+        {
+          "path": "/the-mary-tyler-moore-show-s02e16/s/-6",
+          "status": 200,
+          "response_bytes": 217253,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-mary-tyler-moore-show/s/-6",
+          "status": 200,
+          "response_bytes": 217114,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-mary-tyler-moore-show-s02e16/s/-6",
+          "status": 200,
+          "response_bytes": 217258,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-mary-tyler-moore-show/s/-6",
+          "status": 200,
+          "response_bytes": 217079,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-28T20:41:14.651180+00:00"
     }
   },
-  "updated_at": "2026-10-27T20:40:58.623355+00:00",
+  "updated_at": "2026-10-27T20:42:06.179766+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -700701,12 +700750,12 @@
     },
     "1095": {
       "misses": [
-        "1095:4:5",
         "1095:4:6",
-        "1095:4:7"
+        "1095:4:7",
+        "1095:4:8"
       ],
-      "updated_at": "2026-10-27T20:40:31.814607+00:00",
-      "retry_after": "2026-10-28T00:40:31.814607+00:00"
+      "updated_at": "2026-10-27T20:41:15.587072+00:00",
+      "retry_after": "2026-10-28T00:41:15.587072+00:00"
     },
     "1332": {
       "misses": [
@@ -701639,12 +701688,9 @@
     },
     "3133": {
       "misses": [
-        "3133:2:12",
-        "3133:2:14",
-        "3133:2:15"
+        "3133:2:16"
       ],
-      "updated_at": "2026-10-27T10:19:35.034289+00:00",
-      "retry_after": "2026-10-27T14:19:35.034289+00:00"
+      "updated_at": "2026-10-27T20:41:14.651212+00:00"
     },
     "1617": {
       "misses": [
@@ -711738,12 +711784,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3133,
+    "last_series": 3225,
     "last_series_order": [
       false,
       -8.3,
-      -11431,
-      3133
+      -9503,
+      3225
     ]
   }
 }
