@@ -28,7 +28,12 @@ def decision(kind, *, enabled, runs, now, needed=True, halted=False, report=None
             for run in active:
                 if run['status'] != 'in_progress':
                     continue
-                started = timestamp(run.get('run_started_at') or run.get('created_at'))
+                # GitHub starts the workflow clock while it is still pending
+                # behind the concurrency group. Only the actual worker's age
+                # can exhaust its startup grace period.
+                if 'worker_started_at' in run and not run['worker_started_at']:
+                    continue
+                started = timestamp(run.get('worker_started_at') or run.get('run_started_at') or run.get('created_at'))
                 if started is None or now - started < timedelta(minutes=30):
                     continue
                 saved_heartbeat = timestamp((report or {}).get('updated_at'))
@@ -83,6 +88,9 @@ def settle_runs(repository, runs):
         if run['status'] == 'in_progress':
             payload = github(repository, f'actions/runs/{run["id"]}/jobs?filter=latest&per_page=100')
             jobs = payload['jobs']
+            starts = [job['started_at'] for job in jobs
+                      if job['status'] == 'in_progress' and job.get('started_at')]
+            run = dict(run, worker_started_at=min(starts) if starts else None)
             if (jobs and len(jobs) == payload['total_count']
                     and all(job['status'] == 'completed' and job.get('completed_at') for job in jobs)):
                 conclusions = {job.get('conclusion') for job in jobs}

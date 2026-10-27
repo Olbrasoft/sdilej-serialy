@@ -29,6 +29,8 @@ restart, including the watchdog. Source reports now identify their Actions run.
 If the workflow API still says `in_progress` after its jobs finished, the watchdog
 requires the complete jobs listing before treating that run as completed. An
 incomplete jobs page or any running job keeps it protected from duplicate dispatch.
+The startup grace period begins at the actual job start; time spent waiting for
+the concurrency slot cannot make a newly started producer appear stalled.
 
 The watchdog uses only the repository token, with Actions dispatch permission;
 it receives no source, target-account or production-database credentials. It

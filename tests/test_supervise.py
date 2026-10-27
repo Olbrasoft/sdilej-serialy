@@ -97,3 +97,12 @@ def test_lagging_run_status_requires_every_job_to_be_confirmed_finished(monkeypa
     assert settled[0]['status'] == expected
     if expected == 'completed':
         assert settled[0]['conclusion'] == 'success' and settled[0]['updated_at'] == NOW.isoformat()
+
+
+@pytest.mark.parametrize('started', [None, (NOW - timedelta(minutes=2)).isoformat()])
+def test_pending_time_cannot_exhaust_actual_source_worker_startup_grace(monkeypatch, started):
+    from sdilej_serialy import supervise
+    jobs = [dict(status='in_progress', started_at=started)] if started else []
+    monkeypatch.setattr(supervise, 'github', lambda *a: dict(total_count=len(jobs), jobs=jobs))
+    settled = settle_runs('owner/repo', [run('in_progress', minutes=120)])
+    assert decision('source', enabled=True, runs=settled, now=NOW)['action'] == 'wait'
