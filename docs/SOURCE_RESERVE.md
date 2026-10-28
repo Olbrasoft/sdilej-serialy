@@ -802,3 +802,12 @@ trigger this additional work.
 When retrying from 60 seconds, the provider passes that actual (duration-clamped)
 initial position into consensus. Short episodes must not count the retry sample
 again as a quarter-position vote or as additional evidence.
+
+Search-control diagnostics distinguish missing results from fallback HTML by
+recording the body hash, video-box count, whether the heading matches the query,
+known fallback/request-limit notices, password-field presence and numeric cache
+age. No page text, credentials, cookies or signed URLs are retained. A password
+field alone is not proof of failed authentication. Explicit request-limit pages
+with HTTP 200 now enter the shared quiet window without a second control request
+or a fresh login, just like HTTP 429 responses. These diagnostics do not establish
+the cause of earlier empty responses whose bodies were not retained.

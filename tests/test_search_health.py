@@ -28,6 +28,38 @@ def test_parallel_empty_queries_use_one_shared_positive_control():
     assert circuit.snapshot()['control_requests'] == 1
 
 
+def test_control_diagnostics_distinguish_fallback_html_without_persisting_private_content():
+    html = '''<h1>Account private@example.test</h1><h2>Křišťálová koule říká: zkus to jinak!</h2>
+        <input type="password" value="private-password"><script>token="private-token"</script>
+        <a href="https://cdn.invalid/media?signature=private-signature">Private media</a>'''
+    response = SimpleNamespace(text=html, status_code=200,
+                               url=CONTROL_URL+'?token=private-query', headers={'Age':'123'})
+    circuit = SearchCircuit()
+    circuit.record_control(CONTROL_URL, response, 0, query='Teorie velkého třesku')
+    record = circuit.snapshot()['controls'][0]
+    assert record['fallback_notice_present'] and record['password_field_present']
+    assert not record['heading_matches_query'] and record['video_box_count'] == 0
+    assert record['cache_age_seconds'] == 123 and len(record['body_sha256']) == 64
+    for secret in ['private@example.test','private-password','private-token','private-signature','private-query']:
+        assert secret not in str(record)
+
+
+def test_control_diagnostics_show_real_results_and_explicit_request_limit_notices():
+    circuit = SearchCircuit()
+    response = SimpleNamespace(text='<h1>Teorie Velkeho Tresku</h1>'+POSITIVE, status_code=200)
+    circuit.record_control(CONTROL_URL, response, 1, query='Teorie velkého třesku')
+    first = circuit.snapshot()['controls'][0]
+    assert first['heading_matches_query'] and first['video_box_count'] == 1
+    assert not first['request_limit_notice_present'] and first['cache_age_seconds'] is None
+    response = SimpleNamespace(text='<h1>Too many requests</h1>', status_code=200,
+                               headers={'Age':'private-header'})
+    circuit.record_control(CONTROL_URL, response, 0, query='Teorie velkého třesku')
+    second = circuit.snapshot()['controls'][0]
+    assert second['request_limit_notice_present'] and not second['heading_matches_query']
+    assert second['body_sha256'] != first['body_sha256']
+    assert second['cache_age_seconds'] is None and 'private-header' not in str(second)
+
+
 def test_large_monotonic_timestamp_does_not_add_a_phantom_retry_second():
     circuit = SearchCircuit(clock=lambda: 2 ** 22 - 1e-9)
     assert circuit.failure() == 300
@@ -240,6 +272,19 @@ def test_explicit_control_throttle_never_probes_again_before_quiet_window():
         p._search_page(QUERY_URL, 'Series')
     report = p.search_health.circuit.snapshot()
     assert report['status'] == 'paused' and report['controls'][0]['status'] == 429
+    assert session.calls == [QUERY_URL, CONTROL_URL]
+
+
+@pytest.mark.parametrize('notice', ['Too many requests', 'Příliš mnoho požadavků'])
+def test_http_200_request_limit_notice_also_starts_quiet_window_without_relogin(notice):
+    session = Session(lambda url: f'<h1>{notice}</h1>' if url == CONTROL_URL else EMPTY)
+    p = EpisodeSourceProvider(session, detector=object(), request_gap_seconds=0,
+        session_factory=lambda: pytest.fail('A request limit must not trigger reauthentication'))
+    with pytest.raises(SearchUnavailable):
+        p._search_page(QUERY_URL, 'Series')
+    report = p.search_health.circuit.snapshot()
+    assert report['status'] == 'paused' and report['controls'][0]['status'] == 200
+    assert report['controls'][0]['request_limit_notice_present']
     assert session.calls == [QUERY_URL, CONTROL_URL]
 
 

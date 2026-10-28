@@ -2,16 +2,38 @@
 import time
 import math
 import threading
+import hashlib
 from datetime import UTC, datetime
 from urllib.parse import urlsplit
 
 import requests
-from sdilej_to_prehrajto.sdilej import BASE_URL, SdilejError, parse_search_html
+from bs4 import BeautifulSoup
+from sdilej_to_prehrajto.sdilej import BASE_URL, SdilejError, parse_search_html, slugify
 
 CONTROL_QUERY = 'Teorie velkého třesku'
 CONTROL_URL = BASE_URL + '/teorie-velkeho-tresku/s/-6'
 FALLBACK_QUERY = 'Doktor Martin'
 FALLBACK_URL = BASE_URL + '/doktor-martin/s/-6'
+
+
+def response_diagnostics(response, query):
+    """Persist structural evidence of empty HTTP 200 pages, never page text."""
+    soup = BeautifulSoup(response.text, 'html.parser')
+    heading = soup.find('h1')
+    visible = soup.get_text(' ', strip=True).casefold()
+    headers = getattr(response, 'headers', {})
+    age = headers.get('Age', '')
+    return dict(
+        body_sha256=hashlib.sha256(response.text.encode('utf-8')).hexdigest(),
+        video_box_count=len(soup.select('div.videobox')),
+        heading_matches_query=bool(heading and query and
+            slugify(heading.get_text(' ', strip=True)) == slugify(query)),
+        password_field_present=bool(soup.select_one('input[type="password"]')),
+        fallback_notice_present='křišťálová koule' in visible,
+        request_limit_notice_present=any(term in visible for term in
+            ('too many requests', 'příliš mnoho požadavků', 'rate limit exceeded')),
+        cache_age_seconds=int(age) if age.isascii() and age.isdigit() and len(age) <= 10 else None,
+    )
 
 
 def retry_seconds(remaining):
@@ -109,16 +131,19 @@ class SearchCircuit:
         with self.lock:
             return self._restart_required()
 
-    def record_control(self, url, response, count):
+    def record_control(self, url, response, count, *, query=None):
+        diagnostics = response_diagnostics(response, query)
         with self.lock:
             self.probe_count += 1
             response_url = urlsplit(getattr(response, 'url', url))
             self.controls[url.removeprefix(BASE_URL)] = dict(
                 status=getattr(response, 'status_code', None),
                 response_bytes=len(response.text.encode('utf-8')), parsed_candidates=count,
+                **diagnostics,
                 response_path=response_url.path if response_url.netloc == urlsplit(BASE_URL).netloc else None,
                 unexpected_origin=response_url.netloc != urlsplit(BASE_URL).netloc,
                 checked_at=datetime.fromtimestamp(self.wall_clock(), UTC).isoformat())
+        return diagnostics
 
     def record_control_error(self, url, error):
         # Keep diagnostic types/status only, never authenticated URLs or the
@@ -182,9 +207,13 @@ class SearchHealth:
                     # every worker or renewing the authenticated session.
                     continue
                 count = len(parse_search_html(response.text, query=query))
-                self.circuit.record_control(url, response, count)
+                diagnostics = self.circuit.record_control(url, response, count, query=query)
                 if count:
                     return True
+                if diagnostics['request_limit_notice_present']:
+                    # Some backends return their limit page with HTTP 200.
+                    # Respect it without another control or authentication.
+                    raise SdilejError('Source control reported a request limit')
             return False
         finally:
             provider._fresh_search = previous
