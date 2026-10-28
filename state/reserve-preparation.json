@@ -651564,17 +651564,68 @@
       "queue_rank": 30327
     },
     "1150:4:8": {
-      "at": "2026-10-25T08:44:15.377305+00:00",
+      "at": "2026-10-28T23:29:41.942174+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 2753.28,
-      "consecutive_failures": 0,
-      "retry_after": "2026-10-25T09:45:08.656943+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 36.95,
+      "search_evidence": [
+        {
+          "path": "/super-drbna-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 216918,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/gossip-girl-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 217165,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/super-drbna-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 216938,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/super-drbna/s/-6",
+          "status": 200,
+          "response_bytes": 424218,
+          "boxes": 186,
+          "parsed_candidates": 179,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/gossip-girl-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 216970,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/gossip-girl/s/-6",
+          "status": 200,
+          "response_bytes": 296960,
+          "boxes": 74,
+          "parsed_candidates": 60,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T23:30:18.891514+00:00"
     },
     "1083:6:3": {
       "at": "2026-10-25T17:05:04.163496+00:00",
@@ -744572,7 +744623,7 @@
       "retry_after": "2026-10-29T23:29:40.816757+00:00"
     }
   },
-  "updated_at": "2026-10-28T23:30:06.366984+00:00",
+  "updated_at": "2026-10-28T23:31:17.739976+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -760370,8 +760421,10 @@
       "retry_after": "2026-10-20T08:53:43.359729+00:00"
     },
     "1150": {
-      "misses": [],
-      "updated_at": "2026-10-28T23:26:52.819676+00:00"
+      "misses": [
+        "1150:4:8"
+      ],
+      "updated_at": "2026-10-28T23:30:18.891540+00:00"
     },
     "587": {
       "misses": [],
