@@ -16,6 +16,12 @@ FALLBACK_QUERY = 'Doktor Martin'
 FALLBACK_URL = BASE_URL + '/doktor-martin/s/-6'
 
 
+def request_limit_notice(soup):
+    visible = soup.get_text(' ', strip=True).casefold()
+    return any(term in visible for term in
+               ('too many requests', 'příliš mnoho požadavků', 'rate limit exceeded'))
+
+
 def response_diagnostics(response, query):
     """Persist structural evidence of empty HTTP 200 pages, never page text."""
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -30,8 +36,7 @@ def response_diagnostics(response, query):
             slugify(heading.get_text(' ', strip=True)) == slugify(query)),
         password_field_present=bool(soup.select_one('input[type="password"]')),
         fallback_notice_present='křišťálová koule' in visible,
-        request_limit_notice_present=any(term in visible for term in
-            ('too many requests', 'příliš mnoho požadavků', 'rate limit exceeded')),
+        request_limit_notice_present=request_limit_notice(soup),
         cache_age_seconds=int(age) if age.isascii() and age.isdigit() and len(age) <= 10 else None,
     )
 
@@ -62,6 +67,7 @@ class SearchCircuit:
         self.retry_at = 0
         self.verified = False
         self.controls = {}
+        self.last_request_limit = None
         self.max_failed_cycles = max_failed_cycles
         self.failed_cycles_this_run = 0
         resume = (restored or {}).get('resume_after')
@@ -164,6 +170,11 @@ class SearchCircuit:
                 checked_at=datetime.fromtimestamp(self.wall_clock(), UTC).isoformat())
         return statuses
 
+    def record_request_limit(self, url, status):
+        with self.lock:
+            self.last_request_limit = dict(path=urlsplit(url).path, status=status,
+                checked_at=datetime.fromtimestamp(self.wall_clock(), UTC).isoformat())
+
     def snapshot(self):
         with self.lock:
             remaining = max(0, self.retry_at - self.clock())
@@ -174,6 +185,7 @@ class SearchCircuit:
                 control_requests=self.probe_count,
                 request_gap_seconds=self._request_gap(),
                 restart_required=self._restart_required(),
+                last_request_limit=self.last_request_limit,
                 resume_after=(datetime.fromtimestamp(self.wall_clock() + remaining, UTC).isoformat()
                               if remaining else None),
                 controls=[dict(path=path, **value) for path,value in self.controls.items()])

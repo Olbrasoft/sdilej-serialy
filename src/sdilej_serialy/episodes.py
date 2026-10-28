@@ -36,7 +36,7 @@ from .numbering import mapped_episode_title
 from .auth import login_with_retry
 from .source_cache import media_key, stable_url, search_url
 from .audio_pipeline import PipelinedLanguageDetector
-from .search_health import SearchHealth, SearchUnavailable
+from .search_health import SearchHealth, SearchUnavailable, request_limit_notice
 
 
 # Underscores are filename separators, not letters adjoining an episode code.
@@ -237,6 +237,11 @@ class EpisodeSourceProvider:
             response.raise_for_status()
             return response
         except requests.RequestException as error:
+            if (session is None and self.search_health is not None
+                    and getattr(getattr(error, 'response', None), 'status_code', None) == 429):
+                self.search_health.circuit.record_request_limit(url, 429)
+                self.search_health.circuit.failure()
+                raise SearchUnavailable('Source request limit requires a quiet window') from error
             raise SdilejError("Sdilej.cz request failed") from error
         finally:
             if session is None:
@@ -293,6 +298,10 @@ class EpisodeSourceProvider:
                 fields = ('source_id', 'url', 'title', 'size_bytes', 'duration_sec', 'width', 'height')
                 rows = [{key: getattr(candidate, key) for key in fields}
                         for candidate in parse_search_html(html, query=query)]
+                if not rows and self.search_health is not None and request_limit_notice(soup):
+                    self.search_health.circuit.record_request_limit(url, response.status_code)
+                    self.search_health.circuit.failure()
+                    raise SearchUnavailable('Source search reported a request limit')
                 trace = getattr(self, 'last_search_evidence', [])
                 trace.append(dict(path=urlsplit(url).path, status=getattr(response, 'status_code', None),
                     response_bytes=len(html.encode('utf-8')), boxes=len(soup.select('div.videobox')),

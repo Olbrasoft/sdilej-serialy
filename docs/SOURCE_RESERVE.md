@@ -811,3 +811,9 @@ field alone is not proof of failed authentication. Explicit request-limit pages
 with HTTP 200 now enter the shared quiet window without a second control request
 or a fresh login, just like HTTP 429 responses. These diagnostics do not establish
 the cause of earlier empty responses whose bodies were not retained.
+
+The same protection applies directly to ordinary source requests: HTTP 429 and
+empty search pages with explicit request-limit notices override a recently
+successful control. They pause all producer workers immediately and never become
+cached absence or an episode failure. The triggering status and public path are
+recorded without URL queries or response text.

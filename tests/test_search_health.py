@@ -288,6 +288,32 @@ def test_http_200_request_limit_notice_also_starts_quiet_window_without_relogin(
     assert session.calls == [QUERY_URL, CONTROL_URL]
 
 
+@pytest.mark.parametrize('status', [200, 429])
+def test_query_limit_overrides_recent_healthy_control_without_caching_absence(tmp_path, status):
+    def response(url):
+        if status == 429:
+            result = requests.Response()
+            result.status_code = status
+            raise requests.HTTPError('private-token', response=result)
+        return '<h1>Too many requests</h1>'
+    session = Session(response)
+    cache = SourceCache(tmp_path / 'cache.json')
+    circuit = SearchCircuit()
+    circuit.success()
+    p = EpisodeSourceProvider(session, detector=object(), request_gap_seconds=0, cache=cache,
+        session_factory=lambda: pytest.fail('A request limit must not cause reauthentication'),
+        search_circuit=circuit)
+    url = QUERY_URL + '?token=private-query'
+    with pytest.raises(SearchUnavailable):
+        p._search_page(url, 'Series')
+    report = circuit.snapshot()
+    assert report['status'] == 'paused' and report['consecutive_failures'] == 1
+    assert report['last_request_limit']['status'] == status
+    assert report['last_request_limit']['path'] == '/series/s/-6'
+    assert session.calls == [url] and not cache.entries
+    assert 'private-token' not in str(report) and 'private-query' not in str(report)
+
+
 def test_persistent_empty_control_is_transient_and_backs_off_without_repeated_logins(tmp_path):
     old, fresh = Session(lambda _: EMPTY), Session(lambda _: EMPTY)
     renewed, delays, now = [], [], [100]
