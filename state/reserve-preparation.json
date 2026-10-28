@@ -132282,14 +132282,18 @@
       "queue_rank": 27766
     },
     "938:1:7": {
-      "at": "2026-10-18T08:15:27.344540+00:00",
+      "at": "2026-10-28T16:28:10.405147+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 54.29,
-      "consecutive_failures": 4,
-      "retry_after": "2026-10-19T08:16:21.630524+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 87.79,
+      "consecutive_failures": 5,
+      "retry_after": "2026-10-28T17:29:38.191189+00:00"
     },
     "938:1:8": {
       "at": "2026-10-18T08:16:04.288949+00:00",
@@ -737707,9 +737711,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T16:25:54.706852+00:00"
+    },
+    "3027:3:12": {
+      "at": "2026-10-28T16:28:11.143016+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 122.71,
+      "search_evidence": [
+        {
+          "path": "/mame-jasno-s03e12/s/-6",
+          "status": 200,
+          "response_bytes": 216961,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mame-jasno/s/-6",
+          "status": 200,
+          "response_bytes": 220626,
+          "boxes": 4,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/explained-s03e12/s/-6",
+          "status": 200,
+          "response_bytes": 216903,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/explained/s/-6",
+          "status": 200,
+          "response_bytes": 267513,
+          "boxes": 39,
+          "parsed_candidates": 36,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mame-jasno-s03e12/s/-6",
+          "status": 200,
+          "response_bytes": 216944,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mame-jasno/s/-6",
+          "status": 200,
+          "response_bytes": 220664,
+          "boxes": 4,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/explained-s03e12/s/-6",
+          "status": 200,
+          "response_bytes": 216896,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/explained/s/-6",
+          "status": 200,
+          "response_bytes": 267659,
+          "boxes": 39,
+          "parsed_candidates": 36,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T16:30:13.855609+00:00"
     }
   },
-  "updated_at": "2026-10-28T16:29:10.994960+00:00",
+  "updated_at": "2026-10-28T16:30:27.519433+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -742261,9 +742345,10 @@
     },
     "938": {
       "misses": [
-        "938:1:5"
+        "938:1:5",
+        "938:1:7"
       ],
-      "updated_at": "2026-10-28T16:24:11.288404+00:00"
+      "updated_at": "2026-10-28T16:29:38.191215+00:00"
     },
     "1996": {
       "misses": [
@@ -748534,9 +748619,10 @@
     },
     "3027": {
       "misses": [
-        "3027:3:11"
+        "3027:3:11",
+        "3027:3:12"
       ],
-      "updated_at": "2026-10-28T08:30:00.452914+00:00"
+      "updated_at": "2026-10-28T16:30:13.855639+00:00"
     },
     "8019": {
       "misses": [
@@ -755019,12 +755105,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3027,
+    "last_series": 2531,
     "last_series_order": [
       false,
       -8.0,
-      -10436,
-      3027
+      -8363,
+      2531
     ]
   }
 }
