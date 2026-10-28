@@ -249311,14 +249311,21 @@
       "retry_after": "2026-10-17T11:29:11.649855+00:00"
     },
     "2140:1:3": {
-      "at": "2026-10-16T11:29:07.095476+00:00",
+      "at": "2026-10-28T03:26:18.293222+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 23.88,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-17T11:29:30.977967+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9431438446044922,
+      "observed_source_id": "33240506",
+      "elapsed_seconds": 73.02,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T03:27:31.315295+00:00"
     },
     "577:2:7": {
       "at": "2026-10-16T11:29:06.567470+00:00",
@@ -296424,14 +296431,21 @@
       "retry_after": "2026-10-19T22:33:28.220291+00:00"
     },
     "2140:1:5": {
-      "at": "2026-10-18T22:33:26.968746+00:00",
+      "at": "2026-10-28T03:26:29.152675+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 31.26,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T22:33:58.224780+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9855989217758179,
+      "observed_source_id": "33240510",
+      "elapsed_seconds": 69.09,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T03:27:38.238829+00:00"
     },
     "4951:1:5": {
       "at": "2026-10-18T22:33:28.774228+00:00",
@@ -711188,9 +711202,49 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T03:26:39.899655+00:00"
+    },
+    "1688:1:34": {
+      "at": "2026-10-28T03:27:32.041615+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 7.35,
+      "search_evidence": [
+        {
+          "path": "/fireworks-of-my-heart-s01e34/s/-6",
+          "status": 200,
+          "response_bytes": 217215,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fireworks-of-my-heart-s01e34/s/-6",
+          "status": 200,
+          "response_bytes": 217228,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fireworks-of-my-heart/s/-6",
+          "status": 200,
+          "response_bytes": 260385,
+          "boxes": 40,
+          "parsed_candidates": 40,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T03:27:39.387188+00:00"
     }
   },
-  "updated_at": "2026-10-28T03:26:42.888160+00:00",
+  "updated_at": "2026-10-28T03:27:52.323646+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -722069,10 +722123,12 @@
     },
     "2140": {
       "misses": [
-        "2140:7:2",
-        "2140:7:3"
+        "2140:7:3",
+        "2140:1:3",
+        "2140:1:5"
       ],
-      "updated_at": "2026-10-28T03:25:20.828955+00:00"
+      "updated_at": "2026-10-28T03:27:38.238863+00:00",
+      "retry_after": "2026-10-28T07:27:38.238863+00:00"
     },
     "4951": {
       "misses": [
@@ -722647,9 +722703,11 @@
     "1688": {
       "misses": [
         "1688:1:32",
-        "1688:1:33"
+        "1688:1:33",
+        "1688:1:34"
       ],
-      "updated_at": "2026-10-27T22:55:46.663229+00:00"
+      "updated_at": "2026-10-28T03:27:39.387215+00:00",
+      "retry_after": "2026-10-28T07:27:39.387215+00:00"
     },
     "6992": {
       "misses": [
@@ -728637,12 +728695,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2815,
+    "last_series": 15,
     "last_series_order": [
       false,
-      -8.0,
-      -3220,
-      2815
+      -7.9,
+      -365171,
+      15
     ]
   }
 }
