@@ -192,7 +192,7 @@ def test_audio_retry_uses_a_different_offset_and_keeps_confidence_gate(monkeypat
 
 
 @pytest.mark.parametrize('sampling_revision', [0, 1])
-@pytest.mark.parametrize('consensus_revision', [0, 1])
+@pytest.mark.parametrize('consensus_revision', [0, 1, 2])
 def test_audio_recovery_is_hint_scoped_and_only_once(sampling_revision, consensus_revision):
     now=datetime.now(UTC)
     record=dict(reason='inconclusive_audio',preparation_revision=5,audio_sampling_revision=sampling_revision,

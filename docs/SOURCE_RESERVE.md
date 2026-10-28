@@ -790,3 +790,11 @@ uniformly weak samples cannot use this fallback. Preferred-Czech handling,
 complete Czech-source search before Slovak fallback, original quality and
 ownership checks remain mandatory. Exact hinted inconclusive episodes get one
 versioned recheck through the existing bounded retry lane.
+
+Revision 3 also handles unanimous results with only one qualifying sample:
+before retrying the same inconclusive quarter positions, inspect at most two
+new positions (40% and 60%), clamped to the real episode duration. Stop as soon
+as another clear sample or a conflicting language is observed. The extra samples
+do not authorize publication by themselves: the same confidence, unanimity and
+Czech-preference rules still apply. Split votes and uniformly weak audio do not
+trigger this additional work.

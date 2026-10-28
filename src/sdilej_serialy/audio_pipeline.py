@@ -59,6 +59,27 @@ class PipelinedLanguageDetector(WhisperLanguageDetector):
         for language, probability in samples:
             grouped[language.lower()].append(float(probability))
         preferred = (preferred_language or '').lower()
+        # A unanimous result with just one clear sample needs new evidence,
+        # not another pass over the same quarter offsets. Try at most two
+        # additional, distinct positions and stop on a clear or conflicting
+        # result. No extra requests for split votes or uniformly weak audio.
+        if len(grouped) == 1:
+            language, probabilities = next(iter(grouped.items()))
+            clear_count = sum(probability >= .65 for probability in probabilities)
+            confidence = sum(probabilities) / len(probabilities)
+            if confidence < .65 and clear_count == 1 and language != preferred:
+                duration = int(duration_sec or 900)
+                maximum = max(0, duration - self.seconds)
+                for fraction in (.4, .6):
+                    offset = min(int(duration * fraction), maximum)
+                    if offset in used:
+                        continue
+                    used.add(offset)
+                    detected, probability = self._detect_at(media_url, offset)
+                    detected = detected.lower()
+                    grouped[detected].append(float(probability))
+                    if detected != language or probability >= .65:
+                        break
         if preferred in grouped and max(grouped[preferred]) >= .65:
             return preferred, max(grouped[preferred])
         winner, probabilities = max(grouped.items(), key=lambda item: (len(item[1]), sum(item[1]), item[0]))

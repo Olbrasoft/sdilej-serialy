@@ -130,9 +130,41 @@ def test_unanimous_slovak_samples_recover_a_real_deferred_original(monkeypatch):
 def test_unclear_or_conflicting_consensus_stays_below_acceptance(monkeypatch, samples):
     detector = PipelinedLanguageDetector()
     remaining = iter(samples[1:])
-    monkeypatch.setattr(detector, '_detect_at', lambda *a: next(remaining))
+    monkeypatch.setattr(detector, '_detect_at', lambda *a: next(remaining, ('sk', .30)))
     language, confidence = detector.detect_consensus('sample', 2513, initial=samples[0], preferred_language='cs')
     assert language == 'sk' and confidence < .65
+
+
+@pytest.mark.parametrize('extra,accepted,expected_offsets', [
+    ([('sk', .85)], True, [628, 1256, 1884, 1005]),
+    ([('sk', .40), ('sk', .85)], True, [628, 1256, 1884, 1005, 1507]),
+    ([('sk', .40), ('sk', .50)], False, [628, 1256, 1884, 1005, 1507]),
+    ([('en', .90)], False, [628, 1256, 1884, 1005]),
+])
+def test_single_clear_unanimous_vote_gets_bounded_new_evidence(monkeypatch, extra, accepted, expected_offsets):
+    detector = PipelinedLanguageDetector()
+    samples = iter([('sk', .529), ('sk', .64), ('sk', .442)] + extra)
+    offsets = []
+    def detect(url, offset):
+        offsets.append(offset)
+        return next(samples)
+    monkeypatch.setattr(detector, '_detect_at', detect)
+    language, confidence = detector.detect_consensus('sample', 2513, initial=('sk', .918), preferred_language='cs')
+    assert language == 'sk' and (confidence >= .65) is accepted
+    assert offsets == expected_offsets
+
+
+def test_additional_consensus_samples_never_reuse_a_short_episode_position(monkeypatch):
+    detector = PipelinedLanguageDetector()
+    offsets = []
+    def detect(url, offset):
+        offsets.append(offset)
+        assert 0 <= offset <= 25
+        return 'sk', .4
+    monkeypatch.setattr(detector, '_detect_at', detect)
+    language, confidence = detector.detect_consensus('sample', 100, initial=('sk', .9), preferred_language='cs')
+    assert language == 'sk' and confidence < .65
+    assert offsets == [0, 12]
 
 
 def test_consensus_allows_search_to_reach_the_next_czech_original(monkeypatch):
