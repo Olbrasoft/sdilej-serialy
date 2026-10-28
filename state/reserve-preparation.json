@@ -357155,24 +357155,38 @@
       "retry_after": "2026-10-29T22:44:17.087141+00:00"
     },
     "54:2:10": {
-      "at": "2026-10-21T20:41:42.093315+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
-      "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 31.3,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-22T20:42:13.393648+00:00"
-    },
-    "54:2:11": {
-      "at": "2026-10-22T15:02:23.734637+00:00",
+      "at": "2026-10-28T22:41:44.998642+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 29.55,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-23T15:02:53.288409+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9834307432174683,
+      "observed_source_id": "31555056",
+      "elapsed_seconds": 210.64,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-29T22:45:15.641074+00:00"
+    },
+    "54:2:11": {
+      "at": "2026-10-28T22:43:11.437792+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9912848472595215,
+      "observed_source_id": "31555058",
+      "elapsed_seconds": 120.39,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-29T22:45:11.824203+00:00"
     },
     "54:2:12": {
       "at": "2026-10-22T15:02:47.638305+00:00",
@@ -743446,9 +743460,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T22:44:19.287255+00:00"
+    },
+    "3256:3:6": {
+      "at": "2026-10-28T22:44:17.796990+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 25.14,
+      "search_evidence": [
+        {
+          "path": "/predcasne-vydani-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 217080,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/predcasne-vydani/s/-6",
+          "status": 200,
+          "response_bytes": 216964,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/early-edition-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 216960,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/early-edition/s/-6",
+          "status": 200,
+          "response_bytes": 216707,
+          "boxes": 1,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/predcasne-vydani-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 217096,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/predcasne-vydani/s/-6",
+          "status": 200,
+          "response_bytes": 216905,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/early-edition-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 216967,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/early-edition/s/-6",
+          "status": 200,
+          "response_bytes": 216706,
+          "boxes": 1,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T22:44:42.935433+00:00"
     }
   },
-  "updated_at": "2026-10-28T22:44:35.633138+00:00",
+  "updated_at": "2026-10-28T22:45:45.594144+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -753813,10 +753907,12 @@
     },
     "54": {
       "misses": [
-        "54:1:7",
-        "54:2:2"
+        "54:2:2",
+        "54:2:11",
+        "54:2:10"
       ],
-      "updated_at": "2026-10-28T22:44:17.087167+00:00"
+      "updated_at": "2026-10-28T22:45:15.641096+00:00",
+      "retry_after": "2026-10-29T02:45:15.641096+00:00"
     },
     "1669": {
       "misses": [
@@ -758793,9 +758889,10 @@
     },
     "3256": {
       "misses": [
-        "3256:3:5"
+        "3256:3:5",
+        "3256:3:6"
       ],
-      "updated_at": "2026-10-28T09:30:13.043657+00:00"
+      "updated_at": "2026-10-28T22:44:42.935471+00:00"
     },
     "3574": {
       "misses": [
