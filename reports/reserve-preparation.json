@@ -1,13 +1,13 @@
 {
   "generation": "pair-2026-09-25",
   "run_id": "40639581321",
-  "attempted_this_run": 23,
+  "attempted_this_run": 24,
   "prepared_this_run": 0,
   "reserve_total": 22424,
   "queue_total": 30859,
-  "updated_at": "2026-10-28T06:57:34.504664+00:00",
+  "updated_at": "2026-10-28T06:58:45.060755+00:00",
   "workers": 4,
-  "elapsed_seconds": 1205.25,
+  "elapsed_seconds": 1275.81,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -23,8 +23,7 @@
     "categories": {
       "completed": 30822,
       "allocated": 25,
-      "failed": 9,
-      "in_flight": 3
+      "failed": 12
     },
     "completed_by_account": {
       "a": 15409,
@@ -35,17 +34,20 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "waiting_for_sources",
-    "starved_accounts": [],
+    "status": "starved",
+    "starved_accounts": [
+      "a",
+      "b"
+    ],
     "seconds_since_upload": {
-      "a": 2495,
-      "b": 2798
+      "a": 2565,
+      "b": 2869
     },
     "preparation_outcomes_last_hour": {
-      "no_matches": 51,
+      "no_matches": 48,
       "verified_non_czech": 13,
-      "transient_original": 4,
-      "inconclusive_audio": 8,
+      "transient_original": 5,
+      "inconclusive_audio": 7,
       "transient_search": 1,
       "prepared": 3,
       "no_acceptable_original": 4,
@@ -64,12 +66,12 @@
     ]
   },
   "cache": {
-    "search_miss": 102,
-    "search_seconds": 2009.53,
-    "search_hit": 33,
-    "media_miss": 24,
-    "media_seconds": 93.78,
-    "media_hit": 27,
+    "search_miss": 108,
+    "search_seconds": 2083.67,
+    "search_hit": 36,
+    "media_miss": 29,
+    "media_seconds": 111.91,
+    "media_hit": 28,
     "audio_miss": 25,
     "audio_seconds": 559.01,
     "audio_hit": 5
@@ -82,7 +84,7 @@
     "failures": 2
   },
   "productive_seasons": 72,
-  "series_paused_this_run": 114,
+  "series_paused_this_run": 113,
   "saved_reviewed_this_run": 0,
   "saved_prepared_this_run": 0,
   "repaired_this_run": 0,
@@ -2911,7 +2913,7 @@
     "retry_seconds": 0,
     "failed_cycles_this_run": 0,
     "control_requests": 12,
-    "request_gap_seconds": 4.0,
+    "request_gap_seconds": 2,
     "restart_required": false,
     "resume_after": null,
     "controls": [
