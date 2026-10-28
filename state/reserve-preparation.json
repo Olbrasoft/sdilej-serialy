@@ -236938,14 +236938,21 @@
       "queue_rank": 23303
     },
     "1678:1:3": {
-      "at": "2026-10-15T19:35:05.491459+00:00",
+      "at": "2026-10-28T03:17:25.445985+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 21.76,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-16T19:35:27.256335+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ko",
+      "observed_language_probability": 0.9051283001899719,
+      "observed_source_id": "30321511",
+      "elapsed_seconds": 74.45,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T03:18:54.401264+00:00"
     },
     "3858:1:3": {
       "at": "2026-10-15T19:35:27.711690+00:00",
@@ -461059,14 +461066,18 @@
       "retry_after": "2026-10-24T00:44:12.620217+00:00"
     },
     "2778:7:6": {
-      "at": "2026-10-23T00:43:13.629676+00:00",
+      "at": "2026-10-28T03:17:26.171763+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "inconclusive_audio",
-      "elapsed_seconds": 112.92,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T01:45:06.547901+00:00"
+      "elapsed_seconds": 148.7,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-28T04:19:54.873480+00:00"
     },
     "1074:7:12": {
       "at": "2026-10-23T00:44:31.463465+00:00",
@@ -650242,18 +650253,17 @@
       "queue_rank": 30368
     },
     "1787:9:13": {
-      "at": "2026-10-28T02:20:32.036129+00:00",
-      "status": "deferred",
+      "at": "2026-10-28T03:14:36.841730+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 1,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 384.87,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-28T02:36:56.903555+00:00"
+      "elapsed_seconds": 266.77,
+      "source_id": "34625586",
+      "queue_rank": 30814
     },
     "3367:2:14": {
       "at": "2026-10-25T16:50:05.556976+00:00",
@@ -710121,9 +710131,70 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T03:17:55.522538+00:00"
+    },
+    "1402:8:22": {
+      "at": "2026-10-28T03:19:04.939572+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 39.04,
+      "source_id": "29099185",
+      "queue_rank": 30815
+    },
+    "4082:4:11": {
+      "at": "2026-10-28T03:19:44.692055+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 7.04,
+      "search_evidence": [
+        {
+          "path": "/natsume-s-book-of-friends-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 217287,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/natsume-s-book-of-friends/s/-6",
+          "status": 200,
+          "response_bytes": 217095,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/natsume-s-book-of-friends-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 217346,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/natsume-s-book-of-friends/s/-6",
+          "status": 200,
+          "response_bytes": 217056,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T03:19:51.731867+00:00"
     }
   },
-  "updated_at": "2026-10-28T03:18:29.855351+00:00",
+  "updated_at": "2026-10-28T03:19:58.147776+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -716115,12 +716186,12 @@
     },
     "1678": {
       "misses": [
-        "1678:1:8",
         "1678:1:4",
-        "1678:1:1"
+        "1678:1:1",
+        "1678:1:3"
       ],
-      "updated_at": "2026-10-28T03:16:19.111258+00:00",
-      "retry_after": "2026-10-28T07:16:19.111258+00:00"
+      "updated_at": "2026-10-28T03:18:54.401298+00:00",
+      "retry_after": "2026-10-28T07:18:54.401298+00:00"
     },
     "2673": {
       "misses": [
@@ -716551,9 +716622,10 @@
     },
     "2778": {
       "misses": [
-        "2778:1:28"
+        "2778:1:28",
+        "2778:7:6"
       ],
-      "updated_at": "2026-10-28T03:16:19.111394+00:00"
+      "updated_at": "2026-10-28T03:19:54.873506+00:00"
     },
     "76": {
       "misses": [],
@@ -719137,7 +719209,7 @@
     },
     "1402": {
       "misses": [],
-      "updated_at": "2026-10-28T03:17:24.719532+00:00"
+      "updated_at": "2026-10-28T03:19:43.978477+00:00"
     },
     "7836": {
       "misses": [
@@ -720203,9 +720275,11 @@
     "4082": {
       "misses": [
         "4082:4:9",
-        "4082:4:10"
+        "4082:4:10",
+        "4082:4:11"
       ],
-      "updated_at": "2026-10-27T22:13:36.720213+00:00"
+      "updated_at": "2026-10-28T03:19:51.731902+00:00",
+      "retry_after": "2026-10-28T07:19:51.731902+00:00"
     },
     "5984": {
       "misses": [
@@ -726615,13 +726689,8 @@
       "retry_after": "2026-10-27T14:20:07.357120+00:00"
     },
     "1787": {
-      "misses": [
-        "1787:8:24",
-        "1787:3:20",
-        "1787:7:8"
-      ],
-      "updated_at": "2026-10-28T03:13:19.268600+00:00",
-      "retry_after": "2026-10-28T03:43:19.268600+00:00"
+      "misses": [],
+      "updated_at": "2026-10-28T03:19:04.009172+00:00"
     },
     "899": {
       "misses": [
@@ -727547,12 +727616,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3103,
+    "last_series": 1669,
     "last_series_order": [
       false,
-      -8.1,
-      -6709,
-      3103
+      -8.0,
+      -83710,
+      1669
     ]
   }
 }
