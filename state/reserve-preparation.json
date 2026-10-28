@@ -238284,14 +238284,21 @@
       "retry_after": "2026-10-29T01:19:43.574985+00:00"
     },
     "1108:4:4": {
-      "at": "2026-10-23T08:34:32.396873+00:00",
+      "at": "2026-10-28T08:13:16.126631+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 176.53,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-24T08:37:28.923612+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9074284434318542,
+      "observed_source_id": "28383877",
+      "elapsed_seconds": 257.79,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-29T08:17:33.916053+00:00"
     },
     "1108:4:6": {
       "at": "2026-10-24T12:02:14.749804+00:00",
@@ -725992,9 +725999,99 @@
       "elapsed_seconds": 48.5,
       "source_id": "29099476",
       "queue_rank": 30884
+    },
+    "1402:10:19": {
+      "at": "2026-10-28T08:16:34.217920+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 38.73,
+      "source_id": "34729037",
+      "queue_rank": 30885
+    },
+    "1402:10:20": {
+      "at": "2026-10-28T08:16:52.950827+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 58.26,
+      "source_id": "29099504",
+      "queue_rank": 30886
+    },
+    "1669:5:8": {
+      "at": "2026-10-28T08:16:54.831510+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 70.31,
+      "search_evidence": [
+        {
+          "path": "/status-nezadouci-s05e08/s/-6",
+          "status": 200,
+          "response_bytes": 217076,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/burn-notice-s05e08/s/-6",
+          "status": 200,
+          "response_bytes": 216921,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/status-nezadouci-s05e08/s/-6",
+          "status": 200,
+          "response_bytes": 217049,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/status-nezadouci/s/-6",
+          "status": 200,
+          "response_bytes": 276015,
+          "boxes": 51,
+          "parsed_candidates": 51,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/burn-notice-s05e08/s/-6",
+          "status": 200,
+          "response_bytes": 217002,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/burn-notice/s/-6",
+          "status": 200,
+          "response_bytes": 217042,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T08:18:05.140530+00:00"
     }
   },
-  "updated_at": "2026-10-28T08:17:06.074963+00:00",
+  "updated_at": "2026-10-28T08:18:17.767002+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -732652,9 +732749,11 @@
     "1108": {
       "misses": [
         "1108:5:7",
-        "1108:4:3"
+        "1108:4:3",
+        "1108:4:4"
       ],
-      "updated_at": "2026-10-28T08:16:54.396697+00:00"
+      "updated_at": "2026-10-28T08:17:33.916082+00:00",
+      "retry_after": "2026-10-28T12:17:33.916082+00:00"
     },
     "1087": {
       "misses": [],
@@ -735054,7 +735153,7 @@
     },
     "1402": {
       "misses": [],
-      "updated_at": "2026-10-28T08:16:52.508996+00:00"
+      "updated_at": "2026-10-28T08:17:51.215518+00:00"
     },
     "7836": {
       "misses": [
@@ -736462,12 +736561,9 @@
     },
     "1669": {
       "misses": [
-        "1669:5:5",
-        "1669:5:6",
-        "1669:5:7"
+        "1669:5:8"
       ],
-      "updated_at": "2026-10-28T03:20:16.146666+00:00",
-      "retry_after": "2026-10-28T07:20:16.146666+00:00"
+      "updated_at": "2026-10-28T08:18:05.140565+00:00"
     },
     "1056": {
       "misses": [
@@ -743506,12 +743602,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1669,
+    "last_series": 2621,
     "last_series_order": [
       false,
       -8.0,
-      -83710,
-      1669
+      -44915,
+      2621
     ]
   }
 }
