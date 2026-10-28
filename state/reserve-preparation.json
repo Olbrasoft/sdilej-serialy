@@ -252223,14 +252223,18 @@
       "queue_rank": 24214
     },
     "1055:1:11": {
-      "at": "2026-10-19T08:40:20.387406+00:00",
+      "at": "2026-10-28T04:59:05.670890+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 62.13,
-      "consecutive_failures": 8,
-      "retry_after": "2026-10-19T09:41:22.515380+00:00"
+      "elapsed_seconds": 84.42,
+      "consecutive_failures": 9,
+      "retry_after": "2026-10-28T06:00:30.098135+00:00"
     },
     "1055:2:7": {
       "at": "2026-10-16T16:53:56.268645+00:00",
@@ -718062,9 +718066,88 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T04:59:03.704613+00:00"
+    },
+    "1402:9:6": {
+      "at": "2026-10-28T04:59:32.474520+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 38.07,
+      "source_id": "29099241",
+      "queue_rank": 30847
+    },
+    "1402:9:7": {
+      "at": "2026-10-28T05:00:05.294221+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 36.66,
+      "source_id": "29099248",
+      "queue_rank": 30848
+    },
+    "1402:9:9": {
+      "at": "2026-10-28T05:00:11.257352+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 49.02,
+      "source_id": "29099261",
+      "queue_rank": 30849
+    },
+    "9708:3:9": {
+      "at": "2026-10-28T05:00:42.719357+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 18.59,
+      "search_evidence": [
+        {
+          "path": "/transformers-prime-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 217076,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/transformers-prime-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 217137,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/transformers-prime/s/-6",
+          "status": 200,
+          "response_bytes": 277972,
+          "boxes": 47,
+          "parsed_candidates": 47,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T05:01:01.314161+00:00"
     }
   },
-  "updated_at": "2026-10-28T04:59:47.774292+00:00",
+  "updated_at": "2026-10-28T05:01:04.461559+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -727136,7 +727219,7 @@
     },
     "1402": {
       "misses": [],
-      "updated_at": "2026-10-28T04:59:44.710643+00:00"
+      "updated_at": "2026-10-28T05:01:00.281254+00:00"
     },
     "7836": {
       "misses": [
@@ -727844,9 +727927,10 @@
     },
     "9708": {
       "misses": [
-        "9708:3:8"
+        "9708:3:8",
+        "9708:3:9"
       ],
-      "updated_at": "2026-10-28T03:17:24.719627+00:00"
+      "updated_at": "2026-10-28T05:01:01.314188+00:00"
     },
     "3361": {
       "misses": [
@@ -729658,8 +729742,10 @@
       "updated_at": "2026-10-28T04:20:19.894065+00:00"
     },
     "1055": {
-      "misses": [],
-      "updated_at": "2026-10-28T03:47:58.330991+00:00"
+      "misses": [
+        "1055:1:11"
+      ],
+      "updated_at": "2026-10-28T05:00:30.098167+00:00"
     },
     "257": {
       "misses": [
@@ -735635,12 +735721,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1780,
+    "last_series": 3103,
     "last_series_order": [
       false,
       -8.1,
-      -14655,
-      1780
+      -6709,
+      3103
     ]
   }
 }
