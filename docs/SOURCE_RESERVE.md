@@ -780,3 +780,13 @@ A failed shared control is recorded as `source_search_unavailable`. It does not
 increase episode/series failure counts or consume requested-season sampling
 budgets. Its retry follows the shared recovery deadline. Episode identity,
 language, original quality and cross-account ownership checks remain mandatory.
+
+On 2026-10-28, Havaj 5-0 S07E08 exposed a second consensus failure: all four
+samples identified Slovak (.918, .529, .656, .442), but averaging clear and weak
+samples fell below .65. Consensus revision 2 accepts the mean of the clear
+samples only when at least two distinct offsets meet .65 and every sampled
+passage agrees on the language. A single clear sample, conflicting votes or
+uniformly weak samples cannot use this fallback. Preferred-Czech handling,
+complete Czech-source search before Slovak fallback, original quality and
+ownership checks remain mandatory. Exact hinted inconclusive episodes get one
+versioned recheck through the existing bounded retry lane.

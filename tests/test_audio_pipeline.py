@@ -99,6 +99,42 @@ def test_weak_majority_still_cannot_pass_provider_language_verification(monkeypa
             filename='Episode CZ dabing.mkv', sample_url='sample', duration_sec=2500))
 
 
+def test_unanimous_slovak_samples_recover_a_real_deferred_original(monkeypatch):
+    detector = PipelinedLanguageDetector()
+    samples = iter([('sk', .91827154), ('sk', .52921146), ('sk', .65585202), ('sk', .44218436)])
+    offsets = []
+    def detect(url, offset):
+        offsets.append(offset)
+        return next(samples)
+    monkeypatch.setattr(detector, '_detect_at', detect)
+    candidate = Candidate('34609528', 'detail', 'Episode CZ', filename='Episode CZ.mp4',
+        sample_url='original', width=1920, height=1080, duration_sec=2513, size_bytes=2188564363,
+        match_tier=MatchTier.STRONG)
+    provider = EpisodeSourceProvider(None, detector=detector)
+    monkeypatch.setattr(provider, 'search', lambda _: [candidate])
+    monkeypatch.setattr(provider, '_inspect', lambda _episode, row: row)
+    selected = provider.discover_fresh(episode())
+    assert selected.audio_language == 'sk'
+    assert selected.language_probability == pytest.approx((.91827154 + .65585202) / 2)
+    assert selected._language_selection['czech_search_complete']
+    assert selected._language_selection['czech_found'] is False
+    assert offsets == [180, 628, 1256, 1884]
+
+
+@pytest.mark.parametrize('samples', [
+    [('sk', .92), ('sk', .64), ('sk', .44), ('sk', .30)],  # Only one clear sample.
+    [('sk', .92), ('sk', .65), ('sk', .25), ('en', .40)],  # Conflicting language.
+    [('sk', .64), ('sk', .64), ('sk', .64), ('sk', .64)],  # No clear samples.
+    [('sk', .92), ('sk', .649), ('sk', .40), ('sk', .30)],  # No rounded threshold.
+])
+def test_unclear_or_conflicting_consensus_stays_below_acceptance(monkeypatch, samples):
+    detector = PipelinedLanguageDetector()
+    remaining = iter(samples[1:])
+    monkeypatch.setattr(detector, '_detect_at', lambda *a: next(remaining))
+    language, confidence = detector.detect_consensus('sample', 2513, initial=samples[0], preferred_language='cs')
+    assert language == 'sk' and confidence < .65
+
+
 def test_consensus_allows_search_to_reach_the_next_czech_original(monkeypatch):
     detector = PipelinedLanguageDetector()
     first = Candidate('1', 'detail-1', 'Episode CZ', filename='Episode CZ.mp4',

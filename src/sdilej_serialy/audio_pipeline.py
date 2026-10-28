@@ -62,7 +62,15 @@ class PipelinedLanguageDetector(WhisperLanguageDetector):
         if preferred in grouped and max(grouped[preferred]) >= .65:
             return preferred, max(grouped[preferred])
         winner, probabilities = max(grouped.items(), key=lambda item: (len(item[1]), sum(item[1]), item[0]))
-        return winner, sum(probabilities) / len(probabilities)
+        confidence = sum(probabilities) / len(probabilities)
+        # Quiet/unclear passages must not veto multiple independently clear
+        # samples when every sampled passage agrees on the spoken language.
+        # Keep the publication threshold, require two qualifying samples, and
+        # never use this fallback for a split vote or one isolated strong guess.
+        clear = [probability for probability in probabilities if probability >= .65]
+        if confidence < .65 and len(grouped) == 1 and len(clear) >= 2:
+            confidence = sum(clear) / len(clear)
+        return winner, confidence
 
     def _extract(self, media_url, offset, sample):
         timeout = max(self.seconds + 30, int(os.environ.get('WHISPER_FFMPEG_TIMEOUT_SECONDS', '120')))
