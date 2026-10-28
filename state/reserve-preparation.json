@@ -131476,14 +131476,21 @@
       "retry_after": "2026-10-28T17:24:11.288376+00:00"
     },
     "938:1:6": {
-      "at": "2026-10-18T17:39:50.214821+00:00",
+      "at": "2026-10-28T16:28:09.643866+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 27.38,
-      "consecutive_failures": 4,
-      "retry_after": "2026-10-19T17:40:17.594465+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9809404015541077,
+      "observed_source_id": "29285537",
+      "elapsed_seconds": 205.64,
+      "consecutive_failures": 5,
+      "retry_after": "2026-10-29T16:31:35.285501+00:00"
     },
     "1996:1:2": {
       "at": "2026-10-10T16:04:36.002028+00:00",
@@ -737791,9 +737798,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T16:30:13.855609+00:00"
+    },
+    "2531:4:7": {
+      "at": "2026-10-28T16:29:22.523489+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 71.35,
+      "search_evidence": [
+        {
+          "path": "/aggretsuko-s04e07/s/-6",
+          "status": 200,
+          "response_bytes": 216882,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/aggretsuko/s/-6",
+          "status": 200,
+          "response_bytes": 216832,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/aggretsuko-s04e07/s/-6",
+          "status": 200,
+          "response_bytes": 216919,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/aggretsuko/s/-6",
+          "status": 200,
+          "response_bytes": 216823,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T16:30:39.065316+00:00"
     }
   },
-  "updated_at": "2026-10-28T16:30:27.519433+00:00",
+  "updated_at": "2026-10-28T16:31:43.005495+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -742346,9 +742401,11 @@
     "938": {
       "misses": [
         "938:1:5",
-        "938:1:7"
+        "938:1:7",
+        "938:1:6"
       ],
-      "updated_at": "2026-10-28T16:29:38.191215+00:00"
+      "updated_at": "2026-10-28T16:31:35.285527+00:00",
+      "retry_after": "2026-10-28T20:31:35.285527+00:00"
     },
     "1996": {
       "misses": [
@@ -748704,12 +748761,9 @@
     },
     "2531": {
       "misses": [
-        "2531:4:4",
-        "2531:4:5",
-        "2531:4:6"
+        "2531:4:7"
       ],
-      "updated_at": "2026-10-28T08:30:08.246397+00:00",
-      "retry_after": "2026-10-28T12:30:08.246397+00:00"
+      "updated_at": "2026-10-28T16:30:39.065357+00:00"
     },
     "2234": {
       "misses": [
