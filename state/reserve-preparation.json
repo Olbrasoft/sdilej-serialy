@@ -487225,16 +487225,85 @@
       "queue_rank": 29795
     },
     "2661:1:2": {
-      "at": "2026-10-23T15:21:14.600438+00:00",
+      "at": "2026-10-28T00:49:55.993049+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "request_probe_revision": 1,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 47.4,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T15:22:02.004519+00:00"
+      "elapsed_seconds": 243.06,
+      "search_evidence": [
+        {
+          "path": "/misto-cinu-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 222114,
+          "boxes": 4,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/misto-cinu/s/-6",
+          "status": 200,
+          "response_bytes": 412751,
+          "boxes": 155,
+          "parsed_candidates": 148,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tatort-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 239650,
+          "boxes": 18,
+          "parsed_candidates": 18,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tatort/s/-6",
+          "status": 200,
+          "response_bytes": 441128,
+          "boxes": 208,
+          "parsed_candidates": 186,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/misto-cinu-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 222144,
+          "boxes": 4,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/misto-cinu/s/-6",
+          "status": 200,
+          "response_bytes": 412877,
+          "boxes": 155,
+          "parsed_candidates": 148,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tatort-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 239630,
+          "boxes": 18,
+          "parsed_candidates": 18,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tatort/s/-6",
+          "status": 200,
+          "response_bytes": 441063,
+          "boxes": 208,
+          "parsed_candidates": 186,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T00:53:59.050924+00:00"
     },
     "3677:1:2": {
       "at": "2026-10-23T16:28:10.272717+00:00",
@@ -491982,35 +492051,22 @@
       "retry_after": "2026-10-24T16:58:47.601504+00:00"
     },
     "9508:1:3": {
-      "at": "2026-10-23T16:58:50.352972+00:00",
+      "at": "2026-10-28T00:50:31.338955+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "request_probe_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 20.83,
-      "search_evidence": [
-        {
-          "path": "/art-detectives-s01e03/s/-6",
-          "status": 200,
-          "response_bytes": 189621,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/art-detectives/s/-6",
-          "status": 200,
-          "response_bytes": 189474,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        }
-      ],
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T16:59:11.183048+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.988298773765564,
+      "observed_source_id": "31295899",
+      "elapsed_seconds": 213.91,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T00:54:05.245238+00:00"
     },
     "10471:1:3": {
       "at": "2026-10-27T23:35:43.210096+00:00",
@@ -702880,7 +702936,7 @@
       "retry_after": "2026-10-28T00:47:37.435678+00:00"
     }
   },
-  "updated_at": "2026-10-28T00:53:25.320307+00:00",
+  "updated_at": "2026-10-28T00:54:33.891025+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -719961,12 +720017,12 @@
     },
     "2661": {
       "misses": [
-        "2661:0:2",
         "2661:0:3",
-        "2661:1:1"
+        "2661:1:1",
+        "2661:1:2"
       ],
-      "updated_at": "2026-10-28T00:09:44.185209+00:00",
-      "retry_after": "2026-10-28T04:09:44.185209+00:00"
+      "updated_at": "2026-10-28T00:53:59.050957+00:00",
+      "retry_after": "2026-10-28T04:53:59.050957+00:00"
     },
     "10494": {
       "misses": [
@@ -720193,9 +720249,11 @@
     "9508": {
       "misses": [
         "9508:1:1",
-        "9508:1:2"
+        "9508:1:2",
+        "9508:1:3"
       ],
-      "updated_at": "2026-10-28T00:10:13.545592+00:00"
+      "updated_at": "2026-10-28T00:54:05.245271+00:00",
+      "retry_after": "2026-10-28T04:54:05.245271+00:00"
     },
     "10471": {
       "misses": [],
