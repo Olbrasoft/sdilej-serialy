@@ -113222,14 +113222,21 @@
       "retry_after": "2026-10-29T23:56:13.109978+00:00"
     },
     "1251:2:6": {
-      "at": "2026-10-10T16:40:34.002987+00:00",
+      "at": "2026-10-28T23:55:58.473625+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 4.32,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-11T16:40:38.326372+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9901037216186523,
+      "observed_source_id": "28887301",
+      "elapsed_seconds": 63.57,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T23:57:14.686436+00:00"
     },
     "1946:1:3": {
       "at": "2026-10-19T04:14:47.403672+00:00",
@@ -337808,14 +337815,17 @@
       "retry_after": "2026-10-21T08:14:33.283926+00:00"
     },
     "1076:5:15": {
-      "at": "2026-10-20T08:03:00.634599+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-10-28T23:53:36.759091+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 222.78,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-21T08:14:33.284962+00:00"
+      "elapsed_seconds": 245.45,
+      "source_id": "22294265",
+      "queue_rank": 31044
     },
     "1227:13:11": {
       "at": "2026-10-20T08:14:33.939295+00:00",
@@ -745274,9 +745284,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T23:53:25.631185+00:00"
+    },
+    "1709:10:2": {
+      "at": "2026-10-28T23:57:15.900988+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 54.95,
+      "search_evidence": [
+        {
+          "path": "/zavolejte-porodni-sestricky-s10e02/s/-6",
+          "status": 200,
+          "response_bytes": 217287,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zavolejte-porodni-sestricky/s/-6",
+          "status": 200,
+          "response_bytes": 226462,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/call-the-midwife-s10e02/s/-6",
+          "status": 200,
+          "response_bytes": 217047,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/call-the-midwife/s/-6",
+          "status": 200,
+          "response_bytes": 301639,
+          "boxes": 70,
+          "parsed_candidates": 70,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zavolejte-porodni-sestricky-s10e02/s/-6",
+          "status": 200,
+          "response_bytes": 217312,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zavolejte-porodni-sestricky/s/-6",
+          "status": 200,
+          "response_bytes": 226512,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/call-the-midwife-s10e02/s/-6",
+          "status": 200,
+          "response_bytes": 217136,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/call-the-midwife/s/-6",
+          "status": 200,
+          "response_bytes": 301672,
+          "boxes": 70,
+          "parsed_candidates": 70,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T23:58:10.852237+00:00"
     }
   },
-  "updated_at": "2026-10-28T23:56:49.884398+00:00",
+  "updated_at": "2026-10-28T23:58:21.367449+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -749678,12 +749768,12 @@
     },
     "1251": {
       "misses": [
-        "1251:7:6",
         "1251:1:1",
-        "1251:2:5"
+        "1251:2:5",
+        "1251:2:6"
       ],
-      "updated_at": "2026-10-28T23:56:13.110002+00:00",
-      "retry_after": "2026-10-29T03:56:13.110002+00:00"
+      "updated_at": "2026-10-28T23:57:14.686479+00:00",
+      "retry_after": "2026-10-29T03:57:14.686479+00:00"
     },
     "119": {
       "misses": [
@@ -749708,12 +749798,9 @@
     },
     "1709": {
       "misses": [
-        "1709:15:2",
-        "1709:15:5",
-        "1709:15:6"
+        "1709:10:2"
       ],
-      "updated_at": "2026-10-28T16:48:25.109802+00:00",
-      "retry_after": "2026-10-28T20:48:25.109802+00:00"
+      "updated_at": "2026-10-28T23:58:10.852262+00:00"
     },
     "4815": {
       "misses": [
@@ -750478,7 +750565,7 @@
     },
     "1076": {
       "misses": [],
-      "updated_at": "2026-10-28T23:55:01.388696+00:00"
+      "updated_at": "2026-10-28T23:57:45.315481+00:00"
     },
     "47": {
       "misses": [
@@ -762621,12 +762708,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1251,
+    "last_series": 1996,
     "last_series_order": [
       false,
-      -8.6,
-      -319541,
-      1251
+      -8.5,
+      -177227,
+      1996
     ]
   }
 }
