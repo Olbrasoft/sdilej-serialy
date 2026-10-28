@@ -473159,14 +473159,21 @@
       "retry_after": "2026-10-24T06:24:25.290911+00:00"
     },
     "1708:6:1": {
-      "at": "2026-10-23T06:24:20.755516+00:00",
+      "at": "2026-10-28T03:29:20.074822+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 40.34,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T06:25:01.098005+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9965027570724487,
+      "observed_source_id": "14522875",
+      "elapsed_seconds": 36.83,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T03:29:56.904403+00:00"
     },
     "9879:2:8": {
       "at": "2026-10-23T06:25:01.646660+00:00",
@@ -651109,17 +651116,18 @@
       "retry_after": "2026-10-26T17:07:38.846017+00:00"
     },
     "1787:10:10": {
-      "at": "2026-10-25T23:21:40.209914+00:00",
+      "at": "2026-10-28T03:26:31.098997+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "inconclusive_audio",
-      "elapsed_seconds": 114.24,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-26T00:23:35.810698+00:00"
+      "elapsed_seconds": 150.87,
+      "consecutive_failures": 4,
+      "retry_after": "2026-10-28T04:29:18.601183+00:00"
     },
     "1787:10:12": {
       "at": "2026-10-25T17:06:55.031692+00:00",
@@ -651134,17 +651142,18 @@
       "queue_rank": 30393
     },
     "1787:10:11": {
-      "at": "2026-10-25T23:22:22.912087+00:00",
+      "at": "2026-10-28T03:26:47.493933+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "inconclusive_audio",
-      "elapsed_seconds": 107.34,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-26T00:24:10.252228+00:00"
+      "elapsed_seconds": 138.23,
+      "consecutive_failures": 4,
+      "retry_after": "2026-10-28T04:29:18.601292+00:00"
     },
     "1787:10:13": {
       "at": "2026-10-25T17:10:47.148633+00:00",
@@ -711323,9 +711332,73 @@
       "elapsed_seconds": 63.66,
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T03:28:43.776746+00:00"
+    },
+    "1553:3:10": {
+      "at": "2026-10-28T03:28:44.495483+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 17.82,
+      "search_evidence": [
+        {
+          "path": "/fresh-prince-s03e10/s/-6",
+          "status": 200,
+          "response_bytes": 217043,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-fresh-prince-of-bel-air-s03e10/s/-6",
+          "status": 200,
+          "response_bytes": 217325,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fresh-prince-s03e10/s/-6",
+          "status": 200,
+          "response_bytes": 217043,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fresh-prince/s/-6",
+          "status": 200,
+          "response_bytes": 373993,
+          "boxes": 137,
+          "parsed_candidates": 127,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-fresh-prince-of-bel-air-s03e10/s/-6",
+          "status": 200,
+          "response_bytes": 217340,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-fresh-prince-of-bel-air/s/-6",
+          "status": 200,
+          "response_bytes": 237083,
+          "boxes": 17,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T03:29:18.601406+00:00"
     }
   },
-  "updated_at": "2026-10-28T03:29:01.983615+00:00",
+  "updated_at": "2026-10-28T03:30:22.363124+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -716060,12 +716133,9 @@
     },
     "1553": {
       "misses": [
-        "1553:1:15",
-        "1553:3:7",
-        "1553:1:16"
+        "1553:3:10"
       ],
-      "updated_at": "2026-10-27T23:04:10.997639+00:00",
-      "retry_after": "2026-10-28T03:04:10.997639+00:00"
+      "updated_at": "2026-10-28T03:29:18.601417+00:00"
     },
     "2108": {
       "misses": [
@@ -722512,9 +722582,10 @@
     },
     "1708": {
       "misses": [
-        "1708:3:8"
+        "1708:3:8",
+        "1708:6:1"
       ],
-      "updated_at": "2026-10-28T03:26:17.586545+00:00"
+      "updated_at": "2026-10-28T03:29:56.904428+00:00"
     },
     "3889": {
       "misses": [
@@ -727847,9 +727918,12 @@
     },
     "1787": {
       "misses": [
-        "1787:10:8"
+        "1787:10:8",
+        "1787:10:10",
+        "1787:10:11"
       ],
-      "updated_at": "2026-10-28T03:26:28.444665+00:00"
+      "updated_at": "2026-10-28T03:29:18.601305+00:00",
+      "retry_after": "2026-10-28T03:59:18.601305+00:00"
     },
     "899": {
       "misses": [
@@ -728775,12 +728849,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1553,
+    "last_series": 1214,
     "last_series_order": [
       false,
       -7.9,
-      -154415,
-      1553
+      -51344,
+      1214
     ]
   }
 }
