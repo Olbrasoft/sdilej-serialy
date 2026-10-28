@@ -89854,13 +89854,22 @@
       "retry_after": "2026-10-29T07:03:40.121934+00:00"
     },
     "1237:4:25": {
-      "at": "2026-10-06T23:13:01.825541+00:00",
+      "at": "2026-10-28T11:33:05.884160+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "saved_review_revision": 1,
       "method": "discovery",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-07T23:13:25.285119+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "bg",
+      "observed_language_probability": 0.866629958152771,
+      "observed_source_id": "33416115",
+      "elapsed_seconds": 77.36,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T11:34:23.244188+00:00"
     },
     "1237:4:26": {
       "at": "2026-10-06T23:13:29.135264+00:00",
@@ -502797,28 +502806,22 @@
       "retry_after": "2026-10-24T18:26:17.440371+00:00"
     },
     "27:10:2": {
-      "at": "2026-10-23T17:57:54.753445+00:00",
+      "at": "2026-10-28T11:33:06.955172+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "request_probe_revision": 1,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 22.61,
+      "elapsed_seconds": 66.4,
       "search_evidence": [
         {
           "path": "/dunaj-k-vasim-sluzbam-s10e02/s/-6",
           "status": 200,
-          "response_bytes": 189768,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/dunaj-k-vasim-sluzbam-s10e02/s/-6",
-          "status": 200,
-          "response_bytes": 189768,
+          "response_bytes": 217136,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -502826,14 +502829,30 @@
         {
           "path": "/dunaj-k-vasim-sluzbam/s/-6",
           "status": 200,
-          "response_bytes": 189621,
+          "response_bytes": 217093,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/dunaj-k-vasim-sluzbam-s10e02/s/-6",
+          "status": 200,
+          "response_bytes": 217222,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/dunaj-k-vasim-sluzbam/s/-6",
+          "status": 200,
+          "response_bytes": 216959,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T17:58:17.365067+00:00"
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T11:34:13.359726+00:00"
     },
     "1743:3:1": {
       "at": "2026-10-27T18:49:10.358711+00:00",
@@ -732980,7 +732999,7 @@
       "retry_after": "2026-10-28T11:18:37.111042+00:00"
     }
   },
-  "updated_at": "2026-10-28T11:34:06.844491+00:00",
+  "updated_at": "2026-10-28T11:35:16.309997+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -734624,22 +734643,23 @@
       "retry_after": "2026-10-29T11:29:19.483065+00:00"
     },
     "1410:1:18": {
-      "at": "2026-10-27T07:23:16.489218+00:00",
+      "at": "2026-10-28T11:33:04.389890+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "source_repair",
       "source_repair_revision": 2,
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
       "observed_language_probability": 0.9916905164718628,
       "observed_source_id": "34451713",
-      "elapsed_seconds": 46.04,
+      "elapsed_seconds": 110.84,
       "repair_fingerprint": "e937044c46d6c82a014a1c08692dc81581728d0cf4438d8974cab153db10b531",
-      "consecutive_failures": 18,
-      "retry_after": "2026-10-28T07:24:02.531273+00:00"
+      "consecutive_failures": 19,
+      "retry_after": "2026-10-29T11:34:55.235828+00:00"
     },
     "1085:3:14": {
       "at": "2026-10-10T23:40:01.485659+00:00",
@@ -737423,9 +737443,10 @@
     },
     "1237": {
       "misses": [
-        "1237:3:34"
+        "1237:3:34",
+        "1237:4:25"
       ],
-      "updated_at": "2026-10-28T11:21:27.642115+00:00"
+      "updated_at": "2026-10-28T11:34:23.244213+00:00"
     },
     "1709": {
       "misses": [
@@ -740957,9 +740978,11 @@
     "1410": {
       "misses": [
         "1410:1:10",
-        "1410:1:16"
+        "1410:1:16",
+        "1410:1:18"
       ],
-      "updated_at": "2026-10-28T11:29:19.483095+00:00"
+      "updated_at": "2026-10-28T11:34:55.235853+00:00",
+      "retry_after": "2026-10-28T15:34:55.235853+00:00"
     },
     "2053": {
       "misses": [
@@ -750054,12 +750077,12 @@
     },
     "27": {
       "misses": [
-        "27:9:2",
         "27:9:3",
-        "27:10:1"
+        "27:10:1",
+        "27:10:2"
       ],
-      "updated_at": "2026-10-28T11:23:37.552354+00:00",
-      "retry_after": "2026-10-28T15:23:37.552354+00:00"
+      "updated_at": "2026-10-28T11:34:13.359755+00:00",
+      "retry_after": "2026-10-28T15:34:13.359755+00:00"
     },
     "10461": {
       "misses": [],
