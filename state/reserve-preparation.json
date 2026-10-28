@@ -145369,14 +145369,21 @@
       "queue_rank": 17530
     },
     "1145:1:1": {
-      "at": "2026-10-12T21:03:56.888129+00:00",
+      "at": "2026-10-28T06:37:32.309824+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 68.26,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-13T21:05:05.153035+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9872745275497437,
+      "observed_source_id": "24784460",
+      "elapsed_seconds": 540.87,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-29T06:46:33.179699+00:00"
     },
     "1309:1:8": {
       "at": "2026-10-11T16:04:05.315661+00:00",
@@ -492613,83 +492620,85 @@
       "queue_rank": 30712
     },
     "2661:3:1": {
-      "at": "2026-10-23T16:43:17.343256+00:00",
+      "at": "2026-10-28T06:43:23.039023+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "request_probe_revision": 1,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 39.28,
+      "elapsed_seconds": 209.53,
       "search_evidence": [
         {
           "path": "/misto-cinu-s03e01/s/-6",
           "status": 200,
-          "response_bytes": 189537,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 218875,
+          "boxes": 2,
+          "parsed_candidates": 2,
           "heading_matches_query": true
         },
         {
           "path": "/misto-cinu/s/-6",
           "status": 200,
-          "response_bytes": 189390,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 412650,
+          "boxes": 155,
+          "parsed_candidates": 148,
           "heading_matches_query": true
         },
         {
           "path": "/tatort-s03e01/s/-6",
           "status": 200,
-          "response_bytes": 189453,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 218632,
+          "boxes": 2,
+          "parsed_candidates": 2,
           "heading_matches_query": true
         },
         {
           "path": "/tatort/s/-6",
           "status": 200,
-          "response_bytes": 189306,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 441604,
+          "boxes": 209,
+          "parsed_candidates": 186,
           "heading_matches_query": true
         },
         {
           "path": "/misto-cinu-s03e01/s/-6",
           "status": 200,
-          "response_bytes": 189537,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 218845,
+          "boxes": 2,
+          "parsed_candidates": 2,
           "heading_matches_query": true
         },
         {
           "path": "/misto-cinu/s/-6",
           "status": 200,
-          "response_bytes": 189390,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 412739,
+          "boxes": 155,
+          "parsed_candidates": 148,
           "heading_matches_query": true
         },
         {
           "path": "/tatort-s03e01/s/-6",
           "status": 200,
-          "response_bytes": 189453,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 218527,
+          "boxes": 2,
+          "parsed_candidates": 2,
           "heading_matches_query": true
         },
         {
           "path": "/tatort/s/-6",
           "status": 200,
-          "response_bytes": 189306,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 441529,
+          "boxes": 209,
+          "parsed_candidates": 186,
           "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T16:43:56.623593+00:00"
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T06:46:52.566667+00:00"
     },
     "10471:1:2": {
       "at": "2026-10-27T23:35:25.331647+00:00",
@@ -722264,7 +722273,7 @@
       "retry_after": "2026-10-28T06:37:17.540657+00:00"
     }
   },
-  "updated_at": "2026-10-28T06:46:29.170304+00:00",
+  "updated_at": "2026-10-28T06:47:36.945645+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -728014,9 +728023,11 @@
     "1145": {
       "misses": [
         "1145:5:6",
-        "1145:5:5"
+        "1145:5:5",
+        "1145:1:1"
       ],
-      "updated_at": "2026-10-24T07:11:41.379451+00:00"
+      "updated_at": "2026-10-28T06:46:33.179734+00:00",
+      "retry_after": "2026-10-28T10:46:33.179734+00:00"
     },
     "1519": {
       "misses": [],
@@ -739512,12 +739523,12 @@
     },
     "2661": {
       "misses": [
-        "2661:2:1",
         "2661:2:2",
-        "2661:2:3"
+        "2661:2:3",
+        "2661:3:1"
       ],
-      "updated_at": "2026-10-28T05:27:22.838738+00:00",
-      "retry_after": "2026-10-28T09:27:22.838738+00:00"
+      "updated_at": "2026-10-28T06:46:52.566701+00:00",
+      "retry_after": "2026-10-28T10:46:52.566701+00:00"
     },
     "10494": {
       "misses": [
