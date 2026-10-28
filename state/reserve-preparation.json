@@ -273709,14 +273709,17 @@
       "retry_after": "2026-10-21T09:41:18.853746+00:00"
     },
     "2215:1:5": {
-      "at": "2026-10-19T17:36:25.308115+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-10-28T20:53:08.096491+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 30.03,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-20T17:36:55.337567+00:00"
+      "elapsed_seconds": 150.24,
+      "source_id": "31002869",
+      "queue_rank": 31005
     },
     "2215:1:6": {
       "at": "2026-10-20T04:47:21.135615+00:00",
@@ -741502,9 +741505,82 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T20:50:30.811727+00:00"
+    },
+    "1070:4:18": {
+      "at": "2026-10-28T20:54:47.719953+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.994932234287262,
+      "observed_source_id": "22424233",
+      "elapsed_seconds": 47.34,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T20:55:46.022056+00:00"
+    },
+    "2025:4:8": {
+      "at": "2026-10-28T20:55:46.638099+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 22.29,
+      "search_evidence": [
+        {
+          "path": "/hodny-holky-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 216965,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/hodny-holky/s/-6",
+          "status": 200,
+          "response_bytes": 424534,
+          "boxes": 154,
+          "parsed_candidates": 151,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/good-girls-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 217603,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/good-girls/s/-6",
+          "status": 200,
+          "response_bytes": 272788,
+          "boxes": 47,
+          "parsed_candidates": 41,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/hodny-holky-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 216947,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-28T21:11:08.931043+00:00"
     }
   },
-  "updated_at": "2026-10-28T20:55:31.577228+00:00",
+  "updated_at": "2026-10-28T20:56:49.855317+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -755273,12 +755349,9 @@
     },
     "1070": {
       "misses": [
-        "1070:3:10",
-        "1070:3:16",
-        "1070:3:18"
+        "1070:4:18"
       ],
-      "updated_at": "2026-10-28T15:18:24.679260+00:00",
-      "retry_after": "2026-10-28T19:18:24.679260+00:00"
+      "updated_at": "2026-10-28T20:55:46.022075+00:00"
     },
     "827": {
       "misses": [
@@ -755335,12 +755408,9 @@
     },
     "2025": {
       "misses": [
-        "2025:4:4",
-        "2025:4:5",
-        "2025:4:7"
+        "2025:4:8"
       ],
-      "updated_at": "2026-10-28T06:05:53.269465+00:00",
-      "retry_after": "2026-10-28T10:05:53.269465+00:00"
+      "updated_at": "2026-10-28T20:56:08.931074+00:00"
     },
     "1819": {
       "misses": [
@@ -757944,7 +758014,7 @@
     },
     "2215": {
       "misses": [],
-      "updated_at": "2026-10-28T20:54:47.114563+00:00"
+      "updated_at": "2026-10-28T20:55:46.021947+00:00"
     },
     "2578": {
       "misses": [
@@ -758825,12 +758895,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1070,
+    "last_series": 2025,
     "last_series_order": [
       false,
       -7.7,
-      -85082,
-      1070
+      -68623,
+      2025
     ]
   }
 }
