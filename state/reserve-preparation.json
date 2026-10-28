@@ -307954,14 +307954,21 @@
       "retry_after": "2026-10-20T12:36:59.446049+00:00"
     },
     "1410:1:26": {
-      "at": "2026-10-19T12:36:50.240926+00:00",
+      "at": "2026-10-28T22:32:51.342197+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 21.21,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-20T12:37:11.454718+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.997288703918457,
+      "observed_source_id": "34451683",
+      "elapsed_seconds": 79.64,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T22:34:10.983485+00:00"
     },
     "1388:4:3": {
       "at": "2026-10-19T12:31:25.131891+00:00",
@@ -742809,9 +742816,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T21:52:16.657734+00:00"
+    },
+    "1179:3:5": {
+      "at": "2026-10-28T22:33:24.856160+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 67.93,
+      "search_evidence": [
+        {
+          "path": "/fire-force-s03e05/s/-6",
+          "status": 200,
+          "response_bytes": 217026,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fire-force/s/-6",
+          "status": 200,
+          "response_bytes": 347263,
+          "boxes": 104,
+          "parsed_candidates": 104,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fire-force-s03e05/s/-6",
+          "status": 200,
+          "response_bytes": 216994,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fire-force/s/-6",
+          "status": 200,
+          "response_bytes": 347351,
+          "boxes": 104,
+          "parsed_candidates": 104,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T22:34:32.782641+00:00"
     }
   },
-  "updated_at": "2026-10-28T22:33:40.753581+00:00",
+  "updated_at": "2026-10-28T22:34:49.388232+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -750773,12 +750828,12 @@
     },
     "1410": {
       "misses": [
-        "1410:1:21",
         "1410:1:22",
-        "1410:1:24"
+        "1410:1:24",
+        "1410:1:26"
       ],
-      "updated_at": "2026-10-28T22:33:24.143027+00:00",
-      "retry_after": "2026-10-29T02:33:24.143027+00:00"
+      "updated_at": "2026-10-28T22:34:10.983545+00:00",
+      "retry_after": "2026-10-29T02:34:10.983545+00:00"
     },
     "2053": {
       "misses": [
@@ -757914,12 +757969,9 @@
     },
     "1179": {
       "misses": [
-        "1179:3:2",
-        "1179:3:3",
-        "1179:3:4"
+        "1179:3:5"
       ],
-      "updated_at": "2026-10-28T06:14:35.196877+00:00",
-      "retry_after": "2026-10-28T10:14:35.196877+00:00"
+      "updated_at": "2026-10-28T22:34:32.782668+00:00"
     },
     "2245": {
       "misses": [
