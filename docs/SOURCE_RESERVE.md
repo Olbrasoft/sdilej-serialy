@@ -817,3 +817,12 @@ empty search pages with explicit request-limit notices override a recently
 successful control. They pause all producer workers immediately and never become
 cached absence or an episode failure. The triggering status and public path are
 recorded without URL queries or response text.
+
+Legacy `no_matches` results contradicted by an exact positive source hint now
+receive their existing one-time search-recovery review in the fresh dispatch
+lane. Previously they were eligible but stayed behind large retry backlogs;
+Zákon a pořádek S06E01 reproduced this with a verified 720p Czech original.
+New hints found by another worker can promote such pending episodes without
+restarting the producer. Once checked at the current recovery revision they
+return to normal retry rules. Inconclusive audio, unhinted misses and current
+negative checks keep the bounded retry lane; all publication checks still apply.

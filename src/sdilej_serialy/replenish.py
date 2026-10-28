@@ -70,6 +70,11 @@ def needs_short_audio_review(record, metadata):
             and runtime is not None and 0 < runtime < 15)
 
 
+def needs_search_recovery(record, *, source_hint=False):
+    return (source_hint and record.get('reason') == 'no_matches'
+            and record.get('search_recovery_revision', 0) < SEARCH_RECOVERY_REVISION)
+
+
 def repaired_preparation(record, metadata=None, *, filename_recovery=False, source_hint=False):
     revision = record.get('preparation_revision', 1)
     return ((record.get('reason') == 'TypeError' and revision < 2)
@@ -81,8 +86,7 @@ def repaired_preparation(record, metadata=None, *, filename_recovery=False, sour
             or ((metadata or {}).get('requested_audio_policy') == SLOVAK_POLICY
                 and record.get('audio_policy_revision', 0) < AUDIO_POLICY_REVISION
                 and record.get('reason') in ('verified_non_czech', 'no_verified_czech_match'))
-            or (source_hint and record.get('reason') == 'no_matches'
-                and record.get('search_recovery_revision', 0) < SEARCH_RECOVERY_REVISION)
+            or needs_search_recovery(record, source_hint=source_hint)
             or (subtitle_request(metadata or {}) and record.get('reason') == 'transient_original'
                 and record.get('subtitle_verification_revision', 0) < 1)
             or (subtitle_request(metadata or {}) and record.get('reason') in ('inconclusive_audio', 'inconclusive_subtitles')
@@ -188,7 +192,18 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
                  if not records.get(Episode.from_dict(m).identity)
                  or repaired_preparation(records[Episode.from_dict(m).identity], m,
                       filename_recovery=Episode.from_dict(m).identity in index.recovered_hints)}
-        yield from indexed_order(ordinary, fresh, paused, index, refresh, progress,
+        recoverable = {Episode.from_dict(m).identity for m in ordinary
+                       if needs_search_recovery(records.get(Episode.from_dict(m).identity, {}),
+                                                source_hint=True)}
+        def refresh_recovered():
+            if refresh:
+                refresh()
+            # Exact positive evidence contradicts these legacy empty searches.
+            # Admit their one versioned review to the fresh lane, including
+            # evidence found by peers after startup. Audio failures stay retries.
+            fresh.update(identity for identity in recoverable if index.rank(identity) < 2)
+        fresh.update(identity for identity in recoverable if index.rank(identity) < 2)
+        yield from indexed_order(ordinary, fresh, paused, index, refresh_recovered, progress,
                                  productive_seasons=productive_seasons, records=records, available=available,
                                  wait_for_changes=bool(requested and requested.series), urgent=urgent)
 

@@ -181,6 +181,51 @@ def test_reserve_production_path_preserves_productive_hints_and_retry_budget():
     assert result[8]['series_id'] == 1
 
 
+def test_legacy_empty_search_with_exact_hint_gets_one_fresh_review_not_audio_failures():
+    from sdilej_serialy.replenish import reserve_order, SEARCH_RECOVERY_REVISION
+    rows = [metadata(series=n) for n in range(1, 16)]
+    index = CandidateIndex(rows)
+    index.observe([candidate('Series 1 S01E01.mkv', '1'),
+                   candidate('Series 2 S01E01 CZ.mkv', '2'),
+                   candidate('Series 3 S01E01 CZ.mkv', '3')])
+    records = {
+        '1:1:1': dict(reason='no_matches', preparation_revision=5, consecutive_failures=3),
+        '2:1:1': dict(reason='inconclusive_audio', preparation_revision=5, consecutive_failures=80),
+        '3:1:1': dict(reason='no_matches', preparation_revision=5, consecutive_failures=1,
+                      search_recovery_revision=SEARCH_RECOVERY_REVISION),
+        '4:1:1': dict(reason='no_matches', preparation_revision=5, consecutive_failures=1),
+    }
+    def order():
+        return [r['series_id'] for r in reserve_order(rows, records, {}, set(), {(1,1)},
+            index=index, refresh=lambda:None, progress={})]
+    result = order()
+    assert result[0] == 1 and not {2,3,4}.intersection(result[:8])
+    assert len(set(result)) == len(result) == len(rows)
+    records['1:1:1']['search_recovery_revision'] = SEARCH_RECOVERY_REVISION
+    assert 1 not in order()[:8]
+
+
+def test_exact_hint_discovered_mid_run_promotes_legacy_miss_without_restart(monkeypatch):
+    from functools import partial
+    from sdilej_serialy import replenish
+    now = [0]
+    rows = [metadata(series=n) for n in range(1, 36)]
+    index = CandidateIndex(rows)
+    records = {f'{n}:1:1': dict(reason='no_matches', preparation_revision=5,
+                               consecutive_failures=3 if n==29 else 1) for n in (29,30,31)}
+    def refresh():
+        if now[0] >= 60:
+            index.observe([candidate('Series 29 S01E01.mkv')])
+    monkeypatch.setattr(replenish, 'indexed_order', partial(indexed_order, clock=lambda:now[0]))
+    result = replenish.reserve_order(rows, records, {}, set(), index=index, refresh=refresh, progress={})
+    first = list(islice(result, 10))
+    assert [r['series_id'] for r in first] == list(range(1,9))+[30,31]
+    now[0] = 61
+    rest = list(result)
+    assert rest[0]['series_id'] == 29
+    assert len({r['series_id'] for r in first+rest}) == len(first+rest) == 35
+
+
 def test_expired_pauses_are_released_without_restoring_explicit_unpauses():
     now = datetime(2026, 10, 20, tzinfo=UTC)
     records = {

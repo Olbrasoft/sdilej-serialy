@@ -80,9 +80,10 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
     positions = {identity: n for n, identity in enumerate(pending)}
     series_orders = {}
     for identity, row in pending.items():
-        if identity in fresh_ids:
-            series_orders[row['series_id']] = (row.get('imdb_rating') is None, -(row.get('imdb_rating') or 0),
-                                              -(row.get('imdb_votes') or 0), row['series_id'])
+        # A legacy empty search can join the fresh lane when a peer discovers
+        # its exact source. Its exploration cursor needs the same stable order.
+        series_orders[row['series_id']] = (row.get('imdb_rating') is None, -(row.get('imdb_rating') or 0),
+                                          -(row.get('imdb_votes') or 0), row['series_id'])
     groups, series, retries = defaultdict(deque), deque(), deque()
     hinted, productive, dubbed_retries = deque(), deque(), deque()
     refreshed = float('-inf')
