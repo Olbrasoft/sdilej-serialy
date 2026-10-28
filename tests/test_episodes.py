@@ -3,6 +3,7 @@ import pytest
 
 from sdilej_serialy.episodes import EpisodeSourceProvider, episode_match, has_exact_code, runtime_acceptable
 from sdilej_serialy.models import Episode
+from sdilej_serialy.search_health import SearchUnavailable
 from sdilej_to_prehrajto.language import LanguageDetectionError
 from sdilej_to_prehrajto.models import Candidate, LanguageTier, MatchTier
 from sdilej_to_prehrajto.sdilej import SdilejError
@@ -247,6 +248,30 @@ def test_unresolved_original_metadata_defers_selection(monkeypatch):
         raise SdilejError('temporary failure')
     monkeypatch.setattr(provider, '_inspect', inspect)
     assert provider.discover(episode()) is None
+
+
+@pytest.mark.parametrize('stage', ['_inspect', '_verify_language'])
+def test_shared_source_pause_propagates_without_retry_or_fallback(monkeypatch, stage):
+    item = candidate('paused', height=1080, size_bytes=100_000_000,
+                     language=LanguageTier.CZECH_AUDIO)
+    provider = provider_with(monkeypatch, [item], lambda _episode, item: item)
+    calls = []
+    failure = SearchUnavailable('Shared quiet window')
+
+    def unavailable(*args):
+        calls.append(1)
+        raise failure
+
+    monkeypatch.setattr(provider, stage, unavailable)
+    monkeypatch.setattr(provider, 'verify_language_retry',
+                        lambda *args: pytest.fail('Do not retry during a shared pause'))
+    monkeypatch.setattr('sdilej_serialy.subtitle_media.zero_original_evidence',
+                        lambda *args, **kwargs: pytest.fail('Do not probe during a shared pause'))
+    with pytest.raises(SearchUnavailable) as raised:
+        provider.discover(episode())
+    assert raised.value is failure
+    assert calls == [1]
+    assert provider.last_outcome == 'source_search_unavailable'
 
 
 @pytest.mark.parametrize('metadata', [

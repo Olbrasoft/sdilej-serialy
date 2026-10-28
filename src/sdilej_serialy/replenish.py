@@ -46,7 +46,10 @@ MAX_SERIES_MISSES = 3
 def pipeline_health(metrics, target, preparation, now):
     """Report account progress separately from a running/green producer job."""
     records = list(target.get('episodes', {}).values())
-    active = {r.get('target_account') for r in records if r.get('claim')}
+    # Retrying unavailable originals holds a claim before target allocation.
+    # Such preflights must not hide a prolonged absence of uploadable sources.
+    active = {r.get('target_account') for r in records
+              if r.get('claim') and r.get('prepared_target')}
     ages = {}
     for account in ACCOUNTS:
         latest = max((r['upload']['uploaded_at'] for r in records

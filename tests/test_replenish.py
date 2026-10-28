@@ -219,7 +219,9 @@ def test_health_marks_only_idle_starved_accounts_and_separates_discovery_outcome
     target = dict(episodes={
         'old-a': dict(target_account='a', upload=dict(uploaded_at='2026-10-11T10:00:00+00:00')),
         'old-b': dict(target_account='b', upload=dict(uploaded_at='2026-10-11T10:00:00+00:00')),
-        'active': dict(target_account='a', claim=dict(worker_id='active')),
+        'active': dict(target_account='a', claim=dict(worker_id='active'),
+                       prepared_target=dict(file_id='new-video')),
+        'preflight': dict(target_account='b', claim=dict(worker_id='retry-missing-source')),
     })
     prep = dict(episodes={'check': dict(at='2026-10-11T11:50:00+00:00', status='deferred', reason='no_matches')})
     health = replenish.pipeline_health(metrics, target, prep, now)

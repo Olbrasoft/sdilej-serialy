@@ -490,6 +490,11 @@ class EpisodeSourceProvider:
                 try:
                     detail = self._inspect(episode, candidate)
                     break
+                except SearchUnavailable:
+                    # A shared source pause is not evidence about this file.
+                    # Do not bypass it with the zero-original fallback probe.
+                    self.last_outcome = 'source_search_unavailable'
+                    raise
                 except (SdilejError, requests.RequestException):
                     if attempt == 1:
                         from .subtitle_media import zero_original_evidence
@@ -528,6 +533,9 @@ class EpisodeSourceProvider:
                                   else self._verify_language(episode, candidate))
                         verification_completed = True
                         break
+                    except SearchUnavailable:
+                        self.last_outcome = 'source_search_unavailable'
+                        raise
                     except (SdilejError, LanguageDetectionError, requests.RequestException, subprocess.TimeoutExpired):
                         continue
                 if not verification_completed:
