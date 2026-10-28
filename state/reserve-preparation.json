@@ -409290,14 +409290,18 @@
       "retry_after": "2026-10-23T00:14:50.515681+00:00"
     },
     "2778:1:18": {
-      "at": "2026-10-23T05:35:23.664095+00:00",
+      "at": "2026-10-28T14:05:35.115021+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 35.64,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-24T05:35:59.302991+00:00"
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 221.13,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-28T15:09:16.246406+00:00"
     },
     "5458:2:6": {
       "at": "2026-10-22T00:14:47.633201+00:00",
@@ -735513,9 +735517,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T13:34:26.441236+00:00"
+    },
+    "2291:1:38": {
+      "at": "2026-10-28T14:09:17.002312+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 40.97,
+      "search_evidence": [
+        {
+          "path": "/zorro-s01e38/s/-6",
+          "status": 200,
+          "response_bytes": 216921,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zorro/s/-6",
+          "status": 200,
+          "response_bytes": 327473,
+          "boxes": 93,
+          "parsed_candidates": 87,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zorro-s01e38/s/-6",
+          "status": 200,
+          "response_bytes": 216853,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zorro/s/-6",
+          "status": 200,
+          "response_bytes": 327353,
+          "boxes": 93,
+          "parsed_candidates": 87,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T14:09:57.975655+00:00"
     }
   },
-  "updated_at": "2026-10-28T14:09:08.751852+00:00",
+  "updated_at": "2026-10-28T14:10:17.598817+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -741951,12 +742003,12 @@
     },
     "2778": {
       "misses": [
-        "2778:4:13",
         "2778:4:14",
-        "2778:1:24"
+        "2778:1:24",
+        "2778:1:18"
       ],
-      "updated_at": "2026-10-28T14:09:04.079625+00:00",
-      "retry_after": "2026-10-28T14:39:04.079625+00:00"
+      "updated_at": "2026-10-28T14:09:16.246432+00:00",
+      "retry_after": "2026-10-28T14:39:16.246432+00:00"
     },
     "76": {
       "misses": [],
@@ -744226,12 +744278,9 @@
     },
     "2291": {
       "misses": [
-        "2291:1:36",
-        "2291:1:7",
-        "2291:1:37"
+        "2291:1:38"
       ],
-      "updated_at": "2026-10-28T04:51:23.505222+00:00",
-      "retry_after": "2026-10-28T08:51:23.505222+00:00"
+      "updated_at": "2026-10-28T14:09:57.975686+00:00"
     },
     "3184": {
       "misses": [
@@ -752871,12 +752920,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2179,
+    "last_series": 2291,
     "last_series_order": [
       false,
       -8.2,
-      -5381,
-      2179
+      -5103,
+      2291
     ]
   }
 }
