@@ -433875,14 +433875,21 @@
       "retry_after": "2026-10-23T10:48:28.468142+00:00"
     },
     "1299:4:5": {
-      "at": "2026-10-22T10:48:09.940012+00:00",
+      "at": "2026-10-28T18:55:59.806749+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 22.41,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T10:48:32.351197+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9925932288169861,
+      "observed_source_id": "34911743",
+      "elapsed_seconds": 506.8,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T19:05:26.613503+00:00"
     },
     "1108:7:4": {
       "at": "2026-10-22T10:48:09.219535+00:00",
@@ -740691,7 +740698,7 @@
       "retry_after": "2026-10-29T19:03:51.205846+00:00"
     }
   },
-  "updated_at": "2026-10-28T19:04:01.724893+00:00",
+  "updated_at": "2026-10-28T19:06:29.834214+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -742826,7 +742833,7 @@
       "retry_after": "2026-10-28T19:54:24.764092+00:00"
     },
     "1553:2:13": {
-      "at": "2026-10-28T14:23:15.168855+00:00",
+      "at": "2026-10-28T19:03:51.206125+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -742836,12 +742843,12 @@
       "method": "source_repair",
       "source_repair_revision": 2,
       "reason": "no_matches",
-      "elapsed_seconds": 55.11,
+      "elapsed_seconds": 22.09,
       "search_evidence": [
         {
           "path": "/fresh-prince-s02e13/s/-6",
           "status": 200,
-          "response_bytes": 216940,
+          "response_bytes": 217002,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -742849,7 +742856,7 @@
         {
           "path": "/fresh-prince/s/-6",
           "status": 200,
-          "response_bytes": 374100,
+          "response_bytes": 374056,
           "boxes": 137,
           "parsed_candidates": 127,
           "heading_matches_query": true
@@ -742857,7 +742864,7 @@
         {
           "path": "/the-fresh-prince-of-bel-air-s02e13/s/-6",
           "status": 200,
-          "response_bytes": 217293,
+          "response_bytes": 217331,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -742865,15 +742872,47 @@
         {
           "path": "/the-fresh-prince-of-bel-air/s/-6",
           "status": 200,
-          "response_bytes": 237110,
+          "response_bytes": 237148,
+          "boxes": 17,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fresh-prince-s02e13/s/-6",
+          "status": 200,
+          "response_bytes": 217003,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fresh-prince/s/-6",
+          "status": 200,
+          "response_bytes": 374129,
+          "boxes": 137,
+          "parsed_candidates": 127,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-fresh-prince-of-bel-air-s02e13/s/-6",
+          "status": 200,
+          "response_bytes": 217330,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-fresh-prince-of-bel-air/s/-6",
+          "status": 200,
+          "response_bytes": 237168,
           "boxes": 17,
           "parsed_candidates": 14,
           "heading_matches_query": true
         }
       ],
       "repair_fingerprint": "3b9d253dd960f1d7cf1d4e3cc881535c8bc2526431d03eb9cd9be78c5eae2a0f",
-      "consecutive_failures": 63,
-      "retry_after": "2026-10-28T15:24:10.277775+00:00"
+      "consecutive_failures": 64,
+      "retry_after": "2026-10-28T20:05:26.616739+00:00"
     },
     "1553:2:15": {
       "at": "2026-10-26T05:18:48.807678+00:00",
@@ -745399,9 +745438,11 @@
     "1553": {
       "misses": [
         "1553:1:15",
-        "1553:1:16"
+        "1553:1:16",
+        "1553:2:13"
       ],
-      "updated_at": "2026-10-28T18:54:24.764121+00:00"
+      "updated_at": "2026-10-28T19:05:26.616762+00:00",
+      "retry_after": "2026-10-28T23:05:26.616762+00:00"
     },
     "2108": {
       "misses": [
@@ -747308,9 +747349,11 @@
     "1299": {
       "misses": [
         "1299:4:4",
-        "1299:4:2"
+        "1299:4:2",
+        "1299:4:5"
       ],
-      "updated_at": "2026-10-28T19:03:21.085585+00:00"
+      "updated_at": "2026-10-28T19:05:26.613559+00:00",
+      "retry_after": "2026-10-28T23:05:26.613559+00:00"
     },
     "7928": {
       "misses": [
