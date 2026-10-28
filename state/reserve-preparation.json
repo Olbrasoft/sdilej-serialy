@@ -718629,9 +718629,100 @@
       "elapsed_seconds": 128.75,
       "source_id": "29099316",
       "queue_rank": 30854
+    },
+    "1402:9:18": {
+      "at": "2026-10-28T05:30:21.208776+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 139.64,
+      "source_id": "29099320",
+      "queue_rank": 30855
+    },
+    "1402:9:19": {
+      "at": "2026-10-28T05:30:30.129059+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 140.91,
+      "source_id": "29099329",
+      "queue_rank": 30856
+    },
+    "2195:3:19": {
+      "at": "2026-10-28T05:31:47.538991+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ja",
+      "observed_language_probability": 0.9818817973136902,
+      "observed_source_id": "31928991",
+      "elapsed_seconds": 67.27,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T05:32:54.810550+00:00"
+    },
+    "2531:4:5": {
+      "at": "2026-10-28T05:32:16.605845+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 54.41,
+      "search_evidence": [
+        {
+          "path": "/aggretsuko-s04e05/s/-6",
+          "status": 200,
+          "response_bytes": 217006,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/aggretsuko/s/-6",
+          "status": 200,
+          "response_bytes": 216788,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/aggretsuko-s04e05/s/-6",
+          "status": 200,
+          "response_bytes": 216879,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/aggretsuko/s/-6",
+          "status": 200,
+          "response_bytes": 216837,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T05:33:11.018014+00:00"
     }
   },
-  "updated_at": "2026-10-28T05:32:33.643315+00:00",
+  "updated_at": "2026-10-28T05:33:45.707394+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -727705,7 +727796,7 @@
     },
     "1402": {
       "misses": [],
-      "updated_at": "2026-10-28T05:31:47.111637+00:00"
+      "updated_at": "2026-10-28T05:32:51.043700+00:00"
     },
     "7836": {
       "misses": [
@@ -727881,9 +727972,11 @@
     "2195": {
       "misses": [
         "2195:2:9",
-        "2195:3:18"
+        "2195:3:18",
+        "2195:3:19"
       ],
-      "updated_at": "2026-10-28T05:22:40.800898+00:00"
+      "updated_at": "2026-10-28T05:32:54.810577+00:00",
+      "retry_after": "2026-10-28T09:32:54.810577+00:00"
     },
     "1247": {
       "misses": [
@@ -729689,9 +729782,10 @@
     },
     "2531": {
       "misses": [
-        "2531:4:4"
+        "2531:4:4",
+        "2531:4:5"
       ],
-      "updated_at": "2026-10-28T03:26:10.679574+00:00"
+      "updated_at": "2026-10-28T05:33:11.018065+00:00"
     },
     "2234": {
       "misses": [
@@ -736207,12 +736301,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2531,
+    "last_series": 1708,
     "last_series_order": [
       false,
       -8.0,
-      -8363,
-      2531
+      -5748,
+      1708
     ]
   }
 }
