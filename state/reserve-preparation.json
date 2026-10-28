@@ -465124,14 +465124,21 @@
       "retry_after": "2026-10-24T01:00:41.582035+00:00"
     },
     "1095:5:1": {
-      "at": "2026-10-23T00:59:52.249694+00:00",
+      "at": "2026-10-28T23:22:14.393064+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 61.31,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T01:00:53.561904+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.8779925107955933,
+      "observed_source_id": "35063228",
+      "elapsed_seconds": 110.49,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T23:24:04.884867+00:00"
     },
     "1635:2:9": {
       "at": "2026-10-23T01:00:30.259870+00:00",
@@ -743725,9 +743732,89 @@
       "elapsed_seconds": 105.91,
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T23:20:06.118298+00:00"
+    },
+    "1150:4:21": {
+      "at": "2026-10-28T23:22:22.427896+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 104.45,
+      "search_evidence": [
+        {
+          "path": "/super-drbna-s04e21/s/-6",
+          "status": 200,
+          "response_bytes": 216891,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/super-drbna/s/-6",
+          "status": 200,
+          "response_bytes": 424261,
+          "boxes": 186,
+          "parsed_candidates": 179,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/gossip-girl-s04e21/s/-6",
+          "status": 200,
+          "response_bytes": 216983,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/gossip-girl/s/-6",
+          "status": 200,
+          "response_bytes": 296937,
+          "boxes": 74,
+          "parsed_candidates": 60,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/super-drbna-s04e21/s/-6",
+          "status": 200,
+          "response_bytes": 216979,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/super-drbna/s/-6",
+          "status": 200,
+          "response_bytes": 424274,
+          "boxes": 186,
+          "parsed_candidates": 179,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/gossip-girl-s04e21/s/-6",
+          "status": 200,
+          "response_bytes": 216964,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/gossip-girl/s/-6",
+          "status": 200,
+          "response_bytes": 296839,
+          "boxes": 74,
+          "parsed_candidates": 60,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T23:24:06.877978+00:00"
     }
   },
-  "updated_at": "2026-10-28T23:22:53.390608+00:00",
+  "updated_at": "2026-10-28T23:24:12.603466+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -750057,12 +750144,12 @@
     },
     "1095": {
       "misses": [
-        "1095:4:9",
         "1095:4:12",
-        "1095:4:15"
+        "1095:4:15",
+        "1095:5:1"
       ],
-      "updated_at": "2026-10-28T23:22:50.533525+00:00",
-      "retry_after": "2026-10-29T03:22:50.533525+00:00"
+      "updated_at": "2026-10-28T23:24:04.884895+00:00",
+      "retry_after": "2026-10-29T03:24:04.884895+00:00"
     },
     "1332": {
       "misses": [],
@@ -759516,9 +759603,10 @@
     },
     "1150": {
       "misses": [
-        "1150:3:13"
+        "1150:3:13",
+        "1150:4:21"
       ],
-      "updated_at": "2026-10-28T13:34:24.559567+00:00"
+      "updated_at": "2026-10-28T23:24:06.878045+00:00"
     },
     "587": {
       "misses": [],
@@ -761036,12 +761124,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1150,
+    "last_series": 2079,
     "last_series_order": [
       false,
       -7.5,
-      -217589,
-      1150
+      -84097,
+      2079
     ]
   }
 }
