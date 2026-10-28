@@ -36,7 +36,8 @@ class PipelinedLanguageDetector(WhisperLanguageDetector):
     def detect_for_duration(self, media_url, duration_sec):
         return self._detect_at(media_url, self.initial_offset(duration_sec))
 
-    def detect_consensus(self, media_url, duration_sec, *, initial=None, preferred_language=None):
+    def detect_consensus(self, media_url, duration_sec, *, initial=None, preferred_language=None,
+                         initial_sample_offset=None):
         if not duration_sec or duration_sec >= 900:
             duration = max(int(duration_sec or 0), 900)
             offsets = [int(duration * fraction) for fraction in (.25, .5, .75)]
@@ -46,7 +47,9 @@ class PipelinedLanguageDetector(WhisperLanguageDetector):
             maximum = max(0, int(duration_sec) - self.seconds)
             offsets = ([0, maximum // 2, maximum] if duration_sec < 2 * self.seconds else
                        [min(int(duration_sec * fraction), maximum) for fraction in (.25, .5, .75)])
-        used = {self.initial_offset(duration_sec)} if initial else set()
+        initial_position = (self.initial_offset(duration_sec) if initial_sample_offset is None
+                            else initial_sample_offset)
+        used = {initial_position} if initial else set()
         samples = [initial] if initial else []
         for offset in offsets:
             if offset not in used:

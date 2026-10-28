@@ -167,6 +167,23 @@ def test_additional_consensus_samples_never_reuse_a_short_episode_position(monke
     assert offsets == [0, 12]
 
 
+@pytest.mark.parametrize('duration,expected', [(240, [60, 120, 165, 96, 144]), (100, [25, 0, 12])])
+def test_retry_sample_cannot_be_counted_twice_to_approve_a_language(monkeypatch, duration, expected):
+    detector = PipelinedLanguageDetector()
+    initial = min(60, duration - detector.seconds)
+    offsets = []
+    def detect(url, offset):
+        offsets.append(offset)
+        return 'sk', .9 if offset == initial else .4
+    monkeypatch.setattr(detector, '_detect_at', detect)
+    provider = EpisodeSourceProvider(None, detector=detector)
+    with pytest.raises(LanguageDetectionError, match='confidence'):
+        provider.verify_language_retry(episode(), Candidate('1', 'detail', 'Episode CZ',
+            filename='Episode CZ.mp4', sample_url='original', duration_sec=duration))
+    assert offsets == expected
+    assert len(offsets) == len(set(offsets))
+
+
 def test_consensus_allows_search_to_reach_the_next_czech_original(monkeypatch):
     detector = PipelinedLanguageDetector()
     first = Candidate('1', 'detail-1', 'Episode CZ', filename='Episode CZ.mp4',

@@ -798,3 +798,7 @@ as another clear sample or a conflicting language is observed. The extra samples
 do not authorize publication by themselves: the same confidence, unanimity and
 Czech-preference rules still apply. Split votes and uniformly weak audio do not
 trigger this additional work.
+
+When retrying from 60 seconds, the provider passes that actual (duration-clamped)
+initial position into consensus. Short episodes must not count the retry sample
+again as a quarter-position vote or as additional evidence.

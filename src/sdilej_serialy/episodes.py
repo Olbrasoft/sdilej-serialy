@@ -396,7 +396,12 @@ class EpisodeSourceProvider:
                 if probability < 0.65 or (hint and language_tier(language) != language_tier(hint)):
                     consensus = getattr(self.detector, "detect_consensus", None)
                     if consensus:
-                        language, probability = consensus(detail.sample_url, detail.duration_sec, initial=(language, probability), preferred_language=hint)
+                        options = dict(initial=(language, probability), preferred_language=hint)
+                        if sample_offset is not None and isinstance(self.detector, PipelinedLanguageDetector):
+                            # The retry sample starts at 60 seconds (or the
+                            # clamped end), not the normal initial position.
+                            options['initial_sample_offset'] = offset
+                        language, probability = consensus(detail.sample_url, detail.duration_sec, **options)
                 if probability < 0.65:
                     raise LanguageDetectionError("Whisper language confidence is too low")
                 return dict(language=language, probability=probability)
