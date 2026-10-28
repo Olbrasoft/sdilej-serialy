@@ -1,13 +1,13 @@
 {
   "generation": "pair-2026-09-25",
-  "run_id": "40774232291",
-  "attempted_this_run": 10,
+  "run_id": "40777247379",
+  "attempted_this_run": 0,
   "prepared_this_run": 0,
   "reserve_total": 22597,
   "queue_total": 31032,
-  "updated_at": "2026-10-28T22:05:22.846174+00:00",
+  "updated_at": "2026-10-28T22:16:14.855328+00:00",
   "workers": 4,
-  "elapsed_seconds": 553.42,
+  "elapsed_seconds": 66.21,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -30,30 +30,30 @@
       "a": 15495,
       "b": 15496
     },
-    "uploads_last_24h": 299,
-    "uploads_per_hour_24h": 12.46,
+    "uploads_last_24h": 298,
+    "uploads_per_hour_24h": 12.42,
     "stock_hours_24h": 0.32
   },
   "health": {
     "status": "buffered",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 57,
-      "b": 1618
+      "a": 709,
+      "b": 2270
     },
     "preparation_outcomes_last_hour": {
-      "verified_non_czech": 35,
-      "transient_original": 6,
-      "prepared": 18,
-      "no_acceptable_original": 12,
+      "verified_non_czech": 23,
+      "prepared": 15,
+      "transient_original": 2,
       "source_search_unavailable": 5,
+      "no_acceptable_original": 8,
       "inconclusive_audio": 2,
-      "no_matches": 19,
+      "no_matches": 14,
       "no_english_czech_subtitles": 1,
-      "transient_search": 2
+      "transient_search": 1
     }
   },
-  "indexed_candidates_in_scan": 1081,
+  "indexed_candidates_in_scan": 1084,
   "discovery_progress": {
     "last_series": 534,
     "last_series_order": [
@@ -64,17 +64,14 @@
     ]
   },
   "cache": {
-    "search_miss": 37,
-    "search_hit": 5,
-    "search_seconds": 614.84,
-    "media_hit": 29,
-    "audio_hit": 11,
-    "media_miss": 2,
-    "media_seconds": 5.61
+    "search_miss": 5,
+    "search_hit": 4,
+    "search_seconds": 56.55,
+    "media_hit": 2
   },
   "audio_pipeline": {},
   "productive_seasons": 96,
-  "series_paused_this_run": 35,
+  "series_paused_this_run": 33,
   "saved_reviewed_this_run": 0,
   "saved_prepared_this_run": 0,
   "repaired_this_run": 0,
@@ -2529,7 +2526,9 @@
           ],
           "foreign_audio_samples": [],
           "hinted_samples": [
-            "2685:1:4"
+            "2685:1:4",
+            "2685:1:5",
+            "2685:1:6"
           ]
         },
         {
@@ -2914,48 +2913,15 @@
     }
   ],
   "search_health": {
-    "status": "paused",
+    "status": "probe_due",
     "consecutive_failures": 2,
-    "retry_seconds": 572,
-    "failed_cycles_this_run": 2,
-    "control_requests": 8,
+    "retry_seconds": 0,
+    "failed_cycles_this_run": 0,
+    "control_requests": 0,
     "request_gap_seconds": 8,
-    "restart_required": true,
+    "restart_required": false,
     "last_request_limit": null,
-    "resume_after": "2026-10-28T22:14:54.798233+00:00",
-    "controls": [
-      {
-        "path": "/teorie-velkeho-tresku/s/-6",
-        "status": 200,
-        "response_bytes": 189619,
-        "parsed_candidates": 0,
-        "body_sha256": "346121a01425244d3a0d2807e71d64d5cf0eb717daf2a3ac09dd1c68bdfb5da4",
-        "video_box_count": 0,
-        "heading_matches_query": true,
-        "password_field_present": false,
-        "fallback_notice_present": false,
-        "request_limit_notice_present": false,
-        "cache_age_seconds": null,
-        "response_path": "/teorie-velkeho-tresku/s/-6",
-        "unexpected_origin": false,
-        "checked_at": "2026-10-28T22:04:46.823962+00:00"
-      },
-      {
-        "path": "/doktor-martin/s/-6",
-        "status": 200,
-        "response_bytes": 189451,
-        "parsed_candidates": 0,
-        "body_sha256": "5a1d828bf204c387a0a21d815740fa2f12d4bf80df8dcfbe2b66d94955ee5549",
-        "video_box_count": 0,
-        "heading_matches_query": true,
-        "password_field_present": false,
-        "fallback_notice_present": false,
-        "request_limit_notice_present": false,
-        "cache_age_seconds": null,
-        "response_path": "/doktor-martin/s/-6",
-        "unexpected_origin": false,
-        "checked_at": "2026-10-28T22:04:54.798165+00:00"
-      }
-    ]
+    "resume_after": null,
+    "controls": []
   }
 }
