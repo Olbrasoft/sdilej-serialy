@@ -133074,14 +133074,21 @@
       "retry_after": "2026-10-21T14:46:49.755801+00:00"
     },
     "635:1:3": {
-      "at": "2026-10-20T04:18:21.319348+00:00",
+      "at": "2026-10-28T05:33:11.629461+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 49.2,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-21T04:19:10.521971+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9543062448501587,
+      "observed_source_id": "19573629",
+      "elapsed_seconds": 188.45,
+      "consecutive_failures": 4,
+      "retry_after": "2026-10-29T05:36:20.084062+00:00"
     },
     "2246:1:1": {
       "at": "2026-10-10T16:55:38.441395+00:00",
@@ -718910,9 +718917,57 @@
       "elapsed_seconds": 61.73,
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T05:35:17.325053+00:00"
+    },
+    "9879:3:11": {
+      "at": "2026-10-28T05:35:14.197290+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 57.38,
+      "search_evidence": [
+        {
+          "path": "/round-the-twist-s03e11/s/-6",
+          "status": 200,
+          "response_bytes": 217152,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/round-the-twist/s/-6",
+          "status": 200,
+          "response_bytes": 216893,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/round-the-twist-s03e11/s/-6",
+          "status": 200,
+          "response_bytes": 217071,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/round-the-twist/s/-6",
+          "status": 200,
+          "response_bytes": 216966,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T05:36:18.281775+00:00"
     }
   },
-  "updated_at": "2026-10-28T05:36:11.354596+00:00",
+  "updated_at": "2026-10-28T05:37:20.686988+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -723554,9 +723609,10 @@
     },
     "635": {
       "misses": [
-        "635:1:9"
+        "635:1:9",
+        "635:1:3"
       ],
-      "updated_at": "2026-10-21T05:58:54.882241+00:00"
+      "updated_at": "2026-10-28T05:36:20.084091+00:00"
     },
     "3351": {
       "misses": [
@@ -730368,9 +730424,11 @@
     "9879": {
       "misses": [
         "9879:3:9",
-        "9879:3:10"
+        "9879:3:10",
+        "9879:3:11"
       ],
-      "updated_at": "2026-10-28T03:26:39.899684+00:00"
+      "updated_at": "2026-10-28T05:36:18.281816+00:00",
+      "retry_after": "2026-10-28T09:36:18.281816+00:00"
     },
     "6813": {
       "misses": [
@@ -736491,12 +736549,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 15,
+    "last_series": 1214,
     "last_series_order": [
       false,
       -7.9,
-      -365171,
-      15
+      -51344,
+      1214
     ]
   }
 }
