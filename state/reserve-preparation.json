@@ -418631,14 +418631,21 @@
       "retry_after": "2026-10-23T04:21:05.467268+00:00"
     },
     "1299:4:2": {
-      "at": "2026-10-22T04:20:46.201521+00:00",
+      "at": "2026-10-28T18:54:25.373204+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 21.39,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T04:21:07.595830+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9842609167098999,
+      "observed_source_id": "34911722",
+      "elapsed_seconds": 535.71,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T19:03:21.085536+00:00"
     },
     "1149:2:7": {
       "at": "2026-10-22T04:21:06.430870+00:00",
@@ -423631,14 +423638,21 @@
       "retry_after": "2026-10-23T06:27:25.869385+00:00"
     },
     "1299:4:4": {
-      "at": "2026-10-22T06:27:07.147813+00:00",
+      "at": "2026-10-28T18:55:22.176645+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 29.57,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T06:27:36.718549+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.958702564239502,
+      "observed_source_id": "34911740",
+      "elapsed_seconds": 472.6,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T19:03:14.779824+00:00"
     },
     "5513:7:3": {
       "at": "2026-10-22T06:26:50.187667+00:00",
@@ -740610,9 +740624,74 @@
       "elapsed_seconds": 74.35,
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T18:25:15.949589+00:00"
+    },
+    "7:2:8": {
+      "at": "2026-10-28T19:03:21.698793+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "transient_search",
+      "elapsed_seconds": 14.26,
+      "search_evidence": [
+        {
+          "path": "/muj-maly-pony-pratelstvi-je-magicke-s02e08/s/-6",
+          "status": 200,
+          "response_bytes": 217484,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/muj-maly-pony-pratelstvi-je-magicke/s/-6",
+          "status": 200,
+          "response_bytes": 219008,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/my-little-pony-friendship-is-magic-s02e08/s/-6",
+          "status": 200,
+          "response_bytes": 217510,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/my-little-pony-friendship-is-magic/s/-6",
+          "status": 200,
+          "response_bytes": 217311,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-28T19:18:35.954379+00:00"
+    },
+    "45:4:5": {
+      "at": "2026-10-28T19:03:15.400028+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9984429478645325,
+      "observed_source_id": "6601546",
+      "elapsed_seconds": 35.81,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T19:03:51.205846+00:00"
     }
   },
-  "updated_at": "2026-10-28T19:02:39.955200+00:00",
+  "updated_at": "2026-10-28T19:04:01.724893+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -747228,12 +747307,10 @@
     },
     "1299": {
       "misses": [
-        "1299:1:4",
-        "1299:2:2",
-        "1299:2:6"
+        "1299:4:4",
+        "1299:4:2"
       ],
-      "updated_at": "2026-10-28T14:25:00.306403+00:00",
-      "retry_after": "2026-10-28T18:25:00.306403+00:00"
+      "updated_at": "2026-10-28T19:03:21.085585+00:00"
     },
     "7928": {
       "misses": [
@@ -753490,16 +753567,20 @@
     "45": {
       "misses": [
         "45:4:2",
-        "45:4:3"
+        "45:4:3",
+        "45:4:5"
       ],
-      "updated_at": "2026-10-28T08:45:19.367084+00:00"
+      "updated_at": "2026-10-28T19:03:51.205872+00:00",
+      "retry_after": "2026-10-28T23:03:51.205872+00:00"
     },
     "7": {
       "misses": [
         "7:2:6",
-        "7:2:7"
+        "7:2:7",
+        "7:2:8"
       ],
-      "updated_at": "2026-10-28T08:46:19.850334+00:00"
+      "updated_at": "2026-10-28T19:03:35.954403+00:00",
+      "retry_after": "2026-10-28T19:33:35.954403+00:00"
     },
     "2070": {
       "misses": [
@@ -757931,12 +758012,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9699,
+    "last_series": 7,
     "last_series_order": [
       false,
       -7.8,
-      -30944,
-      9699
+      -26631,
+      7
     ]
   }
 }
