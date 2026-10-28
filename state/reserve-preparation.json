@@ -275586,14 +275586,21 @@
       "queue_rank": 25540
     },
     "2404:1:8": {
-      "at": "2026-10-18T04:45:36.786649+00:00",
+      "at": "2026-10-28T07:43:07.735637+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 41.78,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T04:46:18.566302+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9859371781349182,
+      "observed_source_id": "33395054",
+      "elapsed_seconds": 53.53,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-29T07:44:01.263274+00:00"
     },
     "7764:1:4": {
       "at": "2026-10-18T04:46:19.123301+00:00",
@@ -725838,9 +725845,110 @@
       "elapsed_seconds": 59.03,
       "source_id": "29099435",
       "queue_rank": 30881
+    },
+    "1402:10:13": {
+      "at": "2026-10-28T07:41:33.007230+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "elapsed_seconds": 61.54,
+      "source_id": "29099443",
+      "queue_rank": 30882
+    },
+    "9708:3:10": {
+      "at": "2026-10-28T07:42:30.269227+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 7.81,
+      "search_evidence": [
+        {
+          "path": "/transformers-prime-s03e10/s/-6",
+          "status": 200,
+          "response_bytes": 217631,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/transformers-prime-s03e10/s/-6",
+          "status": 200,
+          "response_bytes": 217575,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/transformers-prime/s/-6",
+          "status": 200,
+          "response_bytes": 278129,
+          "boxes": 47,
+          "parsed_candidates": 47,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T07:43:07.190672+00:00"
+    },
+    "4082:4:12": {
+      "at": "2026-10-28T07:43:07.190370+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 22.97,
+      "search_evidence": [
+        {
+          "path": "/natsume-s-book-of-friends-s04e12/s/-6",
+          "status": 200,
+          "response_bytes": 217467,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/natsume-s-book-of-friends/s/-6",
+          "status": 200,
+          "response_bytes": 217134,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/natsume-s-book-of-friends-s04e12/s/-6",
+          "status": 200,
+          "response_bytes": 217274,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/natsume-s-book-of-friends/s/-6",
+          "status": 200,
+          "response_bytes": 217150,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T07:43:30.161503+00:00"
     }
   },
-  "updated_at": "2026-10-28T07:42:34.957836+00:00",
+  "updated_at": "2026-10-28T07:44:12.505261+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -734905,7 +735013,7 @@
     },
     "1402": {
       "misses": [],
-      "updated_at": "2026-10-28T07:42:31.511393+00:00"
+      "updated_at": "2026-10-28T07:43:07.190292+00:00"
     },
     "7836": {
       "misses": [
@@ -735375,9 +735483,10 @@
     },
     "2404": {
       "misses": [
-        "2404:5:2"
+        "2404:5:2",
+        "2404:1:8"
       ],
-      "updated_at": "2026-10-28T07:40:06.457055+00:00"
+      "updated_at": "2026-10-28T07:44:01.263306+00:00"
     },
     "5235": {
       "misses": [
@@ -735616,9 +735725,11 @@
     "9708": {
       "misses": [
         "9708:3:8",
-        "9708:3:9"
+        "9708:3:9",
+        "9708:3:10"
       ],
-      "updated_at": "2026-10-28T05:01:01.314188+00:00"
+      "updated_at": "2026-10-28T07:43:07.190685+00:00",
+      "retry_after": "2026-10-28T11:43:07.190685+00:00"
     },
     "3361": {
       "misses": [
@@ -735978,12 +736089,9 @@
     },
     "4082": {
       "misses": [
-        "4082:4:9",
-        "4082:4:10",
-        "4082:4:11"
+        "4082:4:12"
       ],
-      "updated_at": "2026-10-28T03:19:51.731902+00:00",
-      "retry_after": "2026-10-28T07:19:51.731902+00:00"
+      "updated_at": "2026-10-28T07:43:30.161533+00:00"
     },
     "5984": {
       "misses": [
@@ -743355,12 +743463,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9708,
+    "last_series": 4082,
     "last_series_order": [
       false,
       -8.1,
-      -11033,
-      9708
+      -3356,
+      4082
     ]
   }
 }
