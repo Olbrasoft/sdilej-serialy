@@ -133978,14 +133978,21 @@
       "retry_after": "2026-10-21T14:48:55.374288+00:00"
     },
     "635:1:5": {
-      "at": "2026-10-20T14:46:08.599986+00:00",
+      "at": "2026-10-28T06:49:13.422166+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 141.56,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-21T14:48:30.161345+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9832095503807068,
+      "observed_source_id": "22466215",
+      "elapsed_seconds": 155.82,
+      "consecutive_failures": 4,
+      "retry_after": "2026-10-29T06:51:49.239211+00:00"
     },
     "635:1:6": {
       "at": "2026-10-21T01:51:19.909730+00:00",
@@ -722384,9 +722391,73 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T06:51:11.286680+00:00"
+    },
+    "1585:3:11": {
+      "at": "2026-10-28T06:51:10.154066+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 36.93,
+      "search_evidence": [
+        {
+          "path": "/nesika-s03e11/s/-6",
+          "status": 200,
+          "response_bytes": 216842,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/awkward-s03e11/s/-6",
+          "status": 200,
+          "response_bytes": 216831,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nesika-s03e11/s/-6",
+          "status": 200,
+          "response_bytes": 216882,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nesika/s/-6",
+          "status": 200,
+          "response_bytes": 551964,
+          "boxes": 285,
+          "parsed_candidates": 246,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/awkward-s03e11/s/-6",
+          "status": 200,
+          "response_bytes": 216893,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/awkward/s/-6",
+          "status": 200,
+          "response_bytes": 410313,
+          "boxes": 156,
+          "parsed_candidates": 144,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-29T06:51:47.081069+00:00"
     }
   },
-  "updated_at": "2026-10-28T06:51:14.165011+00:00",
+  "updated_at": "2026-10-28T06:52:23.539240+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -727033,12 +727104,12 @@
     },
     "635": {
       "misses": [
-        "635:1:1",
         "635:1:10",
-        "635:1:2"
+        "635:1:2",
+        "635:1:5"
       ],
-      "updated_at": "2026-10-28T06:51:09.626012+00:00",
-      "retry_after": "2026-10-28T10:51:09.626012+00:00"
+      "updated_at": "2026-10-28T06:51:49.239244+00:00",
+      "retry_after": "2026-10-28T10:51:49.239244+00:00"
     },
     "3351": {
       "misses": [
@@ -738494,12 +738565,9 @@
     },
     "1585": {
       "misses": [
-        "1585:3:8",
-        "1585:3:9",
-        "1585:3:10"
+        "1585:3:11"
       ],
-      "updated_at": "2026-10-28T01:13:47.455991+00:00",
-      "retry_after": "2026-10-28T05:13:47.455991+00:00"
+      "updated_at": "2026-10-28T06:51:47.081113+00:00"
     },
     "1826": {
       "misses": [
@@ -739939,12 +740007,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1585,
+    "last_series": 1561,
     "last_series_order": [
       false,
       -7.5,
-      -47049,
-      1585
+      -45964,
+      1561
     ]
   }
 }
