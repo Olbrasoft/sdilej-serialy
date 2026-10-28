@@ -110564,17 +110564,18 @@
       "retry_after": "2026-10-24T03:08:02.429959+00:00"
     },
     "1122:1:21": {
-      "at": "2026-10-27T08:53:05.229013+00:00",
+      "at": "2026-10-28T08:56:39.005659+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
-      "reason": "no_acceptable_original",
-      "elapsed_seconds": 32.36,
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 207.99,
       "consecutive_failures": 3,
-      "retry_after": "2026-10-28T08:53:37.593503+00:00"
+      "retry_after": "2026-10-28T09:10:06.993051+00:00"
     },
     "1122:1:22": {
       "at": "2026-10-23T03:07:10.809934+00:00",
@@ -371399,14 +371400,18 @@
       "retry_after": "2026-10-22T04:09:15.537729+00:00"
     },
     "54:2:9": {
-      "at": "2026-10-21T04:06:51.484983+00:00",
+      "at": "2026-10-28T08:54:12.414563+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 148.86,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-22T04:09:20.345758+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 378.01,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-28T09:30:30.427233+00:00"
     },
     "7256:1:9": {
       "at": "2026-10-21T04:09:16.148353+00:00",
@@ -421171,67 +421176,18 @@
       "retry_after": "2026-10-28T19:10:14.161432+00:00"
     },
     "1150:3:2": {
-      "at": "2026-10-27T08:52:50.812310+00:00",
+      "at": "2026-10-28T08:54:08.435535+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 12.88,
-      "search_evidence": [
-        {
-          "path": "/super-drbna-s03e02/s/-6",
-          "status": 200,
-          "response_bytes": 217033,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/gossip-girl-s03e02/s/-6",
-          "status": 200,
-          "response_bytes": 216944,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/super-drbna-s03e02/s/-6",
-          "status": 200,
-          "response_bytes": 217000,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/super-drbna/s/-6",
-          "status": 200,
-          "response_bytes": 424229,
-          "boxes": 186,
-          "parsed_candidates": 179,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/gossip-girl-s03e02/s/-6",
-          "status": 200,
-          "response_bytes": 216962,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/gossip-girl/s/-6",
-          "status": 200,
-          "response_bytes": 296942,
-          "boxes": 74,
-          "parsed_candidates": 60,
-          "heading_matches_query": true
-        }
-      ],
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 358.56,
       "consecutive_failures": 2,
-      "retry_after": "2026-10-28T08:53:04.417036+00:00"
+      "retry_after": "2026-10-28T09:10:06.993051+00:00"
     },
     "1583:2:8": {
       "at": "2026-10-22T06:06:08.002173+00:00",
@@ -729959,9 +729915,23 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-29T08:54:11.951323+00:00"
+    },
+    "2263:3:13": {
+      "at": "2026-10-28T08:54:06.625089+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 1,
+      "method": "discovery",
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 360.37,
+      "consecutive_failures": 0,
+      "retry_after": "2026-10-28T09:10:06.993054+00:00"
     }
   },
-  "updated_at": "2026-10-28T08:59:28.947455+00:00",
+  "updated_at": "2026-10-28T09:00:32.767117+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -740416,9 +740386,11 @@
     "54": {
       "misses": [
         "54:2:3",
-        "54:2:7"
+        "54:2:7",
+        "54:2:9"
       ],
-      "updated_at": "2026-10-28T08:56:38.355671+00:00"
+      "updated_at": "2026-10-28T09:00:30.427259+00:00",
+      "retry_after": "2026-10-28T09:30:30.427259+00:00"
     },
     "1669": {
       "misses": [
