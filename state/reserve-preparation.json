@@ -2785,11 +2785,52 @@
       "retry_after": "2026-10-29T23:40:09.899106+00:00"
     },
     "1611:8:8": {
-      "at": "2026-10-01T23:35:12.390660+00:00",
+      "at": "2026-10-29T11:42:42.087608+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T23:35:13.181918+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 28.3,
+      "search_evidence": [
+        {
+          "path": "/the-joy-of-painting-s08e08/s/-6",
+          "status": 200,
+          "response_bytes": 217135,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting/s/-6",
+          "status": 200,
+          "response_bytes": 227015,
+          "boxes": 8,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting-s08e08/s/-6",
+          "status": 200,
+          "response_bytes": 217181,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting/s/-6",
+          "status": 200,
+          "response_bytes": 226877,
+          "boxes": 8,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T11:43:10.386585+00:00"
     },
     "1611:8:9": {
       "at": "2026-10-01T23:35:47.263653+00:00",
@@ -22501,10 +22542,52 @@
       "retry_after": "2026-10-29T23:46:09.339128+00:00"
     },
     "1344:6:6": {
-      "at": "2026-10-01T15:06:32.796184+00:00",
+      "at": "2026-10-29T11:42:52.186180+00:00",
       "status": "deferred",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T15:06:33.582495+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 28.33,
+      "search_evidence": [
+        {
+          "path": "/seinfeld-s06e06/s/-6",
+          "status": 200,
+          "response_bytes": 216998,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld/s/-6",
+          "status": 200,
+          "response_bytes": 261298,
+          "boxes": 29,
+          "parsed_candidates": 29,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld-s06e06/s/-6",
+          "status": 200,
+          "response_bytes": 216990,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld/s/-6",
+          "status": 200,
+          "response_bytes": 261391,
+          "boxes": 29,
+          "parsed_candidates": 29,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T11:43:20.512177+00:00"
     },
     "1344:6:7": {
       "at": "2026-10-01T15:06:50.209798+00:00",
@@ -373596,14 +373679,21 @@
       "retry_after": "2026-10-22T03:39:43.984906+00:00"
     },
     "1055:5:4": {
-      "at": "2026-10-21T03:39:35.513383+00:00",
+      "at": "2026-10-29T11:40:19.773023+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 37.61,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-22T03:40:13.127771+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9501931965351105,
+      "observed_source_id": "26577274",
+      "elapsed_seconds": 145.63,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-30T11:42:52.186044+00:00"
     },
     "1522:1:10": {
       "at": "2026-10-21T03:39:44.558638+00:00",
@@ -758425,7 +758515,7 @@
       "retry_after": "2026-10-30T11:42:42.729415+00:00"
     }
   },
-  "updated_at": "2026-10-29T11:42:46.729637+00:00",
+  "updated_at": "2026-10-29T11:43:56.278071+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -762636,12 +762726,9 @@
     },
     "1611": {
       "misses": [
-        "1611:8:5",
-        "1611:8:6",
-        "1611:8:7"
+        "1611:8:8"
       ],
-      "updated_at": "2026-10-28T23:40:09.899138+00:00",
-      "retry_after": "2026-10-29T03:40:09.899138+00:00"
+      "updated_at": "2026-10-29T11:43:10.386617+00:00"
     },
     "1265": {
       "misses": [
@@ -762690,12 +762777,9 @@
     },
     "1344": {
       "misses": [
-        "1344:6:3",
-        "1344:6:4",
-        "1344:6:5"
+        "1344:6:6"
       ],
-      "updated_at": "2026-10-28T23:46:09.339155+00:00",
-      "retry_after": "2026-10-29T03:46:09.339155+00:00"
+      "updated_at": "2026-10-29T11:43:20.512206+00:00"
     },
     "2844": {
       "misses": [
@@ -769947,9 +770031,11 @@
     "1055": {
       "misses": [
         "1055:1:11",
-        "1055:5:1"
+        "1055:5:1",
+        "1055:5:4"
       ],
-      "updated_at": "2026-10-29T11:41:33.336343+00:00"
+      "updated_at": "2026-10-29T11:42:52.186075+00:00",
+      "retry_after": "2026-10-29T15:42:52.186075+00:00"
     },
     "257": {
       "misses": [
@@ -775799,12 +775885,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1611,
+    "last_series": 1344,
     "last_series_order": [
       false,
-      -9.3,
-      -7199,
-      1611
+      -8.8,
+      -388900,
+      1344
     ]
   }
 }
