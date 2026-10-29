@@ -506900,20 +506900,22 @@
       "retry_after": "2026-10-29T08:08:09.493659+00:00"
     },
     "2661:8:3": {
-      "at": "2026-10-23T17:51:46.534889+00:00",
+      "at": "2026-10-29T21:48:48.426544+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "request_probe_revision": 1,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 47.57,
+      "elapsed_seconds": 238.48,
       "search_evidence": [
         {
           "path": "/misto-cinu-s08e03/s/-6",
           "status": 200,
-          "response_bytes": 189537,
+          "response_bytes": 216943,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -506921,15 +506923,15 @@
         {
           "path": "/misto-cinu/s/-6",
           "status": 200,
-          "response_bytes": 189390,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 411282,
+          "boxes": 154,
+          "parsed_candidates": 147,
           "heading_matches_query": true
         },
         {
           "path": "/tatort-s08e03/s/-6",
           "status": 200,
-          "response_bytes": 189453,
+          "response_bytes": 216935,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -506937,15 +506939,15 @@
         {
           "path": "/tatort/s/-6",
           "status": 200,
-          "response_bytes": 189306,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 441691,
+          "boxes": 209,
+          "parsed_candidates": 186,
           "heading_matches_query": true
         },
         {
           "path": "/misto-cinu-s08e03/s/-6",
           "status": 200,
-          "response_bytes": 189537,
+          "response_bytes": 216905,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -506953,15 +506955,15 @@
         {
           "path": "/misto-cinu/s/-6",
           "status": 200,
-          "response_bytes": 189390,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 411299,
+          "boxes": 154,
+          "parsed_candidates": 147,
           "heading_matches_query": true
         },
         {
           "path": "/tatort-s08e03/s/-6",
           "status": 200,
-          "response_bytes": 189453,
+          "response_bytes": 216900,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -506969,14 +506971,14 @@
         {
           "path": "/tatort/s/-6",
           "status": 200,
-          "response_bytes": 189306,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 441692,
+          "boxes": 209,
+          "parsed_candidates": 186,
           "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T17:52:34.106497+00:00"
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-30T21:52:46.906991+00:00"
     },
     "4:6:1": {
       "at": "2026-10-24T00:14:56.821510+00:00",
@@ -775451,7 +775453,7 @@
       "queue_rank": 31385
     },
     "1402:28:1": {
-      "at": "2026-10-29T21:32:26.116879+00:00",
+      "at": "2026-10-29T21:48:45.613529+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -775459,10 +775461,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 362.51,
-      "consecutive_failures": 0,
-      "retry_after": "2026-10-29T21:48:28.625782+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9984317421913147,
+      "observed_source_id": "35284897",
+      "elapsed_seconds": 193.35,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T21:52:03.244593+00:00"
     },
     "1402:28:2": {
       "at": "2026-10-29T21:33:05.705761+00:00",
@@ -775493,7 +775498,7 @@
       "retry_after": "2026-10-29T21:48:28.625778+00:00"
     }
   },
-  "updated_at": "2026-10-29T21:51:58.959417+00:00",
+  "updated_at": "2026-10-29T21:53:06.557381+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -784524,8 +784529,10 @@
       "retry_after": "2026-10-24T20:51:50.616844+00:00"
     },
     "1402": {
-      "misses": [],
-      "updated_at": "2026-10-29T21:33:05.110248+00:00"
+      "misses": [
+        "1402:28:1"
+      ],
+      "updated_at": "2026-10-29T21:52:03.244630+00:00"
     },
     "7836": {
       "misses": [
@@ -792654,12 +792661,12 @@
     },
     "2661": {
       "misses": [
-        "2661:8:2",
         "2661:6:3",
-        "2661:7:1"
+        "2661:7:1",
+        "2661:8:3"
       ],
-      "updated_at": "2026-10-29T21:04:10.686000+00:00",
-      "retry_after": "2026-10-30T01:04:10.686000+00:00"
+      "updated_at": "2026-10-29T21:52:46.907019+00:00",
+      "retry_after": "2026-10-30T01:52:46.907019+00:00"
     },
     "10494": {
       "misses": [
