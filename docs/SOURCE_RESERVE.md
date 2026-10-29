@@ -89,9 +89,28 @@ otherwise authenticated discovery inspects original fast-download media and
 verifies speech, resolution, duration and episode identity. The existing selection
 policy remains Czech first, highest original resolution, then smallest file.
 Only confirmed Czech matches enter this upload reserve. Search/original transport
-failures retry after 15, 30, then 60 minutes; inconclusive speech retries after an
-hour. Conclusively foreign, missing or rejected originals retain a daily cooldown.
+failures retry after 15, 30, then 60 minutes, doubling further up to six hours for
+persistent failures. Inconclusive speech/subtitle checks start at one hour and
+double up to a day. Repeated missing-original repairs also back off up to a day.
+The bounded delay applies to existing records without rewriting their history;
+shared search outages and versioned verification fixes retain their recovery rules.
+Conclusively foreign, missing or rejected originals retain a daily cooldown.
 None of these outcomes is proof that a Czech match can never exist.
+
+A successful CR catalog export can still have incomplete season inventories.
+On October 29, series 1402 had 370 catalog episodes and omitted entire seasons 13
+and 15. A read-only production check confirmed the same gaps. Matching TMDB
+metadata supplied 228 additional aired episodes, without changing existing rows.
+These are discovery tasks, not verified sources or authorization to upload.
+
+Use `python -m sdilej_serialy.catalog_repair --series-id 1402 --tmdb-id 2734`
+with `TMDB_API_KEY` in the environment to preview an inventory supplement. Add
+`--apply` to append it to the local compressed catalog after validation. The tool
+requires a matching existing series, ignores future/undated episodes, preserves
+existing metadata and rejects identifier collisions. It uses the existing negative
+local episode-ID namespace and never accesses or modifies the CR database, upload
+history, target accounts or source manifest. Commit the catalog before dispatching
+the normal source producer; every new episode still needs full source verification.
 
 The sole publisher checkpoints source results together in Git after five completed
 checks or 60 seconds, and at normal shutdown. While workers are busy it also
@@ -158,7 +177,8 @@ opt into `requested-english-original-czech-subtitles-v1` only for the explicitly
 requested Tulsa King season 4 (series 581). The season registry preserves this
 request after later catalog imports, and due requested episodes precede broad
 exploration. Search pages are refreshed for this new season. A conclusively
-missing English/full-Czech-subtitle source is retried after 30 minutes.
+missing English/full-Czech-subtitle source is first retried after 30 minutes,
+with repeated failures doubling the delay up to a day.
 Its English speech, episode identity,
 original resolution/size and a full Czech text subtitle track must be verified
 before publication. Selection inspects all originals, then chooses the highest
