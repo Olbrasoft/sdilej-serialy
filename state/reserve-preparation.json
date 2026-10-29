@@ -416450,48 +416450,17 @@
       "queue_rank": 31166
     },
     "1076:9:4": {
-      "at": "2026-10-29T08:56:12.733660+00:00",
-      "status": "deferred",
+      "at": "2026-10-29T09:33:06.765828+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 369.21,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-29T09:12:09.998892+00:00"
+      "elapsed_seconds": 318.7,
+      "source_id": "19561124",
+      "queue_rank": 31167
     },
     "3628:1:12": {
       "at": "2026-10-22T02:27:22.471939+00:00",
@@ -754702,9 +754671,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-30T09:34:29.689185+00:00"
+    },
+    "1783:11:3": {
+      "at": "2026-10-29T09:38:26.463663+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 16.74,
+      "search_evidence": [
+        {
+          "path": "/smrt-v-raji-s11e03/s/-6",
+          "status": 200,
+          "response_bytes": 217338,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/smrt-v-raji/s/-6",
+          "status": 200,
+          "response_bytes": 494856,
+          "boxes": 209,
+          "parsed_candidates": 209,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/death-in-paradise-s11e03/s/-6",
+          "status": 200,
+          "response_bytes": 217055,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/death-in-paradise/s/-6",
+          "status": 200,
+          "response_bytes": 313238,
+          "boxes": 78,
+          "parsed_candidates": 77,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/smrt-v-raji-s11e03/s/-6",
+          "status": 200,
+          "response_bytes": 217419,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/smrt-v-raji/s/-6",
+          "status": 200,
+          "response_bytes": 494902,
+          "boxes": 209,
+          "parsed_candidates": 209,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/death-in-paradise-s11e03/s/-6",
+          "status": 200,
+          "response_bytes": 217060,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/death-in-paradise/s/-6",
+          "status": 200,
+          "response_bytes": 313290,
+          "boxes": 78,
+          "parsed_candidates": 77,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T09:38:43.206087+00:00"
     }
   },
-  "updated_at": "2026-10-29T09:37:44.949831+00:00",
+  "updated_at": "2026-10-29T09:38:57.926230+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -759931,7 +759980,7 @@
     },
     "1076": {
       "misses": [],
-      "updated_at": "2026-10-29T09:36:45.700626+00:00"
+      "updated_at": "2026-10-29T09:38:25.651174+00:00"
     },
     "47": {
       "misses": [
@@ -767551,12 +767600,9 @@
     },
     "1783": {
       "misses": [
-        "1783:2:8",
-        "1783:1:8",
-        "1783:3:2"
+        "1783:11:3"
       ],
-      "updated_at": "2026-10-29T04:45:49.534189+00:00",
-      "retry_after": "2026-10-29T05:15:49.534189+00:00"
+      "updated_at": "2026-10-29T09:38:43.206120+00:00"
     },
     "5376": {
       "misses": [
@@ -772096,12 +772142,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9782,
+    "last_series": 1783,
     "last_series_order": [
       false,
       -7.8,
-      -35511,
-      9782
+      -33793,
+      1783
     ]
   }
 }
