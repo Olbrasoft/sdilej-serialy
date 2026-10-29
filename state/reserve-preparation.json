@@ -376150,14 +376150,17 @@
       "retry_after": "2026-10-22T05:01:01.107762+00:00"
     },
     "1112:3:8": {
-      "at": "2026-10-23T05:06:25.629755+00:00",
-      "status": "deferred",
+      "at": "2026-10-29T04:36:34.248082+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 63.57,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-24T05:07:29.199979+00:00"
+      "elapsed_seconds": 29.81,
+      "source_id": "30296094",
+      "queue_rank": 31106
     },
     "5756:1:15": {
       "at": "2026-10-21T05:01:01.581169+00:00",
@@ -748371,9 +748374,105 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-30T04:34:31.931557+00:00"
+    },
+    "3298:6:6": {
+      "at": "2026-10-29T04:37:04.656926+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 8.7,
+      "search_evidence": [
+        {
+          "path": "/offspring-s06e06/s/-6",
+          "status": 200,
+          "response_bytes": 216882,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/offspring/s/-6",
+          "status": 200,
+          "response_bytes": 266348,
+          "boxes": 50,
+          "parsed_candidates": 13,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/offspring-s06e06/s/-6",
+          "status": 200,
+          "response_bytes": 216875,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/offspring/s/-6",
+          "status": 200,
+          "response_bytes": 266415,
+          "boxes": 50,
+          "parsed_candidates": 13,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T04:37:13.356186+00:00"
+    },
+    "2166:3:2": {
+      "at": "2026-10-29T04:37:13.945725+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 9.24,
+      "search_evidence": [
+        {
+          "path": "/tour-of-duty-s03e02/s/-6",
+          "status": 200,
+          "response_bytes": 216960,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tour-of-duty/s/-6",
+          "status": 200,
+          "response_bytes": 217176,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tour-of-duty-s03e02/s/-6",
+          "status": 200,
+          "response_bytes": 216959,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tour-of-duty/s/-6",
+          "status": 200,
+          "response_bytes": 217071,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T04:37:23.182580+00:00"
     }
   },
-  "updated_at": "2026-10-29T04:36:21.569250+00:00",
+  "updated_at": "2026-10-29T04:37:38.791691+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -755825,9 +755924,10 @@
     },
     "3298": {
       "misses": [
-        "3298:6:5"
+        "3298:6:5",
+        "3298:6:6"
       ],
-      "updated_at": "2026-10-28T11:54:22.283697+00:00"
+      "updated_at": "2026-10-29T04:37:13.356217+00:00"
     },
     "9567": {
       "misses": [
@@ -755852,9 +755952,11 @@
     "2166": {
       "misses": [
         "2166:2:15",
-        "2166:2:16"
+        "2166:2:16",
+        "2166:3:2"
       ],
-      "updated_at": "2026-10-28T11:57:20.983423+00:00"
+      "updated_at": "2026-10-29T04:37:23.182611+00:00",
+      "retry_after": "2026-10-29T08:37:23.182611+00:00"
     },
     "8954": {
       "misses": [
@@ -758707,7 +758809,7 @@
     },
     "1112": {
       "misses": [],
-      "updated_at": "2026-10-29T04:36:18.638178+00:00"
+      "updated_at": "2026-10-29T04:37:04.059547+00:00"
     },
     "583": {
       "misses": [
@@ -765740,12 +765842,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2026,
+    "last_series": 2166,
     "last_series_order": [
       false,
       -8.3,
-      -7486,
-      2026
+      -5643,
+      2166
     ]
   }
 }
