@@ -609727,19 +609727,21 @@
       "retry_after": "2026-10-25T05:58:07.599346+00:00"
     },
     "15:9:4": {
-      "at": "2026-10-24T05:55:45.045472+00:00",
+      "at": "2026-10-29T06:09:48.127541+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.971889317035675,
+      "observed_language_probability": 0.9738947153091431,
       "observed_source_id": "35337054",
-      "elapsed_seconds": 157.21,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-25T05:58:30.989611+00:00"
+      "elapsed_seconds": 125.35,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-30T06:11:53.478741+00:00"
     },
     "1246:5:10": {
       "at": "2026-10-24T05:57:45.908331+00:00",
@@ -751016,9 +751018,123 @@
       "elapsed_seconds": 16.7,
       "consecutive_failures": 1,
       "retry_after": "2026-10-30T06:11:35.781075+00:00"
+    },
+    "2195:4:7": {
+      "at": "2026-10-29T06:11:42.154197+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ja",
+      "observed_language_probability": 0.9793964624404907,
+      "observed_source_id": "31929468",
+      "elapsed_seconds": 16.0,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T06:11:58.154600+00:00"
+    },
+    "2195:4:8": {
+      "at": "2026-10-29T06:11:53.937293+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ja",
+      "observed_language_probability": 0.8937755227088928,
+      "observed_source_id": "31929511",
+      "elapsed_seconds": 20.03,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T06:12:13.968296+00:00"
+    },
+    "1885:2:25": {
+      "at": "2026-10-29T06:12:14.424906+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 25.8,
+      "search_evidence": [
+        {
+          "path": "/batman-budoucnosti-s02e25/s/-6",
+          "status": 200,
+          "response_bytes": 217182,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/batman-budoucnosti/s/-6",
+          "status": 200,
+          "response_bytes": 217035,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/batman-beyond-s02e25/s/-6",
+          "status": 200,
+          "response_bytes": 216930,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/batman-beyond/s/-6",
+          "status": 200,
+          "response_bytes": 217827,
+          "boxes": 2,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/batman-budoucnosti-s02e25/s/-6",
+          "status": 200,
+          "response_bytes": 217176,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/batman-budoucnosti/s/-6",
+          "status": 200,
+          "response_bytes": 217013,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/batman-beyond-s02e25/s/-6",
+          "status": 200,
+          "response_bytes": 217022,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/batman-beyond/s/-6",
+          "status": 200,
+          "response_bytes": 217857,
+          "boxes": 2,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T06:12:40.228452+00:00"
     }
   },
-  "updated_at": "2026-10-29T06:11:37.913071+00:00",
+  "updated_at": "2026-10-29T06:12:45.735853+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -760207,10 +760323,12 @@
     },
     "2195": {
       "misses": [
-        "2195:2:10",
-        "2195:4:5"
+        "2195:4:5",
+        "2195:4:7",
+        "2195:4:8"
       ],
-      "updated_at": "2026-10-29T06:11:35.781101+00:00"
+      "updated_at": "2026-10-29T06:12:13.968324+00:00",
+      "retry_after": "2026-10-29T10:12:13.968324+00:00"
     },
     "1247": {
       "misses": [
@@ -760283,9 +760401,10 @@
     },
     "1885": {
       "misses": [
-        "1885:2:24"
+        "1885:2:24",
+        "1885:2:25"
       ],
-      "updated_at": "2026-10-28T14:30:59.997087+00:00"
+      "updated_at": "2026-10-29T06:12:40.228479+00:00"
     },
     "4551": {
       "misses": [
@@ -762510,12 +762629,12 @@
     },
     "15": {
       "misses": [
-        "15:8:9",
         "15:8:8",
-        "15:8:10"
+        "15:8:10",
+        "15:9:4"
       ],
-      "updated_at": "2026-10-29T06:11:18.157815+00:00",
-      "retry_after": "2026-10-29T10:11:18.157815+00:00"
+      "updated_at": "2026-10-29T06:11:53.478769+00:00",
+      "retry_after": "2026-10-29T10:11:53.478769+00:00"
     },
     "1055": {
       "misses": [
@@ -768419,12 +768538,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2280,
+    "last_series": 1651,
     "last_series_order": [
       false,
       -8.1,
-      -46020,
-      2280
+      -30210,
+      1651
     ]
   }
 }
