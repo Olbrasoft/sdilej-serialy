@@ -622699,7 +622699,7 @@
       "retry_after": "2026-10-29T14:26:38.786259+00:00"
     },
     "4:1:7": {
-      "at": "2026-10-29T14:37:46.495692+00:00",
+      "at": "2026-10-29T14:58:39.735229+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -622709,10 +622709,10 @@
       "request_probe_revision": 1,
       "request_hint_probe_revision": 1,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 370.18,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-29T14:53:56.675496+00:00"
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 431.24,
+      "consecutive_failures": 4,
+      "retry_after": "2026-10-30T15:05:50.978323+00:00"
     },
     "4:3:6": {
       "at": "2026-10-28T14:27:12.471817+00:00",
@@ -765219,9 +765219,121 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-30T15:04:39.136643+00:00"
+    },
+    "1851:4:9": {
+      "at": "2026-10-29T15:04:39.875676+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 83.63,
+      "search_evidence": [
+        {
+          "path": "/one-tree-hill-s04e09/s/-6",
+          "status": 200,
+          "response_bytes": 216964,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/one-tree-hill/s/-6",
+          "status": 200,
+          "response_bytes": 270307,
+          "boxes": 46,
+          "parsed_candidates": 44,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/one-tree-hill-s04e09/s/-6",
+          "status": 200,
+          "response_bytes": 217066,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/one-tree-hill/s/-6",
+          "status": 200,
+          "response_bytes": 270370,
+          "boxes": 46,
+          "parsed_candidates": 44,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T15:06:03.506404+00:00"
+    },
+    "1457:4:10": {
+      "at": "2026-10-29T15:04:24.239894+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 127.18,
+      "search_evidence": [
+        {
+          "path": "/pomsta-s04e10/s/-6",
+          "status": 200,
+          "response_bytes": 218230,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/revenge-s04e10/s/-6",
+          "status": 200,
+          "response_bytes": 216828,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pomsta-s04e10/s/-6",
+          "status": 200,
+          "response_bytes": 218215,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pomsta/s/-6",
+          "status": 200,
+          "response_bytes": 513343,
+          "boxes": 284,
+          "parsed_candidates": 254,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/revenge-s04e10/s/-6",
+          "status": 200,
+          "response_bytes": 216860,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/revenge/s/-6",
+          "status": 200,
+          "response_bytes": 327805,
+          "boxes": 110,
+          "parsed_candidates": 79,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T15:06:31.424855+00:00"
     }
   },
-  "updated_at": "2026-10-29T15:05:42.100941+00:00",
+  "updated_at": "2026-10-29T15:06:51.271685+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -777909,9 +778021,11 @@
     "1457": {
       "misses": [
         "1457:4:9",
-        "1457:1:16"
+        "1457:1:16",
+        "1457:4:10"
       ],
-      "updated_at": "2026-10-29T13:39:13.860312+00:00"
+      "updated_at": "2026-10-29T15:06:31.424885+00:00",
+      "retry_after": "2026-10-29T19:06:31.424885+00:00"
     },
     "3918": {
       "misses": [
@@ -777961,12 +778075,9 @@
     },
     "1851": {
       "misses": [
-        "1851:4:5",
-        "1851:4:7",
-        "1851:4:8"
+        "1851:4:9"
       ],
-      "updated_at": "2026-10-29T08:44:15.836195+00:00",
-      "retry_after": "2026-10-29T12:44:15.836195+00:00"
+      "updated_at": "2026-10-29T15:06:03.506434+00:00"
     },
     "78": {
       "misses": [
@@ -782635,12 +782746,12 @@
     },
     "4": {
       "misses": [
-        "4:1:5",
         "4:2:19",
-        "4:2:24"
+        "4:2:24",
+        "4:1:7"
       ],
-      "updated_at": "2026-10-29T15:05:07.266862+00:00",
-      "retry_after": "2026-10-29T19:05:07.266862+00:00"
+      "updated_at": "2026-10-29T15:05:50.978350+00:00",
+      "retry_after": "2026-10-29T19:05:50.978350+00:00"
     },
     "1138": {
       "misses": [
@@ -782656,12 +782767,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1955,
+    "last_series": 1779,
     "last_series_order": [
       false,
       -7.8,
-      -52180,
-      1955
+      -45833,
+      1779
     ]
   }
 }
