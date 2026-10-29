@@ -117296,12 +117296,52 @@
       "retry_after": "2026-10-11T12:52:05.319569+00:00"
     },
     "2844:17:6": {
-      "at": "2026-10-08T20:58:54.669895+00:00",
+      "at": "2026-10-29T22:07:35.081265+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-09T20:58:57.918011+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 51.18,
+      "search_evidence": [
+        {
+          "path": "/it-s-always-sunny-in-philadelphia-s17e06/s/-6",
+          "status": 200,
+          "response_bytes": 217442,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/it-s-always-sunny-in-philadelphia/s/-6",
+          "status": 200,
+          "response_bytes": 217679,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/it-s-always-sunny-in-philadelphia-s17e06/s/-6",
+          "status": 200,
+          "response_bytes": 217491,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/it-s-always-sunny-in-philadelphia/s/-6",
+          "status": 200,
+          "response_bytes": 217667,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T22:08:26.258388+00:00"
     },
     "2844:17:7": {
       "at": "2026-10-08T20:59:03.075704+00:00",
@@ -483033,14 +483073,21 @@
       "retry_after": "2026-10-24T07:40:12.156176+00:00"
     },
     "9667:4:26": {
-      "at": "2026-10-23T07:40:37.934019+00:00",
+      "at": "2026-10-29T22:06:20.454924+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 32.19,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T07:41:10.121795+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.8906883597373962,
+      "observed_source_id": "34437146",
+      "elapsed_seconds": 90.47,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-30T22:07:50.921147+00:00"
     },
     "9667:4:18": {
       "at": "2026-10-23T07:40:12.161407+00:00",
@@ -483063,14 +483110,18 @@
       "retry_after": "2026-10-23T08:42:30.186617+00:00"
     },
     "9667:4:21": {
-      "at": "2026-10-23T07:40:12.736014+00:00",
+      "at": "2026-10-29T22:05:22.836180+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "inconclusive_audio",
-      "elapsed_seconds": 144.4,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T08:42:37.135269+00:00"
+      "elapsed_seconds": 122.71,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-30T00:07:34.336239+00:00"
     },
     "3352:3:2": {
       "at": "2026-10-23T07:42:30.786438+00:00",
@@ -504451,7 +504502,7 @@
       "retry_after": "2026-10-24T17:40:47.876005+00:00"
     },
     "4:3:1": {
-      "at": "2026-10-28T21:52:17.453017+00:00",
+      "at": "2026-10-29T22:06:21.397972+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -504460,9 +504511,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_acceptable_original",
-      "elapsed_seconds": 76.23,
-      "consecutive_failures": 5,
-      "retry_after": "2026-10-29T21:53:33.679551+00:00"
+      "elapsed_seconds": 125.51,
+      "consecutive_failures": 6,
+      "retry_after": "2026-10-30T22:08:26.993213+00:00"
     },
     "2:6:3": {
       "at": "2026-10-23T17:40:45.049065+00:00",
@@ -775874,7 +775925,7 @@
       "retry_after": "2026-10-30T22:04:44.720974+00:00"
     }
   },
-  "updated_at": "2026-10-29T22:07:25.548231+00:00",
+  "updated_at": "2026-10-29T22:08:38.610257+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -780146,9 +780197,11 @@
     "2844": {
       "misses": [
         "2844:17:4",
-        "2844:17:5"
+        "2844:17:5",
+        "2844:17:6"
       ],
-      "updated_at": "2026-10-29T11:46:57.706903+00:00"
+      "updated_at": "2026-10-29T22:08:26.258419+00:00",
+      "retry_after": "2026-10-30T02:08:26.258419+00:00"
     },
     "1643": {
       "misses": [
@@ -781056,12 +781109,12 @@
     },
     "9667": {
       "misses": [
-        "9667:4:12",
-        "9667:1:13",
-        "9667:1:17"
+        "9667:1:17",
+        "9667:4:21",
+        "9667:4:26"
       ],
-      "updated_at": "2026-10-29T22:06:20.454841+00:00",
-      "retry_after": "2026-10-29T22:36:20.454841+00:00"
+      "updated_at": "2026-10-29T22:07:50.921173+00:00",
+      "retry_after": "2026-10-30T02:07:50.921173+00:00"
     },
     "7803": {
       "misses": [
@@ -793300,12 +793353,12 @@
     },
     "4": {
       "misses": [
-        "4:8:4",
         "4:2:33",
-        "4:1:1"
+        "4:1:1",
+        "4:3:1"
       ],
-      "updated_at": "2026-10-29T21:59:54.322832+00:00",
-      "retry_after": "2026-10-30T01:59:54.322832+00:00"
+      "updated_at": "2026-10-29T22:08:26.993238+00:00",
+      "retry_after": "2026-10-30T02:08:26.993238+00:00"
     },
     "1138": {
       "misses": [
@@ -793321,12 +793374,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1344,
+    "last_series": 1251,
     "last_series_order": [
       false,
-      -8.8,
-      -388900,
-      1344
+      -8.6,
+      -319541,
+      1251
     ]
   }
 }
