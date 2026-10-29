@@ -109,13 +109,47 @@ def needs_saved_review(row, record):
     return legacy_czech(row) and record.get('saved_review_revision') != SAVED_REVIEW_REVISION
 
 
+def preparation_retry_minutes(reason, failures, *, repairing_source=False):
+    """Keep early retries quick without polling a persistent failure hourly."""
+    exponent = min(max(failures - 1, 0), 7)
+    if reason in ('source_search_unavailable', 'uploader_upgrade_pending'):
+        return 1
+    if reason == 'episode_active_or_completed':
+        return 15
+    if reason == 'no_english_czech_subtitles':
+        return min(30 * 2 ** exponent, 24 * 60)
+    if reason in ('inconclusive_audio', 'inconclusive_subtitles'):
+        return min(60 * 2 ** exponent, 24 * 60)
+    if repairing_source and reason == 'no_matches':
+        return min(15 * 2 ** exponent, 24 * 60)
+    if reason in ('transient_search', 'transient_original', 'SdilejError',
+                  'Timeout', 'ConnectionError', 'HTTPError'):
+        return min(15 * 2 ** exponent, 6 * 60)
+    return 24 * 60
+
+
+def preparation_retry_due(record, now, *, repairing_source=False):
+    retry = record.get('retry_after')
+    if retry and datetime.fromisoformat(retry) > now:
+        return False
+    # Apply the bounded policy to existing repeated failures too. Otherwise a
+    # rollout would spend another full pass on old hourly retries before any
+    # capacity becomes available. No history or saved source is rewritten.
+    failures = record.get('consecutive_failures', 0)
+    if failures >= 3 and record.get('at'):
+        finished = datetime.fromisoformat(record['at']) + timedelta(seconds=record.get('elapsed_seconds', 0))
+        minutes = preparation_retry_minutes(record.get('reason'), failures, repairing_source=repairing_source)
+        if finished + timedelta(minutes=minutes) > now:
+            return False
+    return True
+
+
 def preparation_due(record, metadata, saved, now, *, filename_recovery=False, source_hint=False):
     """Evaluate episode backoff at dispatch, not only at producer startup."""
     return (bool(metadata.get('requested_probe') and record.get('request_probe_revision') != PROBE_REVISION)
             or repaired_preparation(record, metadata, filename_recovery=filename_recovery, source_hint=source_hint)
             or needs_saved_review(saved, record)
-            or not record.get('retry_after')
-            or datetime.fromisoformat(record['retry_after']) <= now)
+            or preparation_retry_due(record, now))
 
 
 def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, index=None, refresh=None,
@@ -597,8 +631,8 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
             recover_empty_search = (old.get('reason') == 'no_matches'
                                     and old.get('source_repair_revision', 1) < REPAIR_SEARCH_REVISION)
             if (not recover_empty_search and not needs_short_audio_review(old, row['episode'])
-                    and old.get('repair_fingerprint') == fingerprint(row) and old.get('retry_after')
-                    and datetime.fromisoformat(old['retry_after']) > datetime.now(UTC)):
+                    and old.get('repair_fingerprint') == fingerprint(row)
+                    and not preparation_retry_due(old, datetime.now(UTC), repairing_source=True)):
                 continue
             # Saved policy/evidence cannot prove availability. Never take the
             # current_saved shortcut when repairing a failed queued original.
@@ -704,12 +738,7 @@ def prepare(root, generation, provider, *, limit=500, runtime_minutes=110, persi
                 search_outage = reason == 'source_search_unavailable'
                 failures = previous.get('consecutive_failures', 0) + int(not search_outage)
                 record['consecutive_failures'] = failures
-                minutes = (1 if search_outage or reason == 'uploader_upgrade_pending'
-                           else 30 if reason == 'no_english_czech_subtitles' else min(15 * 2 ** min(failures - 1, 2), 60)
-                           if reason in ('transient_search', 'transient_original', 'SdilejError',
-                                         'Timeout', 'ConnectionError', 'HTTPError', 'episode_active_or_completed')
-                           or repairing_source and reason == 'no_matches'
-                           else 60 if reason in ('inconclusive_audio', 'inconclusive_subtitles') else 24 * 60)
+                minutes = preparation_retry_minutes(reason, failures, repairing_source=repairing_source)
                 shared_retry = (provider.search_health.circuit.snapshot().get('resume_after')
                                 if search_outage and getattr(provider, 'search_health', None) else None)
                 record['retry_after'] = shared_retry or (datetime.now(UTC) + timedelta(minutes=minutes)).isoformat()

@@ -666,6 +666,48 @@ def test_transient_source_is_retried_soon_but_no_matches_keep_daily_cooldown(tmp
     assert 23 * 3600 < (retry - datetime.now(UTC)).total_seconds() <= 24 * 3600
 
 
+@pytest.mark.parametrize('reason,failures,hours', [
+    ('inconclusive_audio', 11, 24),
+    ('inconclusive_subtitles', 3, 4),
+    ('no_english_czech_subtitles', 94, 24),
+    ('transient_original', 5, 4),
+])
+def test_persistent_failures_yield_to_fresh_work_and_return_after_bounded_cooldown(
+        tmp_path, monkeypatch, reason, failures, hours):
+    from datetime import UTC, datetime, timedelta
+    directory, _, _ = setup(tmp_path, monkeypatch)
+    before = (directory / 'state.json').read_bytes()
+    now = datetime.now(UTC)
+    record = dict(status='deferred', reason=reason, at=(now-timedelta(hours=2)).isoformat(),
+        elapsed_seconds=60, consecutive_failures=failures, preparation_revision=5,
+        audio_sampling_revision=replenish.AUDIO_SAMPLING_REVISION,
+        audio_consensus_revision=replenish.AUDIO_CONSENSUS_REVISION,
+        retry_after=(now-timedelta(hours=1)).isoformat())
+    path = tmp_path / 'state/reserve-preparation.json'
+    pipeline.atomic_json(path, dict(schema_version=1, episodes={'1:1:5': record}))
+    calls = []
+    p = SimpleNamespace(discover=lambda ep: calls.append(ep.identity) or discover(ep))
+    result = replenish.prepare(tmp_path, 'test', p, runtime_minutes=0)
+    assert calls == ['1:1:6'] and result['prepared_this_run'] == 1
+    assert json.loads(path.read_text())['episodes']['1:1:5'] == record
+    assert (directory / 'state.json').read_bytes() == before
+    assert not replenish.preparation_retry_due(record, now)
+    finished = datetime.fromisoformat(record['at']) + timedelta(seconds=60)
+    assert replenish.preparation_retry_due(record, finished+timedelta(hours=hours))
+
+
+def test_search_outage_and_versioned_audio_fix_are_not_delayed_by_old_failure_counts():
+    from datetime import UTC, datetime, timedelta
+    now = datetime.now(UTC)
+    record = dict(reason='source_search_unavailable', at=(now-timedelta(minutes=2)).isoformat(),
+                  consecutive_failures=80, retry_after=(now-timedelta(minutes=1)).isoformat())
+    assert replenish.preparation_retry_due(record, now)
+    record.update(reason='inconclusive_audio', preparation_revision=5,
+                  audio_sampling_revision=1, audio_consensus_revision=2)
+    assert not replenish.preparation_retry_due(record, now)
+    assert replenish.preparation_due(record, {}, None, now, source_hint=True)
+
+
 def test_watermarks_skip_healthy_stock_and_stop_at_target_without_touching_uploads(tmp_path, monkeypatch):
     directory, _, _ = setup(tmp_path, monkeypatch)
     before = (directory / 'state.json').read_bytes()

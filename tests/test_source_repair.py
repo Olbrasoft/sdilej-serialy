@@ -62,6 +62,29 @@ def failed(directory, row, **extra):
     pipeline.atomic_json(path, state)
 
 
+def test_repeated_missing_original_repair_yields_without_changing_upload_history(tmp_path, monkeypatch):
+    from datetime import UTC, datetime, timedelta
+    from test_replenish import discover
+    directory, _, rows = setup(tmp_path, monkeypatch)
+    failed(directory, rows[0])
+    before = (directory / 'state.json').read_bytes()
+    now = datetime.now(UTC)
+    record = dict(status='deferred', reason='no_matches', consecutive_failures=182,
+                  at=(now-timedelta(hours=2)).isoformat(), elapsed_seconds=60,
+                  retry_after=(now-timedelta(hours=1)).isoformat(),
+                  repair_fingerprint=replenish.fingerprint(rows[0]),
+                  source_repair_revision=replenish.REPAIR_SEARCH_REVISION)
+    path = tmp_path / 'state/reserve-preparation.json'
+    pipeline.atomic_json(path, dict(schema_version=1, episodes={}, repairs={rows[0]['identity']:record}))
+    provider = SimpleNamespace(discover=discover,
+        discover_fresh=lambda _: pytest.fail('Repeated missing original must wait for its bounded cooldown'))
+    result = replenish.prepare(tmp_path, 'test', provider, runtime_minutes=0)
+    assert result['prepared_this_run'] == 2 and result['repaired_this_run'] == 0
+    assert (directory / 'state.json').read_bytes() == before
+    assert json.loads(path.read_text())['repairs'][rows[0]['identity']] == record
+    assert replenish.preparation_retry_due(record, now+timedelta(days=1), repairing_source=True)
+
+
 def test_failed_high_resolution_source_is_rediscovered_without_changing_queue_or_history(tmp_path, monkeypatch):
     directory, plan, rows = setup(tmp_path, monkeypatch)
     base = rows[0]
