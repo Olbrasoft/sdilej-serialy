@@ -207054,14 +207054,21 @@
       "retry_after": "2026-10-15T05:45:44.208059+00:00"
     },
     "1375:7:13": {
-      "at": "2026-10-14T05:45:44.650066+00:00",
+      "at": "2026-10-29T23:55:07.888784+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 18.66,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-15T05:46:03.308826+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9961698651313782,
+      "observed_source_id": "35059042",
+      "elapsed_seconds": 190.16,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-30T23:58:18.052829+00:00"
     },
     "1205:1:7": {
       "at": "2026-10-14T05:45:09.019890+00:00",
@@ -779791,9 +779798,105 @@
       "elapsed_seconds": 229.96,
       "consecutive_failures": 1,
       "retry_after": "2026-10-30T23:56:57.047930+00:00"
+    },
+    "9707:1:43": {
+      "at": "2026-10-29T23:55:46.040106+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 116.35,
+      "search_evidence": [
+        {
+          "path": "/yu-gi-oh-duel-monsters-s01e43/s/-6",
+          "status": 200,
+          "response_bytes": 217157,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/yu-gi-oh-duel-monsters/s/-6",
+          "status": 200,
+          "response_bytes": 217104,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/yu-gi-oh-duel-monsters-s01e43/s/-6",
+          "status": 200,
+          "response_bytes": 217187,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/yu-gi-oh-duel-monsters/s/-6",
+          "status": 200,
+          "response_bytes": 217022,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T23:57:42.387402+00:00"
+    },
+    "1811:2:22": {
+      "at": "2026-10-29T23:56:57.770295+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 76.62,
+      "search_evidence": [
+        {
+          "path": "/wakfu-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 216842,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/wakfu/s/-6",
+          "status": 200,
+          "response_bytes": 235759,
+          "boxes": 17,
+          "parsed_candidates": 16,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/wakfu-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 216933,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/wakfu/s/-6",
+          "status": 200,
+          "response_bytes": 235731,
+          "boxes": 17,
+          "parsed_candidates": 16,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T23:58:14.387176+00:00"
     }
   },
-  "updated_at": "2026-10-29T23:57:18.736143+00:00",
+  "updated_at": "2026-10-29T23:58:27.985175+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -787565,12 +787668,12 @@
     },
     "1375": {
       "misses": [
-        "1375:7:9",
         "1375:7:10",
-        "1375:7:12"
+        "1375:7:12",
+        "1375:7:13"
       ],
-      "updated_at": "2026-10-29T23:56:57.047957+00:00",
-      "retry_after": "2026-10-30T03:56:57.047957+00:00"
+      "updated_at": "2026-10-29T23:58:18.052858+00:00",
+      "retry_after": "2026-10-30T03:58:18.052858+00:00"
     },
     "1104": {
       "misses": [],
@@ -788544,12 +788647,9 @@
     },
     "9707": {
       "misses": [
-        "9707:1:40",
-        "9707:1:41",
-        "9707:1:42"
+        "9707:1:43"
       ],
-      "updated_at": "2026-10-29T13:37:52.030943+00:00",
-      "retry_after": "2026-10-29T17:37:52.030943+00:00"
+      "updated_at": "2026-10-29T23:57:42.387471+00:00"
     },
     "6865": {
       "misses": [],
@@ -788625,9 +788725,10 @@
     },
     "1811": {
       "misses": [
-        "1811:2:21"
+        "1811:2:21",
+        "1811:2:22"
       ],
-      "updated_at": "2026-10-29T13:40:21.243671+00:00"
+      "updated_at": "2026-10-29T23:58:14.387204+00:00"
     },
     "9160": {
       "misses": [
@@ -797210,12 +797311,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1811,
+    "last_series": 1402,
     "last_series_order": [
       false,
-      -8.2,
-      -2780,
-      1811
+      -8.1,
+      -147489,
+      1402
     ]
   }
 }
