@@ -1,16 +1,16 @@
 {
   "generation": "pair-2026-09-25",
   "run_id": "41074037114",
-  "attempted_this_run": 51,
+  "attempted_this_run": 55,
   "prepared_this_run": 21,
   "reserve_total": 23383,
   "queue_total": 31818,
-  "updated_at": "2026-10-30T15:56:30.416283+00:00",
+  "updated_at": "2026-10-30T15:56:48.911260+00:00",
   "workers": 4,
-  "elapsed_seconds": 1889.51,
-  "prepared_per_hour": 40.01,
+  "elapsed_seconds": 1908.0,
+  "prepared_per_hour": 39.62,
   "available_this_run": 21,
-  "available_per_hour": 40.01,
+  "available_per_hour": 39.62,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
@@ -21,34 +21,34 @@
       "b": 0
     },
     "categories": {
-      "completed": 31776,
-      "allocated": 30,
+      "completed": 31778,
+      "allocated": 28,
       "failed": 12
     },
     "completed_by_account": {
-      "a": 15886,
-      "b": 15890
+      "a": 15887,
+      "b": 15891
     },
-    "uploads_last_24h": 631,
-    "uploads_per_hour_24h": 26.29,
+    "uploads_last_24h": 633,
+    "uploads_per_hour_24h": 26.38,
     "stock_hours_24h": 0.0
   },
   "health": {
     "status": "waiting_for_sources",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 178,
-      "b": 113
+      "a": 75,
+      "b": 43
     },
     "preparation_outcomes_last_hour": {
       "transient_original": 6,
       "verified_non_czech": 17,
+      "source_search_unavailable": 6,
       "no_acceptable_original": 11,
       "no_matches": 18,
       "inconclusive_audio": 2,
       "transient_search": 1,
-      "prepared": 31,
-      "source_search_unavailable": 2
+      "prepared": 31
     }
   },
   "indexed_candidates_in_scan": 1246,
@@ -62,8 +62,8 @@
     ]
   },
   "cache": {
-    "search_miss": 140,
-    "search_seconds": 2460.7,
+    "search_miss": 143,
+    "search_seconds": 3934.41,
     "search_hit": 75,
     "media_miss": 78,
     "media_seconds": 225.65,
@@ -88,7 +88,7 @@
   },
   "statuses": {
     "prepared": 23383,
-    "deferred": 31901
+    "deferred": 31904
   },
   "requested_series": [
     {
@@ -2903,22 +2903,22 @@
     }
   ],
   "search_health": {
-    "status": "probe_due",
-    "consecutive_failures": 1,
-    "retry_seconds": 0,
-    "failed_cycles_this_run": 1,
-    "control_requests": 20,
-    "request_gap_seconds": 4,
-    "restart_required": false,
+    "status": "paused",
+    "consecutive_failures": 2,
+    "retry_seconds": 597,
+    "failed_cycles_this_run": 2,
+    "control_requests": 24,
+    "request_gap_seconds": 8,
+    "restart_required": true,
     "last_request_limit": null,
-    "resume_after": null,
+    "resume_after": "2026-10-30T16:06:45.240510+00:00",
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
         "response_bytes": 189621,
         "parsed_candidates": 0,
-        "body_sha256": "446e15b649db88befb6daef094f888e984c071e0a46715d3793de78c4113c608",
+        "body_sha256": "097e2c893393b38eb21005feaeebbf0a076b0ee55fae2221756fa07a4b8a8233",
         "video_box_count": 0,
         "heading_matches_query": true,
         "password_field_present": false,
@@ -2927,14 +2927,14 @@
         "cache_age_seconds": null,
         "response_path": "/teorie-velkeho-tresku/s/-6",
         "unexpected_origin": false,
-        "checked_at": "2026-10-30T15:50:45.781463+00:00"
+        "checked_at": "2026-10-30T15:56:41.237336+00:00"
       },
       {
         "path": "/doktor-martin/s/-6",
         "status": 200,
         "response_bytes": 189453,
         "parsed_candidates": 0,
-        "body_sha256": "aa6b2086c7aca8808fbe7bf1d26b12d8f983dc2a281d2b895ce7ca8f50f563d0",
+        "body_sha256": "c647c4489120f845966ef6be942bd4f15ccfa452979aa3766dc474c4cffb32e0",
         "video_box_count": 0,
         "heading_matches_query": true,
         "password_field_present": false,
@@ -2943,7 +2943,7 @@
         "cache_age_seconds": null,
         "response_path": "/doktor-martin/s/-6",
         "unexpected_origin": false,
-        "checked_at": "2026-10-30T15:50:47.900896+00:00"
+        "checked_at": "2026-10-30T15:56:45.240445+00:00"
       }
     ]
   }
