@@ -819494,7 +819494,7 @@
       "queue_rank": 31915
     },
     "171:2:1": {
-      "at": "2026-10-30T21:14:11.965950+00:00",
+      "at": "2026-10-30T23:19:26.579461+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -819503,9 +819503,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "inconclusive_audio",
-      "elapsed_seconds": 301.85,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-30T23:19:22.957049+00:00"
+      "elapsed_seconds": 554.02,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-31T03:28:40.595649+00:00"
     },
     "1681:20:1": {
       "at": "2026-10-30T20:07:21.574250+00:00",
@@ -824338,9 +824338,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T23:27:36.452839+00:00"
+    },
+    "2462:1:20": {
+      "at": "2026-10-30T23:27:02.524405+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 90.51,
+      "search_evidence": [
+        {
+          "path": "/fullmetal-alchemist-brotherhood-s01e20/s/-6",
+          "status": 200,
+          "response_bytes": 217448,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fullmetal-alchemist-brotherhood-s01e20/s/-6",
+          "status": 200,
+          "response_bytes": 217349,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fullmetal-alchemist-brotherhood/s/-6",
+          "status": 200,
+          "response_bytes": 453432,
+          "boxes": 172,
+          "parsed_candidates": 172,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T23:28:37.645395+00:00"
+    },
+    "2462:1:21": {
+      "at": "2026-10-30T23:27:37.144350+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 102.72,
+      "search_evidence": [
+        {
+          "path": "/fullmetal-alchemist-brotherhood-s01e21/s/-6",
+          "status": 200,
+          "response_bytes": 217455,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fullmetal-alchemist-brotherhood-s01e21/s/-6",
+          "status": 200,
+          "response_bytes": 217385,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fullmetal-alchemist-brotherhood/s/-6",
+          "status": 200,
+          "response_bytes": 453381,
+          "boxes": 172,
+          "parsed_candidates": 172,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T23:29:19.865177+00:00"
     }
   },
-  "updated_at": "2026-10-30T23:28:33.650591+00:00",
+  "updated_at": "2026-10-30T23:29:41.442939+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -829069,9 +829149,12 @@
     },
     "2462": {
       "misses": [
-        "2462:1:19"
+        "2462:1:19",
+        "2462:1:20",
+        "2462:1:21"
       ],
-      "updated_at": "2026-10-30T23:27:36.452870+00:00"
+      "updated_at": "2026-10-30T23:29:19.865207+00:00",
+      "retry_after": "2026-10-31T03:29:19.865207+00:00"
     },
     "1553": {
       "misses": [
@@ -841679,8 +841762,10 @@
       "updated_at": "2026-10-30T20:02:53.145115+00:00"
     },
     "171": {
-      "misses": [],
-      "updated_at": "2026-10-30T22:29:15.149663+00:00"
+      "misses": [
+        "171:2:1"
+      ],
+      "updated_at": "2026-10-30T23:28:40.595676+00:00"
     },
     "6424": {
       "misses": [
@@ -841690,12 +841775,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1327,
+    "last_series": 3105,
     "last_series_order": [
       false,
       -8.0,
-      -44663,
-      1327
+      -30889,
+      3105
     ]
   }
 }
