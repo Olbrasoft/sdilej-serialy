@@ -346280,14 +346280,21 @@
       "retry_after": "2026-10-31T13:12:31.274838+00:00"
     },
     "2079:3:7": {
-      "at": "2026-10-20T11:22:00.133091+00:00",
+      "at": "2026-10-30T13:11:48.548539+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 58.86,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-21T11:22:58.991898+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.982029378414154,
+      "observed_source_id": "33813334",
+      "elapsed_seconds": 63.77,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T13:13:05.104093+00:00"
     },
     "10234:38:21": {
       "at": "2026-10-20T11:22:36.785261+00:00",
@@ -805850,9 +805857,132 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T13:12:12.666547+00:00"
+    },
+    "1967:21:3": {
+      "at": "2026-10-30T13:12:13.618831+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 46.29,
+      "source_id": "28743599",
+      "queue_rank": 31723
+    },
+    "1967:22:6": {
+      "at": "2026-10-30T13:12:32.033063+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 27.65,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T13:28:05.104282+00:00"
+    },
+    "532:3:9": {
+      "at": "2026-10-30T13:13:07.435574+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 25.4,
+      "search_evidence": [
+        {
+          "path": "/d-d-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 230046,
+          "boxes": 11,
+          "parsed_candidates": 11,
+          "heading_matches_query": false
+        },
+        {
+          "path": "/d-d/s/-6",
+          "status": 200,
+          "response_bytes": 366235,
+          "boxes": 203,
+          "parsed_candidates": 70,
+          "heading_matches_query": false
+        },
+        {
+          "path": "/d-d-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 230015,
+          "boxes": 11,
+          "parsed_candidates": 11,
+          "heading_matches_query": false
+        },
+        {
+          "path": "/d-d/s/-6",
+          "status": 200,
+          "response_bytes": 366224,
+          "boxes": 203,
+          "parsed_candidates": 70,
+          "heading_matches_query": false
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T13:13:32.832960+00:00"
+    },
+    "9829:1:40": {
+      "at": "2026-10-30T13:13:33.595218+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 22.99,
+      "search_evidence": [
+        {
+          "path": "/tiny-toon-adventures-s01e40/s/-6",
+          "status": 200,
+          "response_bytes": 217111,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tiny-toon-adventures/s/-6",
+          "status": 200,
+          "response_bytes": 216995,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tiny-toon-adventures-s01e40/s/-6",
+          "status": 200,
+          "response_bytes": 217204,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tiny-toon-adventures/s/-6",
+          "status": 200,
+          "response_bytes": 216987,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T13:13:56.587386+00:00"
     }
   },
-  "updated_at": "2026-10-30T13:12:54.220905+00:00",
+  "updated_at": "2026-10-30T13:13:59.502490+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -817598,8 +817728,10 @@
       "updated_at": "2026-10-12T19:13:34.143318+00:00"
     },
     "1967": {
-      "misses": [],
-      "updated_at": "2026-10-30T13:11:24.229858+00:00"
+      "misses": [
+        "1967:22:6"
+      ],
+      "updated_at": "2026-10-30T13:13:05.104290+00:00"
     },
     "1610": {
       "misses": [
@@ -821849,12 +821981,12 @@
     },
     "2079": {
       "misses": [
-        "2079:4:11",
         "2079:2:8",
-        "2079:2:13"
+        "2079:2:13",
+        "2079:3:7"
       ],
-      "updated_at": "2026-10-30T13:12:31.274864+00:00",
-      "retry_after": "2026-10-30T17:12:31.274864+00:00"
+      "updated_at": "2026-10-30T13:13:05.104133+00:00",
+      "retry_after": "2026-10-30T17:13:05.104133+00:00"
     },
     "1341": {
       "misses": [
@@ -822176,12 +822308,9 @@
     },
     "532": {
       "misses": [
-        "532:3:5",
-        "532:3:7",
-        "532:3:8"
+        "532:3:9"
       ],
-      "updated_at": "2026-10-30T05:57:25.200674+00:00",
-      "retry_after": "2026-10-30T09:57:25.200674+00:00"
+      "updated_at": "2026-10-30T13:13:32.832999+00:00"
     },
     "3106": {
       "misses": [
@@ -822269,12 +822398,9 @@
     },
     "9829": {
       "misses": [
-        "9829:1:37",
-        "9829:1:38",
-        "9829:1:39"
+        "9829:1:40"
       ],
-      "updated_at": "2026-10-30T02:22:53.117857+00:00",
-      "retry_after": "2026-10-30T06:22:53.117857+00:00"
+      "updated_at": "2026-10-30T13:13:56.587418+00:00"
     },
     "4355": {
       "misses": [
@@ -823270,12 +823396,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3106,
+    "last_series": 9829,
     "last_series_order": [
       false,
       -7.5,
-      -18024,
-      3106
+      -15392,
+      9829
     ]
   }
 }
