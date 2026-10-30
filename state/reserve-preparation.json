@@ -35258,7 +35258,7 @@
       "retry_after": "2026-10-21T04:24:45.021747+00:00"
     },
     "673:25:4": {
-      "at": "2026-10-28T11:58:02.052298+00:00",
+      "at": "2026-10-30T20:05:18.637456+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -35266,10 +35266,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 344.73,
-      "consecutive_failures": 4,
-      "retry_after": "2026-10-28T12:13:46.779791+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9810633659362793,
+      "observed_source_id": "20640887",
+      "elapsed_seconds": 145.31,
+      "consecutive_failures": 5,
+      "retry_after": "2026-10-31T20:07:51.831660+00:00"
     },
     "673:25:5": {
       "at": "2026-10-18T07:55:02.557522+00:00",
@@ -819269,9 +819272,129 @@
       "elapsed_seconds": 37.06,
       "source_id": "34643057",
       "queue_rank": 31915
+    },
+    "171:2:1": {
+      "at": "2026-10-30T20:03:52.062439+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 234.27,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T21:07:51.831509+00:00"
+    },
+    "1681:20:1": {
+      "at": "2026-10-30T20:07:21.574250+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 34.46,
+      "source_id": "34643078",
+      "queue_rank": 31916
+    },
+    "3851:1:13": {
+      "at": "2026-10-30T20:07:56.801865+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 38.94,
+      "search_evidence": [
+        {
+          "path": "/druha-svetova-valka-v-barve-s01e13/s/-6",
+          "status": 200,
+          "response_bytes": 217282,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/druha-svetova-valka-v-barve/s/-6",
+          "status": 200,
+          "response_bytes": 336717,
+          "boxes": 110,
+          "parsed_candidates": 79,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/world-war-ii-in-colour-s01e13/s/-6",
+          "status": 200,
+          "response_bytes": 217164,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/world-war-ii-in-colour/s/-6",
+          "status": 200,
+          "response_bytes": 220238,
+          "boxes": 4,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/druha-svetova-valka-v-barve-s01e13/s/-6",
+          "status": 200,
+          "response_bytes": 217373,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/druha-svetova-valka-v-barve/s/-6",
+          "status": 200,
+          "response_bytes": 336727,
+          "boxes": 110,
+          "parsed_candidates": 79,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/world-war-ii-in-colour-s01e13/s/-6",
+          "status": 200,
+          "response_bytes": 217196,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/world-war-ii-in-colour/s/-6",
+          "status": 200,
+          "response_bytes": 220309,
+          "boxes": 4,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T20:08:35.737632+00:00"
+    },
+    "1681:20:3": {
+      "at": "2026-10-30T20:07:53.375787+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 55.23,
+      "source_id": "34643085",
+      "queue_rank": 31917
     }
   },
-  "updated_at": "2026-10-30T20:07:39.761936+00:00",
+  "updated_at": "2026-10-30T20:08:51.776245+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -824813,9 +824936,10 @@
     },
     "673": {
       "misses": [
-        "673:25:3"
+        "673:25:3",
+        "673:25:4"
       ],
-      "updated_at": "2026-10-30T20:04:09.214983+00:00"
+      "updated_at": "2026-10-30T20:07:51.831678+00:00"
     },
     "3396": {
       "misses": [
@@ -827108,7 +827232,7 @@
     },
     "1681": {
       "misses": [],
-      "updated_at": "2026-10-30T20:07:20.763869+00:00"
+      "updated_at": "2026-10-30T20:08:48.609692+00:00"
     },
     "1650": {
       "misses": [
@@ -836229,12 +836353,9 @@
     },
     "3851": {
       "misses": [
-        "3851:1:3",
-        "3851:1:4",
-        "3851:1:5"
+        "3851:1:13"
       ],
-      "updated_at": "2026-10-19T00:33:57.537205+00:00",
-      "retry_after": "2026-10-19T04:33:57.537205+00:00"
+      "updated_at": "2026-10-30T20:08:35.737686+00:00"
     },
     "2143": {
       "misses": [
@@ -836594,15 +836715,21 @@
     "6996": {
       "misses": [],
       "updated_at": "2026-10-30T20:02:53.145115+00:00"
+    },
+    "171": {
+      "misses": [
+        "171:2:1"
+      ],
+      "updated_at": "2026-10-30T20:07:51.831573+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 171,
+    "last_series": 6424,
     "last_series_order": [
       false,
       -8.7,
-      -60101,
-      171
+      -6781,
+      6424
     ]
   }
 }
