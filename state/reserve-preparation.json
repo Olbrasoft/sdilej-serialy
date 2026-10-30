@@ -432769,14 +432769,18 @@
       "retry_after": "2026-10-23T08:48:03.307735+00:00"
     },
     "1108:7:2": {
-      "at": "2026-10-22T08:47:04.367991+00:00",
+      "at": "2026-10-30T01:35:39.355281+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 60.94,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T08:48:05.310220+00:00"
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 345.71,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-30T03:41:25.065155+00:00"
     },
     "170:2:7": {
       "at": "2026-10-22T08:48:01.594859+00:00",
@@ -488708,14 +488712,17 @@
       "queue_rank": 31428
     },
     "912:3:8": {
-      "at": "2026-10-23T10:40:31.154612+00:00",
-      "status": "deferred",
+      "at": "2026-10-30T01:39:10.351371+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 31.78,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T10:41:02.934277+00:00"
+      "elapsed_seconds": 58.29,
+      "source_id": "33676309",
+      "queue_rank": 31429
     },
     "912:3:13": {
       "at": "2026-10-23T10:40:31.849338+00:00",
@@ -784484,9 +784491,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T01:39:09.770101+00:00"
+    },
+    "1918:1:46": {
+      "at": "2026-10-30T01:39:15.017244+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 70.5,
+      "search_evidence": [
+        {
+          "path": "/bohove-smrti-s01e46/s/-6",
+          "status": 200,
+          "response_bytes": 217051,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bohove-smrti/s/-6",
+          "status": 200,
+          "response_bytes": 234230,
+          "boxes": 14,
+          "parsed_candidates": 12,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/soul-eater-s01e46/s/-6",
+          "status": 200,
+          "response_bytes": 216937,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/soul-eater/s/-6",
+          "status": 200,
+          "response_bytes": 295864,
+          "boxes": 79,
+          "parsed_candidates": 79,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bohove-smrti-s01e46/s/-6",
+          "status": 200,
+          "response_bytes": 216911,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bohove-smrti/s/-6",
+          "status": 200,
+          "response_bytes": 234147,
+          "boxes": 14,
+          "parsed_candidates": 12,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/soul-eater-s01e46/s/-6",
+          "status": 200,
+          "response_bytes": 216924,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/soul-eater/s/-6",
+          "status": 200,
+          "response_bytes": 295771,
+          "boxes": 79,
+          "parsed_candidates": 79,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T01:40:27.399575+00:00"
     }
   },
-  "updated_at": "2026-10-30T01:40:06.799857+00:00",
+  "updated_at": "2026-10-30T01:41:31.331635+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -791109,12 +791196,12 @@
     },
     "1108": {
       "misses": [
-        "1108:5:9",
         "1108:8:4",
-        "1108:5:10"
+        "1108:5:10",
+        "1108:7:2"
       ],
-      "updated_at": "2026-10-30T01:39:14.237539+00:00",
-      "retry_after": "2026-10-30T05:39:14.237539+00:00"
+      "updated_at": "2026-10-30T01:41:25.065185+00:00",
+      "retry_after": "2026-10-30T02:11:25.065185+00:00"
     },
     "1087": {
       "misses": [],
@@ -798701,12 +798788,9 @@
     },
     "1918": {
       "misses": [
-        "1918:1:35",
-        "1918:1:39",
-        "1918:1:45"
+        "1918:1:46"
       ],
-      "updated_at": "2026-10-29T20:39:58.893405+00:00",
-      "retry_after": "2026-10-30T00:39:58.893405+00:00"
+      "updated_at": "2026-10-30T01:40:27.399593+00:00"
     },
     "1580": {
       "misses": [
@@ -799344,7 +799428,7 @@
     },
     "912": {
       "misses": [],
-      "updated_at": "2026-10-30T01:40:03.213634+00:00"
+      "updated_at": "2026-10-30T01:40:27.399152+00:00"
     },
     "1168": {
       "misses": [
@@ -801816,12 +801900,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1918,
+    "last_series": 3277,
     "last_series_order": [
       false,
       -7.7,
-      -17368,
-      1918
+      -5638,
+      3277
     ]
   }
 }
