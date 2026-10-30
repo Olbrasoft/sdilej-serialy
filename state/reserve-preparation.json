@@ -676970,7 +676970,7 @@
       "retry_after": "2026-10-27T17:21:10.238426+00:00"
     },
     "1783:12:5": {
-      "at": "2026-10-30T00:07:00.432519+00:00",
+      "at": "2026-10-30T00:36:31.523760+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -676978,10 +676978,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 364.28,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-30T00:23:04.714577+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9415303468704224,
+      "observed_source_id": "25039255",
+      "elapsed_seconds": 54.91,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T00:37:26.437468+00:00"
     },
     "1783:12:6": {
       "at": "2026-10-30T00:07:19.077755+00:00",
@@ -780881,9 +780884,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T00:36:30.814530+00:00"
+    },
+    "2379:2:21": {
+      "at": "2026-10-30T00:35:35.375170+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 131.46,
+      "search_evidence": [
+        {
+          "path": "/vychovavat-hope-s02e21/s/-6",
+          "status": 200,
+          "response_bytes": 217028,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/vychovavat-hope/s/-6",
+          "status": 200,
+          "response_bytes": 218176,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/raising-hope-s02e21/s/-6",
+          "status": 200,
+          "response_bytes": 217044,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/raising-hope/s/-6",
+          "status": 200,
+          "response_bytes": 228615,
+          "boxes": 11,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/vychovavat-hope-s02e21/s/-6",
+          "status": 200,
+          "response_bytes": 217096,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/vychovavat-hope/s/-6",
+          "status": 200,
+          "response_bytes": 218209,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/raising-hope-s02e21/s/-6",
+          "status": 200,
+          "response_bytes": 216966,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/raising-hope/s/-6",
+          "status": 200,
+          "response_bytes": 228585,
+          "boxes": 11,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T00:37:46.831983+00:00"
     }
   },
-  "updated_at": "2026-10-30T00:36:49.595467+00:00",
+  "updated_at": "2026-10-30T00:37:57.593166+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -791333,12 +791416,9 @@
     },
     "2379": {
       "misses": [
-        "2379:2:17",
-        "2379:2:18",
-        "2379:2:20"
+        "2379:2:21"
       ],
-      "updated_at": "2026-10-29T13:53:38.367743+00:00",
-      "retry_after": "2026-10-29T17:53:38.367743+00:00"
+      "updated_at": "2026-10-30T00:37:46.832019+00:00"
     },
     "1757": {
       "misses": [
@@ -793742,12 +793822,9 @@
     },
     "1783": {
       "misses": [
-        "1783:2:8",
-        "1783:12:2",
-        "1783:12:4"
+        "1783:12:5"
       ],
-      "updated_at": "2026-10-29T19:51:16.886130+00:00",
-      "retry_after": "2026-10-29T23:51:16.886130+00:00"
+      "updated_at": "2026-10-30T00:37:26.437516+00:00"
     },
     "5376": {
       "misses": [
@@ -798270,12 +798347,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2379,
+    "last_series": 2293,
     "last_series_order": [
       false,
       -8.0,
-      -43827,
-      2379
+      -28521,
+      2293
     ]
   }
 }
