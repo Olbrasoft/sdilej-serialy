@@ -126687,7 +126687,7 @@
       "retry_after": "2026-10-12T06:44:22.515650+00:00"
     },
     "1122:3:25": {
-      "at": "2026-10-30T20:45:23.660971+00:00",
+      "at": "2026-10-30T21:33:52.347225+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -126695,10 +126695,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 322.92,
-      "consecutive_failures": 4,
-      "retry_after": "2026-10-30T21:00:46.577540+00:00"
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 34.69,
+      "consecutive_failures": 5,
+      "retry_after": "2026-10-31T21:35:09.610901+00:00"
     },
     "1122:4:4": {
       "at": "2026-10-11T08:26:12.183437+00:00",
@@ -678309,20 +678309,21 @@
       "retry_after": "2026-10-27T17:19:58.288108+00:00"
     },
     "1328:3:6": {
-      "at": "2026-10-26T17:19:17.523526+00:00",
+      "at": "2026-10-30T21:33:51.651482+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "ja",
-      "observed_language_probability": 0.9667196273803711,
+      "observed_language_probability": 0.9674526453018188,
       "observed_source_id": "33835995",
-      "elapsed_seconds": 43.3,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-27T17:20:13.411217+00:00"
+      "elapsed_seconds": 45.76,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T21:35:09.610554+00:00"
     },
     "1783:12:4": {
       "at": "2026-10-29T19:49:26.538721+00:00",
@@ -821022,9 +821023,102 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T21:33:51.125020+00:00"
+    },
+    "1681:24:1": {
+      "at": "2026-10-30T21:33:53.335662+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 76.25,
+      "source_id": "33564229",
+      "queue_rank": 31976
+    },
+    "1968:3:5": {
+      "at": "2026-10-30T21:35:11.052679+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 53.25,
+      "search_evidence": [
+        {
+          "path": "/lovci-trolu-od-guillerma-del-toro-s03e05/s/-6",
+          "status": 200,
+          "response_bytes": 217475,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/lovci-trolu-od-guillerma-del-toro/s/-6",
+          "status": 200,
+          "response_bytes": 217278,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/trollhunters-tales-of-arcadia-s03e05/s/-6",
+          "status": 200,
+          "response_bytes": 217416,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/trollhunters-tales-of-arcadia/s/-6",
+          "status": 200,
+          "response_bytes": 217225,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/lovci-trolu-od-guillerma-del-toro-s03e05/s/-6",
+          "status": 200,
+          "response_bytes": 217502,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/lovci-trolu-od-guillerma-del-toro/s/-6",
+          "status": 200,
+          "response_bytes": 217348,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/trollhunters-tales-of-arcadia-s03e05/s/-6",
+          "status": 200,
+          "response_bytes": 217292,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/trollhunters-tales-of-arcadia/s/-6",
+          "status": 200,
+          "response_bytes": 217237,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T21:36:04.298783+00:00"
     }
   },
-  "updated_at": "2026-10-30T21:34:24.803234+00:00",
+  "updated_at": "2026-10-30T21:36:13.417480+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -825370,9 +825464,11 @@
     "1122": {
       "misses": [
         "1122:1:15",
-        "1122:1:13"
+        "1122:1:13",
+        "1122:3:25"
       ],
-      "updated_at": "2026-10-30T21:34:22.305949+00:00"
+      "updated_at": "2026-10-30T21:35:09.610912+00:00",
+      "retry_after": "2026-10-31T01:35:09.610912+00:00"
     },
     "21": {
       "misses": [
@@ -826969,12 +827065,9 @@
     },
     "1968": {
       "misses": [
-        "1968:2:11",
-        "1968:3:1",
-        "1968:3:3"
+        "1968:3:5"
       ],
-      "updated_at": "2026-10-30T03:02:04.892572+00:00",
-      "retry_after": "2026-10-30T07:02:04.892572+00:00"
+      "updated_at": "2026-10-30T21:36:04.298810+00:00"
     },
     "10010": {
       "misses": [
@@ -828842,12 +828935,9 @@
     },
     "1328": {
       "misses": [
-        "1328:3:10",
-        "1328:3:1",
-        "1328:3:5"
+        "1328:3:6"
       ],
-      "updated_at": "2026-10-30T16:39:16.739441+00:00",
-      "retry_after": "2026-10-30T20:39:16.739441+00:00"
+      "updated_at": "2026-10-30T21:35:09.610576+00:00"
     },
     "1371": {
       "misses": [
@@ -828874,7 +828964,7 @@
     },
     "1681": {
       "misses": [],
-      "updated_at": "2026-10-30T21:33:51.124974+00:00"
+      "updated_at": "2026-10-30T21:35:09.610992+00:00"
     },
     "1650": {
       "misses": [
@@ -838374,12 +838464,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2117,
+    "last_series": 2534,
     "last_series_order": [
       false,
       -8.4,
-      -23266,
-      2117
+      -21295,
+      2534
     ]
   }
 }
