@@ -129878,14 +129878,21 @@
       "retry_after": "2026-10-21T08:21:49.056848+00:00"
     },
     "1251:4:3": {
-      "at": "2026-10-20T08:29:59.815334+00:00",
+      "at": "2026-10-30T14:15:09.258723+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 45.5,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-21T08:31:34.802110+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9965772032737732,
+      "observed_source_id": "19344729",
+      "elapsed_seconds": 50.14,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T14:15:59.402978+00:00"
     },
     "1251:4:4": {
       "at": "2026-10-20T08:31:59.917430+00:00",
@@ -807048,9 +807055,96 @@
       "elapsed_seconds": 44.84,
       "source_id": "30900078",
       "queue_rank": 31766
+    },
+    "2889:4:5": {
+      "at": "2026-10-30T14:12:50.436889+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 52.3,
+      "source_id": "20730548",
+      "queue_rank": 31767
+    },
+    "2889:4:8": {
+      "at": "2026-10-30T14:12:51.974565+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 47.83,
+      "source_id": "30900081",
+      "queue_rank": 31768
+    },
+    "2246:8:10": {
+      "at": "2026-10-30T14:13:35.494571+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 6.81,
+      "search_evidence": [
+        {
+          "path": "/trailer-park-boys-s08e10/s/-6",
+          "status": 200,
+          "response_bytes": 217127,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/trailer-park-boys/s/-6",
+          "status": 200,
+          "response_bytes": 217530,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/trailer-park-boys-s08e10/s/-6",
+          "status": 200,
+          "response_bytes": 217069,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/trailer-park-boys/s/-6",
+          "status": 200,
+          "response_bytes": 217431,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T14:15:08.779117+00:00"
+    },
+    "4704:1:19": {
+      "at": "2026-10-30T14:15:10.362505+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 40.57,
+      "source_id": "34861757",
+      "queue_rank": 31769
     }
   },
-  "updated_at": "2026-10-30T14:13:39.466303+00:00",
+  "updated_at": "2026-10-30T14:16:02.074900+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -811473,9 +811567,10 @@
     },
     "1251": {
       "misses": [
-        "1251:7:11"
+        "1251:7:11",
+        "1251:4:3"
       ],
-      "updated_at": "2026-10-30T14:07:15.910244+00:00"
+      "updated_at": "2026-10-30T14:15:59.403008+00:00"
     },
     "119": {
       "misses": [
@@ -811699,12 +811794,9 @@
     },
     "2246": {
       "misses": [
-        "2246:8:7",
-        "2246:8:8",
-        "2246:8:9"
+        "2246:8:10"
       ],
-      "updated_at": "2026-10-30T06:11:50.738443+00:00",
-      "retry_after": "2026-10-30T10:11:50.738443+00:00"
+      "updated_at": "2026-10-30T14:15:08.779129+00:00"
     },
     "1731": {
       "misses": [
@@ -813280,7 +813372,7 @@
     },
     "2889": {
       "misses": [],
-      "updated_at": "2026-10-30T14:13:36.320379+00:00"
+      "updated_at": "2026-10-30T14:15:08.779086+00:00"
     },
     "5252": {
       "misses": [
@@ -824446,16 +824538,16 @@
     },
     "4704": {
       "misses": [],
-      "updated_at": "2026-10-30T14:07:56.313360+00:00"
+      "updated_at": "2026-10-30T14:15:50.933802+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 2246,
+    "last_series": 105,
     "last_series_order": [
       false,
       -8.5,
-      -58531,
-      2246
+      -20843,
+      105
     ]
   }
 }
