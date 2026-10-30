@@ -780615,18 +780615,17 @@
       "retry_after": "2026-10-30T00:23:04.714575+00:00"
     },
     "1402:17:19": {
-      "at": "2026-10-30T00:07:49.321549+00:00",
-      "status": "deferred",
+      "at": "2026-10-30T00:36:08.082444+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 315.4,
-      "consecutive_failures": 0,
-      "retry_after": "2026-10-30T00:23:04.714573+00:00"
+      "elapsed_seconds": 127.07,
+      "source_id": "33552348",
+      "queue_rank": 31399
     },
     "1410:5:22": {
       "at": "2026-10-30T00:23:22.299523+00:00",
@@ -780964,9 +780963,106 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T00:37:46.831983+00:00"
+    },
+    "1056:12:1": {
+      "at": "2026-10-30T00:33:03.906319+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9907376170158386,
+      "observed_source_id": "27806128",
+      "elapsed_seconds": 330.52,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T00:38:34.425862+00:00"
+    },
+    "3105:4:11": {
+      "at": "2026-10-30T00:37:27.533295+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 95.09,
+      "search_evidence": [
+        {
+          "path": "/pribehy-ze-zahrobi-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 217107,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pribehy-ze-zahrobi/s/-6",
+          "status": 200,
+          "response_bytes": 291443,
+          "boxes": 61,
+          "parsed_candidates": 61,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tales-from-the-crypt-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 217264,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tales-from-the-crypt/s/-6",
+          "status": 200,
+          "response_bytes": 220042,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pribehy-ze-zahrobi-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 217173,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pribehy-ze-zahrobi/s/-6",
+          "status": 200,
+          "response_bytes": 291398,
+          "boxes": 61,
+          "parsed_candidates": 61,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tales-from-the-crypt-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 217108,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tales-from-the-crypt/s/-6",
+          "status": 200,
+          "response_bytes": 219943,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T00:39:02.620740+00:00"
     }
   },
-  "updated_at": "2026-10-30T00:37:57.593166+00:00",
+  "updated_at": "2026-10-30T00:39:09.299565+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -789952,7 +790048,7 @@
     },
     "1402": {
       "misses": [],
-      "updated_at": "2026-10-30T00:06:59.712486+00:00"
+      "updated_at": "2026-10-30T00:38:15.151984+00:00"
     },
     "7836": {
       "misses": [
@@ -791354,9 +791450,11 @@
     "1056": {
       "misses": [
         "1056:11:21",
-        "1056:11:22"
+        "1056:11:22",
+        "1056:12:1"
       ],
-      "updated_at": "2026-10-29T16:50:41.078327+00:00"
+      "updated_at": "2026-10-30T00:38:34.425891+00:00",
+      "retry_after": "2026-10-30T04:38:34.425891+00:00"
     },
     "600": {
       "misses": [
@@ -791482,12 +791580,9 @@
     },
     "3105": {
       "misses": [
-        "3105:4:6",
-        "3105:4:8",
-        "3105:4:10"
+        "3105:4:11"
       ],
-      "updated_at": "2026-10-29T13:53:44.374244+00:00",
-      "retry_after": "2026-10-29T17:53:44.374244+00:00"
+      "updated_at": "2026-10-30T00:39:02.620772+00:00"
     },
     "5127": {
       "misses": [],
@@ -798347,12 +798442,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2293,
+    "last_series": 3533,
     "last_series_order": [
       false,
       -8.0,
-      -28521,
-      2293
+      -15460,
+      3533
     ]
   }
 }
