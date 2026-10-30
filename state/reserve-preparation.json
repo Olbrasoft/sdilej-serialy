@@ -277526,14 +277526,17 @@
       "retry_after": "2026-10-19T03:02:18.446913+00:00"
     },
     "2487:1:4": {
-      "at": "2026-10-18T03:01:11.733551+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-10-30T20:32:18.135194+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 61.93,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T03:02:18.447002+00:00"
+      "elapsed_seconds": 348.17,
+      "source_id": "35008050",
+      "queue_rank": 31947
     },
     "3425:1:4": {
       "at": "2026-10-18T03:01:22.072815+00:00",
@@ -820060,9 +820063,105 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-30T20:47:16.536866+00:00"
+    },
+    "3367:3:2": {
+      "at": "2026-10-30T20:37:12.616880+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 13.97,
+      "search_evidence": [
+        {
+          "path": "/fruits-basket-s03e02/s/-6",
+          "status": 200,
+          "response_bytes": 217036,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fruits-basket/s/-6",
+          "status": 200,
+          "response_bytes": 217870,
+          "boxes": 2,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fruits-basket-s03e02/s/-6",
+          "status": 200,
+          "response_bytes": 216982,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fruits-basket/s/-6",
+          "status": 200,
+          "response_bytes": 217836,
+          "boxes": 2,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T20:37:37.857206+00:00"
+    },
+    "2907:4:4": {
+      "at": "2026-10-30T20:37:38.871614+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 12.99,
+      "search_evidence": [
+        {
+          "path": "/the-larry-sanders-show-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 217264,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-larry-sanders-show/s/-6",
+          "status": 200,
+          "response_bytes": 217022,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-larry-sanders-show-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 217257,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-larry-sanders-show/s/-6",
+          "status": 200,
+          "response_bytes": 217208,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T20:37:51.860905+00:00"
     }
   },
-  "updated_at": "2026-10-30T20:37:24.994528+00:00",
+  "updated_at": "2026-10-30T20:38:42.322935+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -824887,9 +824986,10 @@
     },
     "3367": {
       "misses": [
-        "3367:3:1"
+        "3367:3:1",
+        "3367:3:2"
       ],
-      "updated_at": "2026-10-30T14:18:32.603476+00:00"
+      "updated_at": "2026-10-30T20:37:37.857245+00:00"
     },
     "3602": {
       "misses": [
@@ -824922,9 +825022,11 @@
     "2907": {
       "misses": [
         "2907:4:2",
-        "2907:4:3"
+        "2907:4:3",
+        "2907:4:4"
       ],
-      "updated_at": "2026-10-30T14:21:08.067352+00:00"
+      "updated_at": "2026-10-30T20:37:51.860941+00:00",
+      "retry_after": "2026-10-31T00:37:51.860941+00:00"
     },
     "2938": {
       "misses": [
@@ -828725,7 +828827,7 @@
     },
     "2487": {
       "misses": [],
-      "updated_at": "2026-10-30T20:37:11.851511+00:00"
+      "updated_at": "2026-10-30T20:38:06.545438+00:00"
     },
     "2179": {
       "misses": [
@@ -837403,12 +837505,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3367,
+    "last_series": 2907,
     "last_series_order": [
       false,
       -8.5,
-      -14133,
-      3367
+      -10302,
+      2907
     ]
   }
 }
