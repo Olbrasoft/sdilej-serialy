@@ -309437,18 +309437,21 @@
       "retry_after": "2026-10-22T16:17:01.027533+00:00"
     },
     "9667:1:26": {
-      "at": "2026-10-28T01:57:11.044681+00:00",
+      "at": "2026-10-30T07:52:00.782480+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
-      "audio_consensus_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "inconclusive_audio",
-      "elapsed_seconds": 191.2,
-      "consecutive_failures": 4,
-      "retry_after": "2026-10-28T03:00:22.249722+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.7275736331939697,
+      "observed_source_id": "32473277",
+      "elapsed_seconds": 268.87,
+      "consecutive_failures": 5,
+      "retry_after": "2026-10-31T07:56:29.651338+00:00"
     },
     "1373:1:5": {
       "at": "2026-10-22T00:26:20.768846+00:00",
@@ -796598,9 +796601,121 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T07:54:47.976394+00:00"
+    },
+    "2531:5:2": {
+      "at": "2026-10-30T07:53:10.510393+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 163.06,
+      "search_evidence": [
+        {
+          "path": "/aggretsuko-s05e02/s/-6",
+          "status": 200,
+          "response_bytes": 217053,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/aggretsuko/s/-6",
+          "status": 200,
+          "response_bytes": 216863,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/aggretsuko-s05e02/s/-6",
+          "status": 200,
+          "response_bytes": 216905,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/aggretsuko/s/-6",
+          "status": 200,
+          "response_bytes": 216861,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T07:55:59.557170+00:00"
+    },
+    "1708:4:2": {
+      "at": "2026-10-30T07:54:48.697241+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 109.42,
+      "search_evidence": [
+        {
+          "path": "/ostre-jako-britva-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 217010,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/underbelly-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 216857,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ostre-jako-britva-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 217107,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ostre-jako-britva/s/-6",
+          "status": 200,
+          "response_bytes": 217165,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/underbelly-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 216900,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/underbelly/s/-6",
+          "status": 200,
+          "response_bytes": 218292,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T07:56:38.118225+00:00"
     }
   },
-  "updated_at": "2026-10-30T07:55:54.124700+00:00",
+  "updated_at": "2026-10-30T07:57:03.823416+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -801795,9 +801910,11 @@
     "9667": {
       "misses": [
         "9667:1:23",
-        "9667:1:24"
+        "9667:1:24",
+        "9667:1:26"
       ],
-      "updated_at": "2026-10-30T07:33:25.355736+00:00"
+      "updated_at": "2026-10-30T07:56:29.651368+00:00",
+      "retry_after": "2026-10-30T11:56:29.651368+00:00"
     },
     "7803": {
       "misses": [
@@ -807640,9 +807757,11 @@
     "2531": {
       "misses": [
         "2531:4:10",
-        "2531:5:1"
+        "2531:5:1",
+        "2531:5:2"
       ],
-      "updated_at": "2026-10-30T04:00:17.557283+00:00"
+      "updated_at": "2026-10-30T07:55:59.557208+00:00",
+      "retry_after": "2026-10-30T11:55:59.557208+00:00"
     },
     "2234": {
       "misses": [
@@ -807835,9 +807954,11 @@
     "1708": {
       "misses": [
         "1708:3:13",
-        "1708:4:1"
+        "1708:4:1",
+        "1708:4:2"
       ],
-      "updated_at": "2026-10-30T04:00:53.655726+00:00"
+      "updated_at": "2026-10-30T07:56:38.118253+00:00",
+      "retry_after": "2026-10-30T11:56:38.118253+00:00"
     },
     "3889": {
       "misses": [
@@ -814071,12 +814192,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1708,
+    "last_series": 3038,
     "last_series_order": [
       false,
       -8.0,
-      -5748,
-      1708
+      -2529,
+      3038
     ]
   }
 }
