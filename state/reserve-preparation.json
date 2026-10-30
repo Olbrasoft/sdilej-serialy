@@ -143841,14 +143841,21 @@
       "retry_after": "2026-10-20T11:30:32.283220+00:00"
     },
     "4466:1:15": {
-      "at": "2026-10-11T10:54:52.325104+00:00",
+      "at": "2026-10-30T03:05:58.329660+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 57.66,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T10:55:49.983190+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ko",
+      "observed_language_probability": 0.996566116809845,
+      "observed_source_id": "14022544",
+      "elapsed_seconds": 95.9,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T03:07:34.228752+00:00"
     },
     "4466:1:16": {
       "at": "2026-10-29T22:42:37.974558+00:00",
@@ -787104,9 +787111,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T03:02:04.892542+00:00"
+    },
+    "1922:2:10": {
+      "at": "2026-10-30T03:07:34.977200+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 12.82,
+      "search_evidence": [
+        {
+          "path": "/the-andy-griffith-show-s02e10/s/-6",
+          "status": 200,
+          "response_bytes": 217208,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-andy-griffith-show/s/-6",
+          "status": 200,
+          "response_bytes": 217029,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-andy-griffith-show-s02e10/s/-6",
+          "status": 200,
+          "response_bytes": 217199,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-andy-griffith-show/s/-6",
+          "status": 200,
+          "response_bytes": 217043,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T03:07:47.799198+00:00"
     }
   },
-  "updated_at": "2026-10-30T03:07:01.792630+00:00",
+  "updated_at": "2026-10-30T03:08:20.433989+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -793099,9 +793154,11 @@
     "1922": {
       "misses": [
         "1922:2:7",
-        "1922:2:8"
+        "1922:2:8",
+        "1922:2:10"
       ],
-      "updated_at": "2026-10-29T12:42:48.938727+00:00"
+      "updated_at": "2026-10-30T03:07:47.799228+00:00",
+      "retry_after": "2026-10-30T07:07:47.799228+00:00"
     },
     "1551": {
       "misses": [
@@ -803803,9 +803860,10 @@
     },
     "4466": {
       "misses": [
-        "4466:1:9"
+        "4466:1:9",
+        "4466:1:15"
       ],
-      "updated_at": "2026-10-30T03:00:34.520319+00:00"
+      "updated_at": "2026-10-30T03:07:34.228776+00:00"
     },
     "1169": {
       "misses": [
@@ -804462,12 +804520,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2534,
+    "last_series": 2778,
     "last_series_order": [
       false,
       -8.4,
-      -21295,
-      2534
+      -3600,
+      2778
     ]
   }
 }
