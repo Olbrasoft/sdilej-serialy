@@ -382204,7 +382204,7 @@
       "retry_after": "2026-10-22T06:22:41.993975+00:00"
     },
     "1428:2:2": {
-      "at": "2026-10-28T22:39:00.192608+00:00",
+      "at": "2026-10-30T19:47:27.801617+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -382216,9 +382216,9 @@
       "observed_audio_language": "ja",
       "observed_language_probability": 0.9661663770675659,
       "observed_source_id": "28354064",
-      "elapsed_seconds": 48.17,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-29T22:39:48.363132+00:00"
+      "elapsed_seconds": 100.32,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-31T19:49:12.348480+00:00"
     },
     "1905:2:3": {
       "at": "2026-10-21T06:22:46.914840+00:00",
@@ -818445,9 +818445,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T19:48:10.758815+00:00"
+    },
+    "2896:3:19": {
+      "at": "2026-10-30T19:48:35.769397+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 63.14,
+      "search_evidence": [
+        {
+          "path": "/in-the-heat-of-the-night-s03e19/s/-6",
+          "status": 200,
+          "response_bytes": 217258,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/in-the-heat-of-the-night/s/-6",
+          "status": 200,
+          "response_bytes": 224768,
+          "boxes": 7,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/in-the-heat-of-the-night-s03e19/s/-6",
+          "status": 200,
+          "response_bytes": 217287,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/in-the-heat-of-the-night/s/-6",
+          "status": 200,
+          "response_bytes": 224774,
+          "boxes": 7,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T19:49:38.905931+00:00"
     }
   },
-  "updated_at": "2026-10-30T19:49:08.126723+00:00",
+  "updated_at": "2026-10-30T19:50:15.705145+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -832208,12 +832256,12 @@
     },
     "1428": {
       "misses": [
-        "1428:4:11",
         "1428:4:12",
-        "1428:2:1"
+        "1428:2:1",
+        "1428:2:2"
       ],
-      "updated_at": "2026-10-30T19:39:03.536170+00:00",
-      "retry_after": "2026-10-30T23:39:03.536170+00:00"
+      "updated_at": "2026-10-30T19:49:12.348511+00:00",
+      "retry_after": "2026-10-30T23:49:12.348511+00:00"
     },
     "1070": {
       "misses": [
@@ -834181,9 +834229,10 @@
     },
     "2896": {
       "misses": [
-        "2896:3:18"
+        "2896:3:18",
+        "2896:3:19"
       ],
-      "updated_at": "2026-10-30T12:57:19.104783+00:00"
+      "updated_at": "2026-10-30T19:49:38.905958+00:00"
     },
     "5183": {
       "misses": [
@@ -835767,12 +835816,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2896,
+    "last_series": 1585,
     "last_series_order": [
       false,
-      -7.6,
-      -7318,
-      2896
+      -7.5,
+      -47049,
+      1585
     ]
   }
 }
