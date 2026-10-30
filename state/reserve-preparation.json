@@ -485133,14 +485133,21 @@
       "retry_after": "2026-10-25T08:37:53.663252+00:00"
     },
     "9667:5:13": {
-      "at": "2026-10-23T08:14:59.076568+00:00",
+      "at": "2026-10-30T03:26:49.119698+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "inconclusive_audio",
-      "elapsed_seconds": 168.41,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T09:17:47.483881+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.6701821237802505,
+      "observed_source_id": "34437171",
+      "elapsed_seconds": 214.02,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T03:30:23.136024+00:00"
     },
     "9717:5:5": {
       "at": "2026-10-24T08:37:19.003905+00:00",
@@ -656308,21 +656315,21 @@
       "retry_after": "2026-10-31T03:18:08.262201+00:00"
     },
     "1059:6:6": {
-      "at": "2026-10-28T00:23:52.221828+00:00",
+      "at": "2026-10-30T03:28:53.136952+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
-      "audio_consensus_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
       "observed_language_probability": 0.9974763989448547,
       "observed_source_id": "6689852",
-      "elapsed_seconds": 48.13,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-29T00:24:40.349886+00:00"
+      "elapsed_seconds": 32.96,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T03:29:49.123210+00:00"
     },
     "9717:4:10": {
       "at": "2026-10-25T12:20:11.458676+00:00",
@@ -789950,9 +789957,73 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T03:28:59.810106+00:00"
+    },
+    "2379:2:22": {
+      "at": "2026-10-30T03:28:50.766401+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 25.43,
+      "search_evidence": [
+        {
+          "path": "/vychovavat-hope-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 189640,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/raising-hope-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 189577,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/vychovavat-hope-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 189640,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/vychovavat-hope/s/-6",
+          "status": 200,
+          "response_bytes": 189493,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/raising-hope-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 189577,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/raising-hope/s/-6",
+          "status": 200,
+          "response_bytes": 189430,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T03:29:49.123088+00:00"
     }
   },
-  "updated_at": "2026-10-30T03:29:04.420443+00:00",
+  "updated_at": "2026-10-30T03:30:52.925906+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -795131,12 +795202,12 @@
     },
     "9667": {
       "misses": [
-        "9667:1:22",
         "9667:5:7",
-        "9667:1:21"
+        "9667:1:21",
+        "9667:5:13"
       ],
-      "updated_at": "2026-10-30T03:26:53.557854+00:00",
-      "retry_after": "2026-10-30T03:56:53.557854+00:00"
+      "updated_at": "2026-10-30T03:30:23.136051+00:00",
+      "retry_after": "2026-10-30T07:30:23.136051+00:00"
     },
     "7803": {
       "misses": [
@@ -800455,9 +800526,10 @@
     },
     "2379": {
       "misses": [
-        "2379:2:21"
+        "2379:2:21",
+        "2379:2:22"
       ],
-      "updated_at": "2026-10-30T00:37:46.832019+00:00"
+      "updated_at": "2026-10-30T03:29:49.123118+00:00"
     },
     "1757": {
       "misses": [
@@ -806006,9 +806078,11 @@
     "1059": {
       "misses": [
         "1059:3:2",
-        "1059:6:5"
+        "1059:6:5",
+        "1059:6:6"
       ],
-      "updated_at": "2026-10-30T03:18:08.262228+00:00"
+      "updated_at": "2026-10-30T03:29:49.123230+00:00",
+      "retry_after": "2026-10-30T07:29:49.123230+00:00"
     },
     "9334": {
       "misses": [
