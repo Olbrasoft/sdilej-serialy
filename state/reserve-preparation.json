@@ -346263,14 +346263,21 @@
       "retry_after": "2026-10-31T13:07:10.323820+00:00"
     },
     "2079:2:13": {
-      "at": "2026-10-20T11:21:48.350636+00:00",
+      "at": "2026-10-30T13:11:24.958131+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 55.68,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-21T11:22:44.034164+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.959716796875,
+      "observed_source_id": "33813324",
+      "elapsed_seconds": 66.32,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T13:12:31.274838+00:00"
     },
     "2079:3:7": {
       "at": "2026-10-20T11:22:00.133091+00:00",
@@ -350538,14 +350545,17 @@
       "retry_after": "2026-10-21T13:17:05.741316+00:00"
     },
     "1382:2:5": {
-      "at": "2026-10-22T15:00:28.076695+00:00",
-      "status": "deferred",
+      "at": "2026-10-30T13:11:11.224547+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 55.17,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-23T15:01:23.242399+00:00"
+      "elapsed_seconds": 83.7,
+      "source_id": "29875915",
+      "queue_rank": 31722
     },
     "1697:1:7": {
       "at": "2026-10-20T13:16:52.440427+00:00",
@@ -805760,9 +805770,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T13:11:34.205728+00:00"
+    },
+    "3106:5:10": {
+      "at": "2026-10-30T13:11:21.392636+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 51.27,
+      "search_evidence": [
+        {
+          "path": "/holky-na-drate-s05e10/s/-6",
+          "status": 200,
+          "response_bytes": 217016,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/holky-na-drate/s/-6",
+          "status": 200,
+          "response_bytes": 216876,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/cable-girls-s05e10/s/-6",
+          "status": 200,
+          "response_bytes": 217047,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/cable-girls/s/-6",
+          "status": 200,
+          "response_bytes": 216775,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/holky-na-drate-s05e10/s/-6",
+          "status": 200,
+          "response_bytes": 216983,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/holky-na-drate/s/-6",
+          "status": 200,
+          "response_bytes": 216931,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/cable-girls-s05e10/s/-6",
+          "status": 200,
+          "response_bytes": 216991,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/cable-girls/s/-6",
+          "status": 200,
+          "response_bytes": 216836,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T13:12:12.666547+00:00"
     }
   },
-  "updated_at": "2026-10-30T13:11:37.102968+00:00",
+  "updated_at": "2026-10-30T13:12:54.220905+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -818653,7 +818743,7 @@
     },
     "1382": {
       "misses": [],
-      "updated_at": "2026-10-30T10:13:22.835152+00:00"
+      "updated_at": "2026-10-30T13:12:34.922767+00:00"
     },
     "6099": {
       "misses": [
@@ -821760,9 +821850,11 @@
     "2079": {
       "misses": [
         "2079:4:11",
-        "2079:2:8"
+        "2079:2:8",
+        "2079:2:13"
       ],
-      "updated_at": "2026-10-30T13:07:10.323870+00:00"
+      "updated_at": "2026-10-30T13:12:31.274864+00:00",
+      "retry_after": "2026-10-30T17:12:31.274864+00:00"
     },
     "1341": {
       "misses": [
@@ -822093,12 +822185,9 @@
     },
     "3106": {
       "misses": [
-        "3106:5:7",
-        "3106:5:8",
-        "3106:5:9"
+        "3106:5:10"
       ],
-      "updated_at": "2026-10-30T05:58:12.016247+00:00",
-      "retry_after": "2026-10-30T09:58:12.016247+00:00"
+      "updated_at": "2026-10-30T13:12:12.666580+00:00"
     },
     "699": {
       "misses": [
