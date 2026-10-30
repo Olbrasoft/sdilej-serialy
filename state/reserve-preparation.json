@@ -213934,14 +213934,21 @@
       "retry_after": "2026-10-15T10:50:15.586838+00:00"
     },
     "1375:7:16": {
-      "at": "2026-10-18T05:15:51.028362+00:00",
+      "at": "2026-10-30T06:47:49.301603+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 43.73,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-19T05:16:34.755714+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9880859851837158,
+      "observed_source_id": "35059046",
+      "elapsed_seconds": 128.14,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-31T06:49:58.394064+00:00"
     },
     "2451:2:2": {
       "at": "2026-10-20T03:07:23.328530+00:00",
@@ -683401,21 +683408,21 @@
       "retry_after": "2026-10-28T02:30:35.524826+00:00"
     },
     "1783:15:4": {
-      "at": "2026-10-28T04:40:17.547174+00:00",
+      "at": "2026-10-30T06:47:46.191486+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
-      "audio_consensus_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.8455301523208618,
+      "observed_language_probability": 0.8646634817123413,
       "observed_source_id": "33460770",
-      "elapsed_seconds": 83.74,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-29T04:41:41.289187+00:00"
+      "elapsed_seconds": 109.5,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T06:49:57.394424+00:00"
     },
     "2839:2:9": {
       "at": "2026-10-27T02:30:56.174446+00:00",
@@ -794722,9 +794729,83 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T06:47:52.452028+00:00"
+    },
+    "1375:7:15": {
+      "at": "2026-10-30T06:47:48.660358+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9914441704750061,
+      "observed_source_id": "35059044",
+      "elapsed_seconds": 113.91,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T06:49:57.394557+00:00"
+    },
+    "1375:7:17": {
+      "at": "2026-10-30T06:47:52.922321+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9969679713249207,
+      "observed_source_id": "35059047",
+      "elapsed_seconds": 127.42,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T06:50:00.339075+00:00"
+    },
+    "3548:5:16": {
+      "at": "2026-10-30T06:49:58.881822+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 43.96,
+      "search_evidence": [
+        {
+          "path": "/the-golden-girls-s05e16/s/-6",
+          "status": 200,
+          "response_bytes": 217160,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-golden-girls-s05e16/s/-6",
+          "status": 200,
+          "response_bytes": 217145,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-golden-girls/s/-6",
+          "status": 200,
+          "response_bytes": 220118,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T06:50:42.846601+00:00"
     }
   },
-  "updated_at": "2026-10-30T06:49:16.221628+00:00",
+  "updated_at": "2026-10-30T06:50:45.018058+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -802552,9 +802633,12 @@
     },
     "1375": {
       "misses": [
-        "1375:6:6"
+        "1375:7:15",
+        "1375:7:16",
+        "1375:7:17"
       ],
-      "updated_at": "2026-10-30T06:47:45.698484+00:00"
+      "updated_at": "2026-10-30T06:50:00.339105+00:00",
+      "retry_after": "2026-10-30T10:50:00.339105+00:00"
     },
     "1104": {
       "misses": [],
@@ -802767,9 +802851,11 @@
     "3548": {
       "misses": [
         "3548:5:14",
-        "3548:5:15"
+        "3548:5:15",
+        "3548:5:16"
       ],
-      "updated_at": "2026-10-30T03:15:06.438944+00:00"
+      "updated_at": "2026-10-30T06:50:42.846635+00:00",
+      "retry_after": "2026-10-30T10:50:42.846635+00:00"
     },
     "1015": {
       "misses": [
@@ -807639,12 +807725,12 @@
     },
     "1783": {
       "misses": [
-        "1783:15:2",
         "1783:13:1",
-        "1783:15:3"
+        "1783:15:3",
+        "1783:15:4"
       ],
-      "updated_at": "2026-10-30T06:47:48.001511+00:00",
-      "retry_after": "2026-10-30T10:47:48.001511+00:00"
+      "updated_at": "2026-10-30T06:49:57.394488+00:00",
+      "retry_after": "2026-10-30T10:49:57.394488+00:00"
     },
     "5376": {
       "misses": [
@@ -812176,12 +812262,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2762,
+    "last_series": 2005,
     "last_series_order": [
       false,
       -8.2,
-      -63008,
-      2762
+      -51991,
+      2005
     ]
   }
 }
