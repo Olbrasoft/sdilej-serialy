@@ -792819,9 +792819,49 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T05:56:40.988527+00:00"
+    },
+    "532:3:8": {
+      "at": "2026-10-30T05:56:41.627953+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 43.57,
+      "search_evidence": [
+        {
+          "path": "/d-d-s03e08/s/-6",
+          "status": 200,
+          "response_bytes": 230042,
+          "boxes": 11,
+          "parsed_candidates": 11,
+          "heading_matches_query": false
+        },
+        {
+          "path": "/d-d-s03e08/s/-6",
+          "status": 200,
+          "response_bytes": 229953,
+          "boxes": 11,
+          "parsed_candidates": 11,
+          "heading_matches_query": false
+        },
+        {
+          "path": "/d-d/s/-6",
+          "status": 200,
+          "response_bytes": 366224,
+          "boxes": 203,
+          "parsed_candidates": 70,
+          "heading_matches_query": false
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T05:57:25.200641+00:00"
     }
   },
-  "updated_at": "2026-10-30T05:56:51.657043+00:00",
+  "updated_at": "2026-10-30T05:58:00.512553+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -809150,9 +809190,11 @@
     "532": {
       "misses": [
         "532:3:5",
-        "532:3:7"
+        "532:3:7",
+        "532:3:8"
       ],
-      "updated_at": "2026-10-30T02:22:33.823978+00:00"
+      "updated_at": "2026-10-30T05:57:25.200674+00:00",
+      "retry_after": "2026-10-30T09:57:25.200674+00:00"
     },
     "3106": {
       "misses": [
@@ -810251,12 +810293,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 532,
+    "last_series": 2844,
     "last_series_order": [
       false,
-      -7.5,
-      -17888,
-      532
+      -8.8,
+      -285339,
+      2844
     ]
   }
 }
