@@ -410441,14 +410441,21 @@
       "retry_after": "2026-10-31T15:36:31.011996+00:00"
     },
     "2710:4:4": {
-      "at": "2026-10-21T21:29:48.614331+00:00",
+      "at": "2026-10-30T15:38:54.866499+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 22.98,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-22T21:30:11.596929+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.8997650742530823,
+      "observed_source_id": "35139370",
+      "elapsed_seconds": 50.94,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T15:40:07.455058+00:00"
     },
     "1152:2:6": {
       "at": "2026-10-21T21:29:50.062384+00:00",
@@ -410470,14 +410477,21 @@
       "queue_rank": 28954
     },
     "2710:4:5": {
-      "at": "2026-10-21T21:29:49.449352+00:00",
+      "at": "2026-10-30T15:38:56.211546+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 34.55,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-22T21:30:33.774131+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.8095804452896118,
+      "observed_source_id": "35139392",
+      "elapsed_seconds": 58.54,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T15:40:07.455191+00:00"
     },
     "1806:3:9": {
       "at": "2026-10-21T21:30:12.188983+00:00",
@@ -809048,9 +809062,89 @@
       "elapsed_seconds": 73.48,
       "source_id": "34861968",
       "queue_rank": 31807
+    },
+    "2016:3:8": {
+      "at": "2026-10-30T15:38:52.132282+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 77.79,
+      "search_evidence": [
+        {
+          "path": "/studio-30-rock-s03e08/s/-6",
+          "status": 200,
+          "response_bytes": 217051,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/studio-30-rock/s/-6",
+          "status": 200,
+          "response_bytes": 216866,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/30-rock-s03e08/s/-6",
+          "status": 200,
+          "response_bytes": 216876,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/30-rock/s/-6",
+          "status": 200,
+          "response_bytes": 226195,
+          "boxes": 8,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/studio-30-rock-s03e08/s/-6",
+          "status": 200,
+          "response_bytes": 217047,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/studio-30-rock/s/-6",
+          "status": 200,
+          "response_bytes": 216907,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/30-rock-s03e08/s/-6",
+          "status": 200,
+          "response_bytes": 216872,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/30-rock/s/-6",
+          "status": 200,
+          "response_bytes": 226217,
+          "boxes": 8,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T15:40:09.925786+00:00"
     }
   },
-  "updated_at": "2026-10-30T15:39:47.796344+00:00",
+  "updated_at": "2026-10-30T15:41:11.526441+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -813997,10 +814091,12 @@
     },
     "2710": {
       "misses": [
-        "2710:4:2",
-        "2710:4:3"
+        "2710:4:3",
+        "2710:4:4",
+        "2710:4:5"
       ],
-      "updated_at": "2026-10-30T15:36:31.012019+00:00"
+      "updated_at": "2026-10-30T15:40:07.455206+00:00",
+      "retry_after": "2026-10-30T19:40:07.455206+00:00"
     },
     "3014": {
       "misses": [
@@ -815717,12 +815813,9 @@
     },
     "2016": {
       "misses": [
-        "2016:3:5",
-        "2016:3:6",
-        "2016:3:7"
+        "2016:3:8"
       ],
-      "updated_at": "2026-10-30T03:09:13.326464+00:00",
-      "retry_after": "2026-10-30T07:09:13.326464+00:00"
+      "updated_at": "2026-10-30T15:40:09.925816+00:00"
     },
     "1971": {
       "misses": [
