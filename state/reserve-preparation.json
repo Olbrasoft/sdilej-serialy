@@ -258416,14 +258416,21 @@
       "queue_rank": 24421
     },
     "3320:2:3": {
-      "at": "2026-10-18T03:51:52.469200+00:00",
+      "at": "2026-10-30T20:04:43.109802+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 203.73,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-19T03:55:16.195517+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9936195015907288,
+      "observed_source_id": "33538979",
+      "elapsed_seconds": 340.7,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-31T20:10:56.970924+00:00"
     },
     "3320:2:4": {
       "at": "2026-10-18T10:11:57.178121+00:00",
@@ -819392,9 +819399,102 @@
       "elapsed_seconds": 55.23,
       "source_id": "34643085",
       "queue_rank": 31917
+    },
+    "1681:20:2": {
+      "at": "2026-10-30T20:07:52.598422+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 65.4,
+      "source_id": "34643081",
+      "queue_rank": 31918
+    },
+    "6424:1:7": {
+      "at": "2026-10-30T20:08:36.482281+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 17.99,
+      "search_evidence": [
+        {
+          "path": "/z-deniku-sherlocka-holmese-s01e07/s/-6",
+          "status": 200,
+          "response_bytes": 217241,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/z-deniku-sherlocka-holmese/s/-6",
+          "status": 200,
+          "response_bytes": 233777,
+          "boxes": 12,
+          "parsed_candidates": 12,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-case-book-of-sherlock-holmes-s01e07/s/-6",
+          "status": 200,
+          "response_bytes": 217397,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-case-book-of-sherlock-holmes/s/-6",
+          "status": 200,
+          "response_bytes": 217327,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/z-deniku-sherlocka-holmese-s01e07/s/-6",
+          "status": 200,
+          "response_bytes": 217248,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/z-deniku-sherlocka-holmese/s/-6",
+          "status": 200,
+          "response_bytes": 233721,
+          "boxes": 12,
+          "parsed_candidates": 12,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-case-book-of-sherlock-holmes-s01e07/s/-6",
+          "status": 200,
+          "response_bytes": 217451,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-case-book-of-sherlock-holmes/s/-6",
+          "status": 200,
+          "response_bytes": 217261,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T20:10:56.971111+00:00"
     }
   },
-  "updated_at": "2026-10-30T20:08:51.776245+00:00",
+  "updated_at": "2026-10-30T20:12:01.778403+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -827232,7 +827332,7 @@
     },
     "1681": {
       "misses": [],
-      "updated_at": "2026-10-30T20:08:48.609692+00:00"
+      "updated_at": "2026-10-30T20:10:56.971042+00:00"
     },
     "1650": {
       "misses": [
@@ -830924,12 +831024,12 @@
     },
     "3320": {
       "misses": [
-        "3320:2:7",
         "3320:2:5",
-        "3320:2:2"
+        "3320:2:2",
+        "3320:2:3"
       ],
-      "updated_at": "2026-10-30T20:06:42.447854+00:00",
-      "retry_after": "2026-10-31T00:06:42.447854+00:00"
+      "updated_at": "2026-10-30T20:10:56.970951+00:00",
+      "retry_after": "2026-10-31T00:10:56.970951+00:00"
     },
     "1048": {
       "misses": [
@@ -836721,6 +836821,12 @@
         "171:2:1"
       ],
       "updated_at": "2026-10-30T20:07:51.831573+00:00"
+    },
+    "6424": {
+      "misses": [
+        "6424:1:7"
+      ],
+      "updated_at": "2026-10-30T20:10:56.971127+00:00"
     }
   },
   "discovery_progress": {
