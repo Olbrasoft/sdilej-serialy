@@ -2921,11 +2921,52 @@
       "retry_after": "2026-10-31T02:23:04.371842+00:00"
     },
     "1611:8:11": {
-      "at": "2026-10-01T23:36:28.606334+00:00",
+      "at": "2026-10-30T13:43:18.201657+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T23:36:29.273056+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 51.68,
+      "search_evidence": [
+        {
+          "path": "/the-joy-of-painting-s08e11/s/-6",
+          "status": 200,
+          "response_bytes": 217147,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting/s/-6",
+          "status": 200,
+          "response_bytes": 226942,
+          "boxes": 8,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting-s08e11/s/-6",
+          "status": 200,
+          "response_bytes": 217138,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting/s/-6",
+          "status": 200,
+          "response_bytes": 226978,
+          "boxes": 8,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T13:44:09.882256+00:00"
     },
     "1611:8:12": {
       "at": "2026-10-01T23:36:56.311271+00:00",
@@ -806084,7 +806125,7 @@
       "retry_after": "2026-10-30T13:30:45.286318+00:00"
     },
     "1081:5:14": {
-      "at": "2026-10-30T13:14:13.862117+00:00",
+      "at": "2026-10-30T13:30:58.391965+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -806092,40 +806133,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 393.87,
-      "consecutive_failures": 0,
-      "retry_after": "2026-10-30T13:30:45.286322+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9964795708656311,
+      "observed_source_id": "33237955",
+      "elapsed_seconds": 771.51,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T13:43:49.899132+00:00"
     },
     "1410:5:23": {
       "at": "2026-10-30T13:30:57.908376+00:00",
@@ -806143,9 +806157,48 @@
       "elapsed_seconds": 247.99,
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T13:35:05.895394+00:00"
+    },
+    "1083:7:8": {
+      "at": "2026-10-30T13:38:52.530085+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 202.35,
+      "source_id": "28246333",
+      "queue_rank": 31727
+    },
+    "1083:7:9": {
+      "at": "2026-10-30T13:39:00.392276+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 199.97,
+      "source_id": "26915232",
+      "queue_rank": 31728
+    },
+    "1083:7:10": {
+      "at": "2026-10-30T13:40:20.308898+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 125.28,
+      "source_id": "28246335",
+      "queue_rank": 31729
     }
   },
-  "updated_at": "2026-10-30T13:42:09.184606+00:00",
+  "updated_at": "2026-10-30T13:44:12.126912+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -810357,12 +810410,9 @@
     },
     "1611": {
       "misses": [
-        "1611:8:8",
-        "1611:8:9",
-        "1611:8:10"
+        "1611:8:11"
       ],
-      "updated_at": "2026-10-30T02:23:04.371887+00:00",
-      "retry_after": "2026-10-30T06:23:04.371887+00:00"
+      "updated_at": "2026-10-30T13:44:09.882288+00:00"
     },
     "1265": {
       "misses": [
@@ -820216,7 +820266,7 @@
     },
     "1083": {
       "misses": [],
-      "updated_at": "2026-10-30T13:14:27.085163+00:00"
+      "updated_at": "2026-10-30T13:43:16.652241+00:00"
     },
     "1388": {
       "misses": [
@@ -822628,12 +822678,9 @@
     },
     "1081": {
       "misses": [
-        "1081:5:11",
-        "1081:4:1",
-        "1081:5:13"
+        "1081:5:14"
       ],
-      "updated_at": "2026-10-30T02:25:19.860326+00:00",
-      "retry_after": "2026-10-30T06:25:19.860326+00:00"
+      "updated_at": "2026-10-30T13:43:49.899161+00:00"
     },
     "569": {
       "misses": [
@@ -823561,12 +823608,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1081,
+    "last_series": 1611,
     "last_series_order": [
       false,
-      -7.4,
-      -388857,
-      1081
+      -9.3,
+      -7199,
+      1611
     ]
   }
 }
