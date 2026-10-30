@@ -790042,7 +790042,7 @@
       "queue_rank": 31453
     },
     "1402:21:20": {
-      "at": "2026-10-30T03:30:23.885795+00:00",
+      "at": "2026-10-30T04:02:16.831289+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -790050,10 +790050,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 298.8,
-      "consecutive_failures": 0,
-      "retry_after": "2026-10-30T03:45:22.679003+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 66.06,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-30T04:18:22.889113+00:00"
     },
     "1328:7:2": {
       "at": "2026-10-30T03:45:39.762144+00:00",
@@ -790708,9 +790708,26 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T04:00:53.655694+00:00"
+    },
+    "15:12:2": {
+      "at": "2026-10-30T04:00:18.275222+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9961023330688477,
+      "observed_source_id": "33177974",
+      "elapsed_seconds": 208.74,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T04:03:47.015988+00:00"
     }
   },
-  "updated_at": "2026-10-30T04:02:55.884676+00:00",
+  "updated_at": "2026-10-30T04:04:10.748262+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -799745,8 +799762,10 @@
       "retry_after": "2026-10-24T20:51:50.616844+00:00"
     },
     "1402": {
-      "misses": [],
-      "updated_at": "2026-10-30T04:02:16.089592+00:00"
+      "misses": [
+        "1402:21:20"
+      ],
+      "updated_at": "2026-10-30T04:03:22.889142+00:00"
     },
     "7836": {
       "misses": [
@@ -802250,9 +802269,11 @@
     "15": {
       "misses": [
         "15:11:10",
-        "15:12:1"
+        "15:12:1",
+        "15:12:2"
       ],
-      "updated_at": "2026-10-30T00:47:05.302839+00:00"
+      "updated_at": "2026-10-30T04:03:47.016013+00:00",
+      "retry_after": "2026-10-30T08:03:47.016013+00:00"
     },
     "1055": {
       "misses": [
