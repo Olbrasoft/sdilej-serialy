@@ -309383,18 +309383,21 @@
       "queue_rank": 28039
     },
     "9667:1:24": {
-      "at": "2026-10-28T01:56:31.079828+00:00",
+      "at": "2026-10-30T07:31:27.823859+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
-      "audio_consensus_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "inconclusive_audio",
-      "elapsed_seconds": 178.13,
-      "consecutive_failures": 4,
-      "retry_after": "2026-10-28T02:59:29.212990+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.7532833218574524,
+      "observed_source_id": "31355914",
+      "elapsed_seconds": 117.53,
+      "consecutive_failures": 5,
+      "retry_after": "2026-10-31T07:33:25.355710+00:00"
     },
     "1382:1:16": {
       "at": "2026-10-21T16:15:50.150306+00:00",
@@ -796467,9 +796470,23 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-10-31T07:32:48.714708+00:00"
+    },
+    "2690:3:12": {
+      "at": "2026-10-30T07:32:26.937682+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 48.62,
+      "consecutive_failures": 0,
+      "retry_after": "2026-10-30T07:38:15.553155+00:00"
     }
   },
-  "updated_at": "2026-10-30T07:32:50.790695+00:00",
+  "updated_at": "2026-10-30T07:33:58.940030+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -801663,9 +801680,10 @@
     },
     "9667": {
       "misses": [
-        "9667:1:23"
+        "9667:1:23",
+        "9667:1:24"
       ],
-      "updated_at": "2026-10-30T07:32:33.593438+00:00"
+      "updated_at": "2026-10-30T07:33:25.355736+00:00"
     },
     "7803": {
       "misses": [
@@ -813934,12 +813952,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3533,
+    "last_series": 2209,
     "last_series_order": [
       false,
       -8.0,
-      -15460,
-      3533
+      -12602,
+      2209
     ]
   }
 }
