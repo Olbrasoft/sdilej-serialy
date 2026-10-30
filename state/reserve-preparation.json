@@ -809330,9 +809330,132 @@
       "elapsed_seconds": 47.47,
       "source_id": "34862002",
       "queue_rank": 31813
+    },
+    "4704:3:11": {
+      "at": "2026-10-30T15:45:54.388021+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 51.07,
+      "source_id": "34862012",
+      "queue_rank": 31814
+    },
+    "4704:3:12": {
+      "at": "2026-10-30T15:46:32.213255+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 23.81,
+      "source_id": "34862023",
+      "queue_rank": 31815
+    },
+    "1799:3:12": {
+      "at": "2026-10-30T15:46:59.684252+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 54.78,
+      "search_evidence": [
+        {
+          "path": "/familie-s03e12/s/-6",
+          "status": 200,
+          "response_bytes": 218462,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/familie/s/-6",
+          "status": 200,
+          "response_bytes": 463065,
+          "boxes": 235,
+          "parsed_candidates": 173,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/parenthood-s03e12/s/-6",
+          "status": 200,
+          "response_bytes": 217037,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/parenthood/s/-6",
+          "status": 200,
+          "response_bytes": 221382,
+          "boxes": 4,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/familie-s03e12/s/-6",
+          "status": 200,
+          "response_bytes": 218294,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/familie/s/-6",
+          "status": 200,
+          "response_bytes": 463210,
+          "boxes": 235,
+          "parsed_candidates": 173,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/parenthood-s03e12/s/-6",
+          "status": 200,
+          "response_bytes": 216897,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/parenthood/s/-6",
+          "status": 200,
+          "response_bytes": 221354,
+          "boxes": 4,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T15:47:54.465655+00:00"
+    },
+    "1846:7:4": {
+      "at": "2026-10-30T15:47:00.404544+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9828392863273621,
+      "observed_source_id": "35065790",
+      "elapsed_seconds": 55.87,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T15:47:56.272233+00:00"
     }
   },
-  "updated_at": "2026-10-30T15:46:45.454412+00:00",
+  "updated_at": "2026-10-30T15:48:04.502046+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -816235,9 +816358,10 @@
     },
     "1799": {
       "misses": [
-        "1799:3:10"
+        "1799:3:10",
+        "1799:3:12"
       ],
-      "updated_at": "2026-10-30T06:44:03.862693+00:00"
+      "updated_at": "2026-10-30T15:47:54.465691+00:00"
     },
     "2562": {
       "misses": [
@@ -816330,12 +816454,9 @@
     },
     "1846": {
       "misses": [
-        "1846:3:5",
-        "1846:2:4",
-        "1846:2:5"
+        "1846:7:4"
       ],
-      "updated_at": "2026-10-30T03:23:01.964866+00:00",
-      "retry_after": "2026-10-30T07:23:01.964866+00:00"
+      "updated_at": "2026-10-30T15:47:56.272257+00:00"
     },
     "574": {
       "misses": [
@@ -826723,16 +826844,16 @@
     },
     "4704": {
       "misses": [],
-      "updated_at": "2026-10-30T15:46:41.140935+00:00"
+      "updated_at": "2026-10-30T15:46:59.679090+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 1727,
+    "last_series": 1846,
     "last_series_order": [
       false,
       -8.3,
-      -47358,
-      1727
+      -30190,
+      1846
     ]
   }
 }
