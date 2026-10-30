@@ -77,6 +77,11 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      - name: Fill missing aired episode metadata before source discovery
+        if: steps.reserve.outputs.needed == 'true' && inputs.identity == ''
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+        run: python -m sdilej_serialy.catalog_refresh --persist-git-state
       - name: Prepare new originals from cached catalog and append reserve
         if: steps.reserve.outputs.needed == 'true'
         shell: bash

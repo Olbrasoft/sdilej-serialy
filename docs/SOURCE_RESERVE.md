@@ -112,6 +112,20 @@ local episode-ID namespace and never accesses or modifies the CR database, uploa
 history, target accounts or source manifest. Commit the catalog before dispatching
 the normal source producer; every new episode still needs full source verification.
 
+Normal reserve runs also execute `catalog_refresh` in the same serialized source
+lane before discovery. It uses `backlog/series-inventory.json`, a public ID mapping
+exported from a read-only CR transaction, and a step-scoped `TMDB_API_KEY` secret.
+No database credentials are needed. At most five due series are checked per run,
+within a two-minute request budget, prioritizing previously productive series and
+IMDb rating. Each checked series waits a day; metadata failures wait an hour and
+do not block existing source discovery. Targeted source checks skip this step.
+`state/catalog-inventory.json` preserves progress across restarts. Catalog changes
+and their report are checkpointed together before the source publisher starts.
+Existing episode metadata, upload history and language/quality checks are preserved.
+On October 30 the initial batch appended 276 aired missing episodes across Daria,
+Midsomer Murders, Major Crimes, Cold Case and Hawaii Five-0. Metadata additions
+are not counted as prepared videos until the ordinary source checks succeed.
+
 The sole publisher checkpoints source results together in Git after five completed
 checks or 60 seconds, and at normal shutdown. While workers are busy it also
 checkpoints reusable partial evidence. These source-only batches include:

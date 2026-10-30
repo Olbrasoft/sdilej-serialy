@@ -20,6 +20,25 @@ SERIES_FIELDS = (
 )
 
 
+def fetch_inventory(session, key, tmdb_id, *, before_request=lambda: 30):
+    def get(path):
+        timeout = before_request()
+        try:
+            response = session.get('https://api.themoviedb.org/3/' + path,
+                                   params={'api_key': key, 'language': 'cs-CZ'}, timeout=timeout)
+        except requests.RequestException:
+            raise RuntimeError('TMDB metadata request failed during transport') from None
+        if response.status_code != 200:
+            raise RuntimeError(f'TMDB metadata request failed: HTTP {response.status_code}')
+        return response.json()
+    details = get(f'tv/{tmdb_id}')
+    if details.get('id') != tmdb_id:
+        raise ValueError('Unexpected TMDB series ID')
+    seasons = [get(f'tv/{tmdb_id}/season/{s["season_number"]}')
+               for s in details['seasons'] if s['season_number'] > 0]
+    return details, seasons
+
+
 def supplement(catalog, series_id, details, seasons, *, today):
     """Metadata is only a discovery input; original/audio checks still apply."""
     existing = [r for r in catalog if r['series_id'] == series_id]
@@ -83,21 +102,7 @@ def main():
         parser.error('TMDB_API_KEY is required')
     catalog = load_jsonl(args.catalog)
     with requests.Session() as session:
-        def get(path):
-            try:
-                response = session.get('https://api.themoviedb.org/3/' + path,
-                                       params={'api_key': key, 'language': 'cs-CZ'}, timeout=30)
-            except requests.RequestException:
-                raise RuntimeError('TMDB metadata request failed during transport') from None
-            if response.status_code != 200:
-                # HTTPError includes the secret API key in the request URL.
-                raise RuntimeError(f'TMDB metadata request failed: HTTP {response.status_code}')
-            return response.json()
-        details = get(f'tv/{args.tmdb_id}')
-        if details.get('id') != args.tmdb_id:
-            raise ValueError('Unexpected TMDB series ID')
-        seasons = [get(f'tv/{args.tmdb_id}/season/{s["season_number"]}')
-                   for s in details['seasons'] if s['season_number'] > 0]
+        details, seasons = fetch_inventory(session, key, args.tmdb_id)
     result = supplement(catalog, args.series_id, details, seasons, today=date.today())
     if args.apply and len(result) > len(catalog):
         write_jsonl_gzip(args.catalog, result)
