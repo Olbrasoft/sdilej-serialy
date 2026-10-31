@@ -31710,7 +31710,7 @@
       "queue_rank": 17516
     },
     "673:3:10": {
-      "at": "2026-10-28T11:58:20.908413+00:00",
+      "at": "2026-10-31T01:52:41.517647+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -31719,10 +31719,10 @@
       "audio_consensus_revision": 3,
       "saved_review_revision": 1,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 325.87,
-      "consecutive_failures": 12,
-      "retry_after": "2026-10-28T12:13:46.779789+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 38.88,
+      "consecutive_failures": 13,
+      "retry_after": "2026-10-31T07:53:20.393339+00:00"
     },
     "2844:11:10": {
       "at": "2026-10-11T03:48:16.719472+00:00",
@@ -119137,14 +119137,21 @@
       "queue_rank": 16961
     },
     "2419:4:6": {
-      "at": "2026-10-10T12:53:31.592320+00:00",
+      "at": "2026-10-31T01:52:56.761071+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 7.82,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-11T12:53:39.415235+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "it",
+      "observed_language_probability": 0.6593340039253235,
+      "observed_source_id": "29857439",
+      "elapsed_seconds": 37.31,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-01T01:53:34.068176+00:00"
     },
     "2120:3:4": {
       "at": "2026-10-08T22:18:07.353088+00:00",
@@ -830532,9 +830539,97 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T01:52:40.520750+00:00"
+    },
+    "2534:3:10": {
+      "at": "2026-10-31T01:53:21.134815+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 20.3,
+      "search_evidence": [
+        {
+          "path": "/all-in-the-family-s03e10/s/-6",
+          "status": 200,
+          "response_bytes": 217053,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/all-in-the-family-s03e10/s/-6",
+          "status": 200,
+          "response_bytes": 217045,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/all-in-the-family/s/-6",
+          "status": 200,
+          "response_bytes": 237309,
+          "boxes": 15,
+          "parsed_candidates": 15,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T01:53:41.434193+00:00"
+    },
+    "1922:2:13": {
+      "at": "2026-10-31T01:53:34.807642+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 24.45,
+      "search_evidence": [
+        {
+          "path": "/the-andy-griffith-show-s02e13/s/-6",
+          "status": 200,
+          "response_bytes": 217284,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-andy-griffith-show/s/-6",
+          "status": 200,
+          "response_bytes": 216969,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-andy-griffith-show-s02e13/s/-6",
+          "status": 200,
+          "response_bytes": 217275,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-andy-griffith-show/s/-6",
+          "status": 200,
+          "response_bytes": 217028,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T01:53:59.258720+00:00"
     }
   },
-  "updated_at": "2026-10-31T01:52:47.005512+00:00",
+  "updated_at": "2026-10-31T01:54:02.256379+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -836100,12 +836195,12 @@
     },
     "673": {
       "misses": [
-        "673:26:5",
         "673:26:6",
-        "673:25:2"
+        "673:25:2",
+        "673:3:10"
       ],
-      "updated_at": "2026-10-31T01:52:44.047312+00:00",
-      "retry_after": "2026-10-31T05:52:44.047312+00:00"
+      "updated_at": "2026-10-31T01:53:20.393367+00:00",
+      "retry_after": "2026-10-31T02:23:20.393367+00:00"
     },
     "3396": {
       "misses": [
@@ -836514,9 +836609,10 @@
     },
     "2534": {
       "misses": [
-        "2534:3:9"
+        "2534:3:9",
+        "2534:3:10"
       ],
-      "updated_at": "2026-10-30T21:36:36.058907+00:00"
+      "updated_at": "2026-10-31T01:53:41.434220+00:00"
     },
     "2591": {
       "misses": [
@@ -836533,9 +836629,11 @@
     "1922": {
       "misses": [
         "1922:2:11",
-        "1922:2:12"
+        "1922:2:12",
+        "1922:2:13"
       ],
-      "updated_at": "2026-10-30T22:06:14.980706+00:00"
+      "updated_at": "2026-10-31T01:53:59.258763+00:00",
+      "retry_after": "2026-10-31T05:53:59.258763+00:00"
     },
     "1551": {
       "misses": [
@@ -847959,17 +848057,19 @@
       "updated_at": "2026-10-31T01:47:49.244847+00:00"
     },
     "2419": {
-      "misses": [],
-      "updated_at": "2026-10-31T01:52:10.753001+00:00"
+      "misses": [
+        "2419:4:6"
+      ],
+      "updated_at": "2026-10-31T01:53:34.068204+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 1968,
+    "last_series": 2778,
     "last_series_order": [
       false,
       -8.4,
-      -22685,
-      1968
+      -3600,
+      2778
     ]
   }
 }
