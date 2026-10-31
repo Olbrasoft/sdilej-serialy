@@ -649944,17 +649944,18 @@
       "retry_after": "2026-11-01T12:06:22.210729+00:00"
     },
     "4:8:10": {
-      "at": "2026-10-26T14:32:12.630785+00:00",
+      "at": "2026-10-31T12:09:57.050377+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_acceptable_original",
-      "elapsed_seconds": 53.07,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-27T14:33:05.704155+00:00"
+      "elapsed_seconds": 96.47,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-01T12:11:33.525378+00:00"
     },
     "3226:4:8": {
       "at": "2026-10-25T01:30:29.385106+00:00",
@@ -851481,9 +851482,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T12:11:04.851402+00:00"
+    },
+    "3548:5:21": {
+      "at": "2026-10-31T12:11:06.407795+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 69.71,
+      "search_evidence": [
+        {
+          "path": "/the-golden-girls-s05e21/s/-6",
+          "status": 200,
+          "response_bytes": 217084,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-golden-girls/s/-6",
+          "status": 200,
+          "response_bytes": 220085,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-golden-girls-s05e21/s/-6",
+          "status": 200,
+          "response_bytes": 217043,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-golden-girls/s/-6",
+          "status": 200,
+          "response_bytes": 220150,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T12:12:16.120691+00:00"
     }
   },
-  "updated_at": "2026-10-31T12:11:18.338918+00:00",
+  "updated_at": "2026-10-31T12:12:27.273091+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -859455,9 +859504,10 @@
     },
     "3548": {
       "misses": [
-        "3548:5:20"
+        "3548:5:20",
+        "3548:5:21"
       ],
-      "updated_at": "2026-10-31T07:51:55.781491+00:00"
+      "updated_at": "2026-10-31T12:12:16.120718+00:00"
     },
     "1015": {
       "misses": [
@@ -868793,12 +868843,12 @@
     },
     "4": {
       "misses": [
-        "4:3:29",
         "4:8:9",
-        "4:8:11"
+        "4:8:11",
+        "4:8:10"
       ],
-      "updated_at": "2026-10-31T12:11:05.677791+00:00",
-      "retry_after": "2026-10-31T16:11:05.677791+00:00"
+      "updated_at": "2026-10-31T12:11:33.525406+00:00",
+      "retry_after": "2026-10-31T16:11:33.525406+00:00"
     },
     "1138": {
       "misses": [
@@ -868876,12 +868926,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3548,
+    "last_series": 1486,
     "last_series_order": [
       false,
       -8.2,
-      -53792,
-      3548
+      -39880,
+      1486
     ]
   }
 }
