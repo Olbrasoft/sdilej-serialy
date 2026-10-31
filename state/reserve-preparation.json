@@ -149744,14 +149744,21 @@
       "queue_rank": 17593
     },
     "2292:1:9": {
-      "at": "2026-10-11T16:49:51.589541+00:00",
+      "at": "2026-10-31T19:09:20.714419+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 43.55,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T16:50:38.387306+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ko",
+      "observed_language_probability": 0.9690210819244385,
+      "observed_source_id": "26881769",
+      "elapsed_seconds": 183.38,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-01T19:12:24.823227+00:00"
     },
     "1327:6:3": {
       "at": "2026-10-11T16:50:10.248824+00:00",
@@ -804471,7 +804478,7 @@
       "retry_after": "2026-10-31T11:10:54.625501+00:00"
     },
     "2679:5:5": {
-      "at": "2026-10-30T11:08:54.072714+00:00",
+      "at": "2026-10-31T19:11:55.544363+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -804480,12 +804487,12 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 132.8,
+      "elapsed_seconds": 57.9,
       "search_evidence": [
         {
           "path": "/velka-laska-s05e05/s/-6",
           "status": 200,
-          "response_bytes": 217264,
+          "response_bytes": 217232,
           "boxes": 1,
           "parsed_candidates": 1,
           "heading_matches_query": true
@@ -804493,7 +804500,7 @@
         {
           "path": "/big-love-s05e05/s/-6",
           "status": 200,
-          "response_bytes": 216934,
+          "response_bytes": 216922,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -804501,7 +804508,7 @@
         {
           "path": "/velka-laska-s05e05/s/-6",
           "status": 200,
-          "response_bytes": 217347,
+          "response_bytes": 217193,
           "boxes": 1,
           "parsed_candidates": 1,
           "heading_matches_query": true
@@ -804509,7 +804516,7 @@
         {
           "path": "/velka-laska/s/-6",
           "status": 200,
-          "response_bytes": 269732,
+          "response_bytes": 269800,
           "boxes": 49,
           "parsed_candidates": 41,
           "heading_matches_query": true
@@ -804517,7 +804524,7 @@
         {
           "path": "/big-love-s05e05/s/-6",
           "status": 200,
-          "response_bytes": 216955,
+          "response_bytes": 216961,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -804525,14 +804532,14 @@
         {
           "path": "/big-love/s/-6",
           "status": 200,
-          "response_bytes": 258984,
+          "response_bytes": 258953,
           "boxes": 35,
           "parsed_candidates": 25,
           "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-31T11:11:06.874878+00:00"
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-01T19:12:53.445684+00:00"
     },
     "1461:4:19": {
       "at": "2026-10-30T11:11:07.476294+00:00",
@@ -864063,9 +864070,35 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T19:11:54.782424+00:00"
+    },
+    "1182:1:10": {
+      "at": "2026-10-31T19:10:07.084564+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 123.17,
+      "source_id": "31032020",
+      "queue_rank": 32411
+    },
+    "2467:1:9": {
+      "at": "2026-10-31T19:07:46.628381+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 299.81,
+      "source_id": "24886064",
+      "queue_rank": 32412
     }
   },
-  "updated_at": "2026-10-31T19:12:06.614047+00:00",
+  "updated_at": "2026-10-31T19:13:28.246682+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -870098,8 +870131,10 @@
       "updated_at": "2026-10-29T12:42:56.827087+00:00"
     },
     "2292": {
-      "misses": [],
-      "updated_at": "2026-10-31T18:25:20.163085+00:00"
+      "misses": [
+        "2292:1:9"
+      ],
+      "updated_at": "2026-10-31T19:12:24.823261+00:00"
     },
     "7481": {
       "misses": [
@@ -870889,10 +870924,8 @@
       "updated_at": "2026-10-31T19:05:58.316140+00:00"
     },
     "1182": {
-      "misses": [
-        "1182:4:2"
-      ],
-      "updated_at": "2026-10-29T21:29:35.014456+00:00"
+      "misses": [],
+      "updated_at": "2026-10-31T19:12:24.823350+00:00"
     },
     "3111": {
       "misses": [
@@ -878146,9 +878179,11 @@
     "2679": {
       "misses": [
         "2679:5:3",
-        "2679:5:4"
+        "2679:5:4",
+        "2679:5:5"
       ],
-      "updated_at": "2026-10-31T19:05:58.316255+00:00"
+      "updated_at": "2026-10-31T19:12:53.445717+00:00",
+      "retry_after": "2026-10-31T23:12:53.445717+00:00"
     },
     "1163": {
       "misses": [
@@ -881497,7 +881532,7 @@
     },
     "2467": {
       "misses": [],
-      "updated_at": "2026-10-31T19:11:02.764639+00:00"
+      "updated_at": "2026-10-31T19:12:46.437334+00:00"
     }
   },
   "discovery_progress": {
