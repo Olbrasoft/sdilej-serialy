@@ -155087,14 +155087,18 @@
       "queue_rank": 32381
     },
     "6952:1:7": {
-      "at": "2026-10-11T22:34:40.329305+00:00",
+      "at": "2026-10-31T17:43:20.875253+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 31.77,
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 344.45,
       "consecutive_failures": 1,
-      "retry_after": "2026-10-12T22:35:12.099494+00:00"
+      "retry_after": "2026-10-31T17:59:05.055261+00:00"
     },
     "571:3:1": {
       "at": "2026-10-24T07:21:45.375988+00:00",
@@ -648198,7 +648202,7 @@
       "retry_after": "2026-11-01T07:58:28.759493+00:00"
     },
     "4:4:9": {
-      "at": "2026-10-30T17:33:33.918977+00:00",
+      "at": "2026-10-31T17:43:20.108859+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -648206,10 +648210,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_acceptable_original",
-      "elapsed_seconds": 75.21,
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 345.22,
       "consecutive_failures": 5,
-      "retry_after": "2026-10-31T17:34:49.128152+00:00"
+      "retry_after": "2026-10-31T17:59:05.055273+00:00"
     },
     "4:4:8": {
       "at": "2026-10-31T17:42:45.519361+00:00",
@@ -667041,35 +667045,48 @@
       "queue_rank": 30474
     },
     "193:4:10": {
-      "at": "2026-10-26T00:34:27.859892+00:00",
+      "at": "2026-10-31T17:39:10.934196+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_search",
-      "elapsed_seconds": 1829.32,
-      "search_evidence": [
-        {
-          "path": "/for-all-mankind-s04e10/s/-6",
-          "status": 200,
-          "response_bytes": 189640,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/for-all-mankind-s04e10/s/-6",
-          "status": 200,
-          "response_bytes": 241212,
-          "boxes": 19,
-          "parsed_candidates": 19,
-          "heading_matches_query": true
-        }
-      ],
+      "reason": "source_search_unavailable",
+      "error": {
+        "type": "SearchUnavailable",
+        "frames": [
+          {
+            "file": "episodes.py",
+            "function": "_inspect",
+            "line": 335
+          },
+          {
+            "file": "source_audit.py",
+            "function": "_get",
+            "line": 118
+          },
+          {
+            "file": "episodes.py",
+            "function": "_get",
+            "line": 227
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 202
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 84
+          }
+        ]
+      },
+      "elapsed_seconds": 612.99,
       "consecutive_failures": 1,
-      "retry_after": "2026-10-26T01:19:57.177046+00:00"
+      "retry_after": "2026-10-31T17:59:05.055263+00:00"
     },
     "193:5:3": {
       "at": "2026-10-26T01:42:34.645300+00:00",
@@ -862813,9 +862830,23 @@
       "elapsed_seconds": 74.39,
       "source_id": "25181974",
       "queue_rank": 32382
+    },
+    "9127:1:2": {
+      "at": "2026-10-31T17:43:27.251277+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 338.07,
+      "consecutive_failures": 0,
+      "retry_after": "2026-10-31T17:59:05.055261+00:00"
     }
   },
-  "updated_at": "2026-10-31T17:49:05.352382+00:00",
+  "updated_at": "2026-10-31T17:49:26.993386+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
