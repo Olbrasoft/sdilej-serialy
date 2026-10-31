@@ -1062351,7 +1062351,7 @@
     }
   },
   "initialized_at": "2026-09-25T14:05:15.686917+00:00",
-  "updated_at": "2026-10-30T23:26:08.241083+00:00",
+  "updated_at": "2026-10-31T07:59:54.363351+00:00",
   "pilot_verified_at": "2026-09-25T14:23:33.839342+00:00",
   "pilot_counts": {
     "a": 2,
@@ -1062433,6 +1062433,31 @@
       "all_other_episode_records_unchanged": true,
       "retained_pending_target_id": "29821206",
       "new_uploads_created": 0
+    },
+    {
+      "reviewed_at": "2026-10-31T07:59:54.363351+00:00",
+      "previous_halted_at": "2026-10-30T23:26:08.241059+00:00",
+      "previous_halt_reason": "PrehrajtoError",
+      "reason": "Inconclusive target login verification during worker initialization; bounded login retry and recoverable batch pause deployed",
+      "failed_run": 41129951463,
+      "failed_job": 124341352915,
+      "failure_frames": [
+        "continuous.py:login_pair",
+        "pipeline.py:target_session",
+        "prehrajto.py:login"
+      ],
+      "live_account_counts": {
+        "a": 16003,
+        "b": 16002
+      },
+      "confirmed_counts": {
+        "a": 15987,
+        "b": 15990
+      },
+      "all_episode_records_unchanged": true,
+      "retained_pending_allocations": 28,
+      "no_active_claims": true,
+      "new_uploads_created": 0
     }
   ],
   "last_transient_error": {
@@ -1062465,7 +1062490,5 @@
         "line": 717
       }
     ]
-  },
-  "halted_at": "2026-10-30T23:26:08.241059+00:00",
-  "halt_reason": "PrehrajtoError"
+  }
 }
