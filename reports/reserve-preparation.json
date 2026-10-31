@@ -1,16 +1,16 @@
 {
   "generation": "pair-2026-09-25",
   "run_id": "41242566225",
-  "attempted_this_run": 29,
+  "attempted_this_run": 33,
   "prepared_this_run": 5,
   "reserve_total": 24025,
   "queue_total": 32460,
-  "updated_at": "2026-10-31T21:56:18.029364+00:00",
+  "updated_at": "2026-10-31T21:57:23.675114+00:00",
   "workers": 4,
-  "elapsed_seconds": 1791.8,
-  "prepared_per_hour": 10.05,
+  "elapsed_seconds": 1857.45,
+  "prepared_per_hour": 9.69,
   "available_this_run": 5,
-  "available_per_hour": 10.05,
+  "available_per_hour": 9.69,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
@@ -23,30 +23,31 @@
     "categories": {
       "completed": 32418,
       "allocated": 29,
-      "failed": 13
+      "in_flight": 3,
+      "failed": 10
     },
     "completed_by_account": {
       "a": 16207,
       "b": 16211
     },
-    "uploads_last_24h": 498,
-    "uploads_per_hour_24h": 20.75,
+    "uploads_last_24h": 497,
+    "uploads_per_hour_24h": 20.71,
     "stock_hours_24h": 0.0
   },
   "health": {
     "status": "waiting_for_sources",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 1487,
-      "b": 1147
+      "a": 1553,
+      "b": 1212
     },
     "preparation_outcomes_last_hour": {
       "no_acceptable_original": 7,
       "verified_non_czech": 1,
+      "source_search_unavailable": 7,
       "no_matches": 15,
       "inconclusive_audio": 2,
-      "transient_original": 3,
-      "source_search_unavailable": 3,
+      "transient_original": 2,
       "prepared": 9
     }
   },
@@ -61,14 +62,14 @@
     ]
   },
   "cache": {
-    "search_miss": 88,
-    "search_seconds": 1978.2,
+    "search_miss": 90,
+    "search_seconds": 2976.06,
     "search_hit": 50,
     "media_miss": 34,
     "media_seconds": 143.29,
     "audio_miss": 14,
     "audio_seconds": 451.97,
-    "media_hit": 96
+    "media_hit": 98
   },
   "audio_pipeline": {
     "sample_count": 20,
@@ -88,7 +89,7 @@
   },
   "statuses": {
     "prepared": 24025,
-    "deferred": 32763
+    "deferred": 32765
   },
   "requested_series": [
     {
@@ -2902,21 +2903,21 @@
   ],
   "search_health": {
     "status": "paused",
-    "consecutive_failures": 1,
-    "retry_seconds": 23,
-    "failed_cycles_this_run": 1,
-    "control_requests": 16,
-    "request_gap_seconds": 4,
-    "restart_required": false,
+    "consecutive_failures": 2,
+    "retry_seconds": 590,
+    "failed_cycles_this_run": 2,
+    "control_requests": 20,
+    "request_gap_seconds": 8,
+    "restart_required": true,
     "last_request_limit": null,
-    "resume_after": "2026-10-31T21:56:41.155467+00:00",
+    "resume_after": "2026-10-31T22:07:13.655523+00:00",
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
         "response_bytes": 189621,
         "parsed_candidates": 0,
-        "body_sha256": "60d469fffb3f1901d4aa569981f26daa922de8ce3f3092fef60b8e708071209c",
+        "body_sha256": "3ffbf8398644a67fdd8ef4756d113c5cfa6941be830600371ee9d248f7345b2c",
         "video_box_count": 0,
         "heading_matches_query": true,
         "password_field_present": false,
@@ -2925,14 +2926,14 @@
         "cache_age_seconds": null,
         "response_path": "/teorie-velkeho-tresku/s/-6",
         "unexpected_origin": false,
-        "checked_at": "2026-10-31T21:51:37.144229+00:00"
+        "checked_at": "2026-10-31T21:57:05.636195+00:00"
       },
       {
         "path": "/doktor-martin/s/-6",
         "status": 200,
         "response_bytes": 189453,
         "parsed_candidates": 0,
-        "body_sha256": "701ef7cbb4738333cde1225a218ff3582fc9f0293cfa02b5ecc73a541bad73c9",
+        "body_sha256": "4a0f722dbf9b5712f8418491d5561229b3e722617a73148981c56cf72deb74a0",
         "video_box_count": 0,
         "heading_matches_query": true,
         "password_field_present": false,
@@ -2941,7 +2942,7 @@
         "cache_age_seconds": null,
         "response_path": "/doktor-martin/s/-6",
         "unexpected_origin": false,
-        "checked_at": "2026-10-31T21:51:41.155318+00:00"
+        "checked_at": "2026-10-31T21:57:13.655411+00:00"
       }
     ]
   }
