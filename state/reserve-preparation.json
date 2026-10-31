@@ -139265,14 +139265,21 @@
       "retry_after": "2026-11-01T23:27:17.636387+00:00"
     },
     "2143:2:9": {
-      "at": "2026-10-11T09:13:22.832028+00:00",
+      "at": "2026-10-31T23:26:56.992309+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 57.72,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T09:14:20.548893+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9982805252075195,
+      "observed_source_id": "16987600",
+      "elapsed_seconds": 61.53,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-01T23:27:58.520025+00:00"
     },
     "2143:2:10": {
       "at": "2026-10-11T09:13:44.855978+00:00",
@@ -870405,9 +870412,112 @@
       "elapsed_seconds": 34.4,
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T23:26:31.918385+00:00"
+    },
+    "9127:6:1": {
+      "at": "2026-10-31T23:27:15.944579+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 40.42,
+      "source_id": "31541741",
+      "queue_rank": 32490
+    },
+    "9127:6:2": {
+      "at": "2026-10-31T23:27:18.248068+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 49.99,
+      "source_id": "32434337",
+      "queue_rank": 32491
+    },
+    "9127:6:3": {
+      "at": "2026-10-31T23:27:36.392847+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 33.97,
+      "source_id": "31541751",
+      "queue_rank": 32492
+    },
+    "9671:4:3": {
+      "at": "2026-10-31T23:27:59.116779+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 39.22,
+      "search_evidence": [
+        {
+          "path": "/zelvy-ninja-s04e03/s/-6",
+          "status": 200,
+          "response_bytes": 216143,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/teenage-mutant-ninja-turtles-s04e03/s/-6",
+          "status": 200,
+          "response_bytes": 216417,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zelvy-ninja-s04e03/s/-6",
+          "status": 200,
+          "response_bytes": 216135,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zelvy-ninja/s/-6",
+          "status": 200,
+          "response_bytes": 428635,
+          "boxes": 190,
+          "parsed_candidates": 186,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/teenage-mutant-ninja-turtles-s04e03/s/-6",
+          "status": 200,
+          "response_bytes": 216390,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/teenage-mutant-ninja-turtles/s/-6",
+          "status": 200,
+          "response_bytes": 340819,
+          "boxes": 94,
+          "parsed_candidates": 81,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T23:28:38.338758+00:00"
     }
   },
-  "updated_at": "2026-10-31T23:27:30.232039+00:00",
+  "updated_at": "2026-10-31T23:28:40.638590+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -876289,7 +876399,7 @@
     },
     "9127": {
       "misses": [],
-      "updated_at": "2026-10-31T23:16:17.145846+00:00"
+      "updated_at": "2026-10-31T23:28:10.365083+00:00"
     },
     "3610": {
       "misses": [
@@ -882303,9 +882413,11 @@
     "9671": {
       "misses": [
         "9671:4:1",
-        "9671:4:2"
+        "9671:4:2",
+        "9671:4:3"
       ],
-      "updated_at": "2026-10-31T12:56:56.925436+00:00"
+      "updated_at": "2026-10-31T23:28:38.338794+00:00",
+      "retry_after": "2026-11-01T03:28:38.338794+00:00"
     },
     "4007": {
       "misses": [
@@ -887473,9 +887585,11 @@
     "2143": {
       "misses": [
         "2143:2:1",
-        "2143:2:8"
+        "2143:2:8",
+        "2143:2:9"
       ],
-      "updated_at": "2026-10-31T23:27:17.636416+00:00"
+      "updated_at": "2026-10-31T23:27:58.520058+00:00",
+      "retry_after": "2026-11-01T03:27:58.520058+00:00"
     },
     "1377": {
       "misses": [
@@ -887896,12 +888010,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1296,
+    "last_series": 9671,
     "last_series_order": [
       false,
       -7.9,
-      -32877,
-      1296
+      -18757,
+      9671
     ]
   }
 }
