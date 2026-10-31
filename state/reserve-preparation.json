@@ -857864,9 +857864,128 @@
       "elapsed_seconds": 68.02,
       "source_id": "32942832",
       "queue_rank": 32288
+    },
+    "1582:7:15": {
+      "at": "2026-10-31T15:03:21.393902+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 66.84,
+      "source_id": "32942837",
+      "queue_rank": 32289
+    },
+    "1582:7:16": {
+      "at": "2026-10-31T15:03:26.833994+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 68.09,
+      "source_id": "32942843",
+      "queue_rank": 32290
+    },
+    "2604:4:7": {
+      "at": "2026-10-31T15:03:59.329154+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 43.82,
+      "search_evidence": [
+        {
+          "path": "/rwby-s04e07/s/-6",
+          "status": 200,
+          "response_bytes": 216811,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/rwby-s04e07/s/-6",
+          "status": 200,
+          "response_bytes": 216805,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/rwby/s/-6",
+          "status": 200,
+          "response_bytes": 463496,
+          "boxes": 220,
+          "parsed_candidates": 178,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T15:04:43.144317+00:00"
+    },
+    "1582:7:17": {
+      "at": "2026-10-31T15:03:39.824373+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 69.44,
+      "source_id": "32942848",
+      "queue_rank": 32291
+    },
+    "2896:4:1": {
+      "at": "2026-10-31T15:04:28.954127+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 37.4,
+      "search_evidence": [
+        {
+          "path": "/in-the-heat-of-the-night-s04e01/s/-6",
+          "status": 200,
+          "response_bytes": 217186,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/in-the-heat-of-the-night-s04e01/s/-6",
+          "status": 200,
+          "response_bytes": 217249,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/in-the-heat-of-the-night/s/-6",
+          "status": 200,
+          "response_bytes": 224847,
+          "boxes": 7,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T15:05:06.352450+00:00"
     }
   },
-  "updated_at": "2026-10-31T15:04:12.284542+00:00",
+  "updated_at": "2026-10-31T15:05:09.270577+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -863797,7 +863916,7 @@
     },
     "1582": {
       "misses": [],
-      "updated_at": "2026-10-31T15:03:58.609314+00:00"
+      "updated_at": "2026-10-31T15:04:49.262710+00:00"
     },
     "6401": {
       "misses": [
@@ -873519,9 +873638,10 @@
     },
     "2604": {
       "misses": [
-        "2604:4:6"
+        "2604:4:6",
+        "2604:4:7"
       ],
-      "updated_at": "2026-10-31T10:42:13.297212+00:00"
+      "updated_at": "2026-10-31T15:04:43.144343+00:00"
     },
     "2445": {
       "misses": [],
@@ -873606,9 +873726,11 @@
     "2896": {
       "misses": [
         "2896:3:21",
-        "2896:3:22"
+        "2896:3:22",
+        "2896:4:1"
       ],
-      "updated_at": "2026-10-31T10:42:41.218934+00:00"
+      "updated_at": "2026-10-31T15:05:06.352480+00:00",
+      "retry_after": "2026-10-31T19:05:06.352480+00:00"
     },
     "5183": {
       "misses": [
@@ -875242,12 +875364,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2604,
+    "last_series": 2896,
     "last_series_order": [
       false,
       -7.6,
-      -8267,
-      2604
+      -7318,
+      2896
     ]
   }
 }
