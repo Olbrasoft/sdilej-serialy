@@ -627580,7 +627580,7 @@
       "retry_after": "2026-11-01T19:14:25.008360+00:00"
     },
     "4:4:4": {
-      "at": "2026-10-31T19:33:40.825448+00:00",
+      "at": "2026-10-31T22:10:40.964352+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -627588,10 +627588,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 378.83,
-      "consecutive_failures": 15,
-      "retry_after": "2026-10-31T19:49:59.651760+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 479.05,
+      "consecutive_failures": 16,
+      "retry_after": "2026-11-01T04:18:40.010825+00:00"
     },
     "4:3:7": {
       "at": "2026-10-24T07:45:28.951036+00:00",
@@ -867279,9 +867279,73 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T22:15:51.220904+00:00"
+    },
+    "2352:8:8": {
+      "at": "2026-10-31T22:14:36.485783+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 230.76,
+      "search_evidence": [
+        {
+          "path": "/borici-mytu-s08e08/s/-6",
+          "status": 200,
+          "response_bytes": 216980,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mythbusters-s08e08/s/-6",
+          "status": 200,
+          "response_bytes": 216972,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/borici-mytu-s08e08/s/-6",
+          "status": 200,
+          "response_bytes": 216986,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/borici-mytu/s/-6",
+          "status": 200,
+          "response_bytes": 339058,
+          "boxes": 114,
+          "parsed_candidates": 96,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mythbusters-s08e08/s/-6",
+          "status": 200,
+          "response_bytes": 217009,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mythbusters/s/-6",
+          "status": 200,
+          "response_bytes": 233711,
+          "boxes": 15,
+          "parsed_candidates": 15,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T22:18:27.243135+00:00"
     }
   },
-  "updated_at": "2026-10-31T22:17:38.261888+00:00",
+  "updated_at": "2026-10-31T22:18:44.952191+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -874185,9 +874249,10 @@
     },
     "2352": {
       "misses": [
-        "2352:8:7"
+        "2352:8:7",
+        "2352:8:8"
       ],
-      "updated_at": "2026-10-31T22:15:51.220940+00:00"
+      "updated_at": "2026-10-31T22:18:27.243171+00:00"
     },
     "688": {
       "misses": [
@@ -884641,12 +884706,12 @@
     },
     "4": {
       "misses": [
-        "4:2:13",
         "4:3:12",
-        "4:3:42"
+        "4:3:42",
+        "4:4:4"
       ],
-      "updated_at": "2026-10-31T22:10:40.439583+00:00",
-      "retry_after": "2026-11-01T02:10:40.439583+00:00"
+      "updated_at": "2026-10-31T22:18:40.010860+00:00",
+      "retry_after": "2026-10-31T22:48:40.010860+00:00"
     },
     "1138": {
       "misses": [
@@ -884746,12 +884811,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1410,
+    "last_series": 2195,
     "last_series_order": [
       false,
       -8.1,
-      -69542,
-      1410
+      -46346,
+      2195
     ]
   }
 }
