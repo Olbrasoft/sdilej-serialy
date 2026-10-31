@@ -353561,7 +353561,7 @@
       "retry_after": "2026-10-21T14:29:23.876429+00:00"
     },
     "1918:1:30": {
-      "at": "2026-10-30T23:02:48.555441+00:00",
+      "at": "2026-10-31T00:44:04.008325+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -353569,10 +353569,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 382.9,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-30T23:19:11.451557+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9568036794662476,
+      "observed_source_id": "33687857",
+      "elapsed_seconds": 128.17,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-01T00:46:21.568553+00:00"
     },
     "1918:1:35": {
       "at": "2026-10-29T20:34:21.733670+00:00",
@@ -514655,7 +514658,7 @@
       "queue_rank": 29811
     },
     "27:14:3": {
-      "at": "2026-10-29T23:05:25.082332+00:00",
+      "at": "2026-10-31T00:44:05.107306+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -514665,28 +514668,12 @@
       "request_probe_revision": 1,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 143.41,
+      "elapsed_seconds": 135.23,
       "search_evidence": [
         {
           "path": "/dunaj-k-vasim-sluzbam-s14e03/s/-6",
           "status": 200,
-          "response_bytes": 217146,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/dunaj-k-vasim-sluzbam/s/-6",
-          "status": 200,
-          "response_bytes": 217017,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/dunaj-k-vasim-sluzbam-s14e03/s/-6",
-          "status": 200,
-          "response_bytes": 217214,
+          "response_bytes": 217196,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -514698,10 +514685,26 @@
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
+        },
+        {
+          "path": "/dunaj-k-vasim-sluzbam-s14e03/s/-6",
+          "status": 200,
+          "response_bytes": 217200,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/dunaj-k-vasim-sluzbam/s/-6",
+          "status": 200,
+          "response_bytes": 217108,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-30T23:07:48.491167+00:00"
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-01T00:46:21.568664+00:00"
     },
     "10451:1:6": {
       "at": "2026-10-23T18:50:16.367307+00:00",
@@ -828147,7 +828150,7 @@
       "retry_after": "2026-10-31T00:43:47.647399+00:00"
     }
   },
-  "updated_at": "2026-10-31T00:46:16.111677+00:00",
+  "updated_at": "2026-10-31T00:47:24.834772+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -842392,9 +842395,10 @@
     },
     "1918": {
       "misses": [
-        "1918:1:50"
+        "1918:1:50",
+        "1918:1:30"
       ],
-      "updated_at": "2026-10-31T00:15:30.805683+00:00"
+      "updated_at": "2026-10-31T00:46:21.568598+00:00"
     },
     "1580": {
       "misses": [
@@ -845213,12 +845217,12 @@
     },
     "27": {
       "misses": [
-        "27:13:3",
         "27:14:1",
-        "27:14:2"
+        "27:14:2",
+        "27:14:3"
       ],
-      "updated_at": "2026-10-31T00:02:01.879438+00:00",
-      "retry_after": "2026-10-31T04:02:01.879438+00:00"
+      "updated_at": "2026-10-31T00:46:21.568676+00:00",
+      "retry_after": "2026-10-31T04:46:21.568676+00:00"
     },
     "10461": {
       "misses": [],
@@ -845530,12 +845534,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1585,
+    "last_series": 1561,
     "last_series_order": [
       false,
       -7.5,
-      -47049,
-      1585
+      -45964,
+      1561
     ]
   }
 }
