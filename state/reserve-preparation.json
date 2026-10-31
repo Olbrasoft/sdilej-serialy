@@ -863851,7 +863851,7 @@
       "queue_rank": 32403
     },
     "681:2:2": {
-      "at": "2026-10-31T18:26:53.372808+00:00",
+      "at": "2026-10-31T18:54:50.763808+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -863859,40 +863859,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 604.44,
-      "consecutive_failures": 0,
-      "retry_after": "2026-10-31T18:46:20.925573+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 915.56,
+      "consecutive_failures": 1,
+      "retry_after": "2026-10-31T19:25:06.321989+00:00"
     },
     "2489:2:7": {
       "at": "2026-10-31T18:51:43.837259+00:00",
@@ -864034,7 +864004,7 @@
       "queue_rank": 32409
     }
   },
-  "updated_at": "2026-10-31T19:09:38.695409+00:00",
+  "updated_at": "2026-10-31T19:10:54.212535+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -870789,8 +870759,10 @@
       "updated_at": "2026-10-11T18:51:09.503046+00:00"
     },
     "681": {
-      "misses": [],
-      "updated_at": "2026-10-11T21:44:00.885912+00:00"
+      "misses": [
+        "681:2:2"
+      ],
+      "updated_at": "2026-10-31T19:10:06.322015+00:00"
     },
     "2921": {
       "misses": [
@@ -881466,12 +881438,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1662,
+    "last_series": 1182,
     "last_series_order": [
       false,
       -8.3,
-      -90083,
-      1662
+      -84221,
+      1182
     ]
   }
 }
