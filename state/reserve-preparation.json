@@ -863023,9 +863023,130 @@
       "elapsed_seconds": 73.56,
       "source_id": "26903859",
       "queue_rank": 32389
+    },
+    "9127:1:7": {
+      "at": "2026-10-31T18:13:13.388024+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 34.96,
+      "search_evidence": [
+        {
+          "path": "/top-gear-s01e07/s/-6",
+          "status": 200,
+          "response_bytes": 216944,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear-s01e07/s/-6",
+          "status": 200,
+          "response_bytes": 216940,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear/s/-6",
+          "status": 200,
+          "response_bytes": 467539,
+          "boxes": 249,
+          "parsed_candidates": 247,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T18:13:49.350608+00:00"
+    },
+    "2292:1:20": {
+      "at": "2026-10-31T18:08:14.316205+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ko",
+      "observed_language_probability": 0.9425160686175028,
+      "observed_source_id": "26882514",
+      "elapsed_seconds": 336.4,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T18:13:50.712819+00:00"
+    },
+    "1582:11:1": {
+      "at": "2026-10-31T18:13:15.033208+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 74.69,
+      "search_evidence": [
+        {
+          "path": "/ranc-heartland-s11e01/s/-6",
+          "status": 200,
+          "response_bytes": 217369,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s11e01/s/-6",
+          "status": 200,
+          "response_bytes": 217306,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ranc-heartland-s11e01/s/-6",
+          "status": 200,
+          "response_bytes": 217432,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ranc-heartland/s/-6",
+          "status": 200,
+          "response_bytes": 718227,
+          "boxes": 412,
+          "parsed_candidates": 412,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s11e01/s/-6",
+          "status": 200,
+          "response_bytes": 217258,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland/s/-6",
+          "status": 200,
+          "response_bytes": 550621,
+          "boxes": 322,
+          "parsed_candidates": 236,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T18:14:29.719745+00:00"
     }
   },
-  "updated_at": "2026-10-31T18:13:26.351192+00:00",
+  "updated_at": "2026-10-31T18:14:52.365751+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -868905,8 +869026,10 @@
       "updated_at": "2026-10-16T09:36:13.898343+00:00"
     },
     "9127": {
-      "misses": [],
-      "updated_at": "2026-10-31T18:13:16.483084+00:00"
+      "misses": [
+        "9127:1:7"
+      ],
+      "updated_at": "2026-10-31T18:13:49.350656+00:00"
     },
     "3610": {
       "misses": [
@@ -868966,8 +869089,10 @@
       "updated_at": "2026-10-31T17:34:36.585666+00:00"
     },
     "1582": {
-      "misses": [],
-      "updated_at": "2026-10-31T17:39:30.492024+00:00"
+      "misses": [
+        "1582:11:1"
+      ],
+      "updated_at": "2026-10-31T18:14:29.719777+00:00"
     },
     "6401": {
       "misses": [
@@ -869053,9 +869178,11 @@
     "2292": {
       "misses": [
         "2292:1:15",
-        "2292:1:16"
+        "2292:1:16",
+        "2292:1:20"
       ],
-      "updated_at": "2026-10-22T18:47:12.794350+00:00"
+      "updated_at": "2026-10-31T18:13:50.712848+00:00",
+      "retry_after": "2026-10-31T22:13:50.712848+00:00"
     },
     "7481": {
       "misses": [
@@ -880444,12 +880571,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 5252,
+    "last_series": 2778,
     "last_series_order": [
       false,
       -8.4,
-      -7201,
-      5252
+      -3600,
+      2778
     ]
   }
 }
