@@ -3097,11 +3097,44 @@
       "retry_after": "2026-11-01T05:23:22.566071+00:00"
     },
     "1611:9:2": {
-      "at": "2026-10-01T23:38:25.373029+00:00",
+      "at": "2026-10-31T10:49:31.066872+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T23:38:26.153846+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 10.79,
+      "search_evidence": [
+        {
+          "path": "/the-joy-of-painting-s09e02/s/-6",
+          "status": 200,
+          "response_bytes": 217155,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting-s09e02/s/-6",
+          "status": 200,
+          "response_bytes": 217244,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting/s/-6",
+          "status": 200,
+          "response_bytes": 226917,
+          "boxes": 8,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T10:49:41.859210+00:00"
     },
     "1611:9:3": {
       "at": "2026-10-01T23:38:45.618801+00:00",
@@ -848809,9 +848842,90 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T10:48:00.711583+00:00"
+    },
+    "1081:5:18": {
+      "at": "2026-10-31T10:47:48.845564+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9954884648323059,
+      "observed_source_id": "33237965",
+      "elapsed_seconds": 101.11,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T10:49:29.955064+00:00"
+    },
+    "2889:11:3": {
+      "at": "2026-10-31T10:49:42.713195+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 15.5,
+      "search_evidence": [
+        {
+          "path": "/jak-funguje-vesmir-s11e03/s/-6",
+          "status": 200,
+          "response_bytes": 217160,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/how-the-universe-works-s11e03/s/-6",
+          "status": 200,
+          "response_bytes": 217177,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/jak-funguje-vesmir-s11e03/s/-6",
+          "status": 200,
+          "response_bytes": 217112,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/jak-funguje-vesmir/s/-6",
+          "status": 200,
+          "response_bytes": 365651,
+          "boxes": 116,
+          "parsed_candidates": 111,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/how-the-universe-works-s11e03/s/-6",
+          "status": 200,
+          "response_bytes": 217240,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/how-the-universe-works/s/-6",
+          "status": 200,
+          "response_bytes": 250689,
+          "boxes": 26,
+          "parsed_candidates": 26,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T10:49:58.217848+00:00"
     }
   },
-  "updated_at": "2026-10-31T10:48:53.643944+00:00",
+  "updated_at": "2026-10-31T10:50:07.280002+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -853023,9 +853137,10 @@
     },
     "1611": {
       "misses": [
-        "1611:9:1"
+        "1611:9:1",
+        "1611:9:2"
       ],
-      "updated_at": "2026-10-31T05:23:22.566097+00:00"
+      "updated_at": "2026-10-31T10:49:41.859239+00:00"
     },
     "1265": {
       "misses": [
@@ -855038,9 +855153,10 @@
     },
     "2889": {
       "misses": [
-        "2889:11:2"
+        "2889:11:2",
+        "2889:11:3"
       ],
-      "updated_at": "2026-10-31T05:23:56.678484+00:00"
+      "updated_at": "2026-10-31T10:49:58.217882+00:00"
     },
     "5252": {
       "misses": [
@@ -865207,12 +865323,9 @@
     },
     "1081": {
       "misses": [
-        "1081:5:17",
-        "1081:4:1",
-        "1081:4:3"
+        "1081:5:18"
       ],
-      "updated_at": "2026-10-31T01:58:43.981253+00:00",
-      "retry_after": "2026-10-31T05:58:43.981253+00:00"
+      "updated_at": "2026-10-31T10:49:29.955088+00:00"
     },
     "569": {
       "misses": [
@@ -866212,12 +866325,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1081,
+    "last_series": 1344,
     "last_series_order": [
       false,
-      -7.4,
-      -388857,
-      1081
+      -8.8,
+      -388900,
+      1344
     ]
   }
 }
