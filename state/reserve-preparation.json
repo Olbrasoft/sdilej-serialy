@@ -844264,7 +844264,7 @@
       "retry_after": "2026-11-01T08:23:44.736910+00:00"
     },
     "2462:1:29": {
-      "at": "2026-10-31T07:53:31.985541+00:00",
+      "at": "2026-10-31T08:26:53.886980+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -844272,10 +844272,36 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 310.02,
-      "consecutive_failures": 0,
-      "retry_after": "2026-10-31T08:08:42.009896+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 43.11,
+      "search_evidence": [
+        {
+          "path": "/fullmetal-alchemist-brotherhood-s01e29/s/-6",
+          "status": 200,
+          "response_bytes": 217427,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fullmetal-alchemist-brotherhood-s01e29/s/-6",
+          "status": 200,
+          "response_bytes": 217378,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fullmetal-alchemist-brotherhood/s/-6",
+          "status": 200,
+          "response_bytes": 453486,
+          "boxes": 172,
+          "parsed_candidates": 172,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T08:27:36.998904+00:00"
     },
     "2462:1:30": {
       "at": "2026-10-31T07:58:29.366885+00:00",
@@ -844461,9 +844487,62 @@
       "elapsed_seconds": 148.52,
       "source_id": "32003207",
       "queue_rank": 32185
+    },
+    "907:7:7": {
+      "at": "2026-10-31T08:23:46.705465+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 153.89,
+      "source_id": "32003208",
+      "queue_rank": 32186
+    },
+    "2291:2:7": {
+      "at": "2026-10-31T08:26:14.689081+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 38.48,
+      "search_evidence": [
+        {
+          "path": "/zorro-s02e07/s/-6",
+          "status": 200,
+          "response_bytes": 216849,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zorro-s02e07/s/-6",
+          "status": 200,
+          "response_bytes": 216880,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zorro/s/-6",
+          "status": 200,
+          "response_bytes": 327353,
+          "boxes": 93,
+          "parsed_candidates": 87,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T08:26:53.172170+00:00"
     }
   },
-  "updated_at": "2026-10-31T08:26:23.549581+00:00",
+  "updated_at": "2026-10-31T08:27:52.678781+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -849185,9 +849264,11 @@
     "2462": {
       "misses": [
         "2462:1:27",
-        "2462:1:28"
+        "2462:1:28",
+        "2462:1:29"
       ],
-      "updated_at": "2026-10-31T08:23:44.736939+00:00"
+      "updated_at": "2026-10-31T08:27:36.998939+00:00",
+      "retry_after": "2026-10-31T12:27:36.998939+00:00"
     },
     "1553": {
       "misses": [
@@ -853161,9 +853242,10 @@
     },
     "2291": {
       "misses": [
-        "2291:1:6"
+        "2291:1:6",
+        "2291:2:7"
       ],
-      "updated_at": "2026-10-31T08:23:45.900078+00:00"
+      "updated_at": "2026-10-31T08:26:53.172198+00:00"
     },
     "3184": {
       "misses": [
@@ -857649,7 +857731,7 @@
     },
     "907": {
       "misses": [],
-      "updated_at": "2026-10-31T08:26:13.985121+00:00"
+      "updated_at": "2026-10-31T08:26:48.757138+00:00"
     },
     "1231": {
       "misses": [
@@ -861910,12 +861992,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2291,
+    "last_series": 9707,
     "last_series_order": [
       false,
       -8.2,
-      -5103,
-      2291
+      -4548,
+      9707
     ]
   }
 }
