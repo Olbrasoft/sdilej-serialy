@@ -865754,7 +865754,7 @@
       "retry_after": "2026-10-31T22:51:15.141081+00:00"
     },
     "681:2:5": {
-      "at": "2026-10-31T21:43:36.290234+00:00",
+      "at": "2026-10-31T22:10:33.065427+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -865762,40 +865762,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 823.47,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-31T22:07:13.655521+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 929.3,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-31T23:26:02.362716+00:00"
     },
     "2352:8:17": {
       "at": "2026-10-31T20:14:46.640118+00:00",
@@ -867859,9 +867829,121 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T22:25:19.868881+00:00"
+    },
+    "1582:11:17": {
+      "at": "2026-10-31T22:25:00.409691+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 95.55,
+      "search_evidence": [
+        {
+          "path": "/ranc-heartland-s11e17/s/-6",
+          "status": 200,
+          "response_bytes": 217355,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s11e17/s/-6",
+          "status": 200,
+          "response_bytes": 217214,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ranc-heartland-s11e17/s/-6",
+          "status": 200,
+          "response_bytes": 217307,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ranc-heartland/s/-6",
+          "status": 200,
+          "response_bytes": 718203,
+          "boxes": 412,
+          "parsed_candidates": 412,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s11e17/s/-6",
+          "status": 200,
+          "response_bytes": 217190,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland/s/-6",
+          "status": 200,
+          "response_bytes": 550701,
+          "boxes": 322,
+          "parsed_candidates": 236,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T22:26:35.964737+00:00"
+    },
+    "2280:3:6": {
+      "at": "2026-10-31T22:25:20.378830+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 79.13,
+      "search_evidence": [
+        {
+          "path": "/steven-universe-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 217031,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/steven-universe/s/-6",
+          "status": 200,
+          "response_bytes": 221595,
+          "boxes": 5,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/steven-universe-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 217110,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/steven-universe/s/-6",
+          "status": 200,
+          "response_bytes": 221619,
+          "boxes": 5,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T22:26:39.510308+00:00"
     }
   },
-  "updated_at": "2026-10-31T22:25:41.660304+00:00",
+  "updated_at": "2026-10-31T22:26:56.292443+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -873802,12 +873884,12 @@
     },
     "1582": {
       "misses": [
-        "1582:11:11",
         "1582:11:12",
-        "1582:11:14"
+        "1582:11:14",
+        "1582:11:17"
       ],
-      "updated_at": "2026-10-31T22:25:19.868915+00:00",
-      "retry_after": "2026-11-01T02:25:19.868915+00:00"
+      "updated_at": "2026-10-31T22:26:35.964778+00:00",
+      "retry_after": "2026-11-01T02:26:35.964778+00:00"
     },
     "6401": {
       "misses": [
@@ -874622,9 +874704,11 @@
     "681": {
       "misses": [
         "681:2:3",
-        "681:2:4"
+        "681:2:4",
+        "681:2:5"
       ],
-      "updated_at": "2026-10-31T21:51:15.141112+00:00"
+      "updated_at": "2026-10-31T22:26:02.362748+00:00",
+      "retry_after": "2026-10-31T22:56:02.362748+00:00"
     },
     "2921": {
       "misses": [
@@ -877083,9 +877167,10 @@
     },
     "2280": {
       "misses": [
-        "2280:3:5"
+        "2280:3:5",
+        "2280:3:6"
       ],
-      "updated_at": "2026-10-31T12:15:58.055180+00:00"
+      "updated_at": "2026-10-31T22:26:39.510341+00:00"
     },
     "4377": {
       "misses": [],
@@ -885322,12 +885407,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2280,
+    "last_series": 1885,
     "last_series_order": [
       false,
       -8.1,
-      -46020,
-      2280
+      -33927,
+      1885
     ]
   }
 }
