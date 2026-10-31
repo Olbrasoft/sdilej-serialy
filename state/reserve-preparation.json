@@ -11299,15 +11299,19 @@
       "retry_after": "2026-10-19T15:55:28.443335+00:00"
     },
     "1235:4:4": {
-      "at": "2026-10-18T10:19:14.805213+00:00",
+      "at": "2026-10-31T23:20:00.186416+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "saved_review_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 59.45,
-      "consecutive_failures": 8,
-      "retry_after": "2026-10-19T10:20:41.430211+00:00"
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 70.62,
+      "consecutive_failures": 9,
+      "retry_after": "2026-11-01T23:21:10.801717+00:00"
     },
     "1235:4:5": {
       "at": "2026-09-29T13:56:21.456043+00:00",
@@ -870157,9 +870161,89 @@
       "elapsed_seconds": 114.32,
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T23:19:59.003018+00:00"
+    },
+    "9828:8:1": {
+      "at": "2026-10-31T23:21:11.318475+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 34.37,
+      "search_evidence": [
+        {
+          "path": "/zelvy-ninja-s08e01/s/-6",
+          "status": 200,
+          "response_bytes": 216282,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zelvy-ninja/s/-6",
+          "status": 200,
+          "response_bytes": 428663,
+          "boxes": 190,
+          "parsed_candidates": 186,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/teenage-mutant-ninja-turtles-s08e01/s/-6",
+          "status": 200,
+          "response_bytes": 216291,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/teenage-mutant-ninja-turtles/s/-6",
+          "status": 200,
+          "response_bytes": 340639,
+          "boxes": 94,
+          "parsed_candidates": 81,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zelvy-ninja-s08e01/s/-6",
+          "status": 200,
+          "response_bytes": 216081,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zelvy-ninja/s/-6",
+          "status": 200,
+          "response_bytes": 428669,
+          "boxes": 190,
+          "parsed_candidates": 186,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/teenage-mutant-ninja-turtles-s08e01/s/-6",
+          "status": 200,
+          "response_bytes": 216304,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/teenage-mutant-ninja-turtles/s/-6",
+          "status": 200,
+          "response_bytes": 340837,
+          "boxes": 94,
+          "parsed_candidates": 81,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T23:21:45.686553+00:00"
     }
   },
-  "updated_at": "2026-10-31T23:21:02.135956+00:00",
+  "updated_at": "2026-10-31T23:22:11.341155+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -874405,12 +874489,12 @@
     },
     "1235": {
       "misses": [
-        "1235:7:21",
         "1235:6:16",
-        "1235:4:2"
+        "1235:4:2",
+        "1235:4:4"
       ],
-      "updated_at": "2026-10-31T23:20:57.317554+00:00",
-      "retry_after": "2026-11-01T03:20:57.317554+00:00"
+      "updated_at": "2026-10-31T23:21:10.801747+00:00",
+      "retry_after": "2026-11-01T03:21:10.801747+00:00"
     },
     "3013": {
       "misses": [
@@ -881887,9 +881971,10 @@
     },
     "9828": {
       "misses": [
-        "9828:7:13"
+        "9828:7:13",
+        "9828:8:1"
       ],
-      "updated_at": "2026-10-31T12:55:22.622400+00:00"
+      "updated_at": "2026-10-31T23:21:45.686583+00:00"
     },
     "3646": {
       "misses": [
@@ -887641,12 +887726,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1055,
+    "last_series": 9828,
     "last_series_order": [
       false,
       -7.9,
-      -304309,
-      1055
+      -41207,
+      9828
     ]
   }
 }
