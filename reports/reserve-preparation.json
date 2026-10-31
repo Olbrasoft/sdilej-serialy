@@ -5,26 +5,27 @@
   "prepared_this_run": 5,
   "reserve_total": 23952,
   "queue_total": 32387,
-  "updated_at": "2026-10-31T18:09:47.150435+00:00",
+  "updated_at": "2026-10-31T18:11:00.825515+00:00",
   "workers": 4,
-  "elapsed_seconds": 631.9,
-  "prepared_per_hour": 28.49,
+  "elapsed_seconds": 705.57,
+  "prepared_per_hour": 25.51,
   "available_this_run": 5,
-  "available_per_hour": 28.49,
+  "available_per_hour": 25.51,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
     "queue_total": 32387,
-    "ready": 2,
+    "ready": 1,
     "ready_by_account": {
       "a": 1,
-      "b": 1
+      "b": 0
     },
     "categories": {
       "completed": 32345,
       "allocated": 28,
       "failed": 12,
-      "ready": 2
+      "in_flight": 1,
+      "ready": 1
     },
     "completed_by_account": {
       "a": 16171,
@@ -32,14 +33,14 @@
     },
     "uploads_last_24h": 494,
     "uploads_per_hour_24h": 20.58,
-    "stock_hours_24h": 0.1
+    "stock_hours_24h": 0.05
   },
   "health": {
     "status": "buffered",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 76,
-      "b": 309
+      "a": 149,
+      "b": 383
     },
     "preparation_outcomes_last_hour": {
       "no_acceptable_original": 10,
@@ -60,19 +61,20 @@
     ]
   },
   "cache": {
-    "search_miss": 40,
-    "search_seconds": 1198.16,
-    "search_hit": 15,
-    "media_miss": 17,
-    "media_seconds": 103.51,
-    "audio_miss": 6,
-    "audio_seconds": 55.45
+    "search_miss": 41,
+    "search_seconds": 1241.5,
+    "search_hit": 17,
+    "media_miss": 23,
+    "media_seconds": 123.85,
+    "audio_miss": 8,
+    "audio_seconds": 175.51
   },
   "audio_pipeline": {
-    "sample_count": 5,
-    "download_seconds": 46.62,
+    "sample_count": 9,
+    "download_seconds": 197.36,
     "inference_wait_seconds": 0.0,
-    "inference_seconds": 8.82
+    "inference_seconds": 11.55,
+    "failures": 1
   },
   "productive_seasons": 156,
   "series_paused_this_run": 40,
@@ -2904,7 +2906,7 @@
     "retry_seconds": 0,
     "failed_cycles_this_run": 0,
     "control_requests": 6,
-    "request_gap_seconds": 8,
+    "request_gap_seconds": 4.0,
     "restart_required": false,
     "last_request_limit": null,
     "resume_after": null,
