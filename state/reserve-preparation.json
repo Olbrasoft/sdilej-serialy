@@ -89406,15 +89406,19 @@
       "queue_rank": 15634
     },
     "6815:3:3": {
-      "at": "2026-10-10T12:54:02.482256+00:00",
+      "at": "2026-10-31T03:58:00.353675+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "saved_review_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 11.8,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-11T12:54:14.284316+00:00"
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 274.69,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T06:02:35.043952+00:00"
     },
     "6815:3:4": {
       "at": "2026-10-06T21:00:06.782333+00:00",
@@ -835828,9 +835832,57 @@
       "elapsed_seconds": 114.9,
       "source_id": "34896674",
       "queue_rank": 32066
+    },
+    "1434:6:2": {
+      "at": "2026-10-31T04:01:32.326417+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 50.67,
+      "search_evidence": [
+        {
+          "path": "/silicon-valley-s06e02/s/-6",
+          "status": 200,
+          "response_bytes": 217191,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/silicon-valley/s/-6",
+          "status": 200,
+          "response_bytes": 374045,
+          "boxes": 129,
+          "parsed_candidates": 128,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/silicon-valley-s06e02/s/-6",
+          "status": 200,
+          "response_bytes": 217098,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/silicon-valley/s/-6",
+          "status": 200,
+          "response_bytes": 374074,
+          "boxes": 129,
+          "parsed_candidates": 128,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T04:02:22.997969+00:00"
     }
   },
-  "updated_at": "2026-10-31T04:01:46.485558+00:00",
+  "updated_at": "2026-10-31T04:02:58.502983+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -852647,9 +852699,11 @@
     "1434": {
       "misses": [
         "1434:1:3",
-        "1434:6:1"
+        "1434:6:1",
+        "1434:6:2"
       ],
-      "updated_at": "2026-10-14T10:37:23.041024+00:00"
+      "updated_at": "2026-10-31T04:02:22.997996+00:00",
+      "retry_after": "2026-10-31T08:02:22.997996+00:00"
     },
     "1212": {
       "misses": [
@@ -853363,12 +853417,12 @@
     },
     "6815": {
       "misses": [
-        "6815:8:1",
         "6815:6:2",
-        "6815:3:1"
+        "6815:3:1",
+        "6815:3:3"
       ],
-      "updated_at": "2026-10-31T04:01:31.888819+00:00",
-      "retry_after": "2026-10-31T04:31:31.888819+00:00"
+      "updated_at": "2026-10-31T04:02:35.043975+00:00",
+      "retry_after": "2026-10-31T04:32:35.043975+00:00"
     },
     "700": {
       "misses": [],
