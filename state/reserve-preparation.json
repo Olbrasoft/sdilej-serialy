@@ -828292,9 +828292,49 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T00:50:36.403876+00:00"
+    },
+    "532:3:11": {
+      "at": "2026-10-31T00:49:57.461636+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 96.28,
+      "search_evidence": [
+        {
+          "path": "/d-d-s03e11/s/-6",
+          "status": 200,
+          "response_bytes": 228826,
+          "boxes": 10,
+          "parsed_candidates": 10,
+          "heading_matches_query": false
+        },
+        {
+          "path": "/d-d-s03e11/s/-6",
+          "status": 200,
+          "response_bytes": 228840,
+          "boxes": 10,
+          "parsed_candidates": 10,
+          "heading_matches_query": false
+        },
+        {
+          "path": "/d-d/s/-6",
+          "status": 200,
+          "response_bytes": 366199,
+          "boxes": 203,
+          "parsed_candidates": 70,
+          "heading_matches_query": false
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T00:51:33.739844+00:00"
     }
   },
-  "updated_at": "2026-10-31T00:50:50.978164+00:00",
+  "updated_at": "2026-10-31T00:51:58.351460+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -844572,9 +844612,11 @@
     "532": {
       "misses": [
         "532:3:9",
-        "532:3:10"
+        "532:3:10",
+        "532:3:11"
       ],
-      "updated_at": "2026-10-30T19:57:04.117404+00:00"
+      "updated_at": "2026-10-31T00:51:33.739873+00:00",
+      "retry_after": "2026-10-31T04:51:33.739873+00:00"
     },
     "3106": {
       "misses": [
@@ -845686,12 +845728,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1081,
+    "last_series": 1611,
     "last_series_order": [
       false,
-      -7.4,
-      -388857,
-      1081
+      -9.3,
+      -7199,
+      1611
     ]
   }
 }
