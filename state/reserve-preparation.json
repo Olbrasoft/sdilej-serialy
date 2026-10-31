@@ -487810,7 +487810,7 @@
       "retry_after": "2026-10-24T08:21:15.608977+00:00"
     },
     "1081:4:13": {
-      "at": "2026-10-31T16:18:13.118162+00:00",
+      "at": "2026-10-31T16:58:07.798938+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -487818,10 +487818,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 329.08,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-31T16:33:42.199705+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9794853329658508,
+      "observed_source_id": "33237823",
+      "elapsed_seconds": 167.09,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-01T17:02:11.780951+00:00"
     },
     "2183:4:6": {
       "at": "2026-10-23T08:20:56.248720+00:00",
@@ -861792,9 +861795,88 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T17:00:35.463379+00:00"
+    },
+    "1582:13:10": {
+      "at": "2026-10-31T16:59:43.849110+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 51.95,
+      "source_id": "33087338",
+      "queue_rank": 32360
+    },
+    "1582:14:3": {
+      "at": "2026-10-31T17:00:16.824883+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 31.67,
+      "source_id": "33087347",
+      "queue_rank": 32361
+    },
+    "3749:3:2": {
+      "at": "2026-10-31T17:02:12.405709+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 26.12,
+      "search_evidence": [
+        {
+          "path": "/american-crime-story-s03e02/s/-6",
+          "status": 200,
+          "response_bytes": 217204,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/american-crime-story-s03e02/s/-6",
+          "status": 200,
+          "response_bytes": 217204,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/american-crime-story/s/-6",
+          "status": 200,
+          "response_bytes": 189600,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T17:02:38.529585+00:00"
+    },
+    "1582:14:5": {
+      "at": "2026-10-31T17:02:11.781051+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 40.3,
+      "source_id": "33087359",
+      "queue_rank": 32362
     }
   },
-  "updated_at": "2026-10-31T17:00:38.419084+00:00",
+  "updated_at": "2026-10-31T17:02:54.999444+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -867258,9 +867340,11 @@
     "3749": {
       "misses": [
         "3749:1:1",
-        "3749:1:10"
+        "3749:1:10",
+        "3749:3:2"
       ],
-      "updated_at": "2026-10-31T11:35:19.484867+00:00"
+      "updated_at": "2026-10-31T17:02:38.529613+00:00",
+      "retry_after": "2026-10-31T21:02:38.529613+00:00"
     },
     "6": {
       "misses": [
@@ -867733,11 +867817,8 @@
       "updated_at": "2026-10-31T16:37:35.584256+00:00"
     },
     "1582": {
-      "misses": [
-        "1582:9:8",
-        "1582:9:10"
-      ],
-      "updated_at": "2026-10-31T17:00:35.463416+00:00"
+      "misses": [],
+      "updated_at": "2026-10-31T17:02:52.082414+00:00"
     },
     "6401": {
       "misses": [
@@ -878204,9 +878285,11 @@
     "1081": {
       "misses": [
         "1081:5:18",
-        "1081:8:6"
+        "1081:8:6",
+        "1081:4:13"
       ],
-      "updated_at": "2026-10-31T16:59:56.426384+00:00"
+      "updated_at": "2026-10-31T17:02:11.780979+00:00",
+      "retry_after": "2026-10-31T21:02:11.780979+00:00"
     },
     "569": {
       "misses": [
@@ -879202,12 +879285,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1255,
+    "last_series": 2658,
     "last_series_order": [
       false,
       -8.4,
-      -174707,
-      1255
+      -56062,
+      2658
     ]
   }
 }
