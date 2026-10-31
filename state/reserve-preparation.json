@@ -38530,15 +38530,18 @@
       "retry_after": "2026-10-11T10:19:54.876639+00:00"
     },
     "3401:3:1": {
-      "at": "2026-10-10T10:20:21.046391+00:00",
-      "status": "deferred",
-      "preparation_revision": 3,
+      "at": "2026-10-31T01:43:30.980639+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "saved_review_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 13.83,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-11T10:20:34.876451+00:00"
+      "elapsed_seconds": 50.51,
+      "source_id": "27822891",
+      "queue_rank": 32055
     },
     "2419:1:7": {
       "at": "2026-10-31T01:42:01.739270+00:00",
@@ -830092,9 +830095,62 @@
       "elapsed_seconds": 120.39,
       "source_id": "26772266",
       "queue_rank": 32053
+    },
+    "4181:3:12": {
+      "at": "2026-10-31T01:41:56.006511+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 132.11,
+      "source_id": "26772997",
+      "queue_rank": 32054
+    },
+    "1255:1:45": {
+      "at": "2026-10-31T01:43:56.405538+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 27.19,
+      "search_evidence": [
+        {
+          "path": "/naruto-s01e45/s/-6",
+          "status": 200,
+          "response_bytes": 216842,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/naruto-s01e45/s/-6",
+          "status": 200,
+          "response_bytes": 216858,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/naruto/s/-6",
+          "status": 200,
+          "response_bytes": 491620,
+          "boxes": 260,
+          "parsed_candidates": 246,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T01:44:23.595217+00:00"
     }
   },
-  "updated_at": "2026-10-31T01:44:01.387003+00:00",
+  "updated_at": "2026-10-31T01:45:14.234938+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -835454,9 +835510,11 @@
     "1255": {
       "misses": [
         "1255:1:43",
-        "1255:1:44"
+        "1255:1:44",
+        "1255:1:45"
       ],
-      "updated_at": "2026-10-30T21:20:16.985949+00:00"
+      "updated_at": "2026-10-31T01:44:23.595253+00:00",
+      "retry_after": "2026-10-31T05:44:23.595253+00:00"
     },
     "4328": {
       "misses": [
@@ -836564,7 +836622,7 @@
     },
     "4181": {
       "misses": [],
-      "updated_at": "2026-10-31T01:43:55.669774+00:00"
+      "updated_at": "2026-10-31T01:44:10.921985+00:00"
     },
     "645": {
       "misses": [],
@@ -847509,7 +847567,7 @@
     },
     "3401": {
       "misses": [],
-      "updated_at": "2026-10-31T01:40:33.062252+00:00"
+      "updated_at": "2026-10-31T01:44:21.491009+00:00"
     },
     "2419": {
       "misses": [],
@@ -847517,12 +847575,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1255,
+    "last_series": 2658,
     "last_series_order": [
       false,
       -8.4,
-      -174707,
-      1255
+      -56062,
+      2658
     ]
   }
 }
