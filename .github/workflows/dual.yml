@@ -68,7 +68,10 @@ jobs:
             if python -c 'import json,os,sys; r=json.load(open("dual/"+os.environ["DUAL_GENERATION"]+"/report.json")); sys.exit(r["remaining"] != 0)'; then
               exit 0
             fi
-            sleep 60
+            # Inconclusive authentication gets a quiet window, without changing
+            # any episode allocation or permanently halting the shared queue.
+            retry_delay=$(python -c 'import json,os; r=json.load(open("dual/"+os.environ["DUAL_GENERATION"]+"/report.json")); print(max(60,min(300,int(r.get("retry_delay_seconds",60)))))')
+            sleep "$retry_delay"
           done
       - name: Preserve progress after interruption
         if: always()

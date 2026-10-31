@@ -245,7 +245,7 @@ def target_session(email: str, password: str, *, expected_email: str = TARGET_EM
         raise RuntimeError(f"Refusing target account other than {expected_email}")
     # The uploader is shared with the film pipeline. Its account guard is set
     # for this process only; secrets stay external to the repository.
-    from .auth import login_with_retry
+    from .auth import target_login_with_retry
     # The dependency uses a module-level account guard. Serialize logins and
     # restore it before another account logs in; sessions themselves are separate.
     with _TARGET_LOGIN_LOCK:
@@ -253,7 +253,7 @@ def target_session(email: str, password: str, *, expected_email: str = TARGET_EM
         try:
             prehrajto.EXPECTED_EMAIL = expected_email.strip().casefold()
             from .resilience import retry_target_reads
-            return retry_target_reads(login_with_retry(prehrajto.login, email, password))
+            return retry_target_reads(target_login_with_retry(prehrajto.login, email, password))
         finally:
             prehrajto.EXPECTED_EMAIL = previous
 

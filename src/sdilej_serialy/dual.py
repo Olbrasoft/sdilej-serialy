@@ -339,6 +339,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
     sessions = {}
     stop = threading.Event()
     transient_pause = threading.Event()
+    retry_delay_seconds = 60
     results = {}
     try:
         for alias, (email, password) in creds.items():
@@ -418,6 +419,9 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
             print('checkpoint_batch_deferred', flush=True)
         elif transient_http(error) and not stop.is_set():
             transient_pause.set()
+            from .auth import TargetLoginUnavailable
+            if isinstance(error, TargetLoginUnavailable):
+                retry_delay_seconds = 300
             state.data['last_transient_error'] = dict(at=now_iso(), **error_evidence(error))
             state.save()
             print(f'target_batch_deferred error={error_evidence(error)}', flush=True)
@@ -425,6 +429,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
             # Credential/account, integrity and checkpoint failures remain fatal.
             state.data['halted_at'] = now_iso()
             state.data['halt_reason'] = type(error).__name__
+            state.data['halt_evidence'] = error_evidence(error)
             state.save()
             raise
     finally:
@@ -436,6 +441,7 @@ def _run(root, generation, mode, limit_per_account=25, persist=False, idle_refil
                       halted=bool(state.data.get('halted_at')), updated_at=now_iso())
         report['retry_deferred'] = len(state.retry_deferred_identities())
         report['transient_pause'] = transient_pause.is_set()
+        report['retry_delay_seconds'] = retry_delay_seconds
         report['stop_claiming_at'] = stop_claiming_at
         report['claim_deadline_reached'] = claim_deadline is not None and time.monotonic() >= claim_deadline
         report['pending_confirmation'] = sum(bool(r.get('prepared_target')) for r in state.data['episodes'].values())

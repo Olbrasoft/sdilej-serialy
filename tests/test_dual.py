@@ -153,7 +153,7 @@ def test_shared_claim_is_durable_and_exclusive(tmp_path, monkeypatch):
 
 def test_target_login_guard_is_serialized_and_restored(monkeypatch):
     original = pipeline.prehrajto.EXPECTED_EMAIL
-    def login(email, password):
+    def login(email, password, *, session):
         time.sleep(.005)
         assert pipeline.prehrajto.EXPECTED_EMAIL == email
         return email
@@ -232,6 +232,32 @@ def test_failed_transfer_halts_both_accounts_and_all_future_runs(tmp_path, monke
         dual.run(tmp_path, 'test', 'pilot')
     with pytest.raises(RuntimeError, match='manual review'):
         dual.run(tmp_path, 'test', 'pilot')
+
+
+@pytest.mark.parametrize('phase', ['initial', 'worker'])
+def test_unconfirmed_login_defers_both_accounts_without_losing_allocations(tmp_path, monkeypatch, phase):
+    from sdilej_serialy.auth import TargetLoginUnavailable
+    directory, _, rows = setup_plan(tmp_path, monkeypatch)
+    _, sessions = stub_live(monkeypatch)
+    state = pipeline.EpisodeState(directory / 'state.json')
+    state.data.update(initialized_at=pipeline.now_iso(), pilot_verified_at=pipeline.now_iso())
+    pending = state.row(Episode.from_dict(rows[0]['episode']))
+    pending.update(target_account='a', prepared_target={'target_video_id': 'already-allocated', 'size_bytes': 100})
+    state.save()
+    before = json.loads(state.path.read_text())['episodes']
+    def unavailable(*args, **kwargs):
+        raise TargetLoginUnavailable('Target session verification is inconclusive')
+    monkeypatch.setattr(dual, 'upload_continuously', unavailable if phase == 'worker' else lambda *a, **k: {})
+    if phase == 'initial':
+        monkeypatch.setattr(dual, 'target_session', unavailable)
+    report = dual.run(tmp_path, 'test', 'full')
+    assert report['transient_pause'] and not report['halted'] and report['retry_delay_seconds'] == 300
+    saved = json.loads(state.path.read_text())
+    assert saved['episodes'] == before and 'halted_at' not in saved
+    assert saved['last_transient_error']['type'] == 'TargetLoginUnavailable'
+    monkeypatch.setattr(dual, 'target_session', lambda email, *a, **k: sessions[email[0]])
+    monkeypatch.setattr(dual, 'upload_continuously', lambda *a, **k: {})
+    assert not dual.run(tmp_path, 'test', 'full')['halted']
 
 
 @pytest.mark.parametrize('complete_receipt', [False, True])

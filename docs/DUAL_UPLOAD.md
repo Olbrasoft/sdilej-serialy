@@ -1,5 +1,17 @@
 # Ranked two-account upload
 
+On October 31, a target login verification failure in worker setup was found to
+have permanently halted both accounts despite a growing verified reserve. The
+SDK collapses every non-200 profile response into the same authentication error.
+Target login now preserves HTTP status errors, retries an inconclusive session
+verification at most three times using fresh sessions, and defers the batch for
+five minutes if verification still fails. HTTP 401/403 and account mismatches
+remain fatal. HTTP 408/429 and all 5xx errors, including CDN 522, use the existing
+transient pause. Login failures never authorize allocations or replays; completed
+transfers and uncertain target IDs remain unchanged. Fatal errors now retain
+sanitized stack locations for diagnosis. Existing integrity halts still require
+review; this change does not automatically clear historical halts.
+
 Continuity hardening on October 27 keeps a fully receipted transfer pending when
 its owned listing/statistics are temporarily not visible. A later batch confirms
 that same target ID without another POST; the delayed listing does not halt both

@@ -19,7 +19,7 @@ def http_error(status):
     return requests.HTTPError('Private URL must not be logged', response=response)
 
 
-@pytest.mark.parametrize('status,expected', [(504, True), (503, True), (429, True), (401, False), (403, False), (404, False)])
+@pytest.mark.parametrize('status,expected', [(504, True), (503, True), (522, True), (429, True), (401, False), (403, False), (404, False)])
 def test_transient_classifier_preserves_account_and_permission_failures(status, expected):
     assert resilience.transient_http(http_error(status)) == expected
     assert resilience.error_evidence(http_error(status)) == {'type': 'HTTPError', 'http_status': status}
@@ -192,17 +192,18 @@ def test_statistics_504_after_success_does_not_lose_completed_upload(tmp_path, m
     assert pause.is_set() and not stop.is_set()
 
 
-def test_preflight_504_is_retried_next_batch_not_persistently_halted(tmp_path, monkeypatch):
+@pytest.mark.parametrize('status', [504, 522])
+def test_preflight_gateway_failure_is_retried_next_batch_not_persistently_halted(tmp_path, monkeypatch, status):
     directory, _, _ = setup_plan(tmp_path, monkeypatch)
     stub_live(monkeypatch)
     def failed_count(session):
-        raise http_error(504)
+        raise http_error(status)
     monkeypatch.setattr(dual.prehrajto, 'uploaded_video_count', failed_count)
     for _ in range(2):
         report = dual.run(tmp_path, 'test', 'pilot')
         assert not report['halted'] and report['transient_pause']
     saved = pipeline.EpisodeState(directory / 'state.json').data
-    assert saved['last_transient_error']['http_status'] == 504
+    assert saved['last_transient_error']['http_status'] == status
     assert not saved.get('halted_at')
 
 

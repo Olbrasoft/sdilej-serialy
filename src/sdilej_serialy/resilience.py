@@ -7,8 +7,9 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
 from sdilej_to_prehrajto import prehrajto
+from .auth import TargetLoginUnavailable
 
-TRANSIENT_STATUSES = (408, 429, 500, 502, 503, 504)
+TRANSIENT_STATUSES = (408, 429, *range(500, 600))
 
 
 class TargetPending(RuntimeError):
@@ -19,7 +20,8 @@ def transient_http(error):
     seen = set()
     while error is not None and id(error) not in seen:
         seen.add(id(error))
-        if isinstance(error, (requests.Timeout, requests.ConnectionError, requests.exceptions.RetryError)):
+        if isinstance(error, (requests.Timeout, requests.ConnectionError, requests.exceptions.RetryError,
+                              TargetLoginUnavailable)):
             return True
         if isinstance(error, requests.HTTPError):
             return getattr(error.response, 'status_code', None) in TRANSIENT_STATUSES
