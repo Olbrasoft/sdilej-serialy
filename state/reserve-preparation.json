@@ -570775,7 +570775,7 @@
       "retry_after": "2026-10-25T01:12:57.955459+00:00"
     },
     "193:4:4": {
-      "at": "2026-10-31T09:24:56.297643+00:00",
+      "at": "2026-10-31T11:53:02.849617+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -570783,10 +570783,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "inconclusive_audio",
-      "elapsed_seconds": 921.24,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-31T11:40:17.536010+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 906.92,
+      "consecutive_failures": 3,
+      "retry_after": "2026-10-31T13:08:09.766839+00:00"
     },
     "1051:5:2": {
       "at": "2026-10-24T01:12:46.635481+00:00",
@@ -851136,9 +851136,81 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T12:07:48.820065+00:00"
+    },
+    "9751:2:33": {
+      "at": "2026-10-31T12:07:49.584345+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 54.69,
+      "search_evidence": [
+        {
+          "path": "/mrnousci-s02e33/s/-6",
+          "status": 200,
+          "response_bytes": 216918,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/minuscule-the-private-life-of-insects-s02e33/s/-6",
+          "status": 200,
+          "response_bytes": 217476,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/minuscule-the-private-life-of-insects/s/-6",
+          "status": 200,
+          "response_bytes": 217417,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mrnousci-s02e33/s/-6",
+          "status": 200,
+          "response_bytes": 216985,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mrnousci/s/-6",
+          "status": 200,
+          "response_bytes": 249016,
+          "boxes": 29,
+          "parsed_candidates": 24,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/minuscule-the-private-life-of-insects-s02e33/s/-6",
+          "status": 200,
+          "response_bytes": 217513,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/minuscule-the-private-life-of-insects/s/-6",
+          "status": 200,
+          "response_bytes": 217342,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T12:08:44.271632+00:00"
     }
   },
-  "updated_at": "2026-10-31T12:07:56.598442+00:00",
+  "updated_at": "2026-10-31T12:09:08.227751+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -858828,9 +858900,10 @@
     },
     "9751": {
       "misses": [
-        "9751:2:32"
+        "9751:2:32",
+        "9751:2:33"
       ],
-      "updated_at": "2026-10-31T07:46:03.314292+00:00"
+      "updated_at": "2026-10-31T12:08:44.271660+00:00"
     },
     "739": {
       "misses": [
@@ -860188,12 +860261,12 @@
     },
     "193": {
       "misses": [
-        "193:4:7",
         "193:1:6",
-        "193:4:1"
+        "193:4:1",
+        "193:4:4"
       ],
-      "updated_at": "2026-10-31T11:34:41.040531+00:00",
-      "retry_after": "2026-10-31T15:34:41.040531+00:00"
+      "updated_at": "2026-10-31T12:08:09.766863+00:00",
+      "retry_after": "2026-10-31T12:38:09.766863+00:00"
     },
     "452": {
       "misses": [
@@ -868536,12 +868609,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9751,
+    "last_series": 1522,
     "last_series_order": [
       false,
-      -8.3,
-      -1788,
-      9751
+      -8.2,
+      -103803,
+      1522
     ]
   }
 }
