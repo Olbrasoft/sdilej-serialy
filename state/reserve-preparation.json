@@ -144234,14 +144234,44 @@
       "retry_after": "2026-11-01T20:11:05.832799+00:00"
     },
     "3537:1:11": {
-      "at": "2026-10-11T09:34:59.168759+00:00",
+      "at": "2026-10-31T20:22:15.512927+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 31.48,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T09:35:30.653327+00:00"
+      "elapsed_seconds": 18.73,
+      "search_evidence": [
+        {
+          "path": "/ghost-in-the-shell-stand-alone-complex-s01e11/s/-6",
+          "status": 200,
+          "response_bytes": 217635,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ghost-in-the-shell-stand-alone-complex-s01e11/s/-6",
+          "status": 200,
+          "response_bytes": 217506,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ghost-in-the-shell-stand-alone-complex/s/-6",
+          "status": 200,
+          "response_bytes": 259089,
+          "boxes": 33,
+          "parsed_candidates": 32,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-01T20:22:34.245169+00:00"
     },
     "3537:1:13": {
       "at": "2026-10-11T09:35:02.961390+00:00",
@@ -865698,9 +865728,115 @@
       "elapsed_seconds": 51.95,
       "source_id": "28260108",
       "queue_rank": 32437
+    },
+    "681:2:6": {
+      "at": "2026-10-31T20:11:35.973013+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 634.31,
+      "source_id": "35385550",
+      "queue_rank": 32438
+    },
+    "1522:10:12": {
+      "at": "2026-10-31T20:20:48.915528+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 52.59,
+      "search_evidence": [
+        {
+          "path": "/bobovy-burgery-s10e12/s/-6",
+          "status": 200,
+          "response_bytes": 217047,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bobovy-burgery/s/-6",
+          "status": 200,
+          "response_bytes": 345551,
+          "boxes": 100,
+          "parsed_candidates": 100,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bob-s-burgers-s10e12/s/-6",
+          "status": 200,
+          "response_bytes": 216996,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bob-s-burgers/s/-6",
+          "status": 200,
+          "response_bytes": 216868,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bobovy-burgery-s10e12/s/-6",
+          "status": 200,
+          "response_bytes": 217076,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bobovy-burgery/s/-6",
+          "status": 200,
+          "response_bytes": 345395,
+          "boxes": 100,
+          "parsed_candidates": 100,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bob-s-burgers-s10e12/s/-6",
+          "status": 200,
+          "response_bytes": 217018,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bob-s-burgers/s/-6",
+          "status": 200,
+          "response_bytes": 216874,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T20:22:15.513268+00:00"
+    },
+    "2352:9:9": {
+      "at": "2026-10-31T20:22:34.737020+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 37.05,
+      "source_id": "28260109",
+      "queue_rank": 32439
     }
   },
-  "updated_at": "2026-10-31T20:21:42.672725+00:00",
+  "updated_at": "2026-10-31T20:23:18.623562+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -870395,9 +870531,10 @@
     },
     "3537": {
       "misses": [
-        "3537:1:10"
+        "3537:1:10",
+        "3537:1:11"
       ],
-      "updated_at": "2026-10-31T20:11:05.832830+00:00"
+      "updated_at": "2026-10-31T20:22:34.245205+00:00"
     },
     "3378": {
       "misses": [
@@ -872459,13 +872596,8 @@
       "updated_at": "2026-10-11T18:51:09.503046+00:00"
     },
     "681": {
-      "misses": [
-        "681:2:3",
-        "681:2:4",
-        "681:2:5"
-      ],
-      "updated_at": "2026-10-31T20:20:47.913688+00:00",
-      "retry_after": "2026-10-31T20:50:47.913688+00:00"
+      "misses": [],
+      "updated_at": "2026-10-31T20:22:15.512843+00:00"
     },
     "2921": {
       "misses": [
@@ -872604,7 +872736,7 @@
     },
     "2352": {
       "misses": [],
-      "updated_at": "2026-10-31T20:21:40.361491+00:00"
+      "updated_at": "2026-10-31T20:23:11.791496+00:00"
     },
     "688": {
       "misses": [
@@ -873589,9 +873721,10 @@
     },
     "1522": {
       "misses": [
-        "1522:10:11"
+        "1522:10:11",
+        "1522:10:12"
       ],
-      "updated_at": "2026-10-31T12:10:00.254482+00:00"
+      "updated_at": "2026-10-31T20:22:15.513283+00:00"
     },
     "1681": {
       "misses": [
