@@ -112491,14 +112491,21 @@
       "retry_after": "2026-11-01T00:26:37.960170+00:00"
     },
     "13:37:11": {
-      "at": "2026-10-20T12:24:03.758517+00:00",
+      "at": "2026-10-31T00:25:55.113146+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 45.59,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-21T12:24:49.350329+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9988349080085754,
+      "observed_source_id": "32588271",
+      "elapsed_seconds": 137.05,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-01T00:28:12.257313+00:00"
     },
     "13:37:12": {
       "at": "2026-10-10T16:39:47.287736+00:00",
@@ -828070,9 +828077,49 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T00:27:59.169823+00:00"
+    },
+    "1133:4:8": {
+      "at": "2026-10-31T00:27:57.774123+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 13.61,
+      "search_evidence": [
+        {
+          "path": "/sword-art-online-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 189661,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sword-art-online-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 189661,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sword-art-online/s/-6",
+          "status": 200,
+          "response_bytes": 189514,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T00:28:11.383636+00:00"
     }
   },
-  "updated_at": "2026-10-31T00:28:03.584820+00:00",
+  "updated_at": "2026-10-31T00:29:16.324387+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -843999,9 +844046,10 @@
     },
     "1133": {
       "misses": [
-        "1133:4:7"
+        "1133:4:7",
+        "1133:4:8"
       ],
-      "updated_at": "2026-10-30T19:50:24.923056+00:00"
+      "updated_at": "2026-10-31T00:28:11.383673+00:00"
     },
     "2079": {
       "misses": [
@@ -844834,12 +844882,12 @@
     },
     "13": {
       "misses": [
-        "13:37:1",
         "13:37:9",
-        "13:37:10"
+        "13:37:10",
+        "13:37:11"
       ],
-      "updated_at": "2026-10-31T00:26:37.960200+00:00",
-      "retry_after": "2026-10-31T04:26:37.960200+00:00"
+      "updated_at": "2026-10-31T00:28:12.257345+00:00",
+      "retry_after": "2026-10-31T04:28:12.257345+00:00"
     },
     "51": {
       "misses": [
@@ -845452,12 +845500,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1133,
+    "last_series": 1585,
     "last_series_order": [
       false,
       -7.5,
-      -64944,
-      1133
+      -47049,
+      1585
     ]
   }
 }
