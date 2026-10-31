@@ -91727,15 +91727,19 @@
       "queue_rank": 15837
     },
     "47:2:12": {
-      "at": "2026-10-17T23:13:03.939940+00:00",
+      "at": "2026-10-31T00:15:31.737763+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "saved_review_revision": 1,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 23.22,
-      "consecutive_failures": 5,
-      "retry_after": "2026-10-18T00:13:29.515227+00:00"
+      "elapsed_seconds": 147.57,
+      "consecutive_failures": 6,
+      "retry_after": "2026-10-31T06:17:59.304659+00:00"
     },
     "47:2:14": {
       "at": "2026-10-17T23:13:07.237445+00:00",
@@ -827155,9 +827159,49 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T00:17:18.902194+00:00"
+    },
+    "912:5:15": {
+      "at": "2026-10-31T00:17:19.639003+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 60.5,
+      "search_evidence": [
+        {
+          "path": "/pokemon-s05e15/s/-6",
+          "status": 200,
+          "response_bytes": 216918,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pokemon-s05e15/s/-6",
+          "status": 200,
+          "response_bytes": 216882,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pokemon/s/-6",
+          "status": 200,
+          "response_bytes": 597487,
+          "boxes": 373,
+          "parsed_candidates": 367,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T00:18:20.143921+00:00"
     }
   },
-  "updated_at": "2026-10-31T00:17:36.300269+00:00",
+  "updated_at": "2026-10-31T00:18:46.710926+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -832389,9 +832433,10 @@
     },
     "47": {
       "misses": [
-        "47:1:4"
+        "47:1:4",
+        "47:2:12"
       ],
-      "updated_at": "2026-10-18T05:04:26.797527+00:00"
+      "updated_at": "2026-10-31T00:17:59.304690+00:00"
     },
     "3303": {
       "misses": [
@@ -842038,9 +842083,10 @@
     },
     "912": {
       "misses": [
-        "912:5:14"
+        "912:5:14",
+        "912:5:15"
       ],
-      "updated_at": "2026-10-30T19:00:09.033535+00:00"
+      "updated_at": "2026-10-31T00:18:20.143955+00:00"
     },
     "1168": {
       "misses": [
@@ -844525,12 +844571,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 912,
+    "last_series": 2884,
     "last_series_order": [
       false,
       -7.6,
-      -57326,
-      912
+      -46804,
+      2884
     ]
   }
 }
