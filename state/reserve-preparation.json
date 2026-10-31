@@ -130020,7 +130020,7 @@
       "retry_after": "2026-10-31T06:04:24.094402+00:00"
     },
     "700:3:1": {
-      "at": "2026-10-31T04:09:39.206195+00:00",
+      "at": "2026-10-31T04:32:57.571986+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -130028,40 +130028,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 414.99,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-31T04:26:07.588487+00:00"
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 478.78,
+      "consecutive_failures": 2,
+      "retry_after": "2026-10-31T06:40:56.349794+00:00"
     },
     "700:3:5": {
       "at": "2026-10-09T14:59:29.949057+00:00",
@@ -836244,9 +836214,57 @@
       "elapsed_seconds": 385.29,
       "source_id": "27361138",
       "queue_rank": 32079
+    },
+    "2464:5:14": {
+      "at": "2026-10-31T04:39:50.144119+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 46.79,
+      "search_evidence": [
+        {
+          "path": "/fights-break-sphere-s05e14/s/-6",
+          "status": 200,
+          "response_bytes": 217164,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fights-break-sphere/s/-6",
+          "status": 200,
+          "response_bytes": 216959,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fights-break-sphere-s05e14/s/-6",
+          "status": 200,
+          "response_bytes": 217247,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fights-break-sphere/s/-6",
+          "status": 200,
+          "response_bytes": 217005,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T04:40:36.934298+00:00"
     }
   },
-  "updated_at": "2026-10-31T04:39:59.504468+00:00",
+  "updated_at": "2026-10-31T04:41:12.708575+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -841301,9 +841319,11 @@
     "2464": {
       "misses": [
         "2464:5:11",
-        "2464:5:12"
+        "2464:5:12",
+        "2464:5:14"
       ],
-      "updated_at": "2026-10-30T21:13:56.755197+00:00"
+      "updated_at": "2026-10-31T04:40:36.934334+00:00",
+      "retry_after": "2026-10-31T08:40:36.934334+00:00"
     },
     "6809": {
       "misses": [
@@ -853790,17 +853810,19 @@
       "retry_after": "2026-10-31T04:32:35.043975+00:00"
     },
     "700": {
-      "misses": [],
-      "updated_at": "2026-10-31T04:09:58.116562+00:00"
+      "misses": [
+        "700:3:1"
+      ],
+      "updated_at": "2026-10-31T04:40:56.349823+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 2464,
+    "last_series": 2216,
     "last_series_order": [
       false,
-      -8.5,
-      -3225,
-      2464
+      -8.4,
+      -185470,
+      2216
     ]
   }
 }
