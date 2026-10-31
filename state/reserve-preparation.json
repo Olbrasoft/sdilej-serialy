@@ -856012,7 +856012,7 @@
       "retry_after": "2026-11-01T13:52:12.768199+00:00"
     },
     "1582:4:3": {
-      "at": "2026-10-31T13:52:13.390924+00:00",
+      "at": "2026-10-31T14:17:06.947308+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -856020,13 +856020,31 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 34.06,
-      "consecutive_failures": 0,
-      "retry_after": "2026-10-31T13:57:47.452387+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 102.95,
+      "search_evidence": [
+        {
+          "path": "/ranc-heartland-s04e03/s/-6",
+          "status": 200,
+          "response_bytes": 217386,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s04e03/s/-6",
+          "status": 200,
+          "response_bytes": 217290,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T14:18:50.484027+00:00"
     },
     "1582:4:2": {
-      "at": "2026-10-31T13:52:12.767221+00:00",
+      "at": "2026-10-31T14:16:58.574208+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -856034,10 +856052,44 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 354.99,
-      "consecutive_failures": 0,
-      "retry_after": "2026-10-31T14:08:07.752580+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 111.18,
+      "search_evidence": [
+        {
+          "path": "/ranc-heartland-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 217336,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ranc-heartland/s/-6",
+          "status": 200,
+          "response_bytes": 718173,
+          "boxes": 412,
+          "parsed_candidates": 412,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s04e02/s/-6",
+          "status": 200,
+          "response_bytes": 217198,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland/s/-6",
+          "status": 200,
+          "response_bytes": 550663,
+          "boxes": 322,
+          "parsed_candidates": 236,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T14:18:49.756626+00:00"
     },
     "1582:4:4": {
       "at": "2026-10-31T13:52:14.020207+00:00",
@@ -856171,9 +856223,49 @@
       "elapsed_seconds": 126.85,
       "source_id": "32911995",
       "queue_rank": 32250
+    },
+    "465:2:22": {
+      "at": "2026-10-31T14:16:45.151655+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 107.95,
+      "search_evidence": [
+        {
+          "path": "/sedm-smrtelnych-hrichu-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 217162,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sedm-smrtelnych-hrichu-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 217266,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sedm-smrtelnych-hrichu/s/-6",
+          "status": 200,
+          "response_bytes": 242151,
+          "boxes": 19,
+          "parsed_candidates": 18,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T14:18:33.103134+00:00"
     }
   },
-  "updated_at": "2026-10-31T14:17:48.746788+00:00",
+  "updated_at": "2026-10-31T14:19:02.270403+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -862097,8 +862189,11 @@
       "retry_after": "2026-10-31T15:35:19.484908+00:00"
     },
     "1582": {
-      "misses": [],
-      "updated_at": "2026-10-31T14:17:06.307404+00:00"
+      "misses": [
+        "1582:4:2",
+        "1582:4:3"
+      ],
+      "updated_at": "2026-10-31T14:18:50.484062+00:00"
     },
     "6401": {
       "misses": [
@@ -871035,12 +871130,9 @@
     },
     "465": {
       "misses": [
-        "465:2:21",
-        "465:1:21",
-        "465:1:23"
+        "465:2:22"
       ],
-      "updated_at": "2026-10-31T10:10:29.757551+00:00",
-      "retry_after": "2026-10-31T14:10:29.757551+00:00"
+      "updated_at": "2026-10-31T14:18:33.103165+00:00"
     },
     "686": {
       "misses": [
