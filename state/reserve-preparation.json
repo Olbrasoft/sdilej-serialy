@@ -23411,10 +23411,52 @@
       "retry_after": "2026-11-02T02:18:49.910659+00:00"
     },
     "1344:6:16": {
-      "at": "2026-10-01T15:09:19.704362+00:00",
+      "at": "2026-11-01T10:18:37.080451+00:00",
       "status": "deferred",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T15:09:20.523750+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 110.01,
+      "search_evidence": [
+        {
+          "path": "/seinfeld-s06e16/s/-6",
+          "status": 200,
+          "response_bytes": 215926,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld/s/-6",
+          "status": 200,
+          "response_bytes": 260472,
+          "boxes": 29,
+          "parsed_candidates": 29,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld-s06e16/s/-6",
+          "status": 200,
+          "response_bytes": 215901,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld/s/-6",
+          "status": 200,
+          "response_bytes": 260374,
+          "boxes": 29,
+          "parsed_candidates": 29,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T10:20:27.090700+00:00"
     },
     "1344:6:17": {
       "at": "2026-10-01T15:09:37.333266+00:00",
@@ -888267,9 +888309,81 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T10:18:36.467005+00:00"
+    },
+    "2462:1:51": {
+      "at": "2026-11-01T10:18:33.185434+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 106.08,
+      "search_evidence": [
+        {
+          "path": "/fullmetal-alchemist-brotherhood-s01e51/s/-6",
+          "status": 200,
+          "response_bytes": 216408,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fullmetal-alchemist-brotherhood-s01e51/s/-6",
+          "status": 200,
+          "response_bytes": 216423,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fullmetal-alchemist-brotherhood/s/-6",
+          "status": 200,
+          "response_bytes": 452441,
+          "boxes": 172,
+          "parsed_candidates": 172,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T10:20:19.265795+00:00"
+    },
+    "2462:1:52": {
+      "at": "2026-11-01T10:18:36.467117+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 102.94,
+      "search_evidence": [
+        {
+          "path": "/fullmetal-alchemist-brotherhood-s01e52/s/-6",
+          "status": 200,
+          "response_bytes": 216435,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fullmetal-alchemist-brotherhood-s01e52/s/-6",
+          "status": 200,
+          "response_bytes": 216357,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T10:20:19.976062+00:00"
     }
   },
-  "updated_at": "2026-11-01T10:19:14.920921+00:00",
+  "updated_at": "2026-11-01T10:20:30.399176+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -892532,9 +892646,10 @@
     },
     "1344": {
       "misses": [
-        "1344:6:15"
+        "1344:6:15",
+        "1344:6:16"
       ],
-      "updated_at": "2026-11-01T02:18:49.910690+00:00"
+      "updated_at": "2026-11-01T10:20:27.090729+00:00"
     },
     "2844": {
       "misses": [
@@ -892986,10 +893101,12 @@
     },
     "2462": {
       "misses": [
-        "2462:1:49",
-        "2462:1:50"
+        "2462:1:50",
+        "2462:1:51",
+        "2462:1:52"
       ],
-      "updated_at": "2026-11-01T10:18:36.467048+00:00"
+      "updated_at": "2026-11-01T10:20:19.976093+00:00",
+      "retry_after": "2026-11-01T14:20:19.976093+00:00"
     },
     "1553": {
       "misses": [
@@ -905710,12 +905827,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1344,
+    "last_series": 1392,
     "last_series_order": [
       false,
       -8.8,
-      -388900,
-      1344
+      -105412,
+      1392
     ]
   }
 }
