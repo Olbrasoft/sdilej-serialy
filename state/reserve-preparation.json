@@ -883025,9 +883025,49 @@
       "elapsed_seconds": 51.6,
       "source_id": "31541647",
       "queue_rank": 32695
+    },
+    "9127:25:7": {
+      "at": "2026-11-01T06:47:28.663416+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 58.25,
+      "search_evidence": [
+        {
+          "path": "/top-gear-s25e07/s/-6",
+          "status": 200,
+          "response_bytes": 215923,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear-s25e07/s/-6",
+          "status": 200,
+          "response_bytes": 215975,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear/s/-6",
+          "status": 200,
+          "response_bytes": 466483,
+          "boxes": 249,
+          "parsed_candidates": 247,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T06:48:36.626243+00:00"
     }
   },
-  "updated_at": "2026-11-01T06:48:26.405009+00:00",
+  "updated_at": "2026-11-01T06:49:40.511847+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -888889,8 +888929,10 @@
       "updated_at": "2026-10-16T09:36:13.898343+00:00"
     },
     "9127": {
-      "misses": [],
-      "updated_at": "2026-11-01T06:48:14.531553+00:00"
+      "misses": [
+        "9127:25:7"
+      ],
+      "updated_at": "2026-11-01T06:48:36.626284+00:00"
     },
     "3610": {
       "misses": [
@@ -900483,12 +900525,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1708,
+    "last_series": 9879,
     "last_series_order": [
       false,
       -8.0,
-      -5748,
-      1708
+      -3228,
+      9879
     ]
   }
 }
