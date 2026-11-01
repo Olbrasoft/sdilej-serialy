@@ -392402,14 +392402,76 @@
       "retry_after": "2026-10-22T09:48:52.012744+00:00"
     },
     "2128:3:15": {
-      "at": "2026-10-21T09:48:06.953391+00:00",
+      "at": "2026-11-01T13:04:56.457949+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 53.66,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-22T09:49:00.611980+00:00"
+      "elapsed_seconds": 44.15,
+      "search_evidence": [
+        {
+          "path": "/bajecna-leta-s03e15/s/-6",
+          "status": 200,
+          "response_bytes": 216023,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-wonder-years-s03e15/s/-6",
+          "status": 200,
+          "response_bytes": 216074,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-wonder-years/s/-6",
+          "status": 200,
+          "response_bytes": 215844,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bajecna-leta-s03e15/s/-6",
+          "status": 200,
+          "response_bytes": 216115,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bajecna-leta/s/-6",
+          "status": 200,
+          "response_bytes": 353194,
+          "boxes": 124,
+          "parsed_candidates": 115,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-wonder-years-s03e15/s/-6",
+          "status": 200,
+          "response_bytes": 216111,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-wonder-years/s/-6",
+          "status": 200,
+          "response_bytes": 215906,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-02T13:05:40.609545+00:00"
     },
     "1043:2:6": {
       "at": "2026-10-21T09:48:26.961559+00:00",
@@ -858200,21 +858262,17 @@
       "retry_after": "2026-11-01T13:01:13.313438+00:00"
     },
     "1783:11:7": {
-      "at": "2026-10-31T13:01:14.102516+00:00",
-      "status": "deferred",
+      "at": "2026-11-01T13:03:58.810129+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "observed_audio_language": "en",
-      "observed_language_probability": 0.9783873558044434,
-      "observed_source_id": "24367835",
-      "elapsed_seconds": 34.25,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-01T13:01:48.355917+00:00"
+      "elapsed_seconds": 66.94,
+      "source_id": "35411579",
+      "queue_rank": 32796
     },
     "1587:1:45": {
       "at": "2026-10-31T13:08:00.733377+00:00",
@@ -892969,9 +893027,35 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T13:04:55.808082+00:00"
+    },
+    "2487:5:4": {
+      "at": "2026-11-01T13:01:18.642821+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 252.03,
+      "source_id": "35137866",
+      "queue_rank": 32797
+    },
+    "2487:5:5": {
+      "at": "2026-11-01T13:01:33.371371+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 239.82,
+      "source_id": "35166641",
+      "queue_rank": 32798
     }
   },
-  "updated_at": "2026-11-01T13:05:00.203405+00:00",
+  "updated_at": "2026-11-01T13:06:12.963887+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -899906,9 +899990,11 @@
     "2128": {
       "misses": [
         "2128:3:13",
-        "2128:3:14"
+        "2128:3:14",
+        "2128:3:15"
       ],
-      "updated_at": "2026-11-01T13:01:09.238215+00:00"
+      "updated_at": "2026-11-01T13:05:40.609573+00:00",
+      "retry_after": "2026-11-01T17:05:40.609573+00:00"
     },
     "460": {
       "misses": [
@@ -901673,7 +901759,7 @@
     },
     "2487": {
       "misses": [],
-      "updated_at": "2026-11-01T13:03:57.354055+00:00"
+      "updated_at": "2026-11-01T13:05:33.502028+00:00"
     },
     "2179": {
       "misses": [
@@ -905826,13 +905912,8 @@
       "updated_at": "2026-11-01T07:22:29.920530+00:00"
     },
     "1783": {
-      "misses": [
-        "1783:15:5",
-        "1783:1:8",
-        "1783:2:8"
-      ],
-      "updated_at": "2026-11-01T07:25:50.951487+00:00",
-      "retry_after": "2026-11-01T07:55:50.951487+00:00"
+      "misses": [],
+      "updated_at": "2026-11-01T13:05:10.006945+00:00"
     },
     "5376": {
       "misses": [
