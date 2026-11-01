@@ -12243,14 +12243,18 @@
       "retry_after": "2026-10-20T03:18:45.947320+00:00"
     },
     "1235:9:22": {
-      "at": "2026-10-19T03:18:00.518914+00:00",
+      "at": "2026-11-01T00:18:42.147273+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 59.78,
-      "consecutive_failures": 6,
-      "retry_after": "2026-10-20T03:19:09.801312+00:00"
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 54.71,
+      "consecutive_failures": 7,
+      "retry_after": "2026-11-02T00:19:36.855754+00:00"
     },
     "1235:9:23": {
       "at": "2026-10-31T22:39:53.154901+00:00",
@@ -872110,9 +872114,142 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T00:18:21.543673+00:00"
+    },
+    "9127:10:8": {
+      "at": "2026-11-01T00:18:01.589308+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 29.02,
+      "source_id": "30985132",
+      "queue_rank": 32533
+    },
+    "9127:11:8": {
+      "at": "2026-11-01T00:18:14.576419+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 13.08,
+      "search_evidence": [
+        {
+          "path": "/top-gear-s11e08/s/-6",
+          "status": 200,
+          "response_bytes": 215845,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear-s11e08/s/-6",
+          "status": 200,
+          "response_bytes": 215871,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear/s/-6",
+          "status": 200,
+          "response_bytes": 466454,
+          "boxes": 249,
+          "parsed_candidates": 247,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T00:18:41.387556+00:00"
+    },
+    "9674:2:27": {
+      "at": "2026-11-01T00:18:42.947130+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 37.22,
+      "search_evidence": [
+        {
+          "path": "/ben-10-dokonaly-mimozemstan-s02e27/s/-6",
+          "status": 200,
+          "response_bytes": 216351,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ben-10-dokonaly-mimozemstan/s/-6",
+          "status": 200,
+          "response_bytes": 216133,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ben-10-ultimate-alien-s02e27/s/-6",
+          "status": 200,
+          "response_bytes": 216166,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ben-10-ultimate-alien/s/-6",
+          "status": 200,
+          "response_bytes": 216010,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ben-10-dokonaly-mimozemstan-s02e27/s/-6",
+          "status": 200,
+          "response_bytes": 216268,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ben-10-dokonaly-mimozemstan/s/-6",
+          "status": 200,
+          "response_bytes": 216173,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ben-10-ultimate-alien-s02e27/s/-6",
+          "status": 200,
+          "response_bytes": 216171,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ben-10-ultimate-alien/s/-6",
+          "status": 200,
+          "response_bytes": 216059,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T00:19:20.169784+00:00"
     }
   },
-  "updated_at": "2026-11-01T00:18:24.650810+00:00",
+  "updated_at": "2026-11-01T00:19:45.834687+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -876358,9 +876495,10 @@
     },
     "1235": {
       "misses": [
-        "1235:6:4"
+        "1235:6:4",
+        "1235:9:22"
       ],
-      "updated_at": "2026-11-01T00:18:00.829601+00:00"
+      "updated_at": "2026-11-01T00:19:36.855780+00:00"
     },
     "3013": {
       "misses": [
@@ -877991,9 +878129,9 @@
     },
     "9127": {
       "misses": [
-        "9127:11:7"
+        "9127:11:8"
       ],
-      "updated_at": "2026-11-01T00:18:21.543701+00:00"
+      "updated_at": "2026-11-01T00:18:41.387568+00:00"
     },
     "3610": {
       "misses": [
@@ -885333,9 +885471,11 @@
     "9674": {
       "misses": [
         "9674:2:24",
-        "9674:2:25"
+        "9674:2:25",
+        "9674:2:27"
       ],
-      "updated_at": "2026-10-31T10:02:29.477957+00:00"
+      "updated_at": "2026-11-01T00:19:20.169817+00:00",
+      "retry_after": "2026-11-01T04:19:20.169817+00:00"
     },
     "9931": {
       "misses": [
@@ -889608,12 +889748,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2070,
+    "last_series": 2432,
     "last_series_order": [
       false,
       -7.8,
-      -26552,
-      2070
+      -9497,
+      2432
     ]
   }
 }
