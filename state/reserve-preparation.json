@@ -158442,14 +158442,18 @@
       "queue_rank": 18002
     },
     "3695:11:1": {
-      "at": "2026-10-12T07:08:16.028210+00:00",
+      "at": "2026-11-01T09:02:10.078551+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 49.73,
-      "consecutive_failures": 4,
-      "retry_after": "2026-10-13T07:09:05.761157+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 72.33,
+      "consecutive_failures": 5,
+      "retry_after": "2026-11-01T13:03:22.404074+00:00"
     },
     "2322:1:1": {
       "at": "2026-10-16T02:21:54.348928+00:00",
@@ -886962,9 +886966,97 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T09:01:52.434067+00:00"
+    },
+    "3695:8:3": {
+      "at": "2026-11-01T09:01:53.111588+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 92.12,
+      "source_id": "34060556",
+      "queue_rank": 32720
+    },
+    "3695:12:4": {
+      "at": "2026-11-01T09:02:34.406125+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 73.13,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-01T09:18:47.533150+00:00"
+    },
+    "2177:3:9": {
+      "at": "2026-11-01T09:03:48.027792+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 20.82,
+      "search_evidence": [
+        {
+          "path": "/black-butler-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 216235,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/black-butler/s/-6",
+          "status": 200,
+          "response_bytes": 234316,
+          "boxes": 15,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/black-butler-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 216424,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/black-butler/s/-6",
+          "status": 200,
+          "response_bytes": 234272,
+          "boxes": 15,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T09:04:08.844313+00:00"
+    },
+    "3695:8:4": {
+      "at": "2026-11-01T09:02:09.585883+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 125.69,
+      "source_id": "34060560",
+      "queue_rank": 32721
     }
   },
-  "updated_at": "2026-11-01T09:03:12.791452+00:00",
+  "updated_at": "2026-11-01T09:04:17.651358+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -892777,7 +892869,7 @@
     },
     "3695": {
       "misses": [],
-      "updated_at": "2026-11-01T09:01:09.730219+00:00"
+      "updated_at": "2026-11-01T09:04:15.271352+00:00"
     },
     "1423": {
       "misses": [
@@ -902450,9 +902542,11 @@
     "2177": {
       "misses": [
         "2177:3:7",
-        "2177:3:8"
+        "2177:3:8",
+        "2177:3:9"
       ],
-      "updated_at": "2026-11-01T01:55:05.506274+00:00"
+      "updated_at": "2026-11-01T09:04:08.844346+00:00",
+      "retry_after": "2026-11-01T13:04:08.844346+00:00"
     },
     "628": {
       "misses": [
@@ -904419,12 +904513,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3256,
+    "last_series": 2329,
     "last_series_order": [
       false,
       -7.6,
-      -13968,
-      3256
+      -10511,
+      2329
     ]
   }
 }
