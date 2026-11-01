@@ -171199,14 +171199,18 @@
       "retry_after": "2026-10-13T17:15:50.724405+00:00"
     },
     "597:2:4": {
-      "at": "2026-10-18T09:55:51.621579+00:00",
+      "at": "2026-11-01T04:51:38.922545+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 375.71,
-      "consecutive_failures": 14,
-      "retry_after": "2026-10-18T11:02:07.331589+00:00"
+      "elapsed_seconds": 857.1,
+      "consecutive_failures": 15,
+      "retry_after": "2026-11-01T11:05:56.019667+00:00"
     },
     "597:2:5": {
       "at": "2026-10-17T13:10:47.587004+00:00",
@@ -880821,9 +880825,57 @@
       "elapsed_seconds": 900.46,
       "consecutive_failures": 1,
       "retry_after": "2026-11-01T05:17:42.449249+00:00"
+    },
+    "3548:5:23": {
+      "at": "2026-11-01T05:05:56.783225+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 33.33,
+      "search_evidence": [
+        {
+          "path": "/the-golden-girls-s05e23/s/-6",
+          "status": 200,
+          "response_bytes": 216099,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-golden-girls/s/-6",
+          "status": 200,
+          "response_bytes": 219040,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-golden-girls-s05e23/s/-6",
+          "status": 200,
+          "response_bytes": 216085,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-golden-girls/s/-6",
+          "status": 200,
+          "response_bytes": 219064,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T05:06:30.113498+00:00"
     }
   },
-  "updated_at": "2026-11-01T05:05:51.024970+00:00",
+  "updated_at": "2026-11-01T05:06:59.117556+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -888568,9 +888620,11 @@
     "597": {
       "misses": [
         "597:1:7",
-        "597:3:3"
+        "597:3:3",
+        "597:2:4"
       ],
-      "updated_at": "2026-11-01T05:04:19.550540+00:00"
+      "updated_at": "2026-11-01T05:05:56.019727+00:00",
+      "retry_after": "2026-11-01T05:35:56.019727+00:00"
     },
     "64": {
       "misses": [
@@ -888827,12 +888881,9 @@
     },
     "3548": {
       "misses": [
-        "3548:5:20",
-        "3548:5:21",
-        "3548:5:22"
+        "3548:5:23"
       ],
-      "updated_at": "2026-10-31T20:27:32.045454+00:00",
-      "retry_after": "2026-11-01T00:27:32.045454+00:00"
+      "updated_at": "2026-11-01T05:06:30.113529+00:00"
     },
     "1015": {
       "misses": [
@@ -898295,12 +898346,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2053,
+    "last_series": 2005,
     "last_series_order": [
       false,
       -8.2,
-      -54877,
-      2053
+      -51991,
+      2005
     ]
   }
 }
