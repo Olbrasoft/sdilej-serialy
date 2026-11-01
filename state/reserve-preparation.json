@@ -415833,7 +415833,7 @@
       "retry_after": "2026-11-02T05:31:52.433228+00:00"
     },
     "1375:3:5": {
-      "at": "2026-11-01T05:34:19.059981+00:00",
+      "at": "2026-11-01T06:05:26.701436+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -415841,10 +415841,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 348.26,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-01T05:49:34.563510+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9923566579818726,
+      "observed_source_id": "35058783",
+      "elapsed_seconds": 127.81,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-02T06:07:34.514811+00:00"
     },
     "2329:1:16": {
       "at": "2026-10-21T23:00:17.536318+00:00",
@@ -882211,9 +882214,89 @@
       "elapsed_seconds": 108.88,
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T06:05:25.887331+00:00"
+    },
+    "1327:9:10": {
+      "at": "2026-11-01T06:05:21.770943+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 141.55,
+      "search_evidence": [
+        {
+          "path": "/goldbergovi-s09e10/s/-6",
+          "status": 200,
+          "response_bytes": 215952,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/goldbergovi/s/-6",
+          "status": 200,
+          "response_bytes": 670650,
+          "boxes": 378,
+          "parsed_candidates": 378,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-goldbergs-s09e10/s/-6",
+          "status": 200,
+          "response_bytes": 216024,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-goldbergs/s/-6",
+          "status": 200,
+          "response_bytes": 234268,
+          "boxes": 16,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/goldbergovi-s09e10/s/-6",
+          "status": 200,
+          "response_bytes": 215959,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/goldbergovi/s/-6",
+          "status": 200,
+          "response_bytes": 670706,
+          "boxes": 378,
+          "parsed_candidates": 378,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-goldbergs-s09e10/s/-6",
+          "status": 200,
+          "response_bytes": 216104,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-goldbergs/s/-6",
+          "status": 200,
+          "response_bytes": 234197,
+          "boxes": 16,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T06:07:43.324945+00:00"
     }
   },
-  "updated_at": "2026-11-01T06:07:07.297847+00:00",
+  "updated_at": "2026-11-01T06:08:18.648518+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -886879,12 +886962,9 @@
     },
     "1327": {
       "misses": [
-        "1327:9:8",
-        "1327:2:20",
-        "1327:9:9"
+        "1327:9:10"
       ],
-      "updated_at": "2026-10-31T22:39:26.055779+00:00",
-      "retry_after": "2026-11-01T02:39:26.055779+00:00"
+      "updated_at": "2026-11-01T06:07:43.324979+00:00"
     },
     "1603": {
       "misses": [],
@@ -890005,9 +890085,11 @@
     "1375": {
       "misses": [
         "1375:6:14",
-        "1375:3:4"
+        "1375:3:4",
+        "1375:3:5"
       ],
-      "updated_at": "2026-11-01T05:31:52.433252+00:00"
+      "updated_at": "2026-11-01T06:07:34.514838+00:00",
+      "retry_after": "2026-11-01T10:07:34.514838+00:00"
     },
     "1104": {
       "misses": [],
