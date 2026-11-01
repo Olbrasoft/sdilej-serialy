@@ -212350,14 +212350,18 @@
       "queue_rank": 21357
     },
     "193:1:2": {
-      "at": "2026-10-16T11:16:30.610913+00:00",
+      "at": "2026-11-01T23:03:35.466758+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 25.88,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-17T11:16:56.493427+00:00"
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 936.74,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-02T03:19:12.205118+00:00"
     },
     "132:11:20": {
       "at": "2026-10-14T07:19:58.472506+00:00",
@@ -908231,9 +908235,96 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T23:16:11.834646+00:00"
+    },
+    "1085:9:21": {
+      "at": "2026-11-01T23:17:09.343799+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 60.07,
+      "source_id": "30290416",
+      "queue_rank": 33139
+    },
+    "1085:9:22": {
+      "at": "2026-11-01T23:17:23.685612+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 50.29,
+      "source_id": "30290419",
+      "queue_rank": 33140
+    },
+    "1423:8:14": {
+      "at": "2026-11-01T23:17:55.761842+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 31.07,
+      "source_id": "28237117",
+      "queue_rank": 33141
+    },
+    "2280:3:11": {
+      "at": "2026-11-01T23:18:53.887937+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 24.48,
+      "search_evidence": [
+        {
+          "path": "/steven-universe-s03e11/s/-6",
+          "status": 200,
+          "response_bytes": 216037,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/steven-universe/s/-6",
+          "status": 200,
+          "response_bytes": 220642,
+          "boxes": 5,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/steven-universe-s03e11/s/-6",
+          "status": 200,
+          "response_bytes": 216094,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/steven-universe/s/-6",
+          "status": 200,
+          "response_bytes": 220669,
+          "boxes": 5,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T23:19:18.363146+00:00"
     }
   },
-  "updated_at": "2026-11-01T23:18:04.426872+00:00",
+  "updated_at": "2026-11-01T23:19:20.578325+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -914058,7 +914149,7 @@
     },
     "1423": {
       "misses": [],
-      "updated_at": "2026-11-01T23:15:37.036679+00:00"
+      "updated_at": "2026-11-01T23:18:52.887089+00:00"
     },
     "2199": {
       "misses": [
@@ -917337,12 +917428,9 @@
     },
     "193": {
       "misses": [
-        "193:5:4",
-        "193:5:5",
-        "193:5:6"
+        "193:1:2"
       ],
-      "updated_at": "2026-10-31T23:16:40.753588+00:00",
-      "retry_after": "2026-11-01T03:16:40.753588+00:00"
+      "updated_at": "2026-11-01T23:19:12.205147+00:00"
     },
     "452": {
       "misses": [
@@ -917437,7 +917525,7 @@
     },
     "1085": {
       "misses": [],
-      "updated_at": "2026-11-01T23:15:57.930964+00:00"
+      "updated_at": "2026-11-01T23:18:52.887034+00:00"
     },
     "1242": {
       "misses": [
@@ -917468,9 +917556,10 @@
     },
     "2280": {
       "misses": [
-        "2280:3:9"
+        "2280:3:9",
+        "2280:3:11"
       ],
-      "updated_at": "2026-11-01T13:07:47.110211+00:00"
+      "updated_at": "2026-11-01T23:19:18.363170+00:00"
     },
     "4377": {
       "misses": [],
@@ -925712,12 +925801,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2195,
+    "last_series": 1885,
     "last_series_order": [
       false,
       -8.1,
-      -46346,
-      2195
+      -33927,
+      1885
     ]
   }
 }
