@@ -132669,14 +132669,21 @@
       "retry_after": "2026-11-02T02:35:11.445900+00:00"
     },
     "1237:3:1": {
-      "at": "2026-10-11T10:26:52.165360+00:00",
+      "at": "2026-11-01T07:06:28.818520+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 10.37,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T10:27:02.532215+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "bg",
+      "observed_language_probability": 0.9477008581161499,
+      "observed_source_id": "33415995",
+      "elapsed_seconds": 42.39,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-02T07:07:11.205424+00:00"
     },
     "1237:3:2": {
       "at": "2026-10-29T11:54:58.974515+00:00",
@@ -865697,7 +865704,7 @@
       "queue_rank": 32403
     },
     "681:2:2": {
-      "at": "2026-11-01T06:07:44.395887+00:00",
+      "at": "2026-11-01T06:52:04.008385+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -865705,40 +865712,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 828.5,
-      "consecutive_failures": 5,
-      "retry_after": "2026-11-01T06:31:18.224218+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 904.29,
+      "consecutive_failures": 6,
+      "retry_after": "2026-11-01T13:07:08.294522+00:00"
     },
     "2489:2:7": {
       "at": "2026-10-31T18:51:43.837259+00:00",
@@ -882249,7 +882226,7 @@
       "retry_after": "2026-11-01T08:01:19.151881+00:00"
     },
     "597:3:5": {
-      "at": "2026-11-01T05:56:59.513071+00:00",
+      "at": "2026-11-01T06:51:31.957986+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -882258,9 +882235,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 910.35,
-      "consecutive_failures": 2,
-      "retry_after": "2026-11-01T06:42:09.963672+00:00"
+      "elapsed_seconds": 911.56,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-01T08:06:43.517604+00:00"
     },
     "6735:4:13": {
       "at": "2026-11-01T05:33:16.024772+00:00",
@@ -883777,9 +883754,73 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T07:05:38.047021+00:00"
+    },
+    "2352:8:22": {
+      "at": "2026-11-01T07:05:38.773620+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 49.31,
+      "search_evidence": [
+        {
+          "path": "/borici-mytu-s08e22/s/-6",
+          "status": 200,
+          "response_bytes": 216002,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mythbusters-s08e22/s/-6",
+          "status": 200,
+          "response_bytes": 216048,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/borici-mytu-s08e22/s/-6",
+          "status": 200,
+          "response_bytes": 215986,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/borici-mytu/s/-6",
+          "status": 200,
+          "response_bytes": 338044,
+          "boxes": 114,
+          "parsed_candidates": 96,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mythbusters-s08e22/s/-6",
+          "status": 200,
+          "response_bytes": 216009,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mythbusters/s/-6",
+          "status": 200,
+          "response_bytes": 232701,
+          "boxes": 15,
+          "parsed_candidates": 15,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T07:06:28.086046+00:00"
     }
   },
-  "updated_at": "2026-11-01T07:06:06.901271+00:00",
+  "updated_at": "2026-11-01T07:07:16.070524+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -888220,12 +888261,9 @@
     },
     "1237": {
       "misses": [
-        "1237:2:27",
-        "1237:2:28",
-        "1237:6:4"
+        "1237:3:1"
       ],
-      "updated_at": "2026-11-01T02:35:43.727218+00:00",
-      "retry_after": "2026-11-01T06:35:43.727218+00:00"
+      "updated_at": "2026-11-01T07:07:11.205460+00:00"
     },
     "1709": {
       "misses": [
@@ -890527,8 +890565,10 @@
       "updated_at": "2026-10-11T18:51:09.503046+00:00"
     },
     "681": {
-      "misses": [],
-      "updated_at": "2026-11-01T02:36:58.148127+00:00"
+      "misses": [
+        "681:2:2"
+      ],
+      "updated_at": "2026-11-01T07:07:08.294551+00:00"
     },
     "2921": {
       "misses": [
@@ -890667,9 +890707,11 @@
     "2352": {
       "misses": [
         "2352:8:19",
-        "2352:8:21"
+        "2352:8:21",
+        "2352:8:22"
       ],
-      "updated_at": "2026-11-01T07:05:38.047051+00:00"
+      "updated_at": "2026-11-01T07:06:28.086079+00:00",
+      "retry_after": "2026-11-01T11:06:28.086079+00:00"
     },
     "688": {
       "misses": [
@@ -891512,9 +891554,11 @@
     "597": {
       "misses": [
         "597:3:3",
-        "597:3:4"
+        "597:3:4",
+        "597:3:5"
       ],
-      "updated_at": "2026-11-01T07:01:19.151911+00:00"
+      "updated_at": "2026-11-01T07:06:43.517633+00:00",
+      "retry_after": "2026-11-01T07:36:43.517633+00:00"
     },
     "64": {
       "misses": [
@@ -901236,12 +901280,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3038,
+    "last_series": 9828,
     "last_series_order": [
       false,
-      -8.0,
-      -2529,
-      3038
+      -7.9,
+      -41207,
+      9828
     ]
   }
 }
