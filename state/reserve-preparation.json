@@ -374496,14 +374496,18 @@
       "retry_after": "2026-10-23T04:16:56.363110+00:00"
     },
     "1060:4:7": {
-      "at": "2026-10-21T16:05:26.716051+00:00",
+      "at": "2026-11-01T09:42:15.709555+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 29.29,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-22T16:05:56.006530+00:00"
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 207.58,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-01T17:45:43.779855+00:00"
     },
     "1060:4:11": {
       "at": "2026-10-22T04:17:45.718869+00:00",
@@ -374516,14 +374520,17 @@
       "retry_after": "2026-10-23T04:18:15.036101+00:00"
     },
     "1060:4:9": {
-      "at": "2026-10-21T20:08:33.922467+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-11-01T09:43:16.119219+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 36.06,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-22T20:09:09.978578+00:00"
+      "elapsed_seconds": 141.0,
+      "source_id": "35140767",
+      "queue_rank": 32750
     },
     "5405:1:8": {
       "at": "2026-10-21T01:33:38.441925+00:00",
@@ -887900,9 +887907,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T09:38:44.934491+00:00"
+    },
+    "9829:1:47": {
+      "at": "2026-11-01T09:45:44.296883+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 16.91,
+      "search_evidence": [
+        {
+          "path": "/tiny-toon-adventures-s01e47/s/-6",
+          "status": 200,
+          "response_bytes": 216127,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tiny-toon-adventures/s/-6",
+          "status": 200,
+          "response_bytes": 216068,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tiny-toon-adventures-s01e47/s/-6",
+          "status": 200,
+          "response_bytes": 216213,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tiny-toon-adventures/s/-6",
+          "status": 200,
+          "response_bytes": 216061,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T09:46:01.205613+00:00"
     }
   },
-  "updated_at": "2026-11-01T09:45:17.154678+00:00",
+  "updated_at": "2026-11-01T09:46:47.996807+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -893584,7 +893639,7 @@
     },
     "1060": {
       "misses": [],
-      "updated_at": "2026-11-01T09:44:26.957572+00:00"
+      "updated_at": "2026-11-01T09:45:43.779961+00:00"
     },
     "1287": {
       "misses": [
@@ -904266,9 +904321,10 @@
     },
     "9829": {
       "misses": [
-        "9829:1:46"
+        "9829:1:46",
+        "9829:1:47"
       ],
-      "updated_at": "2026-11-01T02:11:06.138969+00:00"
+      "updated_at": "2026-11-01T09:46:01.205642+00:00"
     },
     "4355": {
       "misses": [
@@ -905351,12 +905407,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 532,
+    "last_series": 1081,
     "last_series_order": [
       false,
-      -7.5,
-      -17888,
-      532
+      -7.4,
+      -388857,
+      1081
     ]
   }
 }
