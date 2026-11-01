@@ -319706,14 +319706,68 @@
       "retry_after": "2026-11-01T22:28:11.339272+00:00"
     },
     "1097:3:22": {
-      "at": "2026-10-19T17:06:43.060121+00:00",
+      "at": "2026-11-01T02:29:02.648446+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 45.46,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-20T17:07:28.517914+00:00"
+      "elapsed_seconds": 46.89,
+      "search_evidence": [
+        {
+          "path": "/scrubs-dokturci-s03e22/s/-6",
+          "status": 200,
+          "response_bytes": 216465,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scrubs-s03e22/s/-6",
+          "status": 200,
+          "response_bytes": 216261,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scrubs-dokturci-s03e22/s/-6",
+          "status": 200,
+          "response_bytes": 216558,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scrubs-dokturci/s/-6",
+          "status": 200,
+          "response_bytes": 453320,
+          "boxes": 191,
+          "parsed_candidates": 184,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scrubs-s03e22/s/-6",
+          "status": 200,
+          "response_bytes": 216312,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scrubs/s/-6",
+          "status": 200,
+          "response_bytes": 711612,
+          "boxes": 407,
+          "parsed_candidates": 393,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-02T02:29:49.537648+00:00"
     },
     "1058:6:11": {
       "at": "2026-10-21T19:31:21.280376+00:00",
@@ -876382,9 +876436,75 @@
       "elapsed_seconds": 30.17,
       "source_id": "31003913",
       "queue_rank": 32639
+    },
+    "9127:22:3": {
+      "at": "2026-11-01T02:27:25.510219+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 54.44,
+      "source_id": "31003345",
+      "queue_rank": 32640
+    },
+    "9127:22:1": {
+      "at": "2026-11-01T02:27:19.352923+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 65.49,
+      "source_id": "31003866",
+      "queue_rank": 32641
+    },
+    "9127:23:7": {
+      "at": "2026-11-01T02:28:18.475688+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 13.79,
+      "search_evidence": [
+        {
+          "path": "/top-gear-s23e07/s/-6",
+          "status": 200,
+          "response_bytes": 215866,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear-s23e07/s/-6",
+          "status": 200,
+          "response_bytes": 215968,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear/s/-6",
+          "status": 200,
+          "response_bytes": 466486,
+          "boxes": 249,
+          "parsed_candidates": 247,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T02:29:01.595451+00:00"
     }
   },
-  "updated_at": "2026-11-01T02:28:22.364062+00:00",
+  "updated_at": "2026-11-01T02:30:04.628942+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -881650,12 +881770,9 @@
     },
     "1097": {
       "misses": [
-        "1097:3:15",
-        "1097:3:19",
-        "1097:3:21"
+        "1097:3:22"
       ],
-      "updated_at": "2026-10-31T22:28:11.339317+00:00",
-      "retry_after": "2026-11-01T02:28:11.339317+00:00"
+      "updated_at": "2026-11-01T02:29:49.537677+00:00"
     },
     "1270": {
       "misses": [
@@ -882253,8 +882370,10 @@
       "updated_at": "2026-10-16T09:36:13.898343+00:00"
     },
     "9127": {
-      "misses": [],
-      "updated_at": "2026-11-01T02:28:17.922148+00:00"
+      "misses": [
+        "9127:23:7"
+      ],
+      "updated_at": "2026-11-01T02:29:01.595464+00:00"
     },
     "3610": {
       "misses": [
@@ -893859,12 +893978,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1237,
+    "last_series": 2120,
     "last_series_order": [
       false,
       -8.6,
-      -76846,
-      1237
+      -23604,
+      2120
     ]
   }
 }
