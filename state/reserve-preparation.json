@@ -142899,14 +142899,18 @@
       "retry_after": "2026-11-02T05:04:14.471746+00:00"
     },
     "183:1:5": {
-      "at": "2026-10-19T03:42:52.971187+00:00",
+      "at": "2026-11-01T05:02:43.231628+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 61.34,
-      "consecutive_failures": 4,
-      "retry_after": "2026-10-20T03:43:54.308785+00:00"
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 436.55,
+      "consecutive_failures": 5,
+      "retry_after": "2026-11-02T05:09:59.779882+00:00"
     },
     "183:1:6": {
       "at": "2026-10-16T03:35:54.191768+00:00",
@@ -146104,14 +146108,44 @@
       "retry_after": "2026-11-02T01:01:47.148071+00:00"
     },
     "3537:1:23": {
-      "at": "2026-10-11T11:00:50.445022+00:00",
+      "at": "2026-11-01T05:10:00.641213+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 29.85,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T11:01:20.297813+00:00"
+      "elapsed_seconds": 24.72,
+      "search_evidence": [
+        {
+          "path": "/ghost-in-the-shell-stand-alone-complex-s01e23/s/-6",
+          "status": 200,
+          "response_bytes": 216544,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ghost-in-the-shell-stand-alone-complex-s01e23/s/-6",
+          "status": 200,
+          "response_bytes": 216675,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ghost-in-the-shell-stand-alone-complex/s/-6",
+          "status": 200,
+          "response_bytes": 258116,
+          "boxes": 33,
+          "parsed_candidates": 32,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-02T05:10:25.357659+00:00"
     },
     "3537:1:24": {
       "at": "2026-10-11T11:00:52.484190+00:00",
@@ -211643,14 +211677,17 @@
       "queue_rank": 21347
     },
     "462:1:2": {
-      "at": "2026-10-16T09:30:18.110502+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-11-01T05:07:11.836522+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 44.37,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-17T09:31:02.479634+00:00"
+      "elapsed_seconds": 168.7,
+      "source_id": "33522170",
+      "queue_rank": 32682
     },
     "132:11:11": {
       "at": "2026-10-14T07:16:19.517727+00:00",
@@ -880923,7 +880960,7 @@
       "retry_after": "2026-11-02T05:07:11.078069+00:00"
     }
   },
-  "updated_at": "2026-11-01T05:09:45.470356+00:00",
+  "updated_at": "2026-11-01T05:10:57.272936+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -885617,12 +885654,9 @@
     },
     "3537": {
       "misses": [
-        "3537:1:16",
-        "3537:1:17",
-        "3537:1:21"
+        "3537:1:23"
       ],
-      "updated_at": "2026-11-01T01:01:47.148085+00:00",
-      "retry_after": "2026-11-01T05:01:47.148085+00:00"
+      "updated_at": "2026-11-01T05:10:25.357731+00:00"
     },
     "3378": {
       "misses": [
@@ -889975,7 +890009,7 @@
     },
     "462": {
       "misses": [],
-      "updated_at": "2026-11-01T04:48:57.548539+00:00"
+      "updated_at": "2026-11-01T05:10:00.641129+00:00"
     },
     "69": {
       "misses": [
@@ -897628,9 +897662,10 @@
     },
     "183": {
       "misses": [
-        "183:1:1"
+        "183:1:1",
+        "183:1:5"
       ],
-      "updated_at": "2026-11-01T05:04:14.471785+00:00"
+      "updated_at": "2026-11-01T05:09:59.779908+00:00"
     },
     "1434": {
       "misses": [
