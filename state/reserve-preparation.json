@@ -472495,14 +472495,21 @@
       "retry_after": "2026-11-02T06:09:38.663348+00:00"
     },
     "1375:3:16": {
-      "at": "2026-10-23T00:16:39.278325+00:00",
+      "at": "2026-11-01T10:32:51.502282+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_original",
-      "elapsed_seconds": 48.02,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T00:32:27.300756+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9942026734352112,
+      "observed_source_id": "35058806",
+      "elapsed_seconds": 59.85,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-02T10:33:51.350370+00:00"
     },
     "1375:3:14": {
       "at": "2026-11-01T10:28:21.597532+00:00",
@@ -472559,14 +472566,21 @@
       "retry_after": "2026-10-24T00:18:00.686325+00:00"
     },
     "1375:3:17": {
-      "at": "2026-10-23T00:17:16.171967+00:00",
+      "at": "2026-11-01T10:33:34.024652+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 60.86,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T00:18:17.030091+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.998153030872345,
+      "observed_source_id": "35058807",
+      "elapsed_seconds": 44.4,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-02T10:34:18.421114+00:00"
     },
     "1955:1:12": {
       "at": "2026-10-23T00:17:51.206080+00:00",
@@ -888802,9 +888816,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T10:32:50.902650+00:00"
+    },
+    "105:3:3": {
+      "at": "2026-11-01T10:32:43.520003+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 32.53,
+      "search_evidence": [
+        {
+          "path": "/alfred-hitchcock-uvadi-s03e03/s/-6",
+          "status": 200,
+          "response_bytes": 216316,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/alfred-hitchcock-uvadi/s/-6",
+          "status": 200,
+          "response_bytes": 230678,
+          "boxes": 13,
+          "parsed_candidates": 13,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/alfred-hitchcock-presents-s03e03/s/-6",
+          "status": 200,
+          "response_bytes": 216306,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/alfred-hitchcock-presents/s/-6",
+          "status": 200,
+          "response_bytes": 216102,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/alfred-hitchcock-uvadi-s03e03/s/-6",
+          "status": 200,
+          "response_bytes": 216199,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/alfred-hitchcock-uvadi/s/-6",
+          "status": 200,
+          "response_bytes": 230615,
+          "boxes": 13,
+          "parsed_candidates": 13,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/alfred-hitchcock-presents-s03e03/s/-6",
+          "status": 200,
+          "response_bytes": 216306,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/alfred-hitchcock-presents/s/-6",
+          "status": 200,
+          "response_bytes": 216094,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T10:33:33.393462+00:00"
     }
   },
-  "updated_at": "2026-11-01T10:33:13.140097+00:00",
+  "updated_at": "2026-11-01T10:34:37.414927+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -893513,9 +893607,10 @@
     },
     "105": {
       "misses": [
-        "105:2:39"
+        "105:2:39",
+        "105:3:3"
       ],
-      "updated_at": "2026-11-01T02:35:11.445993+00:00"
+      "updated_at": "2026-11-01T10:33:33.393497+00:00"
     },
     "5596": {
       "misses": [
@@ -896589,10 +896684,12 @@
     },
     "1375": {
       "misses": [
-        "1375:3:14",
-        "1375:3:15"
+        "1375:3:15",
+        "1375:3:16",
+        "1375:3:17"
       ],
-      "updated_at": "2026-11-01T10:30:30.416117+00:00"
+      "updated_at": "2026-11-01T10:34:18.421145+00:00",
+      "retry_after": "2026-11-01T14:34:18.421145+00:00"
     },
     "1104": {
       "misses": [],
