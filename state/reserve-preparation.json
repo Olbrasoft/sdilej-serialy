@@ -204106,14 +204106,21 @@
       "retry_after": "2026-11-02T07:32:21.581370+00:00"
     },
     "3610:1:4": {
-      "at": "2026-10-15T20:32:48.919753+00:00",
+      "at": "2026-11-01T08:02:57.407186+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 73.18,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-16T20:34:02.899465+00:00"
+      "observed_audio_language": "ko",
+      "observed_language_probability": 0.9995693564414978,
+      "observed_source_id": "34686576",
+      "elapsed_seconds": 90.69,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-02T08:04:32.443171+00:00"
     },
     "3610:1:5": {
       "at": "2026-11-01T03:26:58.861767+00:00",
@@ -885686,9 +885693,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T08:02:56.776499+00:00"
+    },
+    "2207:3:5": {
+      "at": "2026-11-01T08:04:33.107668+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 56.15,
+      "search_evidence": [
+        {
+          "path": "/taxi-s03e05/s/-6",
+          "status": 200,
+          "response_bytes": 216050,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/taxi/s/-6",
+          "status": 200,
+          "response_bytes": 486310,
+          "boxes": 255,
+          "parsed_candidates": 243,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/taxi-s03e05/s/-6",
+          "status": 200,
+          "response_bytes": 215993,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/taxi/s/-6",
+          "status": 200,
+          "response_bytes": 486434,
+          "boxes": 255,
+          "parsed_candidates": 243,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T08:05:29.254237+00:00"
     }
   },
-  "updated_at": "2026-11-01T08:04:26.189667+00:00",
+  "updated_at": "2026-11-01T08:05:36.848251+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -891565,12 +891620,12 @@
     },
     "3610": {
       "misses": [
-        "3610:1:7",
         "3610:1:2",
-        "3610:1:3"
+        "3610:1:3",
+        "3610:1:4"
       ],
-      "updated_at": "2026-11-01T08:02:59.325461+00:00",
-      "retry_after": "2026-11-01T12:02:59.325461+00:00"
+      "updated_at": "2026-11-01T08:04:32.443211+00:00",
+      "retry_after": "2026-11-01T12:04:32.443211+00:00"
     },
     "10092": {
       "misses": [
@@ -899933,12 +899988,9 @@
     },
     "2207": {
       "misses": [
-        "2207:3:2",
-        "2207:3:3",
-        "2207:3:4"
+        "2207:3:5"
       ],
-      "updated_at": "2026-11-01T01:00:31.625644+00:00",
-      "retry_after": "2026-11-01T05:00:31.625644+00:00"
+      "updated_at": "2026-11-01T08:05:29.254269+00:00"
     },
     "7211": {
       "misses": [
@@ -903146,12 +903198,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1330,
+    "last_series": 2351,
     "last_series_order": [
       false,
       -7.7,
-      -27327,
-      1330
+      -11868,
+      2351
     ]
   }
 }
