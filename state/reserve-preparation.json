@@ -155881,17 +155881,18 @@
       "retry_after": "2026-10-12T22:30:07.796464+00:00"
     },
     "597:1:1": {
-      "at": "2026-10-27T14:53:20.973955+00:00",
+      "at": "2026-11-01T07:52:49.569400+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 375.57,
-      "consecutive_failures": 24,
-      "retry_after": "2026-10-27T15:09:36.546934+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 918.67,
+      "consecutive_failures": 25,
+      "retry_after": "2026-11-01T14:08:08.238194+00:00"
     },
     "1097:1:7": {
       "at": "2026-10-24T07:37:04.204302+00:00",
@@ -885741,9 +885742,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T08:05:29.254237+00:00"
+    },
+    "2351:3:14": {
+      "at": "2026-11-01T08:05:29.901215+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 159.16,
+      "search_evidence": [
+        {
+          "path": "/advokati-s03e14/s/-6",
+          "status": 200,
+          "response_bytes": 215913,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/advokati/s/-6",
+          "status": 200,
+          "response_bytes": 507212,
+          "boxes": 265,
+          "parsed_candidates": 230,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-practice-s03e14/s/-6",
+          "status": 200,
+          "response_bytes": 215981,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-practice/s/-6",
+          "status": 200,
+          "response_bytes": 223964,
+          "boxes": 7,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/advokati-s03e14/s/-6",
+          "status": 200,
+          "response_bytes": 215848,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/advokati/s/-6",
+          "status": 200,
+          "response_bytes": 507302,
+          "boxes": 265,
+          "parsed_candidates": 230,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-practice-s03e14/s/-6",
+          "status": 200,
+          "response_bytes": 215986,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-practice/s/-6",
+          "status": 200,
+          "response_bytes": 223955,
+          "boxes": 7,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T08:08:09.064544+00:00"
     }
   },
-  "updated_at": "2026-11-01T08:07:55.364206+00:00",
+  "updated_at": "2026-11-01T08:09:03.877657+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -893487,12 +893568,9 @@
     },
     "597": {
       "misses": [
-        "597:3:3",
-        "597:3:4",
-        "597:3:5"
+        "597:1:1"
       ],
-      "updated_at": "2026-11-01T07:06:43.517633+00:00",
-      "retry_after": "2026-11-01T07:36:43.517633+00:00"
+      "updated_at": "2026-11-01T08:08:08.238224+00:00"
     },
     "64": {
       "misses": [
@@ -900151,12 +900229,9 @@
     },
     "2351": {
       "misses": [
-        "2351:3:11",
-        "2351:3:12",
-        "2351:3:13"
+        "2351:3:14"
       ],
-      "updated_at": "2026-11-01T01:04:48.311268+00:00",
-      "retry_after": "2026-11-01T05:04:48.311268+00:00"
+      "updated_at": "2026-11-01T08:08:09.064576+00:00"
     },
     "1462": {
       "misses": [
@@ -903198,12 +903273,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2351,
+    "last_series": 912,
     "last_series_order": [
       false,
-      -7.7,
-      -11868,
-      2351
+      -7.6,
+      -57326,
+      912
     ]
   }
 }
