@@ -886229,9 +886229,70 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T08:43:06.967205+00:00"
+    },
+    "3695:3:3": {
+      "at": "2026-11-01T08:40:58.138110+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 179.84,
+      "source_id": "34060356",
+      "queue_rank": 32705
+    },
+    "1877:3:4": {
+      "at": "2026-11-01T08:43:07.423307+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 59.02,
+      "search_evidence": [
+        {
+          "path": "/greek-s03e04/s/-6",
+          "status": 200,
+          "response_bytes": 217710,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/greek/s/-6",
+          "status": 200,
+          "response_bytes": 306918,
+          "boxes": 117,
+          "parsed_candidates": 45,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/greek-s03e04/s/-6",
+          "status": 200,
+          "response_bytes": 217733,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/greek/s/-6",
+          "status": 200,
+          "response_bytes": 306881,
+          "boxes": 117,
+          "parsed_candidates": 45,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T08:44:06.442878+00:00"
     }
   },
-  "updated_at": "2026-11-01T08:43:22.788704+00:00",
+  "updated_at": "2026-11-01T08:44:30.227493+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -892044,7 +892105,7 @@
     },
     "3695": {
       "misses": [],
-      "updated_at": "2026-11-01T08:40:57.672885+00:00"
+      "updated_at": "2026-11-01T08:43:57.974883+00:00"
     },
     "1423": {
       "misses": [
@@ -901336,9 +901397,10 @@
     },
     "1877": {
       "misses": [
-        "1877:3:3"
+        "1877:3:3",
+        "1877:3:4"
       ],
-      "updated_at": "2026-11-01T01:12:22.802252+00:00"
+      "updated_at": "2026-11-01T08:44:06.442912+00:00"
     },
     "2767": {
       "misses": [
@@ -903675,12 +903737,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1877,
+    "last_series": 534,
     "last_series_order": [
       false,
       -7.6,
-      -25895,
-      1877
+      -24568,
+      534
     ]
   }
 }
