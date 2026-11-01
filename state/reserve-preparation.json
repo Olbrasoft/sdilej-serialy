@@ -476836,7 +476836,7 @@
       "retry_after": "2026-10-24T01:46:53.683054+00:00"
     },
     "1060:3:13": {
-      "at": "2026-11-01T09:46:01.692880+00:00",
+      "at": "2026-11-01T11:57:55.614411+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -476845,9 +476845,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "inconclusive_audio",
-      "elapsed_seconds": 128.37,
-      "consecutive_failures": 2,
-      "retry_after": "2026-11-01T11:48:13.849478+00:00"
+      "elapsed_seconds": 217.87,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-01T16:01:33.481539+00:00"
     },
     "1086:6:2": {
       "at": "2026-10-23T01:46:22.523201+00:00",
@@ -890480,9 +890480,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T11:58:34.561426+00:00"
+    },
+    "1948:6:9": {
+      "at": "2026-11-01T12:01:33.946964+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 37.08,
+      "search_evidence": [
+        {
+          "path": "/mi5-s06e09/s/-6",
+          "status": 200,
+          "response_bytes": 215814,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mi5/s/-6",
+          "status": 200,
+          "response_bytes": 228939,
+          "boxes": 14,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/spooks-s06e09/s/-6",
+          "status": 200,
+          "response_bytes": 215867,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/spooks/s/-6",
+          "status": 200,
+          "response_bytes": 454880,
+          "boxes": 309,
+          "parsed_candidates": 85,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mi5-s06e09/s/-6",
+          "status": 200,
+          "response_bytes": 215778,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mi5/s/-6",
+          "status": 200,
+          "response_bytes": 228983,
+          "boxes": 14,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/spooks-s06e09/s/-6",
+          "status": 200,
+          "response_bytes": 215850,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/spooks/s/-6",
+          "status": 200,
+          "response_bytes": 454935,
+          "boxes": 309,
+          "parsed_candidates": 85,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T12:02:11.030955+00:00"
     }
   },
-  "updated_at": "2026-11-01T12:01:24.011652+00:00",
+  "updated_at": "2026-11-01T12:02:30.944115+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -896148,9 +896228,10 @@
     },
     "1060": {
       "misses": [
-        "1060:3:18"
+        "1060:3:18",
+        "1060:3:13"
       ],
-      "updated_at": "2026-11-01T11:47:39.426869+00:00"
+      "updated_at": "2026-11-01T12:01:33.481570+00:00"
     },
     "1287": {
       "misses": [
@@ -897594,9 +897675,11 @@
     "1948": {
       "misses": [
         "1948:6:8",
-        "1948:2:4"
+        "1948:2:4",
+        "1948:6:9"
       ],
-      "updated_at": "2026-11-01T04:36:09.534083+00:00"
+      "updated_at": "2026-11-01T12:02:11.030987+00:00",
+      "retry_after": "2026-11-01T16:02:11.030987+00:00"
     },
     "5746": {
       "misses": [
@@ -907924,12 +908007,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2439,
+    "last_series": 7913,
     "last_series_order": [
       false,
       -8.3,
-      -20822,
-      2439
+      -13666,
+      7913
     ]
   }
 }
