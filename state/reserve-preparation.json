@@ -162983,14 +162983,21 @@
       "retry_after": "2026-10-13T05:35:03.473337+00:00"
     },
     "126:4:6": {
-      "at": "2026-10-19T17:42:07.419805+00:00",
+      "at": "2026-11-01T11:47:39.881095+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 30.18,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-20T17:42:37.597670+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9795108437538147,
+      "observed_source_id": "32217584",
+      "elapsed_seconds": 498.28,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-02T11:55:58.165207+00:00"
     },
     "126:4:1": {
       "at": "2026-10-16T05:12:33.694089+00:00",
@@ -890295,9 +890302,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T11:54:50.949491+00:00"
+    },
+    "1727:1:49": {
+      "at": "2026-11-01T11:54:51.375155+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 59.2,
+      "search_evidence": [
+        {
+          "path": "/dragon-ball-super-s01e49/s/-6",
+          "status": 200,
+          "response_bytes": 216179,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/dragon-ball-super/s/-6",
+          "status": 200,
+          "response_bytes": 232952,
+          "boxes": 15,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/dragon-ball-super-s01e49/s/-6",
+          "status": 200,
+          "response_bytes": 216100,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/dragon-ball-super/s/-6",
+          "status": 200,
+          "response_bytes": 232978,
+          "boxes": 15,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T11:55:51.680012+00:00"
     }
   },
-  "updated_at": "2026-11-01T11:55:47.813770+00:00",
+  "updated_at": "2026-11-01T11:56:54.696253+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -897195,9 +897250,10 @@
     },
     "1727": {
       "misses": [
-        "1727:1:48"
+        "1727:1:48",
+        "1727:1:49"
       ],
-      "updated_at": "2026-11-01T03:47:57.729754+00:00"
+      "updated_at": "2026-11-01T11:55:51.680049+00:00"
     },
     "1140": {
       "misses": [
@@ -899282,9 +899338,10 @@
     },
     "126": {
       "misses": [
-        "126:3:9"
+        "126:3:9",
+        "126:4:6"
       ],
-      "updated_at": "2026-11-01T11:53:38.856456+00:00"
+      "updated_at": "2026-11-01T11:55:58.165237+00:00"
     },
     "1402": {
       "misses": [
@@ -907736,12 +907793,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1727,
+    "last_series": 2439,
     "last_series_order": [
       false,
       -8.3,
-      -47358,
-      1727
+      -20822,
+      2439
     ]
   }
 }
