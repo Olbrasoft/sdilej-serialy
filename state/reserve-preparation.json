@@ -395559,7 +395559,7 @@
       "queue_rank": 28718
     },
     "2710:2:8": {
-      "at": "2026-10-29T05:30:37.882555+00:00",
+      "at": "2026-11-01T07:18:11.657416+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -395569,11 +395569,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.9306565523147583,
+      "observed_language_probability": 0.9128343462944031,
       "observed_source_id": "35139130",
-      "elapsed_seconds": 32.99,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-30T05:31:17.786789+00:00"
+      "elapsed_seconds": 31.2,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-02T07:18:42.861490+00:00"
     },
     "4578:2:4": {
       "at": "2026-10-21T12:16:33.281037+00:00",
@@ -405191,7 +405191,7 @@
       "retry_after": "2026-10-22T17:25:13.908800+00:00"
     },
     "2710:2:9": {
-      "at": "2026-10-30T06:40:15.496820+00:00",
+      "at": "2026-11-01T07:18:12.422976+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -405201,11 +405201,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.846502959728241,
+      "observed_language_probability": 0.8863423466682434,
       "observed_source_id": "35139172",
-      "elapsed_seconds": 89.8,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-31T06:41:45.296614+00:00"
+      "elapsed_seconds": 39.12,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-02T07:18:51.546915+00:00"
     },
     "2464:4:3": {
       "at": "2026-10-21T17:25:10.305930+00:00",
@@ -866931,7 +866931,7 @@
       "retry_after": "2026-11-01T20:03:32.763458+00:00"
     },
     "681:2:3": {
-      "at": "2026-11-01T06:09:39.423311+00:00",
+      "at": "2026-11-01T07:03:54.927767+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -866939,40 +866939,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 721.32,
-      "consecutive_failures": 5,
-      "retry_after": "2026-11-01T06:31:18.224216+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 902.02,
+      "consecutive_failures": 6,
+      "retry_after": "2026-11-01T13:18:56.944092+00:00"
     },
     "566:7:5": {
       "at": "2026-10-31T20:05:16.571103+00:00",
@@ -884322,9 +884292,121 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T07:17:39.103358+00:00"
+    },
+    "1457:4:19": {
+      "at": "2026-11-01T07:17:04.298375+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 56.78,
+      "search_evidence": [
+        {
+          "path": "/pomsta-s04e19/s/-6",
+          "status": 200,
+          "response_bytes": 215899,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/revenge-s04e19/s/-6",
+          "status": 200,
+          "response_bytes": 215884,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pomsta-s04e19/s/-6",
+          "status": 200,
+          "response_bytes": 215884,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pomsta/s/-6",
+          "status": 200,
+          "response_bytes": 512238,
+          "boxes": 284,
+          "parsed_candidates": 254,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/revenge-s04e19/s/-6",
+          "status": 200,
+          "response_bytes": 215865,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/revenge/s/-6",
+          "status": 200,
+          "response_bytes": 326736,
+          "boxes": 110,
+          "parsed_candidates": 79,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T07:18:10.881542+00:00"
+    },
+    "1851:4:21": {
+      "at": "2026-11-01T07:17:39.856739+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 29.51,
+      "search_evidence": [
+        {
+          "path": "/one-tree-hill-s04e21/s/-6",
+          "status": 200,
+          "response_bytes": 216081,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/one-tree-hill/s/-6",
+          "status": 200,
+          "response_bytes": 269380,
+          "boxes": 46,
+          "parsed_candidates": 44,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/one-tree-hill-s04e21/s/-6",
+          "status": 200,
+          "response_bytes": 216033,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/one-tree-hill/s/-6",
+          "status": 200,
+          "response_bytes": 269346,
+          "boxes": 46,
+          "parsed_candidates": 44,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T07:18:10.881655+00:00"
     }
   },
-  "updated_at": "2026-11-01T07:18:00.919693+00:00",
+  "updated_at": "2026-11-01T07:19:00.162816+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -889269,12 +889351,10 @@
     },
     "2710": {
       "misses": [
-        "2710:2:6",
-        "2710:2:4",
-        "2710:2:7"
+        "2710:2:8",
+        "2710:2:9"
       ],
-      "updated_at": "2026-11-01T02:21:21.479968+00:00",
-      "retry_after": "2026-11-01T06:21:21.479968+00:00"
+      "updated_at": "2026-11-01T07:18:51.546944+00:00"
     },
     "3014": {
       "misses": [
@@ -891073,9 +891153,10 @@
     },
     "681": {
       "misses": [
-        "681:2:2"
+        "681:2:2",
+        "681:2:3"
       ],
-      "updated_at": "2026-11-01T07:07:08.294551+00:00"
+      "updated_at": "2026-11-01T07:18:56.944121+00:00"
     },
     "2921": {
       "misses": [
@@ -896982,9 +897063,11 @@
     "1457": {
       "misses": [
         "1457:4:18",
-        "1457:1:16"
+        "1457:1:16",
+        "1457:4:19"
       ],
-      "updated_at": "2026-11-01T07:16:01.320153+00:00"
+      "updated_at": "2026-11-01T07:18:10.881582+00:00",
+      "retry_after": "2026-11-01T11:18:10.881582+00:00"
     },
     "3918": {
       "misses": [
@@ -897031,9 +897114,10 @@
     },
     "1851": {
       "misses": [
-        "1851:4:20"
+        "1851:4:20",
+        "1851:4:21"
       ],
-      "updated_at": "2026-10-31T23:32:33.564874+00:00"
+      "updated_at": "2026-11-01T07:18:10.881665+00:00"
     },
     "78": {
       "misses": [
