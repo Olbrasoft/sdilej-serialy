@@ -204102,14 +204102,21 @@
       "retry_after": "2026-10-23T10:44:06.415388+00:00"
     },
     "3610:1:3": {
-      "at": "2026-10-15T20:32:46.303868+00:00",
+      "at": "2026-11-01T08:01:21.384073+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 73.44,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-16T20:34:02.899387+00:00"
+      "observed_audio_language": "ko",
+      "observed_language_probability": 0.9704354405403137,
+      "observed_source_id": "34686577",
+      "elapsed_seconds": 97.94,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-02T08:02:59.325436+00:00"
     },
     "3610:1:6": {
       "at": "2026-11-01T07:31:46.388824+00:00",
@@ -885629,9 +885636,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-02T08:01:20.756060+00:00"
+    },
+    "1330:2:18": {
+      "at": "2026-11-01T08:01:17.683162+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 99.09,
+      "search_evidence": [
+        {
+          "path": "/zamena-s02e18/s/-6",
+          "status": 200,
+          "response_bytes": 215859,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zamena/s/-6",
+          "status": 200,
+          "response_bytes": 403267,
+          "boxes": 177,
+          "parsed_candidates": 154,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/switched-at-birth-s02e18/s/-6",
+          "status": 200,
+          "response_bytes": 216070,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/switched-at-birth/s/-6",
+          "status": 200,
+          "response_bytes": 216260,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zamena-s02e18/s/-6",
+          "status": 200,
+          "response_bytes": 215855,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zamena/s/-6",
+          "status": 200,
+          "response_bytes": 403456,
+          "boxes": 177,
+          "parsed_candidates": 154,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/switched-at-birth-s02e18/s/-6",
+          "status": 200,
+          "response_bytes": 216165,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/switched-at-birth/s/-6",
+          "status": 200,
+          "response_bytes": 216152,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T08:02:56.776499+00:00"
     }
   },
-  "updated_at": "2026-11-01T08:02:10.919039+00:00",
+  "updated_at": "2026-11-01T08:03:18.200605+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -891506,12 +891593,12 @@
     },
     "3610": {
       "misses": [
-        "3610:1:6",
         "3610:1:7",
-        "3610:1:2"
+        "3610:1:2",
+        "3610:1:3"
       ],
-      "updated_at": "2026-11-01T07:52:04.724241+00:00",
-      "retry_after": "2026-11-01T11:52:04.724241+00:00"
+      "updated_at": "2026-11-01T08:02:59.325461+00:00",
+      "retry_after": "2026-11-01T12:02:59.325461+00:00"
     },
     "10092": {
       "misses": [
@@ -899719,12 +899806,9 @@
     },
     "1330": {
       "misses": [
-        "1330:2:15",
-        "1330:2:16",
-        "1330:2:17"
+        "1330:2:18"
       ],
-      "updated_at": "2026-11-01T01:01:47.148013+00:00",
-      "retry_after": "2026-11-01T05:01:47.148013+00:00"
+      "updated_at": "2026-11-01T08:02:56.776527+00:00"
     },
     "4962": {
       "misses": [
