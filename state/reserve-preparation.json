@@ -329856,7 +329856,7 @@
       "retry_after": "2026-10-31T10:43:38.235983+00:00"
     },
     "1783:1:8": {
-      "at": "2026-10-31T23:41:39.102551+00:00",
+      "at": "2026-11-01T00:01:34.187954+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -329864,10 +329864,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 310.98,
-      "consecutive_failures": 24,
-      "retry_after": "2026-10-31T23:56:50.084692+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 413.82,
+      "consecutive_failures": 25,
+      "retry_after": "2026-11-01T06:08:48.313401+00:00"
     },
     "1587:1:6": {
       "at": "2026-10-19T22:43:30.959491+00:00",
@@ -871723,9 +871723,97 @@
       "elapsed_seconds": 207.46,
       "source_id": "30985196",
       "queue_rank": 32527
+    },
+    "9127:9:7": {
+      "at": "2026-11-01T00:06:24.948453+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 109.19,
+      "search_evidence": [
+        {
+          "path": "/top-gear-s09e07/s/-6",
+          "status": 200,
+          "response_bytes": 215913,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear-s09e07/s/-6",
+          "status": 200,
+          "response_bytes": 215902,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear/s/-6",
+          "status": 200,
+          "response_bytes": 466475,
+          "boxes": 249,
+          "parsed_candidates": 247,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T00:08:48.313511+00:00"
+    },
+    "1587:1:46": {
+      "at": "2026-11-01T00:07:09.654148+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 87.02,
+      "search_evidence": [
+        {
+          "path": "/fairy-tail-s01e46/s/-6",
+          "status": 200,
+          "response_bytes": 215958,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fairy-tail/s/-6",
+          "status": 200,
+          "response_bytes": 294674,
+          "boxes": 82,
+          "parsed_candidates": 82,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fairy-tail-s01e46/s/-6",
+          "status": 200,
+          "response_bytes": 216010,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fairy-tail/s/-6",
+          "status": 200,
+          "response_bytes": 294725,
+          "boxes": 82,
+          "parsed_candidates": 82,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-02T00:08:48.313590+00:00"
     }
   },
-  "updated_at": "2026-11-01T00:08:07.914906+00:00",
+  "updated_at": "2026-11-01T00:09:51.519848+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -877606,8 +877694,10 @@
       "updated_at": "2026-10-16T09:36:13.898343+00:00"
     },
     "9127": {
-      "misses": [],
-      "updated_at": "2026-11-01T00:07:08.909964+00:00"
+      "misses": [
+        "9127:9:7"
+      ],
+      "updated_at": "2026-11-01T00:08:48.313528+00:00"
     },
     "3610": {
       "misses": [
@@ -884626,12 +884716,9 @@
     },
     "1783": {
       "misses": [
-        "1783:12:6",
-        "1783:12:7",
-        "1783:13:1"
+        "1783:1:8"
       ],
-      "updated_at": "2026-10-31T14:35:28.458809+00:00",
-      "retry_after": "2026-10-31T18:35:28.458809+00:00"
+      "updated_at": "2026-11-01T00:08:48.313438+00:00"
     },
     "5376": {
       "misses": [
@@ -884642,9 +884729,10 @@
     },
     "1587": {
       "misses": [
-        "1587:1:45"
+        "1587:1:45",
+        "1587:1:46"
       ],
-      "updated_at": "2026-10-31T13:08:11.439402+00:00"
+      "updated_at": "2026-11-01T00:08:48.313603+00:00"
     },
     "4172": {
       "misses": [
@@ -889226,12 +889314,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1587,
+    "last_series": 9699,
     "last_series_order": [
       false,
       -7.8,
-      -32967,
-      1587
+      -30944,
+      9699
     ]
   }
 }
