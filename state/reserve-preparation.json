@@ -298219,14 +298219,76 @@
       "retry_after": "2026-10-29T14:47:04.118623+00:00"
     },
     "2128:3:9": {
-      "at": "2026-10-18T19:39:36.201811+00:00",
+      "at": "2026-11-01T08:45:10.883734+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 30.31,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T19:40:06.512768+00:00"
+      "elapsed_seconds": 151.87,
+      "search_evidence": [
+        {
+          "path": "/bajecna-leta-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 215956,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-wonder-years-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 216051,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-wonder-years/s/-6",
+          "status": 200,
+          "response_bytes": 216009,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bajecna-leta-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 215975,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bajecna-leta/s/-6",
+          "status": 200,
+          "response_bytes": 353261,
+          "boxes": 124,
+          "parsed_candidates": 115,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-wonder-years-s03e09/s/-6",
+          "status": 200,
+          "response_bytes": 216058,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-wonder-years/s/-6",
+          "status": 200,
+          "response_bytes": 216027,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-02T08:47:42.752141+00:00"
     },
     "618:2:8": {
       "at": "2026-10-18T19:39:56.260706+00:00",
@@ -881319,7 +881381,7 @@
       "queue_rank": 32681
     },
     "597:3:3": {
-      "at": "2026-11-01T08:03:00.155203+00:00",
+      "at": "2026-11-01T08:32:19.331123+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -881327,40 +881389,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 870.0,
-      "consecutive_failures": 3,
-      "retry_after": "2026-11-01T08:27:08.101404+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 900.51,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-01T10:47:19.845511+00:00"
     },
     "3548:5:23": {
       "at": "2026-11-01T05:05:56.783225+00:00",
@@ -886402,7 +886434,7 @@
       "retry_after": "2026-11-02T08:45:10.387183+00:00"
     }
   },
-  "updated_at": "2026-11-01T08:46:50.358516+00:00",
+  "updated_at": "2026-11-01T08:47:57.452035+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -893340,9 +893372,11 @@
     "2128": {
       "misses": [
         "2128:5:21",
-        "2128:3:7"
+        "2128:3:7",
+        "2128:3:9"
       ],
-      "updated_at": "2026-11-01T08:46:10.383482+00:00"
+      "updated_at": "2026-11-01T08:47:42.752177+00:00",
+      "retry_after": "2026-11-01T12:47:42.752177+00:00"
     },
     "460": {
       "misses": [
@@ -894141,9 +894175,10 @@
     },
     "597": {
       "misses": [
-        "597:1:1"
+        "597:1:1",
+        "597:3:3"
       ],
-      "updated_at": "2026-11-01T08:08:08.238224+00:00"
+      "updated_at": "2026-11-01T08:47:19.845536+00:00"
     },
     "64": {
       "misses": [
