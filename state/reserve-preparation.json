@@ -458007,14 +458007,21 @@
       "retry_after": "2026-10-23T15:27:03.236330+00:00"
     },
     "9710:4:15": {
-      "at": "2026-10-22T15:26:08.703375+00:00",
+      "at": "2026-11-02T22:39:37.750254+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 56.54,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T15:27:05.243769+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9056003093719482,
+      "observed_source_id": "35014725",
+      "elapsed_seconds": 90.85,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-03T22:41:13.898211+00:00"
     },
     "3138:1:16": {
       "at": "2026-10-22T15:26:09.636460+00:00",
@@ -467952,14 +467959,21 @@
       "retry_after": "2026-10-22T20:09:36.673817+00:00"
     },
     "9710:4:16": {
-      "at": "2026-10-22T19:54:13.590219+00:00",
+      "at": "2026-11-02T22:40:07.163458+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 24.89,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T19:54:38.479296+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.960748016834259,
+      "observed_source_id": "35014727",
+      "elapsed_seconds": 79.68,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-03T22:41:26.842702+00:00"
     },
     "59:2:4": {
       "at": "2026-10-22T19:54:37.238226+00:00",
@@ -955812,9 +955826,70 @@
       "elapsed_seconds": 536.25,
       "source_id": "35339615",
       "queue_rank": 33570
+    },
+    "1765:2:18": {
+      "at": "2026-11-02T22:39:25.418937+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 144.37,
+      "source_id": "34512360",
+      "queue_rank": 33571
+    },
+    "2815:2:23": {
+      "at": "2026-11-02T22:41:27.338618+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 41.14,
+      "search_evidence": [
+        {
+          "path": "/wanted-dead-or-alive-s02e23/s/-6",
+          "status": 200,
+          "response_bytes": 216196,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/wanted-dead-or-alive/s/-6",
+          "status": 200,
+          "response_bytes": 221418,
+          "boxes": 5,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/wanted-dead-or-alive-s02e23/s/-6",
+          "status": 200,
+          "response_bytes": 216151,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/wanted-dead-or-alive/s/-6",
+          "status": 200,
+          "response_bytes": 221299,
+          "boxes": 5,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T22:42:08.476760+00:00"
     }
   },
-  "updated_at": "2026-11-02T22:41:09.972694+00:00",
+  "updated_at": "2026-11-02T22:42:17.378368+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -967253,12 +967328,9 @@
     },
     "2815": {
       "misses": [
-        "2815:2:19",
-        "2815:2:21",
-        "2815:2:22"
+        "2815:2:23"
       ],
-      "updated_at": "2026-11-02T17:23:27.794071+00:00",
-      "retry_after": "2026-11-02T21:23:27.794071+00:00"
+      "updated_at": "2026-11-02T22:42:08.476793+00:00"
     },
     "3600": {
       "misses": [
@@ -967482,7 +967554,7 @@
     },
     "1765": {
       "misses": [],
-      "updated_at": "2026-11-02T22:37:00.444994+00:00"
+      "updated_at": "2026-11-02T22:41:49.791223+00:00"
     },
     "1197": {
       "misses": [],
@@ -968453,10 +968525,12 @@
     },
     "9710": {
       "misses": [
-        "9710:2:5",
-        "9710:3:10"
+        "9710:3:10",
+        "9710:4:15",
+        "9710:4:16"
       ],
-      "updated_at": "2026-11-02T22:09:44.622139+00:00"
+      "updated_at": "2026-11-02T22:41:26.842731+00:00",
+      "retry_after": "2026-11-03T02:41:26.842731+00:00"
     },
     "1166": {
       "misses": [],
@@ -973333,12 +973407,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2234,
+    "last_series": 2815,
     "last_series_order": [
       false,
       -8.0,
-      -8257,
-      2234
+      -3220,
+      2815
     ]
   }
 }
