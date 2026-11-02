@@ -442473,14 +442473,21 @@
       "retry_after": "2026-10-23T08:26:22.431944+00:00"
     },
     "1109:3:6": {
-      "at": "2026-10-22T08:25:54.688625+00:00",
+      "at": "2026-11-02T20:14:03.764449+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 29.53,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T08:26:24.222561+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9897956252098083,
+      "observed_source_id": "31969480",
+      "elapsed_seconds": 142.79,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-03T20:16:26.556190+00:00"
     },
     "2079:2:2": {
       "at": "2026-10-22T08:25:27.097386+00:00",
@@ -447787,14 +447794,21 @@
       "retry_after": "2026-10-28T14:14:28.917400+00:00"
     },
     "1109:3:7": {
-      "at": "2026-10-22T10:31:26.147823+00:00",
+      "at": "2026-11-02T20:15:21.600356+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 30.11,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T10:31:56.254979+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9914699196815491,
+      "observed_source_id": "8290114",
+      "elapsed_seconds": 87.82,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-03T20:16:49.420561+00:00"
     },
     "2079:2:5": {
       "at": "2026-10-22T10:31:14.540888+00:00",
@@ -948873,9 +948887,49 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-03T20:15:56.575506+00:00"
+    },
+    "1727:1:54": {
+      "at": "2026-11-02T20:16:11.134941+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 7.03,
+      "search_evidence": [
+        {
+          "path": "/dragon-ball-super-s01e54/s/-6",
+          "status": 200,
+          "response_bytes": 216045,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/dragon-ball-super-s01e54/s/-6",
+          "status": 200,
+          "response_bytes": 216057,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/dragon-ball-super/s/-6",
+          "status": 200,
+          "response_bytes": 233013,
+          "boxes": 15,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T20:16:18.162640+00:00"
     }
   },
-  "updated_at": "2026-11-02T20:16:05.718254+00:00",
+  "updated_at": "2026-11-02T20:17:17.203311+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -955799,12 +955853,9 @@
     },
     "1727": {
       "misses": [
-        "1727:1:51",
-        "1727:1:52",
-        "1727:1:53"
+        "1727:1:54"
       ],
-      "updated_at": "2026-11-02T15:35:17.320144+00:00",
-      "retry_after": "2026-11-02T19:35:17.320144+00:00"
+      "updated_at": "2026-11-02T20:16:18.162672+00:00"
     },
     "1140": {
       "misses": [
@@ -964936,12 +964987,10 @@
     },
     "1109": {
       "misses": [
-        "1109:3:1",
-        "1109:3:2",
-        "1109:3:5"
+        "1109:3:6",
+        "1109:3:7"
       ],
-      "updated_at": "2026-11-02T13:34:18.654408+00:00",
-      "retry_after": "2026-11-02T17:34:18.654408+00:00"
+      "updated_at": "2026-11-02T20:16:49.420586+00:00"
     },
     "1585": {
       "misses": [
@@ -966419,12 +966468,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2778,
+    "last_series": 1727,
     "last_series_order": [
       false,
-      -8.4,
-      -3600,
-      2778
+      -8.3,
+      -47358,
+      1727
     ]
   }
 }
