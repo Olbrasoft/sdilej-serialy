@@ -356251,14 +356251,21 @@
       "retry_after": "2026-10-21T13:15:09.354624+00:00"
     },
     "1318:1:10": {
-      "at": "2026-10-20T13:15:00.378707+00:00",
+      "at": "2026-11-02T11:45:13.187262+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 15.01,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-21T13:15:15.389871+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9954778552055359,
+      "observed_source_id": "31983953",
+      "elapsed_seconds": 80.71,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-03T11:46:33.898631+00:00"
     },
     "1692:1:7": {
       "at": "2026-10-23T00:34:05.609444+00:00",
@@ -924348,9 +924355,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-03T11:44:01.440726+00:00"
+    },
+    "9699:3:1": {
+      "at": "2026-11-02T11:46:34.699186+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 40.94,
+      "search_evidence": [
+        {
+          "path": "/prestavka-s03e01/s/-6",
+          "status": 200,
+          "response_bytes": 215925,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/prestavka/s/-6",
+          "status": 200,
+          "response_bytes": 324421,
+          "boxes": 87,
+          "parsed_candidates": 81,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/recess-s03e01/s/-6",
+          "status": 200,
+          "response_bytes": 216218,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/recess/s/-6",
+          "status": 200,
+          "response_bytes": 231248,
+          "boxes": 24,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/prestavka-s03e01/s/-6",
+          "status": 200,
+          "response_bytes": 215937,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/prestavka/s/-6",
+          "status": 200,
+          "response_bytes": 324419,
+          "boxes": 87,
+          "parsed_candidates": 81,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/recess-s03e01/s/-6",
+          "status": 200,
+          "response_bytes": 216185,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/recess/s/-6",
+          "status": 200,
+          "response_bytes": 231234,
+          "boxes": 24,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T11:47:15.638944+00:00"
     }
   },
-  "updated_at": "2026-11-02T11:46:11.494644+00:00",
+  "updated_at": "2026-11-02T11:47:25.782693+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -937091,9 +937178,11 @@
     "1318": {
       "misses": [
         "1318:1:7",
-        "1318:1:9"
+        "1318:1:9",
+        "1318:1:10"
       ],
-      "updated_at": "2026-11-02T11:45:29.445310+00:00"
+      "updated_at": "2026-11-02T11:46:33.898656+00:00",
+      "retry_after": "2026-11-02T15:46:33.898656+00:00"
     },
     "702": {
       "misses": [
@@ -937259,12 +937348,9 @@
     },
     "9699": {
       "misses": [
-        "9699:2:23",
-        "9699:2:24",
-        "9699:2:25"
+        "9699:3:1"
       ],
-      "updated_at": "2026-11-02T01:23:06.707176+00:00",
-      "retry_after": "2026-11-02T05:23:06.707176+00:00"
+      "updated_at": "2026-11-02T11:47:15.638972+00:00"
     },
     "1128": {
       "misses": [
@@ -941795,12 +941881,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1587,
+    "last_series": 7,
     "last_series_order": [
       false,
       -7.8,
-      -32967,
-      1587
+      -26631,
+      7
     ]
   }
 }
