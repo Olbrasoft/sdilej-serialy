@@ -20642,14 +20642,36 @@
       "queue_rank": 9362
     },
     "35:4:23": {
-      "at": "2026-10-18T18:12:24.948772+00:00",
+      "at": "2026-11-02T17:50:07.087901+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 57.47,
-      "consecutive_failures": 8,
-      "retry_after": "2026-10-19T18:13:22.414983+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 96.56,
+      "search_evidence": [
+        {
+          "path": "/pratele-s04e23/s/-6",
+          "status": 200,
+          "response_bytes": 228820,
+          "boxes": 11,
+          "parsed_candidates": 11,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pratele/s/-6",
+          "status": 200,
+          "response_bytes": 559024,
+          "boxes": 330,
+          "parsed_candidates": 319,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 9,
+      "retry_after": "2026-11-02T23:51:43.645081+00:00"
     },
     "35:5:1": {
       "at": "2026-10-02T16:19:59.661410+00:00",
@@ -944146,7 +944168,7 @@
       "retry_after": "2026-11-02T17:39:29.858261+00:00"
     }
   },
-  "updated_at": "2026-11-02T17:50:58.076161+00:00",
+  "updated_at": "2026-11-02T17:52:07.812269+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -951301,9 +951323,10 @@
     },
     "35": {
       "misses": [
-        "35:8:23"
+        "35:8:23",
+        "35:4:23"
       ],
-      "updated_at": "2026-11-02T17:24:19.271616+00:00"
+      "updated_at": "2026-11-02T17:51:43.645110+00:00"
     },
     "8605": {
       "misses": [
