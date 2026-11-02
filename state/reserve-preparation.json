@@ -343129,18 +343129,17 @@
       "queue_rank": 27794
     },
     "3670:2:4": {
-      "at": "2026-11-02T05:11:24.597799+00:00",
-      "status": "deferred",
+      "at": "2026-11-02T05:30:32.185282+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 291.69,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-02T05:26:16.282787+00:00"
+      "elapsed_seconds": 267.09,
+      "source_id": "34829479",
+      "queue_rank": 33350
     },
     "1102:3:2": {
       "at": "2026-10-20T06:41:14.807317+00:00",
@@ -916783,9 +916782,73 @@
       "elapsed_seconds": 136.89,
       "consecutive_failures": 1,
       "retry_after": "2026-11-03T05:28:55.291204+00:00"
+    },
+    "2352:4:17": {
+      "at": "2026-11-02T05:31:53.062894+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 229.95,
+      "search_evidence": [
+        {
+          "path": "/borici-mytu-s04e17/s/-6",
+          "status": 200,
+          "response_bytes": 216033,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mythbusters-s04e17/s/-6",
+          "status": 200,
+          "response_bytes": 216045,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/borici-mytu-s04e17/s/-6",
+          "status": 200,
+          "response_bytes": 215982,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/borici-mytu/s/-6",
+          "status": 200,
+          "response_bytes": 338099,
+          "boxes": 114,
+          "parsed_candidates": 96,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mythbusters-s04e17/s/-6",
+          "status": 200,
+          "response_bytes": 215921,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mythbusters/s/-6",
+          "status": 200,
+          "response_bytes": 232816,
+          "boxes": 15,
+          "parsed_candidates": 15,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T05:35:43.020561+00:00"
     }
   },
-  "updated_at": "2026-11-02T05:34:40.880263+00:00",
+  "updated_at": "2026-11-02T05:35:52.902638+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -923668,8 +923731,10 @@
       "retry_after": "2026-10-20T19:34:10.767895+00:00"
     },
     "2352": {
-      "misses": [],
-      "updated_at": "2026-11-02T05:28:29.654668+00:00"
+      "misses": [
+        "2352:4:17"
+      ],
+      "updated_at": "2026-11-02T05:35:43.020593+00:00"
     },
     "688": {
       "misses": [
@@ -933075,7 +933140,7 @@
     },
     "3670": {
       "misses": [],
-      "updated_at": "2026-11-02T05:34:28.029154+00:00"
+      "updated_at": "2026-11-02T05:34:59.275753+00:00"
     },
     "3538": {
       "misses": [
@@ -934223,12 +934288,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3367,
+    "last_series": 2907,
     "last_series_order": [
       false,
       -8.5,
-      -14133,
-      3367
+      -10302,
+      2907
     ]
   }
 }
