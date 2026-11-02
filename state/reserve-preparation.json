@@ -522214,7 +522214,7 @@
       "retry_after": "2026-11-01T07:30:14.384785+00:00"
     },
     "10480:11:3": {
-      "at": "2026-11-01T14:15:53.941412+00:00",
+      "at": "2026-11-02T16:15:15.123655+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -522223,13 +522223,13 @@
       "audio_consensus_revision": 3,
       "request_probe_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 143.87,
+      "reason": "transient_search",
+      "elapsed_seconds": 142.76,
       "search_evidence": [
         {
           "path": "/i-m-a-celebrity-get-me-out-of-here-s11e03/s/-6",
           "status": 200,
-          "response_bytes": 216467,
+          "response_bytes": 216426,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -522237,7 +522237,7 @@
         {
           "path": "/i-m-a-celebrity-get-me-out-of-here/s/-6",
           "status": 200,
-          "response_bytes": 216354,
+          "response_bytes": 216407,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -522245,22 +522245,14 @@
         {
           "path": "/i-m-a-celebrity-get-me-out-of-here-s11e03/s/-6",
           "status": 200,
-          "response_bytes": 216470,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/i-m-a-celebrity-get-me-out-of-here/s/-6",
-          "status": 200,
-          "response_bytes": 216447,
+          "response_bytes": 216478,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 2,
-      "retry_after": "2026-11-02T14:19:40.045262+00:00"
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-02T17:17:37.885944+00:00"
     },
     "2:13:1": {
       "at": "2026-10-23T18:05:04.563557+00:00",
@@ -938703,9 +938695,49 @@
       "elapsed_seconds": 317.87,
       "consecutive_failures": 0,
       "retry_after": "2026-11-02T16:11:45.629155+00:00"
+    },
+    "2207:3:10": {
+      "at": "2026-11-02T16:16:03.432918+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 88.3,
+      "search_evidence": [
+        {
+          "path": "/taxi-s03e10/s/-6",
+          "status": 200,
+          "response_bytes": 215918,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/taxi-s03e10/s/-6",
+          "status": 200,
+          "response_bytes": 215916,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/taxi/s/-6",
+          "status": 200,
+          "response_bytes": 486301,
+          "boxes": 255,
+          "parsed_candidates": 243,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T16:17:31.729145+00:00"
     }
   },
-  "updated_at": "2026-11-02T16:16:42.717129+00:00",
+  "updated_at": "2026-11-02T16:17:51.499620+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -953037,9 +953069,11 @@
     "2207": {
       "misses": [
         "2207:3:8",
-        "2207:3:9"
+        "2207:3:9",
+        "2207:3:10"
       ],
-      "updated_at": "2026-11-02T14:54:54.642818+00:00"
+      "updated_at": "2026-11-02T16:17:31.729176+00:00",
+      "retry_after": "2026-11-02T20:17:31.729176+00:00"
     },
     "7211": {
       "misses": [
@@ -956011,12 +956045,12 @@
     },
     "10480": {
       "misses": [
-        "10480:10:2",
         "10480:10:3",
-        "10480:11:2"
+        "10480:11:2",
+        "10480:11:3"
       ],
-      "updated_at": "2026-11-02T14:24:44.469619+00:00",
-      "retry_after": "2026-11-02T18:24:44.469619+00:00"
+      "updated_at": "2026-11-02T16:17:37.885977+00:00",
+      "retry_after": "2026-11-02T16:47:37.885977+00:00"
     },
     "10479": {
       "misses": [],
@@ -956281,12 +956315,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3277,
+    "last_series": 9673,
     "last_series_order": [
       false,
-      -7.7,
-      -5638,
-      3277
+      -7.6,
+      -23581,
+      9673
     ]
   }
 }
