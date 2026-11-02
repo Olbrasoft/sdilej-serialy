@@ -350175,14 +350175,18 @@
       "retry_after": "2026-10-21T20:02:37.216491+00:00"
     },
     "1239:3:4": {
-      "at": "2026-10-22T14:20:40.828651+00:00",
+      "at": "2026-11-02T03:28:15.530301+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 65.5,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-23T14:21:46.331995+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 218.82,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-02T05:31:54.354112+00:00"
     },
     "1239:3:7": {
       "at": "2026-10-21T19:01:21.601318+00:00",
@@ -915022,9 +915026,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-03T03:31:24.412598+00:00"
+    },
+    "1585:4:7": {
+      "at": "2026-11-02T03:31:24.943363+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 38.32,
+      "search_evidence": [
+        {
+          "path": "/nesika-s04e07/s/-6",
+          "status": 200,
+          "response_bytes": 225073,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nesika/s/-6",
+          "status": 200,
+          "response_bytes": 549678,
+          "boxes": 284,
+          "parsed_candidates": 245,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/awkward-s04e07/s/-6",
+          "status": 200,
+          "response_bytes": 215908,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/awkward/s/-6",
+          "status": 200,
+          "response_bytes": 410632,
+          "boxes": 157,
+          "parsed_candidates": 145,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nesika-s04e07/s/-6",
+          "status": 200,
+          "response_bytes": 225093,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nesika/s/-6",
+          "status": 200,
+          "response_bytes": 549738,
+          "boxes": 284,
+          "parsed_candidates": 245,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/awkward-s04e07/s/-6",
+          "status": 200,
+          "response_bytes": 215891,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/awkward/s/-6",
+          "status": 200,
+          "response_bytes": 410669,
+          "boxes": 157,
+          "parsed_candidates": 145,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T03:32:03.265371+00:00"
     }
   },
-  "updated_at": "2026-11-02T03:31:36.362836+00:00",
+  "updated_at": "2026-11-02T03:32:45.457845+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -920438,9 +920522,10 @@
     },
     "1239": {
       "misses": [
-        "1239:3:3"
+        "1239:3:3",
+        "1239:3:4"
       ],
-      "updated_at": "2026-11-02T03:31:06.387380+00:00"
+      "updated_at": "2026-11-02T03:31:54.354142+00:00"
     },
     "1951": {
       "misses": [
@@ -931012,9 +931097,11 @@
     "1585": {
       "misses": [
         "1585:4:5",
-        "1585:4:6"
+        "1585:4:6",
+        "1585:4:7"
       ],
-      "updated_at": "2026-11-01T17:43:35.294092+00:00"
+      "updated_at": "2026-11-02T03:32:03.265402+00:00",
+      "retry_after": "2026-11-02T07:32:03.265402+00:00"
     },
     "1826": {
       "misses": [
