@@ -444233,14 +444233,21 @@
       "retry_after": "2026-10-23T10:20:18.415783+00:00"
     },
     "1549:7:17": {
-      "at": "2026-10-22T10:19:19.583528+00:00",
+      "at": "2026-11-02T03:05:06.891688+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 61.01,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T10:20:28.369222+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9977597296237946,
+      "observed_source_id": "33347981",
+      "elapsed_seconds": 169.31,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-03T03:07:56.204804+00:00"
     },
     "616:2:7": {
       "at": "2026-10-22T10:19:45.230022+00:00",
@@ -914659,9 +914666,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-03T03:05:06.321002+00:00"
+    },
+    "3256:4:3": {
+      "at": "2026-11-02T03:07:56.798650+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 24.67,
+      "search_evidence": [
+        {
+          "path": "/predcasne-vydani-s04e03/s/-6",
+          "status": 200,
+          "response_bytes": 216057,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/predcasne-vydani/s/-6",
+          "status": 200,
+          "response_bytes": 215906,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/early-edition-s04e03/s/-6",
+          "status": 200,
+          "response_bytes": 216113,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/early-edition/s/-6",
+          "status": 200,
+          "response_bytes": 215655,
+          "boxes": 1,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/predcasne-vydani-s04e03/s/-6",
+          "status": 200,
+          "response_bytes": 216073,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/predcasne-vydani/s/-6",
+          "status": 200,
+          "response_bytes": 215954,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/early-edition-s04e03/s/-6",
+          "status": 200,
+          "response_bytes": 215977,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/early-edition/s/-6",
+          "status": 200,
+          "response_bytes": 215661,
+          "boxes": 1,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T03:08:21.470006+00:00"
     }
   },
-  "updated_at": "2026-11-02T03:07:21.367636+00:00",
+  "updated_at": "2026-11-02T03:08:30.663951+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -929429,12 +929516,12 @@
     },
     "1549": {
       "misses": [
-        "1549:7:11",
         "1549:7:13",
-        "1549:7:16"
+        "1549:7:16",
+        "1549:7:17"
       ],
-      "updated_at": "2026-11-02T03:04:35.514824+00:00",
-      "retry_after": "2026-11-02T07:04:35.514824+00:00"
+      "updated_at": "2026-11-02T03:07:56.204838+00:00",
+      "retry_after": "2026-11-02T07:07:56.204838+00:00"
     },
     "117": {
       "misses": [],
@@ -930060,9 +930147,10 @@
     },
     "3256": {
       "misses": [
-        "3256:3:23"
+        "3256:3:23",
+        "3256:4:3"
       ],
-      "updated_at": "2026-11-01T17:28:30.905487+00:00"
+      "updated_at": "2026-11-02T03:08:21.470063+00:00"
     },
     "3574": {
       "misses": [
@@ -932134,12 +932222,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9692,
+    "last_series": 2329,
     "last_series_order": [
       false,
       -7.6,
-      -19337,
-      9692
+      -10511,
+      2329
     ]
   }
 }
