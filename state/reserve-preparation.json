@@ -294338,14 +294338,21 @@
       "retry_after": "2026-10-19T14:32:07.362720+00:00"
     },
     "1168:1:7": {
-      "at": "2026-10-22T15:29:03.922536+00:00",
+      "at": "2026-11-02T13:39:44.866097+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 79.69,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-23T15:30:23.608874+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9938318729400635,
+      "observed_source_id": "6750631",
+      "elapsed_seconds": 77.82,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-03T13:41:02.685551+00:00"
     },
     "2884:1:5": {
       "at": "2026-10-18T14:32:09.083785+00:00",
@@ -438275,14 +438282,17 @@
       "queue_rank": 33451
     },
     "1765:6:18": {
-      "at": "2026-10-22T07:19:55.703882+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-11-02T13:36:35.845498+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 30.69,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T07:20:26.390032+00:00"
+      "elapsed_seconds": 224.94,
+      "source_id": "34635064",
+      "queue_rank": 33453
     },
     "1765:6:17": {
       "at": "2026-11-02T13:33:41.970274+00:00",
@@ -929052,9 +929062,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-03T13:39:44.085929+00:00"
+    },
+    "2166:3:16": {
+      "at": "2026-11-02T13:39:34.654197+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 37.2,
+      "search_evidence": [
+        {
+          "path": "/tour-of-duty-s03e16/s/-6",
+          "status": 200,
+          "response_bytes": 215993,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tour-of-duty/s/-6",
+          "status": 200,
+          "response_bytes": 216096,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tour-of-duty-s03e16/s/-6",
+          "status": 200,
+          "response_bytes": 216020,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tour-of-duty/s/-6",
+          "status": 200,
+          "response_bytes": 216117,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T13:40:19.827038+00:00"
     }
   },
-  "updated_at": "2026-11-02T13:40:15.171916+00:00",
+  "updated_at": "2026-11-02T13:41:23.878748+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -936541,9 +936599,10 @@
     },
     "2166": {
       "misses": [
-        "2166:3:15"
+        "2166:3:15",
+        "2166:3:16"
       ],
-      "updated_at": "2026-11-02T06:43:48.045768+00:00"
+      "updated_at": "2026-11-02T13:40:19.827077+00:00"
     },
     "8954": {
       "misses": [
@@ -940686,7 +940745,7 @@
     },
     "1765": {
       "misses": [],
-      "updated_at": "2026-11-02T13:36:36.087343+00:00"
+      "updated_at": "2026-11-02T13:40:21.201624+00:00"
     },
     "1197": {
       "misses": [],
@@ -943957,12 +944016,9 @@
     },
     "1168": {
       "misses": [
-        "1168:2:3",
-        "1168:2:9",
-        "1168:2:10"
+        "1168:1:7"
       ],
-      "updated_at": "2026-11-02T08:58:25.847406+00:00",
-      "retry_after": "2026-11-02T12:58:25.847406+00:00"
+      "updated_at": "2026-11-02T13:41:02.685577+00:00"
     },
     "1020": {
       "misses": [
@@ -946501,12 +946557,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2166,
+    "last_series": 2734,
     "last_series_order": [
       false,
       -8.3,
-      -5643,
-      2166
+      -4491,
+      2734
     ]
   }
 }
