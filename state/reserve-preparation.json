@@ -411803,7 +411803,7 @@
       "queue_rank": 33149
     },
     "1423:2:19": {
-      "at": "2026-11-02T01:48:51.004071+00:00",
+      "at": "2026-11-02T06:21:39.180369+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -411812,9 +411812,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "inconclusive_audio",
-      "elapsed_seconds": 136.44,
-      "consecutive_failures": 2,
-      "retry_after": "2026-11-02T03:51:07.448147+00:00"
+      "elapsed_seconds": 112.96,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-02T10:23:32.138547+00:00"
     },
     "126:2:1": {
       "at": "2026-11-01T02:59:45.655363+00:00",
@@ -918275,9 +918275,83 @@
       "elapsed_seconds": 37.86,
       "source_id": "28237274",
       "queue_rank": 33353
+    },
+    "1423:13:18": {
+      "at": "2026-11-02T06:22:31.589139+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 47.82,
+      "source_id": "29478978",
+      "queue_rank": 33354
+    },
+    "1886:2:39": {
+      "at": "2026-11-02T06:23:30.659374+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 21.83,
+      "search_evidence": [
+        {
+          "path": "/bleach-s02e39/s/-6",
+          "status": 200,
+          "response_bytes": 215874,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bleach/s/-6",
+          "status": 200,
+          "response_bytes": 479899,
+          "boxes": 265,
+          "parsed_candidates": 249,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bleach-s02e39/s/-6",
+          "status": 200,
+          "response_bytes": 215959,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bleach/s/-6",
+          "status": 200,
+          "response_bytes": 479914,
+          "boxes": 265,
+          "parsed_candidates": 249,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T06:23:52.486873+00:00"
+    },
+    "1423:14:11": {
+      "at": "2026-11-02T06:23:04.490368+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 52.06,
+      "source_id": "29479380",
+      "queue_rank": 33355
     }
   },
-  "updated_at": "2026-11-02T06:23:18.270085+00:00",
+  "updated_at": "2026-11-02T06:24:33.763675+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -924095,7 +924169,7 @@
     },
     "1423": {
       "misses": [],
-      "updated_at": "2026-11-02T06:23:11.356771+00:00"
+      "updated_at": "2026-11-02T06:23:56.545547+00:00"
     },
     "2199": {
       "misses": [
@@ -925076,9 +925150,11 @@
     "1886": {
       "misses": [
         "1886:2:36",
-        "1886:2:37"
+        "1886:2:37",
+        "1886:2:39"
       ],
-      "updated_at": "2026-11-01T11:54:50.949517+00:00"
+      "updated_at": "2026-11-02T06:23:52.486913+00:00",
+      "retry_after": "2026-11-02T10:23:52.486913+00:00"
     },
     "2112": {
       "misses": [
@@ -935745,12 +935821,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1579,
+    "last_series": 1886,
     "last_series_order": [
       false,
       -8.3,
-      -135226,
-      1579
+      -99553,
+      1886
     ]
   }
 }
