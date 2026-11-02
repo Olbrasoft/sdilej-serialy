@@ -438905,14 +438905,44 @@
       "retry_after": "2026-10-23T07:55:53.495463+00:00"
     },
     "1765:7:7": {
-      "at": "2026-10-22T07:54:33.028882+00:00",
+      "at": "2026-11-02T08:26:21.411152+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 94.07,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T07:56:07.100627+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 170.99,
+      "search_evidence": [
+        {
+          "path": "/zachranari-l-a-s07e07/s/-6",
+          "status": 200,
+          "response_bytes": 216385,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zachranari-l-a/s/-6",
+          "status": 200,
+          "response_bytes": 425088,
+          "boxes": 172,
+          "parsed_candidates": 172,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/9-1-1-s07e07/s/-6",
+          "status": 200,
+          "response_bytes": 218164,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-02T08:59:14.981457+00:00"
     },
     "1215:2:6": {
       "at": "2026-10-22T07:55:54.192179+00:00",
@@ -919946,7 +919976,7 @@
       "retry_after": "2026-11-03T08:26:45.858606+00:00"
     }
   },
-  "updated_at": "2026-11-02T08:29:02.021506+00:00",
+  "updated_at": "2026-11-02T08:30:19.015955+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -931564,8 +931594,10 @@
       "updated_at": "2026-10-18T23:32:31.699081+00:00"
     },
     "1765": {
-      "misses": [],
-      "updated_at": "2026-11-02T08:28:26.376670+00:00"
+      "misses": [
+        "1765:7:7"
+      ],
+      "updated_at": "2026-11-02T08:29:14.981496+00:00"
     },
     "1197": {
       "misses": [],
