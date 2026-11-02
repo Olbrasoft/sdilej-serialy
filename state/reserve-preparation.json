@@ -444996,14 +444996,21 @@
       "retry_after": "2026-10-23T09:20:29.188449+00:00"
     },
     "1908:2:10": {
-      "at": "2026-10-22T09:20:07.868368+00:00",
+      "at": "2026-11-02T21:39:10.115461+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 31.3,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T09:20:39.172591+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ko",
+      "observed_language_probability": 0.998627781867981,
+      "observed_source_id": "35246372",
+      "elapsed_seconds": 37.43,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-03T21:39:47.545291+00:00"
     },
     "4290:3:5": {
       "at": "2026-10-22T09:19:57.858356+00:00",
@@ -954456,9 +954463,99 @@
       "elapsed_seconds": 58.67,
       "source_id": "34644199",
       "queue_rank": 33541
+    },
+    "1765:9:5": {
+      "at": "2026-11-02T21:38:42.302662+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 82.84,
+      "source_id": "34644204",
+      "queue_rank": 33542
+    },
+    "1765:9:4": {
+      "at": "2026-11-02T21:38:29.290366+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 98.17,
+      "source_id": "34644203",
+      "queue_rank": 33543
+    },
+    "3103:2:6": {
+      "at": "2026-11-02T21:39:48.163543+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 19.42,
+      "search_evidence": [
+        {
+          "path": "/internat-cerna-laguna-s02e06/s/-6",
+          "status": 200,
+          "response_bytes": 216208,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-boarding-school-s02e06/s/-6",
+          "status": 200,
+          "response_bytes": 218203,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/internat-cerna-laguna-s02e06/s/-6",
+          "status": 200,
+          "response_bytes": 216131,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/internat-cerna-laguna/s/-6",
+          "status": 200,
+          "response_bytes": 226725,
+          "boxes": 9,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-boarding-school-s02e06/s/-6",
+          "status": 200,
+          "response_bytes": 218104,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-boarding-school/s/-6",
+          "status": 200,
+          "response_bytes": 227017,
+          "boxes": 8,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T21:40:08.120603+00:00"
     }
   },
-  "updated_at": "2026-11-02T21:39:19.121099+00:00",
+  "updated_at": "2026-11-02T21:40:33.028936+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -964277,9 +964374,11 @@
     "1908": {
       "misses": [
         "1908:2:1",
-        "1908:2:2"
+        "1908:2:2",
+        "1908:2:10"
       ],
-      "updated_at": "2026-11-02T21:35:59.286227+00:00"
+      "updated_at": "2026-11-02T21:39:47.545323+00:00",
+      "retry_after": "2026-11-03T01:39:47.545323+00:00"
     },
     "1684": {
       "misses": [
@@ -964375,9 +964474,11 @@
     "3103": {
       "misses": [
         "3103:3:9",
-        "3103:2:4"
+        "3103:2:4",
+        "3103:2:6"
       ],
-      "updated_at": "2026-11-02T20:28:56.698214+00:00"
+      "updated_at": "2026-11-02T21:40:08.120630+00:00",
+      "retry_after": "2026-11-03T01:40:08.120630+00:00"
     },
     "6630": {
       "misses": [
@@ -966131,7 +966232,7 @@
     },
     "1765": {
       "misses": [],
-      "updated_at": "2026-11-02T21:38:41.707409+00:00"
+      "updated_at": "2026-11-02T21:40:07.471657+00:00"
     },
     "1197": {
       "misses": [],
@@ -971979,12 +972080,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1908,
+    "last_series": 3103,
     "last_series_order": [
       false,
       -8.1,
-      -10173,
-      1908
+      -6709,
+      3103
     ]
   }
 }
