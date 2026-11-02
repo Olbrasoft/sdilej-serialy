@@ -245077,14 +245077,17 @@
       "retry_after": "2026-10-16T23:04:37.464270+00:00"
     },
     "1239:2:5": {
-      "at": "2026-10-21T00:51:09.761711+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-11-02T06:38:36.471765+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "elapsed_seconds": 156.39,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-22T00:53:46.151698+00:00"
+      "elapsed_seconds": 293.51,
+      "source_id": "34863124",
+      "queue_rank": 33369
     },
     "1239:2:6": {
       "at": "2026-10-21T00:51:10.225764+00:00",
@@ -918767,9 +918770,105 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-03T06:36:52.207434+00:00"
+    },
+    "3225:3:7": {
+      "at": "2026-11-02T06:43:30.858551+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 9.19,
+      "search_evidence": [
+        {
+          "path": "/soap-s03e07/s/-6",
+          "status": 200,
+          "response_bytes": 215799,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/soap/s/-6",
+          "status": 200,
+          "response_bytes": 282493,
+          "boxes": 74,
+          "parsed_candidates": 32,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/soap-s03e07/s/-6",
+          "status": 200,
+          "response_bytes": 215962,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/soap/s/-6",
+          "status": 200,
+          "response_bytes": 282505,
+          "boxes": 74,
+          "parsed_candidates": 32,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T06:43:40.046492+00:00"
+    },
+    "2166:3:15": {
+      "at": "2026-11-02T06:43:40.632340+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 7.41,
+      "search_evidence": [
+        {
+          "path": "/tour-of-duty-s03e15/s/-6",
+          "status": 200,
+          "response_bytes": 215994,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tour-of-duty/s/-6",
+          "status": 200,
+          "response_bytes": 216144,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tour-of-duty-s03e15/s/-6",
+          "status": 200,
+          "response_bytes": 215980,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tour-of-duty/s/-6",
+          "status": 200,
+          "response_bytes": 216091,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-03T06:43:48.045730+00:00"
     }
   },
-  "updated_at": "2026-11-02T06:43:14.075728+00:00",
+  "updated_at": "2026-11-02T06:44:30.704986+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -924185,7 +924284,7 @@
     },
     "1239": {
       "misses": [],
-      "updated_at": "2026-11-02T04:12:57.544437+00:00"
+      "updated_at": "2026-11-02T06:43:30.296060+00:00"
     },
     "1951": {
       "misses": [
@@ -926145,12 +926244,9 @@
     },
     "3225": {
       "misses": [
-        "3225:3:4",
-        "3225:3:5",
-        "3225:3:6"
+        "3225:3:7"
       ],
-      "updated_at": "2026-11-01T21:11:59.275499+00:00",
-      "retry_after": "2026-11-02T01:11:59.275499+00:00"
+      "updated_at": "2026-11-02T06:43:40.046530+00:00"
     },
     "9733": {
       "misses": [
@@ -926268,12 +926364,9 @@
     },
     "2166": {
       "misses": [
-        "2166:3:12",
-        "2166:3:13",
-        "2166:3:14"
+        "2166:3:15"
       ],
-      "updated_at": "2026-11-01T21:17:32.730275+00:00",
-      "retry_after": "2026-11-02T01:17:32.730275+00:00"
+      "updated_at": "2026-11-02T06:43:48.045768+00:00"
     },
     "8954": {
       "misses": [
@@ -936218,12 +936311,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3133,
+    "last_series": 2166,
     "last_series_order": [
       false,
       -8.3,
-      -11431,
-      3133
+      -5643,
+      2166
     ]
   }
 }
