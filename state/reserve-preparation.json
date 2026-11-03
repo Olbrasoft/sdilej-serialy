@@ -278501,14 +278501,18 @@
       "queue_rank": 25355
     },
     "9684:2:21": {
-      "at": "2026-10-18T02:38:35.972428+00:00",
+      "at": "2026-11-03T18:06:47.365590+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 47.21,
-      "consecutive_failures": 4,
-      "retry_after": "2026-10-19T02:39:23.182547+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 180.57,
+      "consecutive_failures": 5,
+      "retry_after": "2026-11-03T22:10:04.242638+00:00"
     },
     "7305:1:8": {
       "at": "2026-10-17T20:15:12.213674+00:00",
@@ -337063,14 +337067,18 @@
       "queue_rank": 27197
     },
     "9684:2:28": {
-      "at": "2026-10-20T03:38:25.821888+00:00",
+      "at": "2026-11-03T18:09:24.129183+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 12.6,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-20T04:38:38.419490+00:00"
+      "elapsed_seconds": 75.71,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-03T20:10:39.841380+00:00"
     },
     "9684:2:30": {
       "at": "2026-10-20T05:20:41.182681+00:00",
@@ -997377,9 +997385,49 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-04T18:09:42.784331+00:00"
+    },
+    "9127:32:11": {
+      "at": "2026-11-03T18:10:04.881309+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 45.77,
+      "search_evidence": [
+        {
+          "path": "/top-gear-s32e11/s/-6",
+          "status": 200,
+          "response_bytes": 216016,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear-s32e11/s/-6",
+          "status": 200,
+          "response_bytes": 216150,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/top-gear/s/-6",
+          "status": 200,
+          "response_bytes": 466475,
+          "boxes": 249,
+          "parsed_candidates": 247,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-04T18:10:50.650919+00:00"
     }
   },
-  "updated_at": "2026-11-03T18:09:45.841548+00:00",
+  "updated_at": "2026-11-03T18:11:08.520882+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1003269,9 +1003317,11 @@
     "9127": {
       "misses": [
         "9127:30:5",
-        "9127:30:6"
+        "9127:30:6",
+        "9127:32:11"
       ],
-      "updated_at": "2026-11-03T18:09:23.272347+00:00"
+      "updated_at": "2026-11-03T18:10:50.650948+00:00",
+      "retry_after": "2026-11-03T22:10:50.650948+00:00"
     },
     "3610": {
       "misses": [
@@ -1013557,12 +1013607,10 @@
     },
     "9684": {
       "misses": [
-        "9684:2:13",
-        "9684:2:18",
-        "9684:2:19"
+        "9684:2:21",
+        "9684:2:28"
       ],
-      "updated_at": "2026-11-03T17:28:41.458239+00:00",
-      "retry_after": "2026-11-03T17:58:41.458239+00:00"
+      "updated_at": "2026-11-03T18:10:39.841406+00:00"
     },
     "693": {
       "misses": [
