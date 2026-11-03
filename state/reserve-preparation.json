@@ -123408,14 +123408,21 @@
       "retry_after": "2026-10-11T16:42:45.371048+00:00"
     },
     "1709:2:4": {
-      "at": "2026-10-10T15:49:34.655207+00:00",
+      "at": "2026-11-03T16:26:23.146359+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 4.44,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-11T15:49:39.097690+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9701990485191345,
+      "observed_source_id": "22398264",
+      "elapsed_seconds": 47.88,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-04T16:27:11.026795+00:00"
     },
     "1709:2:5": {
       "at": "2026-10-10T16:42:48.090401+00:00",
@@ -992436,9 +992443,89 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-04T16:26:24.759717+00:00"
+    },
+    "1669:7:1": {
+      "at": "2026-11-03T16:27:11.700319+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 27.46,
+      "search_evidence": [
+        {
+          "path": "/status-nezadouci-s07e01/s/-6",
+          "status": 200,
+          "response_bytes": 216126,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/status-nezadouci/s/-6",
+          "status": 200,
+          "response_bytes": 274904,
+          "boxes": 51,
+          "parsed_candidates": 51,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/burn-notice-s07e01/s/-6",
+          "status": 200,
+          "response_bytes": 215982,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/burn-notice/s/-6",
+          "status": 200,
+          "response_bytes": 216010,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/status-nezadouci-s07e01/s/-6",
+          "status": 200,
+          "response_bytes": 216168,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/status-nezadouci/s/-6",
+          "status": 200,
+          "response_bytes": 274898,
+          "boxes": 51,
+          "parsed_candidates": 51,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/burn-notice-s07e01/s/-6",
+          "status": 200,
+          "response_bytes": 215958,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/burn-notice/s/-6",
+          "status": 200,
+          "response_bytes": 216022,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-04T16:27:39.160425+00:00"
     }
   },
-  "updated_at": "2026-11-03T16:26:47.504776+00:00",
+  "updated_at": "2026-11-03T16:27:58.509976+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -996891,9 +996978,11 @@
     "1709": {
       "misses": [
         "1709:13:2",
-        "1709:13:3"
+        "1709:13:3",
+        "1709:2:4"
       ],
-      "updated_at": "2026-11-03T15:25:15.212684+00:00"
+      "updated_at": "2026-11-03T16:27:11.026820+00:00",
+      "retry_after": "2026-11-03T20:27:11.026820+00:00"
     },
     "4815": {
       "misses": [
@@ -1002854,9 +1002943,10 @@
     },
     "1669": {
       "misses": [
-        "1669:6:18"
+        "1669:6:18",
+        "1669:7:1"
       ],
-      "updated_at": "2026-11-03T09:43:51.293952+00:00"
+      "updated_at": "2026-11-03T16:27:39.160454+00:00"
     },
     "1056": {
       "misses": [
@@ -1009827,12 +1009917,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9693,
+    "last_series": 1056,
     "last_series_order": [
       false,
-      -8.1,
-      -4609,
-      9693
+      -8.0,
+      -72616,
+      1056
     ]
   }
 }
