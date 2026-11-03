@@ -24274,10 +24274,44 @@
       "retry_after": "2026-11-04T00:52:50.495539+00:00"
     },
     "1344:7:1": {
-      "at": "2026-10-01T15:11:51.647787+00:00",
+      "at": "2026-11-03T06:35:18.048293+00:00",
       "status": "deferred",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T15:11:52.605928+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 30.26,
+      "search_evidence": [
+        {
+          "path": "/seinfeld-s07e01/s/-6",
+          "status": 200,
+          "response_bytes": 215902,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld-s07e01/s/-6",
+          "status": 200,
+          "response_bytes": 215971,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld/s/-6",
+          "status": 200,
+          "response_bytes": 260317,
+          "boxes": 29,
+          "parsed_candidates": 29,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-04T06:35:48.305054+00:00"
     },
     "1344:7:2": {
       "at": "2026-10-01T15:12:07.951264+00:00",
@@ -130080,12 +130114,44 @@
       "retry_after": "2026-11-04T00:52:56.387323+00:00"
     },
     "1392:4:4": {
-      "at": "2026-10-09T11:33:39.687604+00:00",
+      "at": "2026-11-03T06:35:48.918804+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-10T11:33:40.488194+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 23.19,
+      "search_evidence": [
+        {
+          "path": "/dragon-ball-z-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 216000,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/dragon-ball-z-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 215997,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/dragon-ball-z/s/-6",
+          "status": 200,
+          "response_bytes": 227767,
+          "boxes": 12,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-04T06:36:12.107129+00:00"
     },
     "1088:5:6": {
       "at": "2026-10-11T08:24:26.527009+00:00",
@@ -977131,7 +977197,7 @@
       "queue_rank": 33699
     }
   },
-  "updated_at": "2026-11-03T06:35:31.993455+00:00",
+  "updated_at": "2026-11-03T06:36:45.682203+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -981391,12 +981457,9 @@
     },
     "1344": {
       "misses": [
-        "1344:6:22",
-        "1344:6:23",
-        "1344:6:24"
+        "1344:7:1"
       ],
-      "updated_at": "2026-11-03T00:52:50.495572+00:00",
-      "retry_after": "2026-11-03T04:52:50.495572+00:00"
+      "updated_at": "2026-11-03T06:35:48.305106+00:00"
     },
     "2844": {
       "misses": [
@@ -981416,12 +981479,9 @@
     },
     "1392": {
       "misses": [
-        "1392:4:1",
-        "1392:4:2",
-        "1392:4:3"
+        "1392:4:4"
       ],
-      "updated_at": "2026-11-03T00:52:56.387355+00:00",
-      "retry_after": "2026-11-03T04:52:56.387355+00:00"
+      "updated_at": "2026-11-03T06:36:12.107162+00:00"
     },
     "1831": {
       "misses": [
@@ -994697,12 +994757,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1344,
+    "last_series": 1392,
     "last_series_order": [
       false,
       -8.8,
-      -388900,
-      1344
+      -105412,
+      1392
     ]
   }
 }
