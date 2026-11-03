@@ -175930,7 +175930,7 @@
       "queue_rank": 18907
     },
     "3285:1:4": {
-      "at": "2026-11-03T02:39:43.551587+00:00",
+      "at": "2026-11-03T03:07:17.792477+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -175938,10 +175938,68 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 316.44,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-03T02:54:59.991801+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 139.3,
+      "search_evidence": [
+        {
+          "path": "/bude-lip-s01e04/s/-6",
+          "status": 200,
+          "response_bytes": 215892,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/better-things-s01e04/s/-6",
+          "status": 200,
+          "response_bytes": 216097,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/better-things/s/-6",
+          "status": 200,
+          "response_bytes": 216933,
+          "boxes": 2,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bude-lip-s01e04/s/-6",
+          "status": 200,
+          "response_bytes": 216035,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bude-lip/s/-6",
+          "status": 200,
+          "response_bytes": 241518,
+          "boxes": 24,
+          "parsed_candidates": 23,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/better-things-s01e04/s/-6",
+          "status": 200,
+          "response_bytes": 216048,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/better-things/s/-6",
+          "status": 200,
+          "response_bytes": 216921,
+          "boxes": 2,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-04T03:09:37.097091+00:00"
     },
     "1734:2:1": {
       "at": "2026-10-12T19:27:54.529289+00:00",
@@ -322126,7 +322184,7 @@
       "queue_rank": 26914
     },
     "9667:2:4": {
-      "at": "2026-11-01T17:55:14.909079+00:00",
+      "at": "2026-11-03T03:07:22.040791+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -322134,10 +322192,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "inconclusive_audio",
-      "elapsed_seconds": 144.81,
-      "consecutive_failures": 6,
-      "retry_after": "2026-11-02T17:57:46.833686+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.676121175289154,
+      "observed_source_id": "31355967",
+      "elapsed_seconds": 141.8,
+      "consecutive_failures": 7,
+      "retry_after": "2026-11-04T03:09:43.842746+00:00"
     },
     "9667:2:36": {
       "at": "2026-11-01T17:58:07.596169+00:00",
@@ -972851,7 +972912,7 @@
       "retry_after": "2026-11-04T03:07:21.160228+00:00"
     }
   },
-  "updated_at": "2026-11-03T03:09:05.724378+00:00",
+  "updated_at": "2026-11-03T03:10:14.709831+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -978043,9 +978104,10 @@
     },
     "9667": {
       "misses": [
-        "9667:4:20"
+        "9667:4:20",
+        "9667:2:4"
       ],
-      "updated_at": "2026-11-03T03:03:24.029745+00:00"
+      "updated_at": "2026-11-03T03:09:43.842770+00:00"
     },
     "7803": {
       "misses": [
@@ -984790,12 +984852,12 @@
     },
     "3285": {
       "misses": [
-        "3285:1:3",
         "3285:1:8",
-        "3285:1:10"
+        "3285:1:10",
+        "3285:1:4"
       ],
-      "updated_at": "2026-11-03T03:08:25.142755+00:00",
-      "retry_after": "2026-11-03T07:08:25.142755+00:00"
+      "updated_at": "2026-11-03T03:09:37.097120+00:00",
+      "retry_after": "2026-11-03T07:09:37.097120+00:00"
     },
     "1063": {
       "misses": [],
@@ -990471,12 +990533,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 919,
+    "last_series": 7290,
     "last_series_order": [
       false,
       -8.0,
-      -24520,
-      919
+      -12741,
+      7290
     ]
   }
 }
