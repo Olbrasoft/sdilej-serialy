@@ -328245,14 +328245,21 @@
       "retry_after": "2026-10-20T20:06:11.937174+00:00"
     },
     "1109:1:13": {
-      "at": "2026-10-19T20:04:49.031826+00:00",
+      "at": "2026-11-03T00:25:10.457055+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 98.77,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-20T20:06:27.797599+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9964398741722107,
+      "observed_source_id": "18079207",
+      "elapsed_seconds": 82.4,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-04T00:26:32.859259+00:00"
     },
     "1670:1:6": {
       "at": "2026-10-19T20:06:12.297686+00:00",
@@ -961428,9 +961435,73 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-04T00:25:35.262599+00:00"
+    },
+    "3105:6:8": {
+      "at": "2026-11-03T00:24:53.932930+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 47.39,
+      "search_evidence": [
+        {
+          "path": "/pribehy-ze-zahrobi-s06e08/s/-6",
+          "status": 200,
+          "response_bytes": 216121,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tales-from-the-crypt-s06e08/s/-6",
+          "status": 200,
+          "response_bytes": 216142,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pribehy-ze-zahrobi-s06e08/s/-6",
+          "status": 200,
+          "response_bytes": 216125,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pribehy-ze-zahrobi/s/-6",
+          "status": 200,
+          "response_bytes": 290647,
+          "boxes": 61,
+          "parsed_candidates": 61,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tales-from-the-crypt-s06e08/s/-6",
+          "status": 200,
+          "response_bytes": 216088,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/tales-from-the-crypt/s/-6",
+          "status": 200,
+          "response_bytes": 218937,
+          "boxes": 3,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-04T00:25:43.164740+00:00"
     }
   },
-  "updated_at": "2026-11-03T00:25:37.670584+00:00",
+  "updated_at": "2026-11-03T00:26:55.939279+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -972028,12 +972099,9 @@
     },
     "3105": {
       "misses": [
-        "3105:6:4",
-        "3105:6:5",
-        "3105:6:6"
+        "3105:6:8"
       ],
-      "updated_at": "2026-11-02T21:56:19.407429+00:00",
-      "retry_after": "2026-11-02T22:26:19.407429+00:00"
+      "updated_at": "2026-11-03T00:25:43.164768+00:00"
     },
     "5127": {
       "misses": [],
@@ -977429,9 +977497,11 @@
     "1109": {
       "misses": [
         "1109:1:11",
-        "1109:1:12"
+        "1109:1:12",
+        "1109:1:13"
       ],
-      "updated_at": "2026-11-03T00:24:50.607044+00:00"
+      "updated_at": "2026-11-03T00:26:32.859293+00:00",
+      "retry_after": "2026-11-03T04:26:32.859293+00:00"
     },
     "1585": {
       "misses": [
