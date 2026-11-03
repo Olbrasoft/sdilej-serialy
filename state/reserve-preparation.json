@@ -343039,14 +343039,44 @@
       "retry_after": "2026-10-23T06:13:49.984343+00:00"
     },
     "3331:3:6": {
-      "at": "2026-10-20T04:15:47.082457+00:00",
+      "at": "2026-11-03T15:24:44.246551+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 7.4,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-21T04:15:57.151801+00:00"
+      "elapsed_seconds": 55.15,
+      "search_evidence": [
+        {
+          "path": "/flashpoint-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 216014,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/flashpoint-s03e06/s/-6",
+          "status": 200,
+          "response_bytes": 216009,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/flashpoint/s/-6",
+          "status": 200,
+          "response_bytes": 278675,
+          "boxes": 59,
+          "parsed_candidates": 43,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-04T15:25:48.109555+00:00"
     },
     "1645:3:6": {
       "at": "2026-10-21T06:36:42.671409+00:00",
@@ -990160,7 +990190,7 @@
       "retry_after": "2026-11-04T15:25:15.212649+00:00"
     }
   },
-  "updated_at": "2026-11-03T15:25:41.674061+00:00",
+  "updated_at": "2026-11-03T15:26:52.369131+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1003183,9 +1003213,10 @@
     },
     "3331": {
       "misses": [
-        "3331:3:2"
+        "3331:3:2",
+        "3331:3:6"
       ],
-      "updated_at": "2026-11-03T15:24:43.420918+00:00"
+      "updated_at": "2026-11-03T15:25:48.109587+00:00"
     },
     "7676": {
       "misses": [
