@@ -293015,14 +293015,21 @@
       "retry_after": "2026-10-19T12:39:29.969751+00:00"
     },
     "5756:1:4": {
-      "at": "2026-10-18T12:38:37.609319+00:00",
+      "at": "2026-11-03T03:21:26.154517+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 55.34,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T12:39:32.951571+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ko",
+      "observed_language_probability": 0.99847811460495,
+      "observed_source_id": "23111974",
+      "elapsed_seconds": 76.18,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-04T03:22:42.936943+00:00"
     },
     "6884:1:4": {
       "at": "2026-10-18T12:38:55.655819+00:00",
@@ -974315,9 +974322,87 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-04T03:22:22.210004+00:00"
+    },
+    "3103:4:11": {
+      "at": "2026-11-03T03:22:23.066331+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 19.18,
+      "search_evidence": [
+        {
+          "path": "/internat-cerna-laguna-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 216183,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-boarding-school-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 188738,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/internat-cerna-laguna-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 188780,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/internat-cerna-laguna/s/-6",
+          "status": 200,
+          "response_bytes": 188633,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-boarding-school-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 188738,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-boarding-school/s/-6",
+          "status": 200,
+          "response_bytes": 188591,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-04T03:22:42.245025+00:00"
+    },
+    "1669:6:17": {
+      "at": "2026-11-03T03:22:33.259195+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 23.41,
+      "consecutive_failures": 0,
+      "retry_after": "2026-11-03T03:27:56.666053+00:00"
     }
   },
-  "updated_at": "2026-11-03T03:22:26.261689+00:00",
+  "updated_at": "2026-11-03T03:23:38.419818+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -984279,9 +984364,11 @@
     "3103": {
       "misses": [
         "3103:4:5",
-        "3103:4:6"
+        "3103:4:6",
+        "3103:4:11"
       ],
-      "updated_at": "2026-11-03T03:18:57.059970+00:00"
+      "updated_at": "2026-11-03T03:22:42.245062+00:00",
+      "retry_after": "2026-11-03T07:22:42.245062+00:00"
     },
     "6630": {
       "misses": [
@@ -987771,9 +987858,11 @@
     "5756": {
       "misses": [
         "5756:1:10",
-        "5756:1:12"
+        "5756:1:12",
+        "5756:1:4"
       ],
-      "updated_at": "2026-10-31T02:37:08.366250+00:00"
+      "updated_at": "2026-11-03T03:22:42.936976+00:00",
+      "retry_after": "2026-11-03T07:22:42.936976+00:00"
     },
     "2432": {
       "misses": [
@@ -991958,12 +992047,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3103,
+    "last_series": 7290,
     "last_series_order": [
       false,
-      -8.1,
-      -6709,
-      3103
+      -8.0,
+      -12741,
+      7290
     ]
   }
 }
