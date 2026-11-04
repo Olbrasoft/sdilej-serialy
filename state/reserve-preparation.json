@@ -318785,7 +318785,7 @@
       "retry_after": "2026-11-04T07:53:44.206470+00:00"
     },
     "9684:2:25": {
-      "at": "2026-11-03T17:27:09.891526+00:00",
+      "at": "2026-11-04T08:52:27.312556+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -318794,9 +318794,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 38.86,
-      "consecutive_failures": 4,
-      "retry_after": "2026-11-03T19:28:00.783056+00:00"
+      "elapsed_seconds": 68.95,
+      "consecutive_failures": 5,
+      "retry_after": "2026-11-04T12:53:36.265539+00:00"
     },
     "9684:2:26": {
       "at": "2026-11-03T23:43:44.835543+00:00",
@@ -1027275,9 +1027275,87 @@
       "elapsed_seconds": 155.23,
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T08:52:26.102667+00:00"
+    },
+    "9667:4:24": {
+      "at": "2026-11-04T08:49:51.778363+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 212.56,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-04T09:53:25.443337+00:00"
+    },
+    "3038:1:30": {
+      "at": "2026-11-04T08:52:44.773905+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 82.37,
+      "search_evidence": [
+        {
+          "path": "/looney-tunes-animaky-s01e30/s/-6",
+          "status": 200,
+          "response_bytes": 216235,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-cartoons-s01e30/s/-6",
+          "status": 200,
+          "response_bytes": 216165,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-animaky-s01e30/s/-6",
+          "status": 200,
+          "response_bytes": 216132,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-animaky/s/-6",
+          "status": 200,
+          "response_bytes": 224978,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-cartoons-s01e30/s/-6",
+          "status": 200,
+          "response_bytes": 216168,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-cartoons/s/-6",
+          "status": 200,
+          "response_bytes": 222843,
+          "boxes": 6,
+          "parsed_candidates": 6,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T08:54:07.143290+00:00"
     }
   },
-  "updated_at": "2026-11-04T08:53:19.758865+00:00",
+  "updated_at": "2026-11-04T08:54:31.483175+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1032466,9 +1032544,10 @@
     },
     "9667": {
       "misses": [
-        "9667:2:17"
+        "9667:2:17",
+        "9667:4:24"
       ],
-      "updated_at": "2026-11-04T08:18:52.697624+00:00"
+      "updated_at": "2026-11-04T08:53:25.443377+00:00"
     },
     "7803": {
       "misses": [
@@ -1038844,9 +1038923,11 @@
     "3038": {
       "misses": [
         "3038:1:25",
-        "3038:1:28"
+        "3038:1:28",
+        "3038:1:30"
       ],
-      "updated_at": "2026-11-04T08:08:58.165747+00:00"
+      "updated_at": "2026-11-04T08:54:07.143329+00:00",
+      "retry_after": "2026-11-04T12:54:07.143329+00:00"
     },
     "5346": {
       "misses": [
@@ -1043538,9 +1043619,10 @@
     },
     "9684": {
       "misses": [
-        "9684:3:12"
+        "9684:3:12",
+        "9684:2:25"
       ],
-      "updated_at": "2026-11-04T08:49:49.992463+00:00"
+      "updated_at": "2026-11-04T08:53:36.265568+00:00"
     },
     "693": {
       "misses": [
@@ -1044836,12 +1044918,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3038,
+    "last_series": 7,
     "last_series_order": [
       false,
-      -8.0,
-      -2529,
-      3038
+      -7.8,
+      -26631,
+      7
     ]
   }
 }
