@@ -1,13 +1,13 @@
 {
   "generation": "pair-2026-09-25",
   "run_id": "41755929755",
-  "attempted_this_run": 18,
+  "attempted_this_run": 19,
   "prepared_this_run": 0,
   "reserve_total": 25709,
   "queue_total": 34144,
-  "updated_at": "2026-11-04T02:18:40.054075+00:00",
+  "updated_at": "2026-11-04T02:19:48.382111+00:00",
   "workers": 4,
-  "elapsed_seconds": 829.95,
+  "elapsed_seconds": 898.28,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -34,14 +34,16 @@
     "stock_hours_24h": 0.0
   },
   "health": {
-    "status": "waiting_for_sources",
-    "starved_accounts": [],
+    "status": "starved",
+    "starved_accounts": [
+      "a"
+    ],
     "seconds_since_upload": {
-      "a": 1741,
-      "b": 1386
+      "a": 1809,
+      "b": 1453
     },
     "preparation_outcomes_last_hour": {
-      "no_matches": 28,
+      "no_matches": 29,
       "transient_search": 3,
       "transient_original": 4,
       "prepared": 25,
@@ -62,9 +64,9 @@
     ]
   },
   "cache": {
-    "search_miss": 73,
-    "search_seconds": 1984.05,
-    "search_hit": 24,
+    "search_miss": 90,
+    "search_seconds": 2305.0,
+    "search_hit": 25,
     "media_hit": 13,
     "media_miss": 7,
     "media_seconds": 26.3,
@@ -88,7 +90,7 @@
   },
   "statuses": {
     "prepared": 25709,
-    "deferred": 34556
+    "deferred": 34557
   },
   "requested_series": [
     {
@@ -2904,7 +2906,7 @@
     "consecutive_failures": 0,
     "retry_seconds": 0,
     "failed_cycles_this_run": 0,
-    "control_requests": 9,
+    "control_requests": 10,
     "request_gap_seconds": 4.0,
     "restart_required": false,
     "last_request_limit": null,
@@ -2922,6 +2924,22 @@
         "response_bytes": null,
         "parsed_candidates": 0,
         "checked_at": "2026-11-04T02:18:37.921458+00:00"
+      },
+      {
+        "path": "/doktor-martin/s/-6",
+        "status": 200,
+        "response_bytes": 647558,
+        "parsed_candidates": 358,
+        "body_sha256": "53d35d9e54de71fdf5c9f3f3a4edbbd2b0ae0ae86dcfe1594b18fca1b74a669c",
+        "video_box_count": 361,
+        "heading_matches_query": true,
+        "password_field_present": false,
+        "fallback_notice_present": false,
+        "request_limit_notice_present": false,
+        "cache_age_seconds": null,
+        "response_path": "/doktor-martin/s/-6",
+        "unexpected_origin": false,
+        "checked_at": "2026-11-04T02:18:49.485803+00:00"
       }
     ]
   }
