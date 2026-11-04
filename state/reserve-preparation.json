@@ -505510,14 +505510,21 @@
       "retry_after": "2026-11-01T00:46:02.116711+00:00"
     },
     "1934:3:4": {
-      "at": "2026-10-23T11:29:58.743762+00:00",
+      "at": "2026-11-04T01:16:36.882391+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 34.39,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T11:30:39.542429+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9982473850250244,
+      "observed_source_id": "31094403",
+      "elapsed_seconds": 36.76,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-05T01:17:13.638639+00:00"
     },
     "1934:3:5": {
       "at": "2026-10-23T11:30:26.513819+00:00",
@@ -1009021,9 +1009028,73 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T01:16:05.179396+00:00"
+    },
+    "2351:4:4": {
+      "at": "2026-11-04T01:14:51.659621+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 85.86,
+      "search_evidence": [
+        {
+          "path": "/advokati-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 227914,
+          "boxes": 10,
+          "parsed_candidates": 10,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-practice-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 215979,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/advokati-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 227888,
+          "boxes": 10,
+          "parsed_candidates": 10,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/advokati/s/-6",
+          "status": 200,
+          "response_bytes": 507178,
+          "boxes": 265,
+          "parsed_candidates": 230,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-practice-s04e04/s/-6",
+          "status": 200,
+          "response_bytes": 215945,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-practice/s/-6",
+          "status": 200,
+          "response_bytes": 223958,
+          "boxes": 7,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T01:16:36.882267+00:00"
     }
   },
-  "updated_at": "2026-11-04T01:16:22.279127+00:00",
+  "updated_at": "2026-11-04T01:17:41.061215+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1022986,8 +1023057,10 @@
       "retry_after": "2026-10-26T11:49:28.343796+00:00"
     },
     "1934": {
-      "misses": [],
-      "updated_at": "2026-11-04T01:16:19.034100+00:00"
+      "misses": [
+        "1934:3:4"
+      ],
+      "updated_at": "2026-11-04T01:17:13.638671+00:00"
     },
     "1303": {
       "misses": [
@@ -1023337,12 +1023410,9 @@
     },
     "2351": {
       "misses": [
-        "2351:4:1",
-        "2351:4:2",
-        "2351:4:3"
+        "2351:4:4"
       ],
-      "updated_at": "2026-11-03T20:47:18.050152+00:00",
-      "retry_after": "2026-11-04T00:47:18.050152+00:00"
+      "updated_at": "2026-11-04T01:16:36.882303+00:00"
     },
     "1462": {
       "misses": [
