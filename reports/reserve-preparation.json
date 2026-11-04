@@ -1,16 +1,16 @@
 {
   "generation": "pair-2026-09-25",
-  "run_id": "41798630875",
-  "attempted_this_run": 89,
-  "prepared_this_run": 1,
+  "run_id": "41801586141",
+  "attempted_this_run": 0,
+  "prepared_this_run": 0,
   "reserve_total": 25880,
   "queue_total": 34315,
-  "updated_at": "2026-11-04T09:16:12.545040+00:00",
+  "updated_at": "2026-11-04T09:26:45.422462+00:00",
   "workers": 4,
-  "elapsed_seconds": 2587.48,
-  "prepared_per_hour": 1.39,
-  "available_this_run": 1,
-  "available_per_hour": 1.39,
+  "elapsed_seconds": 66.33,
+  "prepared_per_hour": 0.0,
+  "available_this_run": 0,
+  "available_per_hour": 0.0,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
@@ -23,37 +23,37 @@
     "categories": {
       "completed": 34275,
       "allocated": 28,
-      "in_flight": 3,
-      "failed": 9
+      "failed": 12
     },
     "completed_by_account": {
       "a": 17136,
       "b": 17139
     },
-    "uploads_last_24h": 523,
-    "uploads_per_hour_24h": 21.79,
+    "uploads_last_24h": 520,
+    "uploads_per_hour_24h": 21.67,
     "stock_hours_24h": 0.0
   },
   "health": {
     "status": "starved",
     "starved_accounts": [
+      "a",
       "b"
     ],
     "seconds_since_upload": {
-      "a": 1535,
-      "b": 4292
+      "a": 2168,
+      "b": 4925
     },
     "preparation_outcomes_last_hour": {
       "transient_original": 9,
       "verified_non_czech": 20,
       "no_acceptable_original": 3,
-      "source_search_unavailable": 7,
-      "inconclusive_audio": 7,
-      "no_matches": 47,
+      "source_search_unavailable": 5,
+      "inconclusive_audio": 6,
+      "no_matches": 45,
       "prepared": 1
     }
   },
-  "indexed_candidates_in_scan": 1120,
+  "indexed_candidates_in_scan": 1013,
   "discovery_progress": {
     "last_series": 3331,
     "last_series_order": [
@@ -64,24 +64,14 @@
     ]
   },
   "cache": {
-    "search_miss": 347,
-    "search_hit": 121,
-    "search_seconds": 5027.58,
-    "media_hit": 41,
-    "media_miss": 79,
-    "media_seconds": 383.5,
-    "audio_miss": 66,
-    "audio_seconds": 1743.67
+    "search_hit": 5,
+    "search_miss": 4,
+    "media_hit": 2,
+    "search_seconds": 108.52
   },
-  "audio_pipeline": {
-    "sample_count": 127,
-    "download_seconds": 1309.29,
-    "inference_wait_seconds": 56.37,
-    "inference_seconds": 374.43,
-    "failures": 2
-  },
-  "productive_seasons": 160,
-  "series_paused_this_run": 118,
+  "audio_pipeline": {},
+  "productive_seasons": 158,
+  "series_paused_this_run": 115,
   "saved_reviewed_this_run": 0,
   "saved_prepared_this_run": 0,
   "repaired_this_run": 0,
@@ -2903,23 +2893,23 @@
     }
   ],
   "search_health": {
-    "status": "paused",
-    "consecutive_failures": 2,
-    "retry_seconds": 551,
-    "failed_cycles_this_run": 2,
-    "control_requests": 32,
+    "status": "healthy",
+    "consecutive_failures": 0,
+    "retry_seconds": 0,
+    "failed_cycles_this_run": 0,
+    "control_requests": 1,
     "request_gap_seconds": 8,
-    "restart_required": true,
+    "restart_required": false,
     "last_request_limit": null,
-    "resume_after": "2026-11-04T09:25:23.674588+00:00",
+    "resume_after": null,
     "controls": [
       {
         "path": "/teorie-velkeho-tresku/s/-6",
         "status": 200,
-        "response_bytes": 188633,
-        "parsed_candidates": 0,
-        "body_sha256": "994a55b7ffb9885950e9c692b87d0f01bc421902383914c8bf01459b0947bbe5",
-        "video_box_count": 0,
+        "response_bytes": 722796,
+        "parsed_candidates": 411,
+        "body_sha256": "f59b466fe20023c98a346a7dfba26304fc171d40d36cf6df93591feb5f400af2",
+        "video_box_count": 464,
         "heading_matches_query": true,
         "password_field_present": false,
         "fallback_notice_present": false,
@@ -2927,23 +2917,7 @@
         "cache_age_seconds": null,
         "response_path": "/teorie-velkeho-tresku/s/-6",
         "unexpected_origin": false,
-        "checked_at": "2026-11-04T09:15:19.599287+00:00"
-      },
-      {
-        "path": "/doktor-martin/s/-6",
-        "status": 200,
-        "response_bytes": 188465,
-        "parsed_candidates": 0,
-        "body_sha256": "b1d04be341586ff33f4e8da72a09ba74c2ba08c2f01f8ed47f2900a0294c65be",
-        "video_box_count": 0,
-        "heading_matches_query": true,
-        "password_field_present": false,
-        "fallback_notice_present": false,
-        "request_limit_notice_present": false,
-        "cache_age_seconds": null,
-        "response_path": "/doktor-martin/s/-6",
-        "unexpected_origin": false,
-        "checked_at": "2026-11-04T09:15:23.674491+00:00"
+        "checked_at": "2026-11-04T09:26:40.064899+00:00"
       }
     ]
   }
