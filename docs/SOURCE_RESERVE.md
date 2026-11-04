@@ -860,3 +860,13 @@ New hints found by another worker can promote such pending episodes without
 restarting the producer. Once checked at the current recovery revision they
 return to normal retry rules. Inconclusive audio, unhinted misses and current
 negative checks keep the bounded retry lane; all publication checks still apply.
+
+Before loading Whisper or searching episodes, reserve workflows now check the
+authenticated source settings card for an explicit active unlimited-download
+status. Inactive, unknown or failed checks are recorded in
+`reports/source-access.json` and defer discovery without changing episode
+verification history. A later scheduled run rechecks access, so subscription
+renewal requires no queue reset. This was added after November 4 failures:
+original links redirected to the pricing page while the account reported
+unlimited downloading as inactive. Upload allocation and content validation
+remain unchanged.

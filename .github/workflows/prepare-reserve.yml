@@ -52,13 +52,20 @@ jobs:
             reserve_needed=$(python -m sdilej_serialy.reserve --generation "$DUAL_GENERATION" --decision prepare)
             echo "needed=$reserve_needed" >> "$GITHUB_OUTPUT"
           fi
-      - uses: actions/cache@v4
+      - name: Check authenticated original download access
+        id: source_access
         if: steps.reserve.outputs.needed == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          python -m sdilej_serialy.source_access
+      - uses: actions/cache@v4
+        if: steps.reserve.outputs.needed == 'true' && steps.source_access.outputs.available == 'true'
         with:
           path: ${{ env.HF_HOME }}
           key: whisper-small-${{ runner.os }}-v1
       - name: Install original-media and Czech audio inspection tools
-        if: steps.reserve.outputs.needed == 'true'
+        if: steps.reserve.outputs.needed == 'true' && steps.source_access.outputs.available == 'true'
         timeout-minutes: 10
         run: |
           # Azure's regional mirror repeatedly downloaded below 60 kB/s and
@@ -73,17 +80,17 @@ jobs:
           pip install ".[whisper]"
           python -m sdilej_serialy.audio_check
       - name: Configure durable preparation checkpoints
-        if: steps.reserve.outputs.needed == 'true'
+        if: steps.reserve.outputs.needed == 'true' && steps.source_access.outputs.available == 'true'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
       - name: Fill missing aired episode metadata before source discovery
-        if: steps.reserve.outputs.needed == 'true' && inputs.identity == ''
+        if: steps.reserve.outputs.needed == 'true' && steps.source_access.outputs.available == 'true' && inputs.identity == ''
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
         run: python -m sdilej_serialy.catalog_refresh --persist-git-state
       - name: Prepare new originals from cached catalog and append reserve
-        if: steps.reserve.outputs.needed == 'true'
+        if: steps.reserve.outputs.needed == 'true' && steps.source_access.outputs.available == 'true'
         shell: bash
         run: |
           set -euo pipefail
@@ -99,7 +106,7 @@ jobs:
           fi
           python -m sdilej_serialy.replenish "${preparation_options[@]}"
       - name: Hand off completed preparation without waiting for cron
-        if: success() && steps.reserve.outputs.needed == 'true'
+        if: success() && steps.reserve.outputs.needed == 'true' && steps.source_access.outputs.available == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           DUAL_ENABLED: ${{ vars.DUAL_ENABLED }}
