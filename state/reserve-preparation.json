@@ -639484,7 +639484,7 @@
       "retry_after": "2026-10-31T11:04:36.261010+00:00"
     },
     "4:3:13": {
-      "at": "2026-11-04T00:46:27.913991+00:00",
+      "at": "2026-11-04T01:31:42.995026+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -639492,10 +639492,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 356.15,
-      "consecutive_failures": 9,
-      "retry_after": "2026-11-04T01:02:24.059534+00:00"
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 66.33,
+      "consecutive_failures": 10,
+      "retry_after": "2026-11-05T01:32:57.221346+00:00"
     },
     "4:3:12": {
       "at": "2026-11-04T01:31:34.636209+00:00",
@@ -1009443,9 +1009443,105 @@
       "elapsed_seconds": 104.16,
       "source_id": "34910455",
       "queue_rank": 34129
+    },
+    "1657:4:20": {
+      "at": "2026-11-04T01:32:57.998899+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 35.86,
+      "search_evidence": [
+        {
+          "path": "/everwood-s04e20/s/-6",
+          "status": 200,
+          "response_bytes": 215865,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everwood/s/-6",
+          "status": 200,
+          "response_bytes": 373098,
+          "boxes": 141,
+          "parsed_candidates": 104,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everwood-s04e20/s/-6",
+          "status": 200,
+          "response_bytes": 215866,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everwood/s/-6",
+          "status": 200,
+          "response_bytes": 373130,
+          "boxes": 141,
+          "parsed_candidates": 104,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T01:33:33.861870+00:00"
+    },
+    "2463:4:8": {
+      "at": "2026-11-04T01:33:34.622281+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 17.0,
+      "search_evidence": [
+        {
+          "path": "/three-s-company-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 216018,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/three-s-company/s/-6",
+          "status": 200,
+          "response_bytes": 215901,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/three-s-company-s04e08/s/-6",
+          "status": 200,
+          "response_bytes": 216093,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/three-s-company/s/-6",
+          "status": 200,
+          "response_bytes": 215956,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T01:33:51.622954+00:00"
     }
   },
-  "updated_at": "2026-11-04T01:32:39.435413+00:00",
+  "updated_at": "2026-11-04T01:34:01.598942+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1024564,21 +1024660,15 @@
     },
     "1657": {
       "misses": [
-        "1657:4:17",
-        "1657:4:18",
-        "1657:4:19"
+        "1657:4:20"
       ],
-      "updated_at": "2026-11-03T17:26:31.076186+00:00",
-      "retry_after": "2026-11-03T21:26:31.076186+00:00"
+      "updated_at": "2026-11-04T01:33:33.861902+00:00"
     },
     "2463": {
       "misses": [
-        "2463:4:5",
-        "2463:4:6",
-        "2463:4:7"
+        "2463:4:8"
       ],
-      "updated_at": "2026-11-03T17:26:38.687605+00:00",
-      "retry_after": "2026-11-03T21:26:38.687605+00:00"
+      "updated_at": "2026-11-04T01:33:51.622987+00:00"
     },
     "636": {
       "misses": [],
@@ -1026713,12 +1026803,12 @@
     },
     "4": {
       "misses": [
-        "4:2:13",
         "4:4:37",
-        "4:3:12"
+        "4:3:12",
+        "4:3:13"
       ],
-      "updated_at": "2026-11-04T01:32:23.905730+00:00",
-      "retry_after": "2026-11-04T05:32:23.905730+00:00"
+      "updated_at": "2026-11-04T01:32:57.221379+00:00",
+      "retry_after": "2026-11-04T05:32:57.221379+00:00"
     },
     "1138": {
       "misses": [
@@ -1026822,12 +1026912,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9673,
+    "last_series": 2463,
     "last_series_order": [
       false,
       -7.6,
-      -23581,
-      9673
+      -19496,
+      2463
     ]
   }
 }
