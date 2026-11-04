@@ -992235,7 +992235,7 @@
       "retry_after": "2026-11-04T14:45:30.584925+00:00"
     },
     "1955:22:2": {
-      "at": "2026-11-04T14:49:22.186186+00:00",
+      "at": "2026-11-04T15:14:39.089563+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -992243,10 +992243,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 306.6,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-04T15:04:28.787910+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9874299168586731,
+      "observed_source_id": "23092350",
+      "elapsed_seconds": 99.76,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-05T15:16:18.848098+00:00"
     },
     "1955:22:3": {
       "at": "2026-11-03T14:45:50.030882+00:00",
@@ -1041557,9 +1041560,121 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T15:14:24.900325+00:00"
+    },
+    "2463:4:15": {
+      "at": "2026-11-04T15:13:29.613748+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 135.87,
+      "search_evidence": [
+        {
+          "path": "/three-s-company-s04e15/s/-6",
+          "status": 200,
+          "response_bytes": 216002,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/three-s-company/s/-6",
+          "status": 200,
+          "response_bytes": 215991,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/three-s-company-s04e15/s/-6",
+          "status": 200,
+          "response_bytes": 216053,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/three-s-company/s/-6",
+          "status": 200,
+          "response_bytes": 215956,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T15:15:45.485995+00:00"
+    },
+    "9673:3:3": {
+      "at": "2026-11-04T15:13:19.589202+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 156.92,
+      "search_evidence": [
+        {
+          "path": "/chip-a-dale-rychla-rota-s03e03/s/-6",
+          "status": 200,
+          "response_bytes": 216693,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chip-n-dale-rescue-rangers-s03e03/s/-6",
+          "status": 200,
+          "response_bytes": 216338,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chip-a-dale-rychla-rota-s03e03/s/-6",
+          "status": 200,
+          "response_bytes": 216591,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chip-a-dale-rychla-rota/s/-6",
+          "status": 200,
+          "response_bytes": 421613,
+          "boxes": 159,
+          "parsed_candidates": 154,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chip-n-dale-rescue-rangers-s03e03/s/-6",
+          "status": 200,
+          "response_bytes": 216244,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chip-n-dale-rescue-rangers/s/-6",
+          "status": 200,
+          "response_bytes": 223743,
+          "boxes": 6,
+          "parsed_candidates": 6,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T15:15:56.510832+00:00"
     }
   },
-  "updated_at": "2026-11-04T15:15:26.233578+00:00",
+  "updated_at": "2026-11-04T15:16:34.780936+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1054325,9 +1054440,11 @@
     "1955": {
       "misses": [
         "1955:3:12",
-        "1955:3:13"
+        "1955:3:13",
+        "1955:22:2"
       ],
-      "updated_at": "2026-11-04T14:37:52.000538+00:00"
+      "updated_at": "2026-11-04T15:16:18.848125+00:00",
+      "retry_after": "2026-11-04T19:16:18.848125+00:00"
     },
     "55": {
       "misses": [],
@@ -1056674,9 +1056791,10 @@
     },
     "9673": {
       "misses": [
-        "9673:3:2"
+        "9673:3:2",
+        "9673:3:3"
       ],
-      "updated_at": "2026-11-04T13:05:27.989904+00:00"
+      "updated_at": "2026-11-04T15:15:56.510865+00:00"
     },
     "9856": {
       "misses": [
@@ -1056756,9 +1056874,10 @@
     },
     "2463": {
       "misses": [
-        "2463:4:13"
+        "2463:4:13",
+        "2463:4:15"
       ],
-      "updated_at": "2026-11-04T13:14:15.042215+00:00"
+      "updated_at": "2026-11-04T15:15:45.486022+00:00"
     },
     "636": {
       "misses": [],
@@ -1058968,12 +1059087,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2463,
+    "last_series": 9692,
     "last_series_order": [
       false,
       -7.6,
-      -19496,
-      2463
+      -19337,
+      9692
     ]
   }
 }
