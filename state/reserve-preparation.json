@@ -1050169,7 +1050169,7 @@
       "retry_after": "2026-11-04T18:56:44.705322+00:00"
     },
     "1851:9:10": {
-      "at": "2026-11-04T18:41:09.598315+00:00",
+      "at": "2026-11-04T19:11:53.968890+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -1050177,10 +1050177,36 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 335.11,
-      "consecutive_failures": 0,
-      "retry_after": "2026-11-04T18:56:44.705323+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 46.32,
+      "search_evidence": [
+        {
+          "path": "/one-tree-hill-s09e10/s/-6",
+          "status": 200,
+          "response_bytes": 211914,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/one-tree-hill-s09e10/s/-6",
+          "status": 200,
+          "response_bytes": 212011,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/one-tree-hill/s/-6",
+          "status": 200,
+          "response_bytes": 265309,
+          "boxes": 46,
+          "parsed_candidates": 44,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T19:12:40.288236+00:00"
     },
     "4102:3:14": {
       "at": "2026-11-04T19:02:37.938546+00:00",
@@ -1050617,9 +1050643,87 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T19:11:53.336366+00:00"
+    },
+    "1239:7:14": {
+      "at": "2026-11-04T19:11:15.426539+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 89.56,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-04T19:27:44.985193+00:00"
+    },
+    "1059:4:13": {
+      "at": "2026-11-04T19:11:16.075133+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 92.66,
+      "search_evidence": [
+        {
+          "path": "/posledni-chlap-s04e13/s/-6",
+          "status": 200,
+          "response_bytes": 212324,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/last-man-standing-s04e13/s/-6",
+          "status": 200,
+          "response_bytes": 212102,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/posledni-chlap-s04e13/s/-6",
+          "status": 200,
+          "response_bytes": 212309,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/posledni-chlap/s/-6",
+          "status": 200,
+          "response_bytes": 415058,
+          "boxes": 152,
+          "parsed_candidates": 152,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/last-man-standing-s04e13/s/-6",
+          "status": 200,
+          "response_bytes": 212087,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/last-man-standing/s/-6",
+          "status": 200,
+          "response_bytes": 295510,
+          "boxes": 71,
+          "parsed_candidates": 68,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T19:12:48.737764+00:00"
     }
   },
-  "updated_at": "2026-11-04T19:12:18.990597+00:00",
+  "updated_at": "2026-11-04T19:13:34.489411+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1056027,9 +1056131,11 @@
     "1239": {
       "misses": [
         "1239:3:3",
-        "1239:3:4"
+        "1239:3:4",
+        "1239:7:14"
       ],
-      "updated_at": "2026-11-04T18:41:13.262622+00:00"
+      "updated_at": "2026-11-04T19:12:44.985217+00:00",
+      "retry_after": "2026-11-04T19:42:44.985217+00:00"
     },
     "1951": {
       "misses": [
@@ -1063381,9 +1063487,10 @@
     },
     "1851": {
       "misses": [
-        "1851:6:10"
+        "1851:6:10",
+        "1851:9:10"
       ],
-      "updated_at": "2026-11-04T19:06:02.734123+00:00"
+      "updated_at": "2026-11-04T19:12:40.288265+00:00"
     },
     "78": {
       "misses": [
@@ -1066755,9 +1066862,11 @@
     "1059": {
       "misses": [
         "1059:4:10",
-        "1059:4:11"
+        "1059:4:11",
+        "1059:4:13"
       ],
-      "updated_at": "2026-11-04T15:34:51.893361+00:00"
+      "updated_at": "2026-11-04T19:12:48.737790+00:00",
+      "retry_after": "2026-11-04T23:12:48.737790+00:00"
     },
     "9334": {
       "misses": [
