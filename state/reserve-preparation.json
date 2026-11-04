@@ -252708,7 +252708,7 @@
       "queue_rank": 23665
     },
     "2291:1:3": {
-      "at": "2026-11-04T15:50:53.884712+00:00",
+      "at": "2026-11-04T16:23:48.257880+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -252716,10 +252716,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 315.54,
-      "consecutive_failures": 8,
-      "retry_after": "2026-11-04T16:06:09.423461+00:00"
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 51.89,
+      "consecutive_failures": 9,
+      "retry_after": "2026-11-05T16:24:40.143578+00:00"
     },
     "2586:1:3": {
       "at": "2026-10-16T03:29:36.464570+00:00",
@@ -262306,7 +262306,7 @@
       "queue_rank": 24214
     },
     "1055:1:11": {
-      "at": "2026-11-04T06:10:06.852883+00:00",
+      "at": "2026-11-04T16:22:36.202152+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -262315,9 +262315,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 325.91,
-      "consecutive_failures": 28,
-      "retry_after": "2026-11-04T12:15:32.761612+00:00"
+      "elapsed_seconds": 161.0,
+      "consecutive_failures": 29,
+      "retry_after": "2026-11-04T22:25:17.197381+00:00"
     },
     "1055:2:7": {
       "at": "2026-10-16T16:53:56.268645+00:00",
@@ -1044460,9 +1044460,49 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T16:23:47.438785+00:00"
+    },
+    "2291:2:27": {
+      "at": "2026-11-04T16:24:40.993728+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 51.18,
+      "search_evidence": [
+        {
+          "path": "/zorro-s02e27/s/-6",
+          "status": 200,
+          "response_bytes": 215924,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zorro-s02e27/s/-6",
+          "status": 200,
+          "response_bytes": 215860,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zorro/s/-6",
+          "status": 200,
+          "response_bytes": 326441,
+          "boxes": 93,
+          "parsed_candidates": 87,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T16:25:32.172400+00:00"
     }
   },
-  "updated_at": "2026-11-04T16:24:27.524179+00:00",
+  "updated_at": "2026-11-04T16:25:37.273200+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1053178,9 +1053218,12 @@
     },
     "2291": {
       "misses": [
-        "2291:2:26"
+        "2291:2:26",
+        "2291:1:3",
+        "2291:2:27"
       ],
-      "updated_at": "2026-11-04T13:52:05.263505+00:00"
+      "updated_at": "2026-11-04T16:25:32.172430+00:00",
+      "retry_after": "2026-11-04T20:25:32.172430+00:00"
     },
     "3184": {
       "misses": [
@@ -1055980,9 +1056023,10 @@
     },
     "1055": {
       "misses": [
-        "1055:10:5"
+        "1055:10:5",
+        "1055:1:11"
       ],
-      "updated_at": "2026-11-04T16:14:27.075795+00:00"
+      "updated_at": "2026-11-04T16:25:17.197408+00:00"
     },
     "257": {
       "misses": [
@@ -1061874,12 +1061918,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2362,
+    "last_series": 1085,
     "last_series_order": [
       false,
-      -8.2,
-      -6037,
-      2362
+      -8.1,
+      -53192,
+      1085
     ]
   }
 }
