@@ -3831,11 +3831,44 @@
       "retry_after": "2026-11-05T02:13:18.636047+00:00"
     },
     "1611:10:7": {
-      "at": "2026-10-01T23:44:31.096983+00:00",
+      "at": "2026-11-04T05:22:13.404715+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T23:44:31.766656+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 10.85,
+      "search_evidence": [
+        {
+          "path": "/the-joy-of-painting-s10e07/s/-6",
+          "status": 200,
+          "response_bytes": 216156,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting-s10e07/s/-6",
+          "status": 200,
+          "response_bytes": 216246,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting/s/-6",
+          "status": 200,
+          "response_bytes": 225970,
+          "boxes": 8,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T05:22:24.258419+00:00"
     },
     "1611:10:8": {
       "at": "2026-10-01T23:44:48.685992+00:00",
@@ -1016509,9 +1016542,62 @@
       "elapsed_seconds": 68.68,
       "source_id": "34922769",
       "queue_rank": 34211
+    },
+    "1198:5:11": {
+      "at": "2026-11-04T05:20:37.750307+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 57.75,
+      "source_id": "34922775",
+      "queue_rank": 34212
+    },
+    "1198:5:13": {
+      "at": "2026-11-04T05:21:00.970556+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 40.92,
+      "source_id": "34922778",
+      "queue_rank": 34213
+    },
+    "1198:5:12": {
+      "at": "2026-11-04T05:20:54.561231+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 64.9,
+      "source_id": "34922777",
+      "queue_rank": 34214
+    },
+    "1198:6:1": {
+      "at": "2026-11-04T05:21:49.977231+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 22.71,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T05:22:12.692145+00:00"
     }
   },
-  "updated_at": "2026-11-04T05:21:32.130019+00:00",
+  "updated_at": "2026-11-04T05:22:27.416367+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1020724,9 +1020810,11 @@
     "1611": {
       "misses": [
         "1611:10:5",
-        "1611:10:6"
+        "1611:10:6",
+        "1611:10:7"
       ],
-      "updated_at": "2026-11-04T02:13:18.636079+00:00"
+      "updated_at": "2026-11-04T05:22:24.258448+00:00",
+      "retry_after": "2026-11-04T09:22:24.258448+00:00"
     },
     "1265": {
       "misses": [
@@ -1027657,8 +1027745,10 @@
       "updated_at": "2026-10-18T22:43:21.697322+00:00"
     },
     "1198": {
-      "misses": [],
-      "updated_at": "2026-11-04T05:20:36.890479+00:00"
+      "misses": [
+        "1198:6:1"
+      ],
+      "updated_at": "2026-11-04T05:22:12.692170+00:00"
     },
     "7093": {
       "misses": [
@@ -1033938,12 +1034028,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1081,
+    "last_series": 1611,
     "last_series_order": [
       false,
-      -7.4,
-      -388857,
-      1081
+      -9.3,
+      -7199,
+      1611
     ]
   }
 }
