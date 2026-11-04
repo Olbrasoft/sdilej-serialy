@@ -126803,24 +126803,38 @@
       "retry_after": "2026-11-04T20:50:57.062756+00:00"
     },
     "1709:3:3": {
-      "at": "2026-10-11T00:08:06.882236+00:00",
+      "at": "2026-11-04T02:28:35.856927+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 7.72,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T00:08:14.604345+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.7908089756965637,
+      "observed_source_id": "22398301",
+      "elapsed_seconds": 42.68,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-05T02:29:18.536017+00:00"
     },
     "1709:3:4": {
-      "at": "2026-10-11T00:08:12.893707+00:00",
+      "at": "2026-11-04T02:28:38.435293+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 7.68,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T00:08:20.576780+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9316414594650269,
+      "observed_source_id": "22398307",
+      "elapsed_seconds": 52.32,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-05T02:29:30.758266+00:00"
     },
     "2370:2:5": {
       "at": "2026-10-10T16:43:11.195590+00:00",
@@ -1011325,9 +1011339,73 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T02:28:27.860147+00:00"
+    },
+    "1582:17:7": {
+      "at": "2026-11-04T02:27:50.758970+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 47.12,
+      "search_evidence": [
+        {
+          "path": "/ranc-heartland-s17e07/s/-6",
+          "status": 200,
+          "response_bytes": 216033,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s17e07/s/-6",
+          "status": 200,
+          "response_bytes": 216158,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ranc-heartland-s17e07/s/-6",
+          "status": 200,
+          "response_bytes": 216114,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ranc-heartland/s/-6",
+          "status": 200,
+          "response_bytes": 718599,
+          "boxes": 413,
+          "parsed_candidates": 413,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s17e07/s/-6",
+          "status": 200,
+          "response_bytes": 216005,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland/s/-6",
+          "status": 200,
+          "response_bytes": 549727,
+          "boxes": 322,
+          "parsed_candidates": 236,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T02:28:37.880148+00:00"
     }
   },
-  "updated_at": "2026-11-04T02:28:31.278592+00:00",
+  "updated_at": "2026-11-04T02:29:52.770338+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1015779,9 +1015857,12 @@
     },
     "1709": {
       "misses": [
-        "1709:13:4"
+        "1709:13:4",
+        "1709:3:3",
+        "1709:3:4"
       ],
-      "updated_at": "2026-11-04T02:20:30.694124+00:00"
+      "updated_at": "2026-11-04T02:29:30.758299+00:00",
+      "retry_after": "2026-11-04T06:29:30.758299+00:00"
     },
     "4815": {
       "misses": [
@@ -1017256,9 +1017337,11 @@
     "1582": {
       "misses": [
         "1582:17:6",
-        "1582:20:1"
+        "1582:20:1",
+        "1582:17:7"
       ],
-      "updated_at": "2026-11-03T23:12:12.442290+00:00"
+      "updated_at": "2026-11-04T02:28:37.880184+00:00",
+      "retry_after": "2026-11-04T06:28:37.880184+00:00"
     },
     "6401": {
       "misses": [
