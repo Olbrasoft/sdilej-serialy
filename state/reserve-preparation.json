@@ -318929,14 +318929,18 @@
       "retry_after": "2026-10-20T12:54:10.144370+00:00"
     },
     "1303:1:18": {
-      "at": "2026-10-19T12:53:48.569332+00:00",
+      "at": "2026-11-04T09:01:48.400145+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 31.73,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-20T12:54:20.299103+00:00"
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 391.66,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-04T11:08:20.062940+00:00"
     },
     "2177:0:5": {
       "at": "2026-10-19T12:53:58.593312+00:00",
@@ -1028811,9 +1028815,121 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T09:07:12.671800+00:00"
+    },
+    "1522:11:8": {
+      "at": "2026-11-04T09:07:03.789590+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 21.49,
+      "search_evidence": [
+        {
+          "path": "/bobovy-burgery-s11e08/s/-6",
+          "status": 200,
+          "response_bytes": 216070,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bob-s-burgers-s11e08/s/-6",
+          "status": 200,
+          "response_bytes": 216048,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bob-s-burgers/s/-6",
+          "status": 200,
+          "response_bytes": 215874,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bobovy-burgery-s11e08/s/-6",
+          "status": 200,
+          "response_bytes": 216054,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bobovy-burgery/s/-6",
+          "status": 200,
+          "response_bytes": 344422,
+          "boxes": 100,
+          "parsed_candidates": 100,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bob-s-burgers-s11e08/s/-6",
+          "status": 200,
+          "response_bytes": 216025,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/bob-s-burgers/s/-6",
+          "status": 200,
+          "response_bytes": 215902,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T09:07:26.037905+00:00"
+    },
+    "2291:2:25": {
+      "at": "2026-11-04T09:07:26.038027+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 9.38,
+      "search_evidence": [
+        {
+          "path": "/zorro-s02e25/s/-6",
+          "status": 200,
+          "response_bytes": 215856,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zorro-s02e25/s/-6",
+          "status": 200,
+          "response_bytes": 215827,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zorro/s/-6",
+          "status": 200,
+          "response_bytes": 326361,
+          "boxes": 93,
+          "parsed_candidates": 87,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T09:07:35.413695+00:00"
     }
   },
-  "updated_at": "2026-11-04T09:07:16.779666+00:00",
+  "updated_at": "2026-11-04T09:08:32.415996+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1036725,12 +1036841,12 @@
     },
     "1522": {
       "misses": [
-        "1522:11:5",
         "1522:11:6",
-        "1522:11:7"
+        "1522:11:7",
+        "1522:11:8"
       ],
-      "updated_at": "2026-11-04T09:01:35.383396+00:00",
-      "retry_after": "2026-11-04T13:01:35.383396+00:00"
+      "updated_at": "2026-11-04T09:07:26.037936+00:00",
+      "retry_after": "2026-11-04T13:07:26.037936+00:00"
     },
     "1681": {
       "misses": [
@@ -1037590,12 +1037706,12 @@
     },
     "2291": {
       "misses": [
-        "2291:2:22",
         "2291:2:23",
-        "2291:2:24"
+        "2291:2:24",
+        "2291:2:25"
       ],
-      "updated_at": "2026-11-04T09:01:02.870866+00:00",
-      "retry_after": "2026-11-04T13:01:02.870866+00:00"
+      "updated_at": "2026-11-04T09:07:35.413726+00:00",
+      "retry_after": "2026-11-04T13:07:35.413726+00:00"
     },
     "3184": {
       "misses": [
@@ -1042970,12 +1043086,12 @@
     },
     "1303": {
       "misses": [
-        "1303:4:4",
         "1303:4:7",
-        "1303:4:9"
+        "1303:4:9",
+        "1303:1:18"
       ],
-      "updated_at": "2026-11-04T09:05:57.505253+00:00",
-      "retry_after": "2026-11-04T13:05:57.505253+00:00"
+      "updated_at": "2026-11-04T09:08:20.062969+00:00",
+      "retry_after": "2026-11-04T09:38:20.062969+00:00"
     },
     "2567": {
       "misses": [
@@ -1046402,12 +1046518,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1522,
+    "last_series": 2291,
     "last_series_order": [
       false,
       -8.2,
-      -103803,
-      1522
+      -5103,
+      2291
     ]
   }
 }
