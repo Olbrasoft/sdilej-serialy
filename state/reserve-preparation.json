@@ -24689,10 +24689,44 @@
       "retry_after": "2026-11-05T02:17:46.931205+00:00"
     },
     "1344:7:6": {
-      "at": "2026-10-01T15:13:14.439055+00:00",
+      "at": "2026-11-04T05:22:58.300474+00:00",
       "status": "deferred",
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T15:13:15.226656+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 15.5,
+      "search_evidence": [
+        {
+          "path": "/seinfeld-s07e06/s/-6",
+          "status": 200,
+          "response_bytes": 215916,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld-s07e06/s/-6",
+          "status": 200,
+          "response_bytes": 215907,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld/s/-6",
+          "status": 200,
+          "response_bytes": 260429,
+          "boxes": 29,
+          "parsed_candidates": 29,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T05:23:13.796408+00:00"
     },
     "1344:7:7": {
       "at": "2026-10-01T15:13:30.658298+00:00",
@@ -591230,19 +591264,21 @@
       "retry_after": "2026-10-25T02:28:37.685352+00:00"
     },
     "1296:2:12": {
-      "at": "2026-10-24T02:28:18.006634+00:00",
+      "at": "2026-11-04T05:22:58.954366+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.984392523765564,
+      "observed_language_probability": 0.9877374172210693,
       "observed_source_id": "9284884",
-      "elapsed_seconds": 31.41,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-25T02:28:49.418167+00:00"
+      "elapsed_seconds": 40.68,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-05T05:23:39.637101+00:00"
     },
     "3245:4:4": {
       "at": "2026-10-24T02:28:34.996137+00:00",
@@ -1016595,9 +1016631,52 @@
       "elapsed_seconds": 22.71,
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T05:22:12.692145+00:00"
+    },
+    "1081:6:13": {
+      "at": "2026-11-04T05:19:30.187307+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9969243407249451,
+      "observed_source_id": "33238129",
+      "elapsed_seconds": 181.66,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T05:22:58.300381+00:00"
+    },
+    "1198:5:15": {
+      "at": "2026-11-04T05:21:49.314048+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 55.29,
+      "source_id": "34922784",
+      "queue_rank": 34215
+    },
+    "1198:6:4": {
+      "at": "2026-11-04T05:22:00.107933+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 36.44,
+      "source_id": "34951853",
+      "queue_rank": 34216
     }
   },
-  "updated_at": "2026-11-04T05:22:27.416367+00:00",
+  "updated_at": "2026-11-04T05:23:43.792694+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1020861,9 +1020940,11 @@
     "1344": {
       "misses": [
         "1344:7:4",
-        "1344:7:5"
+        "1344:7:5",
+        "1344:7:6"
       ],
-      "updated_at": "2026-11-04T02:17:46.931240+00:00"
+      "updated_at": "2026-11-04T05:23:13.796435+00:00",
+      "retry_after": "2026-11-04T09:23:13.796435+00:00"
     },
     "2844": {
       "misses": [
@@ -1027745,10 +1027826,8 @@
       "updated_at": "2026-10-18T22:43:21.697322+00:00"
     },
     "1198": {
-      "misses": [
-        "1198:6:1"
-      ],
-      "updated_at": "2026-11-04T05:22:12.692170+00:00"
+      "misses": [],
+      "updated_at": "2026-11-04T05:22:58.301417+00:00"
     },
     "7093": {
       "misses": [
@@ -1028343,12 +1028422,12 @@
     },
     "1296": {
       "misses": [
-        "1296:4:5",
         "1296:2:8",
-        "1296:2:9"
+        "1296:2:9",
+        "1296:2:12"
       ],
-      "updated_at": "2026-11-04T05:21:00.328995+00:00",
-      "retry_after": "2026-11-04T09:21:00.328995+00:00"
+      "updated_at": "2026-11-04T05:23:39.637125+00:00",
+      "retry_after": "2026-11-04T09:23:39.637125+00:00"
     },
     "4327": {
       "misses": [
@@ -1033005,9 +1033084,10 @@
     },
     "1081": {
       "misses": [
-        "1081:6:12"
+        "1081:6:12",
+        "1081:6:13"
       ],
-      "updated_at": "2026-11-04T02:17:21.407350+00:00"
+      "updated_at": "2026-11-04T05:22:58.300403+00:00"
     },
     "569": {
       "misses": [
@@ -1034028,12 +1034108,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1611,
+    "last_series": 1344,
     "last_series_order": [
       false,
-      -9.3,
-      -7199,
-      1611
+      -8.8,
+      -388900,
+      1344
     ]
   }
 }
