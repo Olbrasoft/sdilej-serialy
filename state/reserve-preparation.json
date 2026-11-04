@@ -264032,7 +264032,7 @@
       "retry_after": "2026-11-04T07:20:02.043676+00:00"
     },
     "2409:10:4": {
-      "at": "2026-11-03T19:02:40.847095+00:00",
+      "at": "2026-11-04T01:17:14.409719+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -264041,9 +264041,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 128.94,
-      "consecutive_failures": 7,
-      "retry_after": "2026-11-04T01:07:36.996445+00:00"
+      "elapsed_seconds": 214.06,
+      "consecutive_failures": 8,
+      "retry_after": "2026-11-04T07:20:48.474155+00:00"
     },
     "2409:10:5": {
       "at": "2026-11-03T08:40:11.165625+00:00",
@@ -1009101,9 +1009101,49 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T01:16:36.882267+00:00"
+    },
+    "912:5:34": {
+      "at": "2026-11-04T01:20:49.232028+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 38.01,
+      "search_evidence": [
+        {
+          "path": "/pokemon-s05e34/s/-6",
+          "status": 200,
+          "response_bytes": 215857,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pokemon-s05e34/s/-6",
+          "status": 200,
+          "response_bytes": 215937,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pokemon/s/-6",
+          "status": 200,
+          "response_bytes": 596463,
+          "boxes": 373,
+          "parsed_candidates": 367,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T01:21:27.246929+00:00"
     }
   },
-  "updated_at": "2026-11-04T01:20:28.449534+00:00",
+  "updated_at": "2026-11-04T01:21:47.059757+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1015266,9 +1015306,11 @@
     "2409": {
       "misses": [
         "2409:10:1",
-        "2409:10:2"
+        "2409:10:2",
+        "2409:10:4"
       ],
-      "updated_at": "2026-11-04T01:20:02.043706+00:00"
+      "updated_at": "2026-11-04T01:20:48.474188+00:00",
+      "retry_after": "2026-11-04T01:50:48.474188+00:00"
     },
     "1405": {
       "misses": [
@@ -1023914,12 +1023956,9 @@
     },
     "912": {
       "misses": [
-        "912:5:31",
-        "912:5:32",
-        "912:5:33"
+        "912:5:34"
       ],
-      "updated_at": "2026-11-03T20:49:22.128830+00:00",
-      "retry_after": "2026-11-04T00:49:22.128830+00:00"
+      "updated_at": "2026-11-04T01:21:27.246967+00:00"
     },
     "1168": {
       "misses": [
@@ -1026497,12 +1026536,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3277,
+    "last_series": 465,
     "last_series_order": [
       false,
-      -7.7,
-      -5638,
-      3277
+      -7.6,
+      -47832,
+      465
     ]
   }
 }
