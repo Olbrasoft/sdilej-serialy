@@ -497142,14 +497142,21 @@
       "retry_after": "2026-10-24T05:57:30.522777+00:00"
     },
     "9667:3:10": {
-      "at": "2026-10-23T05:55:50.178314+00:00",
+      "at": "2026-11-04T16:17:19.445328+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "inconclusive_audio",
-      "elapsed_seconds": 106.6,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-23T06:57:48.894835+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.6524809201558431,
+      "observed_source_id": "31418259",
+      "elapsed_seconds": 108.4,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-05T16:19:07.843211+00:00"
     },
     "9667:3:11": {
       "at": "2026-10-23T05:56:22.595854+00:00",
@@ -1043989,9 +1043996,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T16:17:54.378922+00:00"
+    },
+    "3133:5:6": {
+      "at": "2026-11-04T16:16:30.920123+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 107.45,
+      "search_evidence": [
+        {
+          "path": "/the-mary-tyler-moore-show-s05e06/s/-6",
+          "status": 200,
+          "response_bytes": 216308,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-mary-tyler-moore-show/s/-6",
+          "status": 200,
+          "response_bytes": 216164,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-mary-tyler-moore-show-s05e06/s/-6",
+          "status": 200,
+          "response_bytes": 216324,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-mary-tyler-moore-show/s/-6",
+          "status": 200,
+          "response_bytes": 216077,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T16:18:28.353055+00:00"
     }
   },
-  "updated_at": "2026-11-04T16:18:20.855122+00:00",
+  "updated_at": "2026-11-04T16:19:34.233037+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1049146,9 +1049201,10 @@
     },
     "9667": {
       "misses": [
-        "9667:1:6"
+        "9667:1:6",
+        "9667:3:10"
       ],
-      "updated_at": "2026-11-04T16:15:34.178038+00:00"
+      "updated_at": "2026-11-04T16:19:07.843238+00:00"
     },
     "7803": {
       "misses": [
@@ -1051279,9 +1051335,11 @@
     "3133": {
       "misses": [
         "3133:5:4",
-        "3133:5:5"
+        "3133:5:5",
+        "3133:5:6"
       ],
-      "updated_at": "2026-11-04T13:26:03.552801+00:00"
+      "updated_at": "2026-11-04T16:18:28.353097+00:00",
+      "retry_after": "2026-11-04T20:18:28.353097+00:00"
     },
     "1617": {
       "misses": [
@@ -1061399,12 +1061457,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3225,
+    "last_series": 2734,
     "last_series_order": [
       false,
       -8.3,
-      -9503,
-      3225
+      -4491,
+      2734
     ]
   }
 }
