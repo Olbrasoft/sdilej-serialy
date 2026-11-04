@@ -388666,14 +388666,21 @@
       "retry_after": "2026-11-05T07:39:15.607200+00:00"
     },
     "1066:3:9": {
-      "at": "2026-10-21T04:38:36.727527+00:00",
+      "at": "2026-11-04T07:43:04.500464+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 23.9,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-22T04:39:00.622692+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9932323694229126,
+      "observed_source_id": "30409281",
+      "elapsed_seconds": 45.93,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-05T07:43:50.431906+00:00"
     },
     "1243:1:10": {
       "at": "2026-10-21T04:39:00.984370+00:00",
@@ -1022973,9 +1022980,83 @@
       "elapsed_seconds": 59.7,
       "source_id": "34039215",
       "queue_rank": 34293
+    },
+    "2184:4:19": {
+      "at": "2026-11-04T07:41:45.444627+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 70.92,
+      "source_id": "34039222",
+      "queue_rank": 34294
+    },
+    "1657:4:22": {
+      "at": "2026-11-04T07:42:31.613701+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 17.87,
+      "search_evidence": [
+        {
+          "path": "/everwood-s04e22/s/-6",
+          "status": 200,
+          "response_bytes": 215926,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everwood/s/-6",
+          "status": 200,
+          "response_bytes": 373088,
+          "boxes": 141,
+          "parsed_candidates": 104,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everwood-s04e22/s/-6",
+          "status": 200,
+          "response_bytes": 215899,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everwood/s/-6",
+          "status": 200,
+          "response_bytes": 373091,
+          "boxes": 141,
+          "parsed_candidates": 104,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T07:43:03.830036+00:00"
+    },
+    "2184:4:18": {
+      "at": "2026-11-04T07:41:44.776505+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 83.17,
+      "source_id": "34039218",
+      "queue_rank": 34295
     }
   },
-  "updated_at": "2026-11-04T07:42:47.185660+00:00",
+  "updated_at": "2026-11-04T07:44:09.709160+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1035749,12 +1035830,12 @@
     },
     "1066": {
       "misses": [
-        "1066:6:2",
         "1066:3:4",
-        "1066:3:5"
+        "1066:3:5",
+        "1066:3:9"
       ],
-      "updated_at": "2026-11-04T07:39:15.607223+00:00",
-      "retry_after": "2026-11-04T11:39:15.607223+00:00"
+      "updated_at": "2026-11-04T07:43:50.431931+00:00",
+      "retry_after": "2026-11-04T11:43:50.431931+00:00"
     },
     "1318": {
       "misses": [
@@ -1037921,7 +1038002,7 @@
     },
     "2184": {
       "misses": [],
-      "updated_at": "2026-11-04T07:42:43.813109+00:00"
+      "updated_at": "2026-11-04T07:43:07.947815+00:00"
     },
     "154": {
       "misses": [],
@@ -1038259,9 +1038340,11 @@
     "1657": {
       "misses": [
         "1657:4:20",
-        "1657:4:21"
+        "1657:4:21",
+        "1657:4:22"
       ],
-      "updated_at": "2026-11-04T04:30:09.537448+00:00"
+      "updated_at": "2026-11-04T07:43:03.830053+00:00",
+      "retry_after": "2026-11-04T11:43:03.830053+00:00"
     },
     "2463": {
       "misses": [
