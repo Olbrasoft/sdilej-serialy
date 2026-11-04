@@ -295043,14 +295043,17 @@
       "queue_rank": 30773
     },
     "1934:1:4": {
-      "at": "2026-10-18T13:04:47.800768+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-11-04T01:20:02.818080+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 31.42,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-19T13:05:19.224577+00:00"
+      "elapsed_seconds": 151.84,
+      "source_id": "30753405",
+      "queue_rank": 34120
     },
     "1303:1:4": {
       "at": "2026-10-18T13:04:53.637491+00:00",
@@ -317901,14 +317904,17 @@
       "queue_rank": 31141
     },
     "1934:1:6": {
-      "at": "2026-10-19T12:47:02.934189+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-11-04T01:20:05.482196+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 28.38,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-20T12:47:31.316607+00:00"
+      "elapsed_seconds": 169.34,
+      "source_id": "30812555",
+      "queue_rank": 34121
     },
     "1934:1:7": {
       "at": "2026-10-19T12:47:03.450579+00:00",
@@ -505536,14 +505542,21 @@
       "retry_after": "2026-11-05T01:17:13.638639+00:00"
     },
     "1934:3:5": {
-      "at": "2026-10-23T11:30:26.513819+00:00",
+      "at": "2026-11-04T01:22:11.331682+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 23.44,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T11:30:49.958413+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9985829591751099,
+      "observed_source_id": "30618723",
+      "elapsed_seconds": 58.58,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-05T01:23:09.911552+00:00"
     },
     "2567:3:6": {
       "at": "2026-10-23T11:30:40.299904+00:00",
@@ -1009141,9 +1009154,49 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T01:21:27.246929+00:00"
+    },
+    "465:3:13": {
+      "at": "2026-11-04T01:21:28.038204+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 25.5,
+      "search_evidence": [
+        {
+          "path": "/sedm-smrtelnych-hrichu-s03e13/s/-6",
+          "status": 200,
+          "response_bytes": 216171,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sedm-smrtelnych-hrichu-s03e13/s/-6",
+          "status": 200,
+          "response_bytes": 216199,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sedm-smrtelnych-hrichu/s/-6",
+          "status": 200,
+          "response_bytes": 241183,
+          "boxes": 19,
+          "parsed_candidates": 18,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T01:22:10.578239+00:00"
     }
   },
-  "updated_at": "2026-11-04T01:21:47.059757+00:00",
+  "updated_at": "2026-11-04T01:23:14.893712+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1023109,8 +1023162,10 @@
       "retry_after": "2026-10-26T11:49:28.343796+00:00"
     },
     "1934": {
-      "misses": [],
-      "updated_at": "2026-11-04T01:20:20.456733+00:00"
+      "misses": [
+        "1934:3:5"
+      ],
+      "updated_at": "2026-11-04T01:23:09.911582+00:00"
     },
     "1303": {
       "misses": [
@@ -1023980,12 +1024035,9 @@
     },
     "465": {
       "misses": [
-        "465:3:10",
-        "465:3:11",
-        "465:3:12"
+        "465:3:13"
       ],
-      "updated_at": "2026-11-03T20:50:04.965748+00:00",
-      "retry_after": "2026-11-04T00:50:04.965748+00:00"
+      "updated_at": "2026-11-04T01:22:10.578284+00:00"
     },
     "686": {
       "misses": [
