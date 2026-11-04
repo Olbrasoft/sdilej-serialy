@@ -298619,14 +298619,18 @@
       "retry_after": "2026-10-19T15:02:58.496497+00:00"
     },
     "112:1:8": {
-      "at": "2026-10-20T23:31:51.943212+00:00",
+      "at": "2026-11-04T17:16:43.984974+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 29.67,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-21T23:32:21.611177+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 350.03,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-04T18:22:34.014537+00:00"
     },
     "7891:1:4": {
       "at": "2026-10-18T15:02:33.108020+00:00",
@@ -366643,14 +366647,17 @@
       "retry_after": "2026-10-21T15:28:15.153125+00:00"
     },
     "112:1:13": {
-      "at": "2026-10-20T15:27:49.397048+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-11-04T17:16:45.672465+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 29.75,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-21T15:28:19.147144+00:00"
+      "elapsed_seconds": 318.39,
+      "source_id": "13754403",
+      "queue_rank": 34463
     },
     "1362:2:2": {
       "at": "2026-10-21T15:37:20.589953+00:00",
@@ -1047461,9 +1047468,49 @@
       "elapsed_seconds": 658.51,
       "consecutive_failures": 1,
       "retry_after": "2026-11-04T17:31:43.142297+00:00"
+    },
+    "65:3:3": {
+      "at": "2026-11-04T17:22:04.890697+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 36.88,
+      "search_evidence": [
+        {
+          "path": "/batman-s03e03/s/-6",
+          "status": 200,
+          "response_bytes": 226612,
+          "boxes": 9,
+          "parsed_candidates": 9,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/batman-s03e03/s/-6",
+          "status": 200,
+          "response_bytes": 226516,
+          "boxes": 9,
+          "parsed_candidates": 9,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/batman/s/-6",
+          "status": 200,
+          "response_bytes": 361457,
+          "boxes": 136,
+          "parsed_candidates": 116,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-05T17:22:41.773460+00:00"
     }
   },
-  "updated_at": "2026-11-04T17:21:30.935877+00:00",
+  "updated_at": "2026-11-04T17:22:49.871178+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1059649,8 +1059696,10 @@
       "retry_after": "2026-10-20T02:26:31.320489+00:00"
     },
     "112": {
-      "misses": [],
-      "updated_at": "2026-11-04T17:18:21.941397+00:00"
+      "misses": [
+        "112:1:8"
+      ],
+      "updated_at": "2026-11-04T17:22:34.014565+00:00"
     },
     "989": {
       "misses": [
@@ -1063614,9 +1063663,11 @@
     "65": {
       "misses": [
         "65:3:1",
-        "65:3:2"
+        "65:3:2",
+        "65:3:3"
       ],
-      "updated_at": "2026-11-04T15:37:27.263513+00:00"
+      "updated_at": "2026-11-04T17:22:41.773491+00:00",
+      "retry_after": "2026-11-04T21:22:41.773491+00:00"
     },
     "3503": {
       "misses": [
@@ -1064960,12 +1065011,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1878,
+    "last_series": 9829,
     "last_series_order": [
       false,
       -7.5,
-      -36792,
-      1878
+      -15392,
+      9829
     ]
   }
 }
