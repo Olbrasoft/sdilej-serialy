@@ -833152,7 +833152,7 @@
       "retry_after": "2026-10-31T18:24:41.008332+00:00"
     },
     "1066:5:9": {
-      "at": "2026-10-30T18:24:41.432298+00:00",
+      "at": "2026-11-05T19:58:48.913128+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -833164,9 +833164,9 @@
       "observed_audio_language": "en",
       "observed_language_probability": 0.9906747937202454,
       "observed_source_id": "30409354",
-      "elapsed_seconds": 43.43,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-31T18:25:24.864350+00:00"
+      "elapsed_seconds": 142.16,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T20:01:11.071082+00:00"
     },
     "1955:2:14": {
       "at": "2026-10-30T18:24:41.847922+00:00",
@@ -851328,7 +851328,7 @@
       "retry_after": "2026-11-01T03:18:59.611091+00:00"
     },
     "1066:5:10": {
-      "at": "2026-10-31T03:18:56.649039+00:00",
+      "at": "2026-11-05T19:59:04.753406+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -851338,11 +851338,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.9969340562820435,
+      "observed_language_probability": 0.9972105622291565,
       "observed_source_id": "30409355",
-      "elapsed_seconds": 77.21,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-01T03:20:20.425957+00:00"
+      "elapsed_seconds": 142.31,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T20:01:27.061645+00:00"
     },
     "1955:2:16": {
       "at": "2026-10-31T03:19:09.195658+00:00",
@@ -1098842,9 +1098842,73 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-06T19:59:59.804046+00:00"
+    },
+    "2175:7:11": {
+      "at": "2026-11-05T19:58:00.713127+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 231.32,
+      "search_evidence": [
+        {
+          "path": "/sestricka-jackie-s07e11/s/-6",
+          "status": 200,
+          "response_bytes": 202046,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nurse-jackie-s07e11/s/-6",
+          "status": 200,
+          "response_bytes": 201951,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sestricka-jackie-s07e11/s/-6",
+          "status": 200,
+          "response_bytes": 202077,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sestricka-jackie/s/-6",
+          "status": 200,
+          "response_bytes": 210965,
+          "boxes": 8,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nurse-jackie-s07e11/s/-6",
+          "status": 200,
+          "response_bytes": 202082,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nurse-jackie/s/-6",
+          "status": 200,
+          "response_bytes": 207558,
+          "boxes": 5,
+          "parsed_candidates": 5,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T20:01:52.033717+00:00"
     }
   },
-  "updated_at": "2026-11-05T20:00:54.535431+00:00",
+  "updated_at": "2026-11-05T20:02:03.775340+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1111049,9 +1111113,11 @@
     "2175": {
       "misses": [
         "2175:7:9",
-        "2175:7:10"
+        "2175:7:10",
+        "2175:7:11"
       ],
-      "updated_at": "2026-11-05T19:29:13.651173+00:00"
+      "updated_at": "2026-11-05T20:01:52.033764+00:00",
+      "retry_after": "2026-11-06T00:01:52.033764+00:00"
     },
     "3728": {
       "misses": [
@@ -1112026,10 +1112092,12 @@
     },
     "1066": {
       "misses": [
-        "1066:6:9",
-        "1066:6:10"
+        "1066:6:10",
+        "1066:5:9",
+        "1066:5:10"
       ],
-      "updated_at": "2026-11-05T19:30:35.939618+00:00"
+      "updated_at": "2026-11-05T20:01:27.061670+00:00",
+      "retry_after": "2026-11-06T00:01:27.061670+00:00"
     },
     "1318": {
       "misses": [
@@ -1116783,12 +1116851,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2175,
+    "last_series": 9671,
     "last_series_order": [
       false,
       -7.9,
-      -33852,
-      2175
+      -18757,
+      9671
     ]
   }
 }
