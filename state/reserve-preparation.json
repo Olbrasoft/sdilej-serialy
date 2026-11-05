@@ -385451,48 +385451,17 @@
       "retry_after": "2026-10-22T02:24:23.306177+00:00"
     },
     "1362:2:3": {
-      "at": "2026-11-05T03:06:16.368419+00:00",
-      "status": "deferred",
+      "at": "2026-11-05T03:26:26.591526+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 333.81,
-      "consecutive_failures": 4,
-      "retry_after": "2026-11-05T03:21:34.148107+00:00"
+      "elapsed_seconds": 556.79,
+      "source_id": "29714842",
+      "queue_rank": 34666
     },
     "437:2:7": {
       "at": "2026-10-21T02:24:25.076474+00:00",
@@ -405267,7 +405236,7 @@
       "retry_after": "2026-11-06T02:50:46.291661+00:00"
     },
     "1362:2:8": {
-      "at": "2026-11-05T03:05:32.155385+00:00",
+      "at": "2026-11-05T03:26:25.949712+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -405275,40 +405244,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 386.09,
-      "consecutive_failures": 3,
-      "retry_after": "2026-11-05T03:21:34.148117+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 554.3,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-05T05:35:41.875366+00:00"
     },
     "570:3:20": {
       "at": "2026-11-05T02:49:34.009108+00:00",
@@ -1066017,9 +1065956,83 @@
       "elapsed_seconds": 304.86,
       "source_id": "12819155",
       "queue_rank": 34663
+    },
+    "9837:3:15": {
+      "at": "2026-11-05T03:33:01.391461+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 138.65,
+      "source_id": "12820258",
+      "queue_rank": 34664
+    },
+    "9837:3:19": {
+      "at": "2026-11-05T03:33:45.229227+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 104.31,
+      "source_id": "34095549",
+      "queue_rank": 34665
+    },
+    "2464:5:46": {
+      "at": "2026-11-05T03:35:42.758145+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 52.97,
+      "search_evidence": [
+        {
+          "path": "/fights-break-sphere-s05e46/s/-6",
+          "status": 200,
+          "response_bytes": 202156,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fights-break-sphere/s/-6",
+          "status": 200,
+          "response_bytes": 202075,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fights-break-sphere-s05e46/s/-6",
+          "status": 200,
+          "response_bytes": 202194,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/fights-break-sphere/s/-6",
+          "status": 200,
+          "response_bytes": 202084,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T03:36:35.727041+00:00"
     }
   },
-  "updated_at": "2026-11-05T03:34:05.406933+00:00",
+  "updated_at": "2026-11-05T03:36:38.720657+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1071452,12 +1071465,9 @@
     },
     "2464": {
       "misses": [
-        "2464:5:43",
-        "2464:5:44",
-        "2464:5:45"
+        "2464:5:46"
       ],
-      "updated_at": "2026-11-04T18:00:55.504362+00:00",
-      "retry_after": "2026-11-04T22:00:55.504362+00:00"
+      "updated_at": "2026-11-05T03:36:35.727070+00:00"
     },
     "6809": {
       "misses": [
@@ -1082252,7 +1082262,7 @@
     },
     "1362": {
       "misses": [],
-      "updated_at": "2026-11-05T03:05:15.913904+00:00"
+      "updated_at": "2026-11-05T03:35:44.083250+00:00"
     },
     "1416": {
       "misses": [
@@ -1082565,7 +1082575,7 @@
     },
     "9837": {
       "misses": [],
-      "updated_at": "2026-11-05T03:33:44.598876+00:00"
+      "updated_at": "2026-11-05T03:35:41.875546+00:00"
     },
     "5438": {
       "misses": [
@@ -1083795,12 +1083805,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1599,
+    "last_series": 1255,
     "last_series_order": [
       false,
-      -8.5,
-      -5950,
-      1599
+      -8.4,
+      -174707,
+      1255
     ]
   }
 }
