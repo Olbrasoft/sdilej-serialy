@@ -339970,7 +339970,7 @@
       "queue_rank": 27231
     },
     "9684:3:15": {
-      "at": "2026-11-04T21:43:53.532219+00:00",
+      "at": "2026-11-05T01:45:00.381802+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -339978,10 +339978,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_original",
-      "elapsed_seconds": 45.49,
-      "consecutive_failures": 5,
-      "retry_after": "2026-11-05T01:44:39.024437+00:00"
+      "reason": "no_acceptable_original",
+      "elapsed_seconds": 64.89,
+      "consecutive_failures": 6,
+      "retry_after": "2026-11-06T01:46:05.276846+00:00"
     },
     "9684:3:12": {
       "at": "2026-11-05T00:50:20.339374+00:00",
@@ -1063594,9 +1063594,57 @@
       "elapsed_seconds": 277.65,
       "consecutive_failures": 1,
       "retry_after": "2026-11-05T02:00:14.009922+00:00"
+    },
+    "2884:4:11": {
+      "at": "2026-11-05T01:45:35.690131+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 79.36,
+      "search_evidence": [
+        {
+          "path": "/everybody-hates-chris-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 202257,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everybody-hates-chris/s/-6",
+          "status": 200,
+          "response_bytes": 202154,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everybody-hates-chris-s04e11/s/-6",
+          "status": 200,
+          "response_bytes": 202142,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everybody-hates-chris/s/-6",
+          "status": 200,
+          "response_bytes": 202106,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T01:46:55.048446+00:00"
     }
   },
-  "updated_at": "2026-11-05T01:45:58.947148+00:00",
+  "updated_at": "2026-11-05T01:47:08.711927+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1078865,9 +1078913,10 @@
     },
     "2884": {
       "misses": [
-        "2884:4:10"
+        "2884:4:10",
+        "2884:4:11"
       ],
-      "updated_at": "2026-11-04T21:43:18.042495+00:00"
+      "updated_at": "2026-11-05T01:46:55.048471+00:00"
     },
     "1945": {
       "misses": [],
@@ -1080075,9 +1080124,11 @@
     "9684": {
       "misses": [
         "9684:1:22",
-        "9684:3:13"
+        "9684:3:13",
+        "9684:3:15"
       ],
-      "updated_at": "2026-11-05T01:38:14.635743+00:00"
+      "updated_at": "2026-11-05T01:46:05.276874+00:00",
+      "retry_after": "2026-11-05T05:46:05.276874+00:00"
     },
     "693": {
       "misses": [
@@ -1081364,12 +1081415,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2884,
+    "last_series": 1877,
     "last_series_order": [
       false,
       -7.6,
-      -46804,
-      2884
+      -25895,
+      1877
     ]
   }
 }
