@@ -133790,14 +133790,21 @@
       "retry_after": "2026-10-12T08:46:16.554593+00:00"
     },
     "1709:5:2": {
-      "at": "2026-10-11T08:45:40.825290+00:00",
+      "at": "2026-11-05T08:54:26.038539+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 45.7,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T08:46:26.528870+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9798471927642822,
+      "observed_source_id": "22398366",
+      "elapsed_seconds": 80.28,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T08:55:46.321718+00:00"
     },
     "1709:5:3": {
       "at": "2026-10-11T08:45:42.623849+00:00",
@@ -1072410,9 +1072417,70 @@
       "elapsed_seconds": 115.35,
       "source_id": "34789658",
       "queue_rank": 34800
+    },
+    "2884:4:12": {
+      "at": "2026-11-05T08:54:11.662270+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 49.23,
+      "search_evidence": [
+        {
+          "path": "/everybody-hates-chris-s04e12/s/-6",
+          "status": 200,
+          "response_bytes": 202273,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everybody-hates-chris/s/-6",
+          "status": 200,
+          "response_bytes": 202143,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everybody-hates-chris-s04e12/s/-6",
+          "status": 200,
+          "response_bytes": 202131,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/everybody-hates-chris/s/-6",
+          "status": 200,
+          "response_bytes": 202015,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T08:55:00.896940+00:00"
+    },
+    "1017:13:6": {
+      "at": "2026-11-05T08:53:50.928918+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 106.7,
+      "source_id": "34789667",
+      "queue_rank": 34801
     }
   },
-  "updated_at": "2026-11-05T08:54:45.912348+00:00",
+  "updated_at": "2026-11-05T08:56:00.927352+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1077280,12 +1077348,12 @@
     },
     "1709": {
       "misses": [
-        "1709:13:8",
         "1709:4:6",
-        "1709:4:7"
+        "1709:4:7",
+        "1709:5:2"
       ],
-      "updated_at": "2026-11-05T08:52:29.360956+00:00",
-      "retry_after": "2026-11-05T12:52:29.360956+00:00"
+      "updated_at": "2026-11-05T08:55:46.321745+00:00",
+      "retry_after": "2026-11-05T12:55:46.321745+00:00"
     },
     "4815": {
       "misses": [
@@ -1087752,9 +1087820,11 @@
     "2884": {
       "misses": [
         "2884:4:10",
-        "2884:4:11"
+        "2884:4:11",
+        "2884:4:12"
       ],
-      "updated_at": "2026-11-05T01:46:55.048471+00:00"
+      "updated_at": "2026-11-05T08:55:00.896968+00:00",
+      "retry_after": "2026-11-05T12:55:00.896968+00:00"
     },
     "1945": {
       "misses": [],
@@ -1090264,7 +1090334,7 @@
     },
     "1017": {
       "misses": [],
-      "updated_at": "2026-11-05T08:54:25.378008+00:00"
+      "updated_at": "2026-11-05T08:55:37.631019+00:00"
     }
   },
   "discovery_progress": {
