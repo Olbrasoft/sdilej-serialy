@@ -54,8 +54,10 @@ def test_source_authentication_recovers_from_522(monkeypatch):
     assert EpisodeSourceProvider.authenticated('email','password',detector=object()).session is session
 
 
-@pytest.mark.parametrize('status', [302, 503, 522])
-def test_sdk_profile_verification_recovers_with_a_fresh_session(status, monkeypatch):
+@pytest.mark.parametrize('status,path,recover', [
+    (302,'/profil',True), (503,'/profil',True), (522,'/profil',True), (403,'/',True),
+    (403,'/profil',False), (403,'/?frm=homepageLoginForm-loginForm',False)])
+def test_sdk_profile_verification_recovers_with_a_fresh_session(status, path, recover, monkeypatch):
     from sdilej_to_prehrajto import prehrajto
     from requests.adapters import BaseAdapter
     from io import BytesIO
@@ -64,7 +66,7 @@ def test_sdk_profile_verification_recovers_with_a_fresh_session(status, monkeypa
     class Adapter(BaseAdapter):
         def send(self, request, **kwargs):
             response = requests.Response()
-            response.status_code = status if request.url.endswith('/profil') and len(sessions) < 3 else 200
+            response.status_code = status if request.url == prehrajto.BASE_URL + path and len(sessions) < 3 else 200
             response.url = request.url
             response.request = request
             response._content = b''
@@ -79,6 +81,11 @@ def test_sdk_profile_verification_recovers_with_a_fresh_session(status, monkeypa
         return value
     monkeypatch.setattr(auth.requests, 'Session', session)
     monkeypatch.setattr(auth.time, 'sleep', delays.append)
+    if not recover:
+        with pytest.raises(requests.HTTPError):
+            auth.target_login_with_retry(prehrajto.login, prehrajto.EXPECTED_EMAIL, 'test-password')
+        assert len(sessions) == 1 and len(closed) == 1 and delays == []
+        return
     result = auth.target_login_with_retry(prehrajto.login, prehrajto.EXPECTED_EMAIL, 'test-password')
     assert result is sessions[2] and delays == [2, 4] and len(closed) == 2
     assert result.hooks['response'] == []

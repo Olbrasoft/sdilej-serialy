@@ -9,11 +9,16 @@ class TargetLoginUnavailable(RuntimeError):
 
 def target_login_with_retry(login, email, password):
     """Preserve HTTP failures hidden by the SDK's profile verification."""
-    from sdilej_to_prehrajto.prehrajto import PrehrajtoError
+    from sdilej_to_prehrajto.prehrajto import BASE_URL, PrehrajtoError
 
     def attempt(email, password):
         session = requests.Session()
         def check_status(response, **kwargs):
+            # A forbidden public landing page precedes credential submission;
+            # it cannot establish that an account/password was rejected.
+            if (response.status_code == 403 and response.request.method == 'GET'
+                    and response.url.rstrip('/') == BASE_URL):
+                raise TargetLoginUnavailable('Public target login page is temporarily unavailable')
             # The SDK checks login POST status but turns every non-200 profile
             # response, including 503, into a permanent authentication error.
             response.raise_for_status()

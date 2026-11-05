@@ -1,5 +1,11 @@
 # Ranked two-account upload
 
+On November 5, HTTP 403 from the public landing-page GET halted the queue before
+any credentials were submitted. This exact pre-authentication response now uses
+the bounded target-login retry and five-minute batch pause. HTTP 401 and HTTP 403
+from credential POSTs or protected account pages retain their fatal handling;
+no upload is authorized until normal authentication and account checks succeed.
+
 On October 31, a target login verification failure in worker setup was found to
 have permanently halted both accounts despite a growing verified reserve. The
 SDK collapses every non-200 profile response into the same authentication error.
