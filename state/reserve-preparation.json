@@ -164073,7 +164073,7 @@
       "queue_rank": 18083
     },
     "2291:1:1": {
-      "at": "2026-11-04T03:10:24.539166+00:00",
+      "at": "2026-11-05T17:16:47.633417+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -164082,9 +164082,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_acceptable_original",
-      "elapsed_seconds": 32.7,
-      "consecutive_failures": 9,
-      "retry_after": "2026-11-05T03:11:37.231556+00:00"
+      "elapsed_seconds": 53.6,
+      "consecutive_failures": 10,
+      "retry_after": "2026-11-06T17:17:41.321566+00:00"
     },
     "3184:0:1": {
       "at": "2026-10-12T03:00:26.378270+00:00",
@@ -1092450,9 +1092450,86 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-06T17:15:57.707497+00:00"
+    },
+    "9127:27:1": {
+      "at": "2026-11-05T17:14:50.927148+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 125.41,
+      "source_id": "28527551",
+      "queue_rank": 34867
+    },
+    "1582:19:3": {
+      "at": "2026-11-05T17:17:01.179396+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 39.49,
+      "search_evidence": [
+        {
+          "path": "/ranc-heartland-s19e03/s/-6",
+          "status": 200,
+          "response_bytes": 202169,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s19e03/s/-6",
+          "status": 200,
+          "response_bytes": 201989,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ranc-heartland-s19e03/s/-6",
+          "status": 200,
+          "response_bytes": 202017,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ranc-heartland/s/-6",
+          "status": 200,
+          "response_bytes": 704588,
+          "boxes": 413,
+          "parsed_candidates": 413,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s19e03/s/-6",
+          "status": 200,
+          "response_bytes": 202074,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland/s/-6",
+          "status": 200,
+          "response_bytes": 535694,
+          "boxes": 322,
+          "parsed_candidates": 236,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T17:17:40.673043+00:00"
     }
   },
-  "updated_at": "2026-11-05T17:16:55.453764+00:00",
+  "updated_at": "2026-11-05T17:18:04.907957+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1098747,11 +1098824,8 @@
       "updated_at": "2026-10-16T09:36:13.898343+00:00"
     },
     "9127": {
-      "misses": [
-        "9127:26:13",
-        "9127:26:14"
-      ],
-      "updated_at": "2026-11-05T17:07:47.985529+00:00"
+      "misses": [],
+      "updated_at": "2026-11-05T17:17:00.501332+00:00"
     },
     "3610": {
       "misses": [
@@ -1098816,9 +1098890,11 @@
     "1582": {
       "misses": [
         "1582:19:1",
-        "1582:19:2"
+        "1582:19:2",
+        "1582:19:3"
       ],
-      "updated_at": "2026-11-05T16:29:15.201515+00:00"
+      "updated_at": "2026-11-05T17:17:40.673072+00:00",
+      "retry_after": "2026-11-05T21:17:40.673072+00:00"
     },
     "6401": {
       "misses": [
@@ -1101617,9 +1101693,11 @@
     "2291": {
       "misses": [
         "2291:1:5",
-        "2291:1:6"
+        "2291:1:6",
+        "2291:1:1"
       ],
-      "updated_at": "2026-11-05T17:16:46.964327+00:00"
+      "updated_at": "2026-11-05T17:17:41.321603+00:00",
+      "retry_after": "2026-11-05T21:17:41.321603+00:00"
     },
     "3184": {
       "misses": [
@@ -1110420,12 +1110498,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9127,
+    "last_series": 2016,
     "last_series_order": [
       false,
-      -8.4,
-      -25366,
-      9127
+      -8.3,
+      -140083,
+      2016
     ]
   }
 }
