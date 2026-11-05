@@ -199797,7 +199797,7 @@
       "retry_after": "2026-10-30T05:09:37.445760+00:00"
     },
     "3016:1:2": {
-      "at": "2026-11-05T15:48:07.057183+00:00",
+      "at": "2026-11-05T20:00:00.662914+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -199805,10 +199805,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 244.17,
-      "consecutive_failures": 8,
-      "retry_after": "2026-11-05T16:02:11.224015+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 139.7,
+      "consecutive_failures": 9,
+      "retry_after": "2026-11-06T02:02:20.358495+00:00"
     },
     "3016:1:8": {
       "at": "2026-10-13T14:22:18.009649+00:00",
@@ -212909,7 +212909,7 @@
       "queue_rank": 21141
     },
     "1948:2:8": {
-      "at": "2026-11-04T14:47:38.268304+00:00",
+      "at": "2026-11-05T20:01:11.732554+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -212919,11 +212919,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.808816634118557,
+      "observed_language_probability": 0.8093255311250687,
       "observed_source_id": "12591238",
-      "elapsed_seconds": 72.3,
-      "consecutive_failures": 11,
-      "retry_after": "2026-11-05T14:48:50.568117+00:00"
+      "elapsed_seconds": 109.12,
+      "consecutive_failures": 12,
+      "retry_after": "2026-11-06T20:03:00.854159+00:00"
     },
     "162:4:12": {
       "at": "2026-10-14T03:49:28.626197+00:00",
@@ -1098906,9 +1098906,90 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-06T20:01:52.033717+00:00"
+    },
+    "1296:5:1": {
+      "at": "2026-11-05T20:01:27.720987+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9033495783805847,
+      "observed_source_id": "9284922",
+      "elapsed_seconds": 68.96,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T20:02:36.681213+00:00"
+    },
+    "9671:4:17": {
+      "at": "2026-11-05T20:01:52.683109+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 71.7,
+      "search_evidence": [
+        {
+          "path": "/zelvy-ninja-s04e17/s/-6",
+          "status": 200,
+          "response_bytes": 202160,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/teenage-mutant-ninja-turtles-s04e17/s/-6",
+          "status": 200,
+          "response_bytes": 202334,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zelvy-ninja-s04e17/s/-6",
+          "status": 200,
+          "response_bytes": 202169,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/zelvy-ninja/s/-6",
+          "status": 200,
+          "response_bytes": 413665,
+          "boxes": 189,
+          "parsed_candidates": 185,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/teenage-mutant-ninja-turtles-s04e17/s/-6",
+          "status": 200,
+          "response_bytes": 202323,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/teenage-mutant-ninja-turtles/s/-6",
+          "status": 200,
+          "response_bytes": 326657,
+          "boxes": 94,
+          "parsed_candidates": 81,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T20:03:04.387047+00:00"
     }
   },
-  "updated_at": "2026-11-05T20:02:03.775340+00:00",
+  "updated_at": "2026-11-05T20:03:12.007524+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1106488,9 +1106569,10 @@
     },
     "1948": {
       "misses": [
-        "1948:9:3"
+        "1948:9:3",
+        "1948:2:8"
       ],
-      "updated_at": "2026-11-05T19:58:48.163751+00:00"
+      "updated_at": "2026-11-05T20:03:00.854183+00:00"
     },
     "5746": {
       "misses": [
@@ -1111135,9 +1111217,11 @@
     "1296": {
       "misses": [
         "1296:4:19",
-        "1296:4:20"
+        "1296:4:20",
+        "1296:5:1"
       ],
-      "updated_at": "2026-11-05T19:29:24.566466+00:00"
+      "updated_at": "2026-11-05T20:02:36.681239+00:00",
+      "retry_after": "2026-11-06T00:02:36.681239+00:00"
     },
     "4327": {
       "misses": [
@@ -1111255,9 +1111339,11 @@
     "9671": {
       "misses": [
         "9671:4:15",
-        "9671:4:16"
+        "9671:4:16",
+        "9671:4:17"
       ],
-      "updated_at": "2026-11-05T19:29:56.516203+00:00"
+      "updated_at": "2026-11-05T20:03:04.387074+00:00",
+      "retry_after": "2026-11-06T00:03:04.387074+00:00"
     },
     "4007": {
       "misses": [
@@ -1114859,7 +1114945,7 @@
         "3016:1:2",
         "3016:1:1"
       ],
-      "updated_at": "2026-11-05T19:56:48.820678+00:00"
+      "updated_at": "2026-11-05T20:02:20.358524+00:00"
     },
     "2177": {
       "misses": [
@@ -1116851,12 +1116937,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9671,
+    "last_series": 1066,
     "last_series_order": [
       false,
-      -7.9,
-      -18757,
-      9671
+      -7.8,
+      -86757,
+      1066
     ]
   }
 }
