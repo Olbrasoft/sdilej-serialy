@@ -133807,14 +133807,21 @@
       "retry_after": "2026-11-06T08:55:46.321718+00:00"
     },
     "1709:5:3": {
-      "at": "2026-10-11T08:45:42.623849+00:00",
+      "at": "2026-11-05T08:55:01.543739+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 51.92,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T08:46:34.543158+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9963557720184326,
+      "observed_source_id": "22398370",
+      "elapsed_seconds": 70.55,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T08:57:00.940410+00:00"
     },
     "4012:6:3": {
       "at": "2026-10-11T10:27:42.867587+00:00",
@@ -1059681,7 +1059688,7 @@
       "queue_rank": 34553
     },
     "9684:1:22": {
-      "at": "2026-11-05T04:51:59.602162+00:00",
+      "at": "2026-11-05T08:55:38.444005+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -1059690,9 +1059697,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 68.31,
-      "consecutive_failures": 5,
-      "retry_after": "2026-11-05T08:53:09.586441+00:00"
+      "elapsed_seconds": 64.14,
+      "consecutive_failures": 6,
+      "retry_after": "2026-11-05T14:57:00.940481+00:00"
     },
     "1922:3:9": {
       "at": "2026-11-04T22:56:28.601542+00:00",
@@ -1072478,9 +1072485,89 @@
       "elapsed_seconds": 106.7,
       "source_id": "34789667",
       "queue_rank": 34801
+    },
+    "1089:12:5": {
+      "at": "2026-11-05T08:54:18.097080+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 111.74,
+      "search_evidence": [
+        {
+          "path": "/nemocnice-chicago-med-s12e05/s/-6",
+          "status": 200,
+          "response_bytes": 202198,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nemocnice-chicago-med/s/-6",
+          "status": 200,
+          "response_bytes": 676141,
+          "boxes": 379,
+          "parsed_candidates": 379,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chicago-med-s12e05/s/-6",
+          "status": 200,
+          "response_bytes": 201925,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chicago-med/s/-6",
+          "status": 200,
+          "response_bytes": 590982,
+          "boxes": 336,
+          "parsed_candidates": 336,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nemocnice-chicago-med-s12e05/s/-6",
+          "status": 200,
+          "response_bytes": 202246,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nemocnice-chicago-med/s/-6",
+          "status": 200,
+          "response_bytes": 676082,
+          "boxes": 379,
+          "parsed_candidates": 379,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chicago-med-s12e05/s/-6",
+          "status": 200,
+          "response_bytes": 202027,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chicago-med/s/-6",
+          "status": 200,
+          "response_bytes": 590931,
+          "boxes": 336,
+          "parsed_candidates": 336,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T08:57:00.940289+00:00"
     }
   },
-  "updated_at": "2026-11-05T08:56:00.927352+00:00",
+  "updated_at": "2026-11-05T08:58:03.988917+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1077348,12 +1077435,12 @@
     },
     "1709": {
       "misses": [
-        "1709:4:6",
         "1709:4:7",
-        "1709:5:2"
+        "1709:5:2",
+        "1709:5:3"
       ],
-      "updated_at": "2026-11-05T08:55:46.321745+00:00",
-      "retry_after": "2026-11-05T12:55:46.321745+00:00"
+      "updated_at": "2026-11-05T08:57:00.940423+00:00",
+      "retry_after": "2026-11-05T12:57:00.940423+00:00"
     },
     "4815": {
       "misses": [
@@ -1087887,12 +1087974,9 @@
     },
     "1089": {
       "misses": [
-        "1089:10:17",
-        "1089:12:3",
-        "1089:12:4"
+        "1089:12:5"
       ],
-      "updated_at": "2026-11-05T01:47:52.336452+00:00",
-      "retry_after": "2026-11-05T05:47:52.336452+00:00"
+      "updated_at": "2026-11-05T08:57:00.940329+00:00"
     },
     "3572": {
       "misses": [
@@ -1089040,9 +1089124,10 @@
     },
     "9684": {
       "misses": [
-        "9684:2:4"
+        "9684:2:4",
+        "9684:1:22"
       ],
-      "updated_at": "2026-11-05T08:48:02.739340+00:00"
+      "updated_at": "2026-11-05T08:57:00.940505+00:00"
     },
     "693": {
       "misses": [
