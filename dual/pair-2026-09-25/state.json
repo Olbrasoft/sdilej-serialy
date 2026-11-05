@@ -1157391,7 +1157391,7 @@
     }
   },
   "initialized_at": "2026-09-25T14:05:15.686917+00:00",
-  "updated_at": "2026-11-05T13:54:55.215311+00:00",
+  "updated_at": "2026-11-05T14:04:57.114907+00:00",
   "pilot_verified_at": "2026-09-25T14:23:33.839342+00:00",
   "pilot_counts": {
     "a": 2,
@@ -1157528,6 +1157528,39 @@
         "file": "adapters.py",
         "function": "send",
         "line": 717
+      }
+    ]
+  },
+  "halted_at": "2026-11-05T14:04:57.114189+00:00",
+  "halt_reason": "HTTPError",
+  "halt_evidence": {
+    "type": "HTTPError",
+    "http_status": 403,
+    "frames": [
+      {
+        "file": "sessions.py",
+        "function": "request",
+        "line": 651
+      },
+      {
+        "file": "sessions.py",
+        "function": "send",
+        "line": 791
+      },
+      {
+        "file": "hooks.py",
+        "function": "dispatch_hook",
+        "line": 45
+      },
+      {
+        "file": "auth.py",
+        "function": "check_status",
+        "line": 19
+      },
+      {
+        "file": "models.py",
+        "function": "raise_for_status",
+        "line": 1167
       }
     ]
   }
