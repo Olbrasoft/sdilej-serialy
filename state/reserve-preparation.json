@@ -351979,14 +351979,18 @@
       "retry_after": "2026-11-06T02:32:36.791420+00:00"
     },
     "9684:2:63": {
-      "at": "2026-10-21T10:51:51.602319+00:00",
+      "at": "2026-11-05T03:05:17.532083+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 60.72,
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 376.62,
       "consecutive_failures": 2,
-      "retry_after": "2026-10-22T10:52:52.322209+00:00"
+      "retry_after": "2026-11-05T03:21:34.148108+00:00"
     },
     "9684:2:65": {
       "at": "2026-10-21T15:26:41.166133+00:00",
@@ -385447,7 +385451,7 @@
       "retry_after": "2026-10-22T02:24:23.306177+00:00"
     },
     "1362:2:3": {
-      "at": "2026-11-04T21:48:28.099077+00:00",
+      "at": "2026-11-05T03:06:16.368419+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -385455,10 +385459,40 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_original",
-      "elapsed_seconds": 26.25,
+      "reason": "source_search_unavailable",
+      "error": {
+        "type": "SearchUnavailable",
+        "frames": [
+          {
+            "file": "episodes.py",
+            "function": "_inspect",
+            "line": 335
+          },
+          {
+            "file": "source_audit.py",
+            "function": "_get",
+            "line": 118
+          },
+          {
+            "file": "episodes.py",
+            "function": "_get",
+            "line": 227
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 202
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 84
+          }
+        ]
+      },
+      "elapsed_seconds": 333.81,
       "consecutive_failures": 4,
-      "retry_after": "2026-11-04T23:48:54.346262+00:00"
+      "retry_after": "2026-11-05T03:21:34.148107+00:00"
     },
     "437:2:7": {
       "at": "2026-10-21T02:24:25.076474+00:00",
@@ -976844,7 +976878,7 @@
       "retry_after": "2026-11-04T02:37:00.858676+00:00"
     },
     "3285:1:3": {
-      "at": "2026-11-04T03:03:16.702856+00:00",
+      "at": "2026-11-05T03:05:16.730394+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -976852,68 +976886,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 114.84,
-      "search_evidence": [
-        {
-          "path": "/bude-lip-s01e03/s/-6",
-          "status": 200,
-          "response_bytes": 215928,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/better-things-s01e03/s/-6",
-          "status": 200,
-          "response_bytes": 216039,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/better-things/s/-6",
-          "status": 200,
-          "response_bytes": 217041,
-          "boxes": 2,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/bude-lip-s01e03/s/-6",
-          "status": 200,
-          "response_bytes": 215983,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/bude-lip/s/-6",
-          "status": 200,
-          "response_bytes": 241597,
-          "boxes": 24,
-          "parsed_candidates": 23,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/better-things-s01e03/s/-6",
-          "status": 200,
-          "response_bytes": 215994,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/better-things/s/-6",
-          "status": 200,
-          "response_bytes": 217017,
-          "boxes": 2,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        }
-      ],
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 377.42,
       "consecutive_failures": 2,
-      "retry_after": "2026-11-05T03:05:11.546928+00:00"
+      "retry_after": "2026-11-05T03:21:34.148108+00:00"
     },
     "3285:1:8": {
       "at": "2026-11-04T03:03:51.537871+00:00",
@@ -1065875,7 +1065851,7 @@
       "retry_after": "2026-11-05T03:11:01.513410+00:00"
     }
   },
-  "updated_at": "2026-11-05T03:10:46.028806+00:00",
+  "updated_at": "2026-11-05T03:11:54.436459+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
