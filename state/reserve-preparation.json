@@ -497865,14 +497865,21 @@
       "retry_after": "2026-10-24T05:17:02.445666+00:00"
     },
     "1059:2:18": {
-      "at": "2026-10-23T05:15:46.314716+00:00",
+      "at": "2026-11-05T15:38:04.128807+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 30.81,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T05:17:02.445709+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9975962042808533,
+      "observed_source_id": "30294831",
+      "elapsed_seconds": 74.84,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T15:39:18.969260+00:00"
     },
     "1035:4:11": {
       "at": "2026-10-23T05:17:03.440850+00:00",
@@ -1088028,9 +1088035,121 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-06T15:38:27.871957+00:00"
+    },
+    "1582:19:1": {
+      "at": "2026-11-05T15:36:54.849264+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 102.51,
+      "search_evidence": [
+        {
+          "path": "/ranc-heartland-s19e01/s/-6",
+          "status": 200,
+          "response_bytes": 202046,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s19e01/s/-6",
+          "status": 200,
+          "response_bytes": 201939,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ranc-heartland-s19e01/s/-6",
+          "status": 200,
+          "response_bytes": 202083,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ranc-heartland/s/-6",
+          "status": 200,
+          "response_bytes": 704630,
+          "boxes": 413,
+          "parsed_candidates": 413,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland-s19e01/s/-6",
+          "status": 200,
+          "response_bytes": 201888,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartland/s/-6",
+          "status": 200,
+          "response_bytes": 535661,
+          "boxes": 322,
+          "parsed_candidates": 236,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T15:38:38.366317+00:00"
+    },
+    "1922:3:13": {
+      "at": "2026-11-05T15:37:36.338062+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 63.49,
+      "search_evidence": [
+        {
+          "path": "/the-andy-griffith-show-s03e13/s/-6",
+          "status": 200,
+          "response_bytes": 202227,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-andy-griffith-show/s/-6",
+          "status": 200,
+          "response_bytes": 202088,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-andy-griffith-show-s03e13/s/-6",
+          "status": 200,
+          "response_bytes": 202207,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-andy-griffith-show/s/-6",
+          "status": 200,
+          "response_bytes": 202074,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T15:38:39.831384+00:00"
     }
   },
-  "updated_at": "2026-11-05T15:38:33.795413+00:00",
+  "updated_at": "2026-11-05T15:39:41.190610+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1094381,12 +1094500,9 @@
     },
     "1582": {
       "misses": [
-        "1582:18:7",
-        "1582:18:8",
-        "1582:18:10"
+        "1582:19:1"
       ],
-      "updated_at": "2026-11-05T11:21:03.479053+00:00",
-      "retry_after": "2026-11-05T15:21:03.479053+00:00"
+      "updated_at": "2026-11-05T15:38:38.366357+00:00"
     },
     "6401": {
       "misses": [
@@ -1094431,9 +1094547,10 @@
     },
     "1922": {
       "misses": [
-        "1922:3:12"
+        "1922:3:12",
+        "1922:3:13"
       ],
-      "updated_at": "2026-11-05T14:17:35.831267+00:00"
+      "updated_at": "2026-11-05T15:38:39.831418+00:00"
     },
     "1551": {
       "misses": [
@@ -1104524,12 +1104641,12 @@
     },
     "1059": {
       "misses": [
-        "1059:4:19",
         "1059:4:20",
-        "1059:2:16"
+        "1059:2:16",
+        "1059:2:18"
       ],
-      "updated_at": "2026-11-05T15:35:27.329527+00:00",
-      "retry_after": "2026-11-05T19:35:27.329527+00:00"
+      "updated_at": "2026-11-05T15:39:18.969291+00:00",
+      "retry_after": "2026-11-05T19:39:18.969291+00:00"
     },
     "9334": {
       "misses": [
@@ -1105952,12 +1106069,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1922,
+    "last_series": 2778,
     "last_series_order": [
       false,
       -8.4,
-      -19246,
-      1922
+      -3600,
+      2778
     ]
   }
 }
