@@ -514754,16 +514754,53 @@
       "retry_after": "2026-11-05T15:09:12.190778+00:00"
     },
     "10487:1:2": {
-      "at": "2026-10-23T15:25:22.653089+00:00",
+      "at": "2026-11-05T02:16:03.381911+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "request_probe_revision": 1,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 34.32,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T15:25:56.975609+00:00"
+      "elapsed_seconds": 150.8,
+      "search_evidence": [
+        {
+          "path": "/mia-gracia-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 201939,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mia-gracia/s/-6",
+          "status": 200,
+          "response_bytes": 203974,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mia-gracia-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 201940,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mia-gracia/s/-6",
+          "status": 200,
+          "response_bytes": 203938,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T02:18:34.177784+00:00"
     },
     "10493:1:2": {
       "at": "2026-10-23T15:25:32.506132+00:00",
@@ -1064392,7 +1064429,7 @@
       "retry_after": "2026-11-05T02:11:41.773917+00:00"
     }
   },
-  "updated_at": "2026-11-05T02:17:47.328925+00:00",
+  "updated_at": "2026-11-05T02:18:57.217563+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1081944,9 +1081981,10 @@
     },
     "10487": {
       "misses": [
-        "10487:1:1"
+        "10487:1:1",
+        "10487:1:2"
       ],
-      "updated_at": "2026-11-04T21:18:11.605095+00:00"
+      "updated_at": "2026-11-05T02:18:34.177813+00:00"
     },
     "10493": {
       "misses": [
