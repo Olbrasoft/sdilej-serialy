@@ -856613,7 +856613,7 @@
       "retry_after": "2026-11-01T05:16:58.582609+00:00"
     },
     "1070:5:4": {
-      "at": "2026-11-05T15:06:49.171369+00:00",
+      "at": "2026-11-05T20:06:50.115977+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -856621,10 +856621,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 349.61,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-05T15:22:38.777940+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9954824447631836,
+      "observed_source_id": "30391521",
+      "elapsed_seconds": 115.63,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T20:08:45.744096+00:00"
     },
     "1898:3:15": {
       "at": "2026-10-31T05:17:20.406332+00:00",
@@ -864534,7 +864537,7 @@
       "retry_after": "2026-11-01T10:04:45.949327+00:00"
     },
     "1070:5:5": {
-      "at": "2026-10-31T10:04:46.588221+00:00",
+      "at": "2026-11-05T20:07:44.910900+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -864544,11 +864547,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.9955092668533325,
+      "observed_language_probability": 0.9941577911376953,
       "observed_source_id": "33685425",
-      "elapsed_seconds": 84.13,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-01T10:06:10.722263+00:00"
+      "elapsed_seconds": 63.28,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T20:08:48.188742+00:00"
     },
     "1898:3:17": {
       "at": "2026-10-31T10:04:48.423076+00:00",
@@ -1099356,9 +1099359,90 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-06T20:07:44.300747+00:00"
+    },
+    "1161:5:22": {
+      "at": "2026-11-05T20:06:21.152290+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 91.31,
+      "search_evidence": [
+        {
+          "path": "/plasticka-chirurgie-s-r-o-s05e22/s/-6",
+          "status": 200,
+          "response_bytes": 202295,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nip-tuck-s05e22/s/-6",
+          "status": 200,
+          "response_bytes": 201964,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/plasticka-chirurgie-s-r-o-s05e22/s/-6",
+          "status": 200,
+          "response_bytes": 202266,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/plasticka-chirurgie-s-r-o/s/-6",
+          "status": 200,
+          "response_bytes": 206871,
+          "boxes": 5,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nip-tuck-s05e22/s/-6",
+          "status": 200,
+          "response_bytes": 201974,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nip-tuck/s/-6",
+          "status": 200,
+          "response_bytes": 210618,
+          "boxes": 8,
+          "parsed_candidates": 6,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T20:07:59.258443+00:00"
+    },
+    "1070:6:11": {
+      "at": "2026-11-05T20:05:58.052890+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9969555139541626,
+      "observed_source_id": "22516759",
+      "elapsed_seconds": 128.68,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T20:08:06.736777+00:00"
     }
   },
-  "updated_at": "2026-11-05T20:07:54.081614+00:00",
+  "updated_at": "2026-11-05T20:09:02.725303+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1113663,10 +1113747,12 @@
     },
     "1070": {
       "misses": [
-        "1070:6:9",
-        "1070:6:10"
+        "1070:6:11",
+        "1070:5:4",
+        "1070:5:5"
       ],
-      "updated_at": "2026-11-05T19:31:49.541837+00:00"
+      "updated_at": "2026-11-05T20:08:48.188769+00:00",
+      "retry_after": "2026-11-06T00:08:48.188769+00:00"
     },
     "827": {
       "misses": [
@@ -1113739,9 +1113825,11 @@
     "1161": {
       "misses": [
         "1161:5:20",
-        "1161:5:21"
+        "1161:5:21",
+        "1161:5:22"
       ],
-      "updated_at": "2026-11-05T19:31:51.652996+00:00"
+      "updated_at": "2026-11-05T20:07:59.258485+00:00",
+      "retry_after": "2026-11-06T00:07:59.258485+00:00"
     },
     "1320": {
       "misses": [
@@ -1117315,12 +1117403,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1161,
+    "last_series": 1330,
     "last_series_order": [
       false,
       -7.7,
-      -62329,
-      1161
+      -27327,
+      1330
     ]
   }
 }
