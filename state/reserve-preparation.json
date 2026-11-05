@@ -4381,11 +4381,44 @@
       "retry_after": "2026-11-05T16:56:03.154063+00:00"
     },
     "1611:11:8": {
-      "at": "2026-10-01T23:48:36.498307+00:00",
+      "at": "2026-11-05T17:52:25.477863+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-02T23:48:37.296609+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 55.38,
+      "search_evidence": [
+        {
+          "path": "/the-joy-of-painting-s11e08/s/-6",
+          "status": 200,
+          "response_bytes": 202116,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting-s11e08/s/-6",
+          "status": 200,
+          "response_bytes": 202170,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-joy-of-painting/s/-6",
+          "status": 200,
+          "response_bytes": 211960,
+          "boxes": 8,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T17:53:20.862355+00:00"
     },
     "1611:11:9": {
       "at": "2026-10-01T23:48:52.726833+00:00",
@@ -643557,7 +643590,7 @@
       "retry_after": "2026-11-05T22:40:06.560912+00:00"
     },
     "4:3:5": {
-      "at": "2026-11-04T17:48:22.893343+00:00",
+      "at": "2026-11-05T17:50:37.248718+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -643566,9 +643599,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_acceptable_original",
-      "elapsed_seconds": 71.85,
-      "consecutive_failures": 10,
-      "retry_after": "2026-11-05T17:49:34.746182+00:00"
+      "elapsed_seconds": 175.32,
+      "consecutive_failures": 11,
+      "retry_after": "2026-11-06T17:53:32.571456+00:00"
     },
     "4:1:7": {
       "at": "2026-11-05T17:00:46.783429+00:00",
@@ -1093571,9 +1093604,73 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-06T17:50:36.468236+00:00"
+    },
+    "83:1:17": {
+      "at": "2026-11-05T17:52:01.439924+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 88.34,
+      "search_evidence": [
+        {
+          "path": "/sabrinina-desiva-dobrodruzstvi-s01e17/s/-6",
+          "status": 200,
+          "response_bytes": 202475,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chilling-adventures-of-sabrina-s01e17/s/-6",
+          "status": 200,
+          "response_bytes": 202384,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sabrinina-desiva-dobrodruzstvi-s01e17/s/-6",
+          "status": 200,
+          "response_bytes": 202382,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sabrinina-desiva-dobrodruzstvi/s/-6",
+          "status": 200,
+          "response_bytes": 477238,
+          "boxes": 202,
+          "parsed_candidates": 202,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chilling-adventures-of-sabrina-s01e17/s/-6",
+          "status": 200,
+          "response_bytes": 202403,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/chilling-adventures-of-sabrina/s/-6",
+          "status": 200,
+          "response_bytes": 313119,
+          "boxes": 81,
+          "parsed_candidates": 81,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T17:53:29.784281+00:00"
     }
   },
-  "updated_at": "2026-11-05T17:52:31.852183+00:00",
+  "updated_at": "2026-11-05T17:53:40.587921+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1098210,9 +1098307,11 @@
     "1611": {
       "misses": [
         "1611:11:5",
-        "1611:11:6"
+        "1611:11:6",
+        "1611:11:8"
       ],
-      "updated_at": "2026-11-05T16:24:44.491778+00:00"
+      "updated_at": "2026-11-05T17:53:20.862386+00:00",
+      "retry_after": "2026-11-05T21:53:20.862386+00:00"
     },
     "1265": {
       "misses": [
@@ -1098951,9 +1099050,10 @@
     },
     "83": {
       "misses": [
-        "83:1:15"
+        "83:1:15",
+        "83:1:17"
       ],
-      "updated_at": "2026-11-05T16:24:34.821502+00:00"
+      "updated_at": "2026-11-05T17:53:29.784311+00:00"
     },
     "2710": {
       "misses": [
@@ -1111427,12 +1111527,12 @@
     },
     "4": {
       "misses": [
-        "4:2:25",
         "4:6:36",
-        "4:7:44"
+        "4:7:44",
+        "4:3:5"
       ],
-      "updated_at": "2026-11-05T17:45:00.709012+00:00",
-      "retry_after": "2026-11-05T21:45:00.709012+00:00"
+      "updated_at": "2026-11-05T17:53:32.571482+00:00",
+      "retry_after": "2026-11-05T21:53:32.571482+00:00"
     },
     "1138": {
       "misses": [
@@ -1111551,12 +1111651,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1611,
+    "last_series": 1599,
     "last_series_order": [
       false,
-      -9.3,
-      -7199,
-      1611
+      -8.5,
+      -5950,
+      1599
     ]
   }
 }
