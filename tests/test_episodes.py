@@ -250,6 +250,30 @@ def test_unresolved_original_metadata_defers_selection(monkeypatch):
     assert provider.discover(episode()) is None
 
 
+@pytest.mark.parametrize('confirm', [True,False])
+def test_one_byte_original_needs_two_matching_confirmations_before_alternative_selection(monkeypatch, confirm):
+    from sdilej_serialy.source_detail import InvalidOriginal
+    bad=candidate('bad',height=1080,size_bytes=1_000_000,language=LanguageTier.CZECH_AUDIO)
+    good=candidate('good',height=720,size_bytes=2_000_000,language=LanguageTier.CZECH_AUDIO)
+    p=provider_with(monkeypatch,[bad,good],lambda _episode,item:item)
+    calls=[]
+    def inspect(_episode,item):
+        calls.append(item.source_id)
+        if item is bad:
+            if len(calls)==1 or confirm:raise InvalidOriginal(item.source_id)
+            raise SdilejError('Unresolved transport failure')
+        return item
+    monkeypatch.setattr(p,'_inspect',inspect)
+    monkeypatch.setattr('sdilej_serialy.subtitle_media.zero_original_evidence',lambda *a,**k:None)
+    selected=p.discover(episode())
+    assert selected is (good if confirm else None)
+    assert calls[:2]==['bad','bad']
+    if confirm:
+        assert selected._source_exclusions[0]['confirmations']==2
+    else:
+        assert 'good' not in calls
+
+
 @pytest.mark.parametrize('stage', ['_inspect', '_verify_language'])
 def test_shared_source_pause_propagates_without_retry_or_fallback(monkeypatch, stage):
     item = candidate('paused', height=1080, size_bytes=100_000_000,

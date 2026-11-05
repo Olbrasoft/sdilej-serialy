@@ -157,10 +157,12 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
     """Drain the known-source backlog before broad discovery, HD originals first."""
     dispatched_requests = set()
     if urgent and index is not None:
+        from .discovery_index import hinted_transport_retry
         warmed, seen_series = set(), set()
         # Refill empty accounts first from seasons that actually produced a
         # verified original. A filename hint alone is weaker scheduling evidence.
         warm_order = sorted(catalog, key=lambda m: (
+            not hinted_transport_retry(Episode.from_dict(m).identity, index, records),
             records.get(Episode.from_dict(m).identity, {}).get('consecutive_failures', 0) > 0,
             (m['series_id'], m['season']) not in (productive_seasons or set()),
             index.rank(Episode.from_dict(m).identity)))
@@ -169,7 +171,11 @@ def reserve_order(catalog, records, saved, paused, productive_seasons=None, *, i
             # Startup slots are for likely immediate supply. Repeatedly failed
             # sources keep their bounded retry lane instead of taking both
             # warmup slots again on every short-lived producer restart.
-            if records.get(identity, {}).get('consecutive_failures', 0) >= 3:
+            record = records.get(identity, {})
+            if record.get('reason') in ('inconclusive_audio', 'verified_non_czech', 'no_acceptable_original'):
+                continue
+            if (record.get('consecutive_failures', 0) >= 3
+                    and not hinted_transport_retry(identity, index, records)):
                 continue
             proven_season = (metadata['series_id'], metadata['season']) in (productive_seasons or set())
             # An exact unlabelled source is a useful fresh probe too. Language

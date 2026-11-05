@@ -4,6 +4,27 @@ from sdilej_to_prehrajto.sdilej import SdilejError
 from sdilej_serialy.source_detail import parse_detail_html
 
 
+@pytest.mark.parametrize('status,range_header,payload,typed', [
+    (200,None,b'a',True), (206,'bytes 0-0/1',b'a',True),
+    (206,'bytes 0-0/999999',b'a',False), (200,None,b'b',False),
+    (200,None,b'<html>Login</html>',False)])
+def test_only_complete_specific_backend_error_has_exclusion_evidence(status, range_header, payload, typed):
+    from types import SimpleNamespace
+    from sdilej_serialy.source_detail import resolve_original, InvalidOriginal
+    headers={'Content-Type':'text/html','Content-Length':'1'}
+    if range_header: headers['Content-Range']=range_header
+    response=SimpleNamespace(status_code=status,headers=headers,
+        url='https://sdilej.cz/sdilej_free.php?private-token=never-persist',
+        raise_for_status=lambda:None, close=lambda:None, iter_content=lambda **k:iter([payload]))
+    c=Candidate(source_id='123',url='https://sdilej.cz/123/video',title='Episode',download_url=response.url)
+    with pytest.raises(SdilejError) as caught:
+        resolve_original(SimpleNamespace(get=lambda *a,**k:response),c)
+    assert isinstance(caught.value,InvalidOriginal) == typed
+    if typed:
+        assert caught.value.evidence['source_id']=='123'
+        assert 'private-token' not in str(caught.value.evidence)
+
+
 @pytest.mark.parametrize('host', ['data8.sdilej.cz', 'stream12.sdilej.cz'])
 def test_player_cdn_hosts_and_escaped_query(host):
     page = f'''<h1>Series S04E10.mp4</h1><p>1920x1080 42:16</p>

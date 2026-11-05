@@ -15,6 +15,15 @@ from sdilej_to_prehrajto import sdilej
 MIN_ORIGINAL_BYTES = 1024 * 1024
 
 
+class InvalidOriginal(sdilej.SdilejError):
+    """A complete one-byte backend response, requiring independent confirmation."""
+
+    def __init__(self, source_id):
+        super().__init__('Original download returned the one-byte backend error')
+        self.evidence = dict(source_id=source_id, size_bytes=1,
+                             reason='one_byte_backend_error', sha256=hashlib.sha256(b'a').hexdigest())
+
+
 def request_time_modified(headers):
     """Some download handlers emit request time as Last-Modified on every GET."""
     try:
@@ -90,6 +99,20 @@ def resolve_original(session, candidate, *, evidence=None):
     try:
         response.raise_for_status()
         content_type = response.headers.get('Content-Type', '').split(';', 1)[0].strip().lower()
+        actual, expected = urlparse(response.url), urlparse(candidate.url)
+        if (content_type == 'text/html' and actual.path == '/sdilej_free.php'
+                and actual.hostname and expected.hostname
+                and (actual.hostname == expected.hostname or actual.hostname.endswith('.' + expected.hostname))
+                and response.headers.get('Content-Length') == '1'
+                and (response.status_code == 200 or response.status_code == 206
+                     and response.headers.get('Content-Range') == 'bytes 0-0/1')):
+            payload = bytearray()
+            for chunk in response.iter_content(chunk_size=2):
+                payload.extend(chunk)
+                if len(payload) > 1:
+                    break
+            if payload == b'a':
+                raise InvalidOriginal(candidate.source_id)
         if (content_type.startswith('text/') or content_type in ('application/json',
                 'application/xml', 'application/xhtml+xml')):
             raise sdilej.SdilejError('Original media endpoint returned a document instead of media')

@@ -66,6 +66,12 @@ def series_probe_allowed(row, paused, index=None, records=None, *, urgent=False)
             and (records or {}).get(identity, {}).get('consecutive_failures', 0) < 3)
 
 
+def hinted_transport_retry(identity, index, records):
+    """Dispatch evidence only: a dubbed hit whose original was not inspected."""
+    return (index.rank(identity) == 0 and records.get(identity, {}).get('reason') in (
+        'transient_original', 'transient_search', 'source_search_unavailable'))
+
+
 def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
                   productive_seasons=None, records=None, available=None, clock=time.monotonic,
                   wait_for_changes=False, urgent=False):
@@ -112,7 +118,8 @@ def indexed_order(catalog, fresh_ids, paused, index, refresh, progress, *,
 
     def retry_priority(identity):
         failures = records.get(identity, {}).get('consecutive_failures', 0)
-        return (failures >= 3, not productive_identity(identity), index.rank(identity),
+        return (not (urgent and hinted_transport_retry(identity, index, records)),
+                failures >= 3, not productive_identity(identity), index.rank(identity),
                 failures, positions[identity])
 
     def take(lane):

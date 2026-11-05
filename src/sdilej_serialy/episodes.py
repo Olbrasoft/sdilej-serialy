@@ -30,7 +30,7 @@ from sdilej_to_prehrajto.sdilej import (
 
 from .models import Episode
 from .language_hints import audio_language_hint
-from .source_detail import parse_detail_html, resolve_original, sampled_content_fingerprint
+from .source_detail import InvalidOriginal, parse_detail_html, resolve_original, sampled_content_fingerprint
 from .quality import quality_acceptable, rank_candidates, resolution_label, resolution_rank, SLOVAK_POLICY
 from .numbering import mapped_episode_title
 from .auth import login_with_retry
@@ -482,6 +482,7 @@ class EpisodeSourceProvider:
         by_resolution: dict[int, list[Candidate]] = {}
         exclusions = []
         for candidate in candidates:
+            invalid_original = None
             # Search metadata can describe a low-resolution preview of a 4K
             # original. Inspect every original before choosing a resolution.
             for attempt in range(2):
@@ -490,6 +491,15 @@ class EpisodeSourceProvider:
                 try:
                     detail = self._inspect(episode, candidate)
                     break
+                except InvalidOriginal as error:
+                    if attempt == 1:
+                        if invalid_original != error.evidence:
+                            return None
+                        exclusions.append(dict(error.evidence, confirmations=2,
+                            checked_at=datetime.now(UTC).isoformat()))
+                        detail = None
+                        break
+                    invalid_original = error.evidence
                 except SearchUnavailable:
                     # A shared source pause is not evidence about this file.
                     # Do not bypass it with the zero-original fallback probe.

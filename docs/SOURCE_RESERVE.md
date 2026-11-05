@@ -870,3 +870,14 @@ renewal requires no queue reset. This was added after November 4 failures:
 original links redirected to the pricing page while the account reported
 unlimited downloading as inactive. Upload allocation and content validation
 remain unchanged.
+
+November 5 evening recovery: an original fast-download endpoint returned a
+complete one-byte `a` response from `sdilej_free.php`. An available Czech
+alternative was never inspected because this response remained an unresolved
+original. Selection now excludes only this exact response after two independent
+matching confirmations (same source, full one-byte representation, SHA-256).
+Pricing/login documents, unknown errors, incomplete ranges and one-off failures
+still defer selection. Evidence is saved without URLs or credentials.
+When stock is empty, two startup slots prefer due dubbed hints after transport
+failures; inconclusive audio stays in the bounded retry lanes. All original,
+speech and quality checks and existing dispatch cooldowns still apply.

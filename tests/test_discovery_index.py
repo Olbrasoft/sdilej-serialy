@@ -28,6 +28,25 @@ def test_index_requires_exact_series_and_episode_and_does_not_trust_czech_filena
     assert index.rank('1:1:1') == 1
 
 
+def test_empty_reserve_prefers_due_dubbed_transport_retries_without_losing_audio_retries():
+    from sdilej_serialy.replenish import reserve_order
+    rows = [metadata(series=n) for n in range(1, 17)]
+    index = CandidateIndex(rows)
+    index.observe([candidate(f'Series {n} S01E01 CZ.mkv', str(n)) for n in (1, 2, 3, 4)])
+    records = {
+        '1:1:1': dict(reason='inconclusive_audio', consecutive_failures=1),
+        '2:1:1': dict(reason='transient_original', consecutive_failures=8),
+        '3:1:1': dict(reason='transient_search', consecutive_failures=4),
+        '4:1:1': dict(reason='transient_original', consecutive_failures=1),
+    }
+    order = list(reserve_order(rows, records, {}, set(), index=index, urgent=True, progress={},
+                              available=lambda m: m['series_id'] != 4))
+    assert {m['series_id'] for m in order[:2]} == {2, 3}
+    assert 1 in [m['series_id'] for m in order[2:]]
+    assert 4 not in [m['series_id'] for m in order]
+    assert len({m['series_id'] for m in order}) == len(order) == 15
+
+
 def test_index_accepts_original_aliases_combined_prefixes_and_years():
     row = dict(metadata(title='Český seriál'), series_original_title='Original title')
     index = CandidateIndex([row])
