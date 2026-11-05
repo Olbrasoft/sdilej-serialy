@@ -332929,14 +332929,21 @@
       "retry_after": "2026-11-06T10:11:24.023087+00:00"
     },
     "1059:2:16": {
-      "at": "2026-10-19T20:09:22.211161+00:00",
+      "at": "2026-11-05T15:34:13.919753+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 32.67,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-20T20:09:54.878821+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9979701638221741,
+      "observed_source_id": "30294826",
+      "elapsed_seconds": 73.41,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T15:35:27.329495+00:00"
     },
     "3503:3:3": {
       "at": "2026-10-19T20:09:35.891243+00:00",
@@ -1087835,9 +1087842,57 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-06T15:34:13.355416+00:00"
+    },
+    "2907:6:8": {
+      "at": "2026-11-05T15:34:06.568080+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 74.78,
+      "search_evidence": [
+        {
+          "path": "/the-larry-sanders-show-s06e08/s/-6",
+          "status": 200,
+          "response_bytes": 202220,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-larry-sanders-show/s/-6",
+          "status": 200,
+          "response_bytes": 202089,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-larry-sanders-show-s06e08/s/-6",
+          "status": 200,
+          "response_bytes": 202165,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-larry-sanders-show/s/-6",
+          "status": 200,
+          "response_bytes": 202116,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T15:35:21.350442+00:00"
     }
   },
-  "updated_at": "2026-11-05T15:35:09.279410+00:00",
+  "updated_at": "2026-11-05T15:36:16.551099+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1093118,12 +1093173,9 @@
     },
     "2907": {
       "misses": [
-        "2907:6:5",
-        "2907:6:6",
-        "2907:6:7"
+        "2907:6:8"
       ],
-      "updated_at": "2026-11-05T10:51:37.713749+00:00",
-      "retry_after": "2026-11-05T14:51:37.713749+00:00"
+      "updated_at": "2026-11-05T15:35:21.350477+00:00"
     },
     "2938": {
       "misses": [
@@ -1104334,9 +1104386,11 @@
     "1059": {
       "misses": [
         "1059:4:19",
-        "1059:4:20"
+        "1059:4:20",
+        "1059:2:16"
       ],
-      "updated_at": "2026-11-05T15:04:25.148733+00:00"
+      "updated_at": "2026-11-05T15:35:27.329527+00:00",
+      "retry_after": "2026-11-05T19:35:27.329527+00:00"
     },
     "9334": {
       "misses": [
