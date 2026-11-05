@@ -515364,16 +515364,53 @@
       "retry_after": "2026-11-06T02:18:34.177784+00:00"
     },
     "10493:1:2": {
-      "at": "2026-10-23T15:25:32.506132+00:00",
+      "at": "2026-11-05T04:43:19.529967+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "request_probe_revision": 1,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 27.55,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T15:26:00.060509+00:00"
+      "elapsed_seconds": 130.71,
+      "search_evidence": [
+        {
+          "path": "/big-pharma-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 201949,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/big-pharma/s/-6",
+          "status": 200,
+          "response_bytes": 201858,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/big-pharma-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 202017,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/big-pharma/s/-6",
+          "status": 200,
+          "response_bytes": 201871,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T04:45:33.520832+00:00"
     },
     "10502:1:2": {
       "at": "2026-10-23T15:25:44.500495+00:00",
@@ -529491,20 +529528,22 @@
       "retry_after": "2026-11-03T10:36:14.804410+00:00"
     },
     "2:11:2": {
-      "at": "2026-10-23T17:58:52.235200+00:00",
+      "at": "2026-11-05T04:43:08.571021+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "request_probe_revision": 1,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 31.19,
+      "elapsed_seconds": 134.05,
       "search_evidence": [
         {
           "path": "/nemocnica-s11e02/s/-6",
           "status": 200,
-          "response_bytes": 189516,
+          "response_bytes": 201959,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -529512,15 +529551,15 @@
         {
           "path": "/nemocnica/s/-6",
           "status": 200,
-          "response_bytes": 189369,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 519304,
+          "boxes": 276,
+          "parsed_candidates": 269,
           "heading_matches_query": true
         },
         {
           "path": "/nemocnica-s11e02/s/-6",
           "status": 200,
-          "response_bytes": 189516,
+          "response_bytes": 202024,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -529528,14 +529567,14 @@
         {
           "path": "/nemocnica/s/-6",
           "status": 200,
-          "response_bytes": 189369,
-          "boxes": 0,
-          "parsed_candidates": 0,
+          "response_bytes": 519227,
+          "boxes": 276,
+          "parsed_candidates": 269,
           "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T17:59:23.426272+00:00"
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T04:45:33.520717+00:00"
     },
     "27:10:3": {
       "at": "2026-10-29T14:54:15.930795+00:00",
@@ -1067250,7 +1067289,7 @@
       "queue_rank": 34690
     }
   },
-  "updated_at": "2026-11-05T04:45:24.971442+00:00",
+  "updated_at": "2026-11-05T04:46:37.365386+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1084760,12 +1084799,12 @@
     },
     "2": {
       "misses": [
-        "2:10:2",
         "2:10:3",
-        "2:11:1"
+        "2:11:1",
+        "2:11:2"
       ],
-      "updated_at": "2026-11-05T04:05:49.580280+00:00",
-      "retry_after": "2026-11-05T08:05:49.580280+00:00"
+      "updated_at": "2026-11-05T04:45:33.520752+00:00",
+      "retry_after": "2026-11-05T08:45:33.520752+00:00"
     },
     "10474": {
       "misses": [
@@ -1084784,9 +1084823,10 @@
     },
     "10493": {
       "misses": [
-        "10493:1:1"
+        "10493:1:1",
+        "10493:1:2"
       ],
-      "updated_at": "2026-11-05T04:07:01.338724+00:00"
+      "updated_at": "2026-11-05T04:45:33.520845+00:00"
     },
     "10502": {
       "misses": [
