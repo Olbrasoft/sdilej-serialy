@@ -25523,11 +25523,44 @@
       "retry_after": "2026-11-06T10:44:13.489582+00:00"
     },
     "1344:7:18": {
-      "at": "2026-10-02T23:06:59.078303+00:00",
+      "at": "2026-11-05T15:27:21.047163+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-03T23:06:59.845093+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 124.33,
+      "search_evidence": [
+        {
+          "path": "/seinfeld-s07e18/s/-6",
+          "status": 200,
+          "response_bytes": 201888,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld-s07e18/s/-6",
+          "status": 200,
+          "response_bytes": 201876,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld/s/-6",
+          "status": 200,
+          "response_bytes": 246310,
+          "boxes": 29,
+          "parsed_candidates": 29,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T15:29:25.377061+00:00"
     },
     "1344:7:19": {
       "at": "2026-10-02T23:07:28.554045+00:00",
@@ -1087556,7 +1087589,7 @@
       "retry_after": "2026-11-05T15:22:38.777941+00:00"
     }
   },
-  "updated_at": "2026-11-05T15:28:23.855556+00:00",
+  "updated_at": "2026-11-05T15:29:30.254570+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1092237,12 +1092270,9 @@
     },
     "1344": {
       "misses": [
-        "1344:7:15",
-        "1344:7:16",
-        "1344:7:17"
+        "1344:7:18"
       ],
-      "updated_at": "2026-11-05T10:44:13.489612+00:00",
-      "retry_after": "2026-11-05T14:44:13.489612+00:00"
+      "updated_at": "2026-11-05T15:29:25.377094+00:00"
     },
     "2844": {
       "misses": [
@@ -1105493,12 +1105523,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1344,
+    "last_series": 1392,
     "last_series_order": [
       false,
       -8.8,
-      -388900,
-      1344
+      -105412,
+      1392
     ]
   }
 }
