@@ -434343,7 +434343,7 @@
       "retry_after": "2026-10-23T01:55:34.621119+00:00"
     },
     "2409:10:6": {
-      "at": "2026-11-05T02:17:40.065412+00:00",
+      "at": "2026-11-05T12:25:13.468289+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -434351,10 +434351,40 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_original",
-      "elapsed_seconds": 445.73,
+      "reason": "source_search_unavailable",
+      "error": {
+        "type": "SearchUnavailable",
+        "frames": [
+          {
+            "file": "episodes.py",
+            "function": "_inspect",
+            "line": 335
+          },
+          {
+            "file": "source_audit.py",
+            "function": "_get",
+            "line": 118
+          },
+          {
+            "file": "episodes.py",
+            "function": "_get",
+            "line": 227
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 202
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 84
+          }
+        ]
+      },
+      "elapsed_seconds": 428.14,
       "consecutive_failures": 11,
-      "retry_after": "2026-11-05T08:25:05.791676+00:00"
+      "retry_after": "2026-11-05T12:41:23.702105+00:00"
     },
     "2409:11:3": {
       "at": "2026-10-22T01:55:43.098593+00:00",
@@ -1080526,7 +1080556,7 @@
       "retry_after": "2026-11-05T12:41:23.702087+00:00"
     }
   },
-  "updated_at": "2026-11-05T12:32:23.347444+00:00",
+  "updated_at": "2026-11-05T12:32:42.278754+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
