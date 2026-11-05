@@ -340777,7 +340777,7 @@
       "retry_after": "2026-11-06T01:13:01.626618+00:00"
     },
     "9684:2:30": {
-      "at": "2026-11-05T14:04:57.187808+00:00",
+      "at": "2026-11-05T20:08:00.080526+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -340786,9 +340786,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 24.11,
-      "consecutive_failures": 9,
-      "retry_after": "2026-11-05T20:05:21.301404+00:00"
+      "elapsed_seconds": 69.43,
+      "consecutive_failures": 10,
+      "retry_after": "2026-11-06T02:09:09.508859+00:00"
     },
     "9684:2:29": {
       "at": "2026-10-19T23:50:49.964864+00:00",
@@ -1099440,9 +1099440,49 @@
       "elapsed_seconds": 128.68,
       "consecutive_failures": 1,
       "retry_after": "2026-11-06T20:08:06.736777+00:00"
+    },
+    "2207:4:15": {
+      "at": "2026-11-05T20:09:10.110615+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 46.66,
+      "search_evidence": [
+        {
+          "path": "/taxi-s04e15/s/-6",
+          "status": 200,
+          "response_bytes": 201813,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/taxi-s04e15/s/-6",
+          "status": 200,
+          "response_bytes": 201959,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/taxi/s/-6",
+          "status": 200,
+          "response_bytes": 472378,
+          "boxes": 255,
+          "parsed_candidates": 243,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T20:09:56.770985+00:00"
     }
   },
-  "updated_at": "2026-11-05T20:09:02.725303+00:00",
+  "updated_at": "2026-11-05T20:10:12.491480+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1114166,9 +1114206,11 @@
     "2207": {
       "misses": [
         "2207:4:12",
-        "2207:4:14"
+        "2207:4:14",
+        "2207:4:15"
       ],
-      "updated_at": "2026-11-05T19:32:47.752187+00:00"
+      "updated_at": "2026-11-05T20:09:56.771015+00:00",
+      "retry_after": "2026-11-06T00:09:56.771015+00:00"
     },
     "7211": {
       "misses": [
@@ -1116092,9 +1116134,11 @@
     "9684": {
       "misses": [
         "9684:2:36",
-        "9684:3:12"
+        "9684:3:12",
+        "9684:2:30"
       ],
-      "updated_at": "2026-11-05T20:05:57.434091+00:00"
+      "updated_at": "2026-11-05T20:09:09.508886+00:00",
+      "retry_after": "2026-11-05T20:39:09.508886+00:00"
     },
     "693": {
       "misses": [
@@ -1117403,12 +1117447,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1330,
+    "last_series": 9681,
     "last_series_order": [
       false,
       -7.7,
-      -27327,
-      1330
+      -8212,
+      9681
     ]
   }
 }
