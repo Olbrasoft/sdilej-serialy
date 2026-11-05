@@ -491336,14 +491336,18 @@
       "retry_after": "2026-10-24T03:13:34.404980+00:00"
     },
     "112:6:1": {
-      "at": "2026-10-23T03:12:53.256117+00:00",
+      "at": "2026-11-05T00:50:26.736272+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 31.46,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T03:13:34.405303+00:00"
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 213.16,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-05T02:53:59.898886+00:00"
     },
     "437:3:8": {
       "at": "2026-10-23T03:13:36.714566+00:00",
@@ -509929,14 +509933,21 @@
       "retry_after": "2026-10-24T12:10:40.148115+00:00"
     },
     "112:6:4": {
-      "at": "2026-10-23T12:10:40.153437+00:00",
+      "at": "2026-11-05T00:50:56.513315+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 20.64,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T12:11:00.794688+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9935097098350525,
+      "observed_source_id": "35023999",
+      "elapsed_seconds": 167.54,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-06T00:53:56.076242+00:00"
     },
     "1239:7:9": {
       "at": "2026-10-23T12:10:40.964866+00:00",
@@ -1061669,9 +1061680,83 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-06T00:50:08.777199+00:00"
+    },
+    "112:6:6": {
+      "at": "2026-11-05T00:51:00.198653+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9413057565689087,
+      "observed_source_id": "33408610",
+      "elapsed_seconds": 192.17,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T00:54:12.367131+00:00"
+    },
+    "2815:3:4": {
+      "at": "2026-11-05T00:54:01.212627+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 17.93,
+      "search_evidence": [
+        {
+          "path": "/wanted-dead-or-alive-s03e04/s/-6",
+          "status": 200,
+          "response_bytes": 202201,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/wanted-dead-or-alive-s03e04/s/-6",
+          "status": 200,
+          "response_bytes": 202177,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/wanted-dead-or-alive/s/-6",
+          "status": 200,
+          "response_bytes": 207386,
+          "boxes": 5,
+          "parsed_candidates": 3,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T00:54:19.144334+00:00"
+    },
+    "112:6:8": {
+      "at": "2026-11-05T00:51:21.788613+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9700093865394592,
+      "observed_source_id": "8223469",
+      "elapsed_seconds": 184.68,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T00:54:26.472996+00:00"
     }
   },
-  "updated_at": "2026-11-05T00:53:36.680390+00:00",
+  "updated_at": "2026-11-05T00:54:29.672546+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1073401,9 +1073486,10 @@
     },
     "2815": {
       "misses": [
-        "2815:3:3"
+        "2815:3:3",
+        "2815:3:4"
       ],
-      "updated_at": "2026-11-04T21:24:03.915865+00:00"
+      "updated_at": "2026-11-05T00:54:19.144360+00:00"
     },
     "3600": {
       "misses": [
@@ -1074177,8 +1074263,13 @@
       "retry_after": "2026-10-20T02:26:31.320489+00:00"
     },
     "112": {
-      "misses": [],
-      "updated_at": "2026-11-05T00:51:07.031302+00:00"
+      "misses": [
+        "112:6:1",
+        "112:6:6",
+        "112:6:8"
+      ],
+      "updated_at": "2026-11-05T00:54:26.473020+00:00",
+      "retry_after": "2026-11-05T04:54:26.473020+00:00"
     },
     "989": {
       "misses": [
@@ -1079413,12 +1079504,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2209,
+    "last_series": 3038,
     "last_series_order": [
       false,
       -8.0,
-      -12602,
-      2209
+      -2529,
+      3038
     ]
   }
 }
