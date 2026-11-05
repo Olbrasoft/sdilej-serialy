@@ -1079096,9 +1079096,49 @@
       "elapsed_seconds": 379.67,
       "consecutive_failures": 0,
       "retry_after": "2026-11-05T11:49:23.515054+00:00"
+    },
+    "1296:4:16": {
+      "at": "2026-11-05T11:58:05.846272+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 92.49,
+      "search_evidence": [
+        {
+          "path": "/the-fosters-s04e16/s/-6",
+          "status": 200,
+          "response_bytes": 202026,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-fosters-s04e16/s/-6",
+          "status": 200,
+          "response_bytes": 202071,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-fosters/s/-6",
+          "status": 200,
+          "response_bytes": 470970,
+          "boxes": 236,
+          "parsed_candidates": 202,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T11:59:38.338149+00:00"
     }
   },
-  "updated_at": "2026-11-05T11:58:33.259707+00:00",
+  "updated_at": "2026-11-05T11:59:42.362268+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1091303,9 +1091343,11 @@
     "1296": {
       "misses": [
         "1296:4:3",
-        "1296:4:5"
+        "1296:4:5",
+        "1296:4:16"
       ],
-      "updated_at": "2026-11-05T11:02:01.672392+00:00"
+      "updated_at": "2026-11-05T11:59:38.338215+00:00",
+      "retry_after": "2026-11-05T15:59:38.338215+00:00"
     },
     "4327": {
       "misses": [
@@ -1097052,12 +1097094,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9671,
+    "last_series": 11,
     "last_series_order": [
       false,
       -7.9,
-      -18757,
-      9671
+      -14291,
+      11
     ]
   }
 }
