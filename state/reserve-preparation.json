@@ -900070,7 +900070,7 @@
       "retry_after": "2026-11-02T05:28:15.099638+00:00"
     },
     "597:3:4": {
-      "at": "2026-11-01T15:31:25.383502+00:00",
+      "at": "2026-11-06T20:50:43.863479+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -900079,12 +900079,12 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 912.86,
-      "consecutive_failures": 6,
-      "retry_after": "2026-11-01T21:47:25.146104+00:00"
+      "elapsed_seconds": 906.64,
+      "consecutive_failures": 7,
+      "retry_after": "2026-11-07T03:06:30.908001+00:00"
     },
     "597:3:5": {
-      "at": "2026-11-01T15:39:38.168674+00:00",
+      "at": "2026-11-06T20:50:52.072471+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -900093,9 +900093,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 917.41,
-      "consecutive_failures": 6,
-      "retry_after": "2026-11-01T21:54:55.578149+00:00"
+      "elapsed_seconds": 903.73,
+      "consecutive_failures": 7,
+      "retry_after": "2026-11-07T03:06:30.908118+00:00"
     },
     "6735:4:13": {
       "at": "2026-11-01T05:33:16.024772+00:00",
@@ -1154131,9 +1154131,102 @@
       "elapsed_seconds": 51.37,
       "source_id": "32947294",
       "queue_rank": 35206
+    },
+    "3716:1:1": {
+      "at": "2026-11-06T21:03:46.504180+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 61.17,
+      "source_id": "30550330",
+      "queue_rank": 35207
+    },
+    "2507:1:1": {
+      "at": "2026-11-06T21:06:31.904819+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 50.81,
+      "search_evidence": [
+        {
+          "path": "/kapitan-kloss-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202494,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kapitan-kloss/s/-6",
+          "status": 200,
+          "response_bytes": 297724,
+          "boxes": 76,
+          "parsed_candidates": 73,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/more-than-life-at-stake-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202339,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/more-than-life-at-stake/s/-6",
+          "status": 200,
+          "response_bytes": 202121,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kapitan-kloss-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202422,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kapitan-kloss/s/-6",
+          "status": 200,
+          "response_bytes": 297626,
+          "boxes": 76,
+          "parsed_candidates": 73,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/more-than-life-at-stake-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202204,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/more-than-life-at-stake/s/-6",
+          "status": 200,
+          "response_bytes": 202080,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T21:07:22.712140+00:00"
     }
   },
-  "updated_at": "2026-11-06T21:04:50.010299+00:00",
+  "updated_at": "2026-11-06T21:07:34.988038+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1162358,10 +1162451,12 @@
     },
     "597": {
       "misses": [
-        "597:1:1",
-        "597:3:3"
+        "597:3:3",
+        "597:3:4",
+        "597:3:5"
       ],
-      "updated_at": "2026-11-06T20:58:50.742751+00:00"
+      "updated_at": "2026-11-06T21:06:30.908133+00:00",
+      "retry_after": "2026-11-06T21:36:30.908133+00:00"
     },
     "64": {
       "misses": [
@@ -1172721,15 +1172816,25 @@
         "1856:3:1"
       ],
       "updated_at": "2026-11-06T20:50:51.255293+00:00"
+    },
+    "3716": {
+      "misses": [],
+      "updated_at": "2026-11-06T21:06:31.077774+00:00"
+    },
+    "2507": {
+      "misses": [
+        "2507:1:1"
+      ],
+      "updated_at": "2026-11-06T21:07:22.712183+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 3716,
+    "last_series": 2507,
     "last_series_order": [
       false,
       -7.8,
-      -1100,
-      3716
+      -1036,
+      2507
     ]
   }
 }
