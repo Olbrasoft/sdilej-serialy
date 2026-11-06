@@ -881,3 +881,20 @@ still defer selection. Evidence is saved without URLs or credentials.
 When stock is empty, two startup slots prefer due dubbed hints after transport
 failures; inconclusive audio stays in the bounded retry lanes. All original,
 speech and quality checks and existing dispatch cooldowns still apply.
+
+On November 6 the reserve was still limited to a 2,048-series snapshot although
+the read-only CR language rollup identified 2,451 additional series with CS/SK
+episodes. `catalog_merge` appends previously unseen series from an explicit
+public-metadata JSON export, preserves every existing row, deduplicates episode
+identities, and skips existing TMDB/title aliases. It cannot import upload
+proof or source-policy fields. The initial import added 36,594 episode metadata
+rows across 2,400 series and excluded 51 ambiguous/duplicate series. CR was
+queried only inside an asserted READ ONLY transaction, rolled back afterward.
+No database credentials are copied to Actions.
+
+Run `python -m sdilej_serialy.catalog_merge --incoming metadata.json` to preview,
+then add `--apply` to update the local catalog, public TMDB registry and import
+report. Serialize publication with source preparation, commit all three files
+together, and resume preparation. Metadata language hints never authorize an
+upload: authenticated Sdilej original, speech, resolution and size checks still
+apply. Frozen upload plans, queues and completed/allocated targets are untouched.
