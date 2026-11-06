@@ -133281,14 +133281,21 @@
       "retry_after": "2026-10-19T17:02:59.135932+00:00"
     },
     "1074:4:2": {
-      "at": "2026-10-18T17:00:29.411387+00:00",
+      "at": "2026-11-06T12:40:41.058433+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 210.58,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-19T17:03:59.994028+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9976715445518494,
+      "observed_source_id": "35345760",
+      "elapsed_seconds": 216.72,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-07T12:44:21.478211+00:00"
     },
     "1074:4:3": {
       "at": "2026-10-18T17:00:38.833201+00:00",
@@ -623705,7 +623712,7 @@
       "retry_after": "2026-11-03T05:38:53.142138+00:00"
     },
     "1980:5:2": {
-      "at": "2026-11-05T04:57:39.686807+00:00",
+      "at": "2026-11-06T12:44:22.195167+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -623714,12 +623721,12 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 95.52,
+      "elapsed_seconds": 43.05,
       "search_evidence": [
         {
           "path": "/fotbalovy-talent-s05e02/s/-6",
           "status": 200,
-          "response_bytes": 202553,
+          "response_bytes": 202486,
           "boxes": 1,
           "parsed_candidates": 1,
           "heading_matches_query": true
@@ -623727,7 +623734,7 @@
         {
           "path": "/all-american-s05e02/s/-6",
           "status": 200,
-          "response_bytes": 202022,
+          "response_bytes": 201944,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -623735,22 +623742,38 @@
         {
           "path": "/fotbalovy-talent-s05e02/s/-6",
           "status": 200,
-          "response_bytes": 202454,
+          "response_bytes": 202573,
           "boxes": 1,
           "parsed_candidates": 1,
           "heading_matches_query": true
         },
         {
+          "path": "/fotbalovy-talent/s/-6",
+          "status": 200,
+          "response_bytes": 423029,
+          "boxes": 164,
+          "parsed_candidates": 164,
+          "heading_matches_query": true
+        },
+        {
           "path": "/all-american-s05e02/s/-6",
           "status": 200,
-          "response_bytes": 202137,
+          "response_bytes": 201977,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
+        },
+        {
+          "path": "/all-american/s/-6",
+          "status": 200,
+          "response_bytes": 313309,
+          "boxes": 91,
+          "parsed_candidates": 75,
+          "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 2,
-      "retry_after": "2026-11-06T04:59:15.900329+00:00"
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-07T12:45:05.250851+00:00"
     },
     "1561:2:18": {
       "at": "2026-10-24T04:54:07.335275+00:00",
@@ -1141681,9 +1141704,48 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-07T12:43:37.871763+00:00"
+    },
+    "70:3:2": {
+      "at": "2026-11-06T12:43:08.919867+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 59.52,
+      "source_id": "35406163",
+      "queue_rank": 34945
+    },
+    "7496:1:1": {
+      "at": "2026-11-06T12:43:38.583829+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 34.03,
+      "source_id": "31095796",
+      "queue_rank": 34946
+    },
+    "2275:1:6": {
+      "at": "2026-11-06T12:41:41.952363+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 179.64,
+      "source_id": "33334370",
+      "queue_rank": 34947
     }
   },
-  "updated_at": "2026-11-06T12:44:08.318484+00:00",
+  "updated_at": "2026-11-06T12:45:08.820138+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1146676,12 +1146738,9 @@
     },
     "1074": {
       "misses": [
-        "1074:7:11",
-        "1074:7:12",
-        "1074:7:13"
+        "1074:4:2"
       ],
-      "updated_at": "2026-10-23T01:03:41.822992+00:00",
-      "retry_after": "2026-10-23T05:03:41.822992+00:00"
+      "updated_at": "2026-11-06T12:44:21.478251+00:00"
     },
     "1103": {
       "misses": [
@@ -1157516,12 +1157575,9 @@
     },
     "1980": {
       "misses": [
-        "1980:5:16",
-        "1980:5:1",
-        "1980:8:7"
+        "1980:5:2"
       ],
-      "updated_at": "2026-11-06T08:38:08.202336+00:00",
-      "retry_after": "2026-11-06T12:38:08.202336+00:00"
+      "updated_at": "2026-11-06T12:45:05.250888+00:00"
     },
     "446": {
       "misses": [
@@ -1159717,10 +1159773,8 @@
       "updated_at": "2026-11-06T12:03:09.797399+00:00"
     },
     "70": {
-      "misses": [
-        "70:3:1"
-      ],
-      "updated_at": "2026-11-06T12:43:08.133160+00:00"
+      "misses": [],
+      "updated_at": "2026-11-06T12:44:21.478349+00:00"
     },
     "2239": {
       "misses": [
@@ -1159742,7 +1159796,7 @@
     },
     "2275": {
       "misses": [],
-      "updated_at": "2026-11-06T12:43:10.551457+00:00"
+      "updated_at": "2026-11-06T12:44:41.832085+00:00"
     },
     "8109": {
       "misses": [
@@ -1159771,6 +1159825,10 @@
         "9076:1:1"
       ],
       "updated_at": "2026-11-06T12:36:43.099336+00:00"
+    },
+    "7496": {
+      "misses": [],
+      "updated_at": "2026-11-06T12:44:21.478414+00:00"
     }
   },
   "discovery_progress": {
