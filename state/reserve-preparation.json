@@ -1140526,9 +1140526,49 @@
       "elapsed_seconds": 125.72,
       "source_id": "35405826",
       "queue_rank": 34913
+    },
+    "2949:1:2": {
+      "at": "2026-11-06T12:02:25.754931+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 44.04,
+      "search_evidence": [
+        {
+          "path": "/hrisni-lide-mesta-prazskeho-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 204320,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/hrisni-lide-mesta-prazskeho-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 204335,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/hrisni-lide-mesta-prazskeho/s/-6",
+          "status": 200,
+          "response_bytes": 521855,
+          "boxes": 244,
+          "parsed_candidates": 236,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T12:03:09.797364+00:00"
     }
   },
-  "updated_at": "2026-11-06T12:02:04.673256+00:00",
+  "updated_at": "2026-11-06T12:03:12.255126+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1158552,9 +1158592,10 @@
     },
     "2949": {
       "misses": [
-        "2949:1:1"
+        "2949:1:1",
+        "2949:1:2"
       ],
-      "updated_at": "2026-11-06T12:00:52.980853+00:00"
+      "updated_at": "2026-11-06T12:03:09.797399+00:00"
     },
     "70": {
       "misses": [],
@@ -1158562,12 +1158603,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 70,
+    "last_series": 2949,
     "last_series_order": [
       false,
       -8.5,
-      -348,
-      70
+      -205,
+      2949
     ]
   }
 }
