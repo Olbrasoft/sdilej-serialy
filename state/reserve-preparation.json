@@ -501723,14 +501723,21 @@
       "retry_after": "2026-11-07T13:46:48.425881+00:00"
     },
     "1410:3:61": {
-      "at": "2026-10-23T06:22:46.774539+00:00",
+      "at": "2026-11-06T17:58:58.679804+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 30.05,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T06:23:16.827892+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9960595369338989,
+      "observed_source_id": "34451068",
+      "elapsed_seconds": 129.64,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-07T18:01:12.741785+00:00"
     },
     "1410:3:62": {
       "at": "2026-10-23T06:23:04.324438+00:00",
@@ -1149287,9 +1149294,81 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-07T17:59:00.847905+00:00"
+    },
+    "4403:1:1": {
+      "at": "2026-11-06T18:00:42.739062+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 82.87,
+      "search_evidence": [
+        {
+          "path": "/osm-dni-ktere-utvorily-rim-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202760,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/8-days-that-made-rome-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202224,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/8-days-that-made-rome/s/-6",
+          "status": 200,
+          "response_bytes": 202035,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/osm-dni-ktere-utvorily-rim-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202715,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/osm-dni-ktere-utvorily-rim/s/-6",
+          "status": 200,
+          "response_bytes": 212937,
+          "boxes": 8,
+          "parsed_candidates": 8,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/8-days-that-made-rome-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202169,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/8-days-that-made-rome/s/-6",
+          "status": 200,
+          "response_bytes": 202044,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T18:02:05.610895+00:00"
     }
   },
-  "updated_at": "2026-11-06T18:01:05.689015+00:00",
+  "updated_at": "2026-11-06T18:02:17.720054+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1157764,12 +1157843,9 @@
     },
     "1410": {
       "misses": [
-        "1410:3:59",
-        "1410:3:60",
-        "1410:5:15"
+        "1410:3:61"
       ],
-      "updated_at": "2026-11-06T13:46:48.425979+00:00",
-      "retry_after": "2026-11-06T17:46:48.425979+00:00"
+      "updated_at": "2026-11-06T18:01:12.741826+00:00"
     },
     "2053": {
       "misses": [
@@ -1167586,8 +1167662,10 @@
       "updated_at": "2026-11-06T15:23:08.650756+00:00"
     },
     "4403": {
-      "misses": [],
-      "updated_at": "2026-11-06T15:24:59.042532+00:00"
+      "misses": [
+        "4403:1:1"
+      ],
+      "updated_at": "2026-11-06T18:02:05.610929+00:00"
     },
     "9462": {
       "misses": [],
