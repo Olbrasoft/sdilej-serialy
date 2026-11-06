@@ -341882,14 +341882,21 @@
       "queue_rank": 27195
     },
     "689:1:9": {
-      "at": "2026-10-19T23:44:05.949329+00:00",
+      "at": "2026-11-06T17:52:18.327639+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 222.81,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-20T23:47:48.763491+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.8274000808596611,
+      "observed_source_id": "34891789",
+      "elapsed_seconds": 452.23,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-07T18:00:00.300152+00:00"
     },
     "1921:3:4": {
       "at": "2026-10-19T23:48:10.244440+00:00",
@@ -1148890,7 +1148897,7 @@
       "retry_after": "2026-11-07T17:29:33.594859+00:00"
     },
     "7490:1:10": {
-      "at": "2026-11-06T17:29:15.850070+00:00",
+      "at": "2026-11-06T17:58:57.842460+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -1148898,10 +1148905,68 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 47.91,
-      "consecutive_failures": 0,
-      "retry_after": "2026-11-06T17:35:03.761565+00:00"
+      "reason": "no_matches",
+      "elapsed_seconds": 104.06,
+      "search_evidence": [
+        {
+          "path": "/deti-z-kourove-hory-s01e10/s/-6",
+          "status": 200,
+          "response_bytes": 202095,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/children-of-fire-mountain-s01e10/s/-6",
+          "status": 200,
+          "response_bytes": 202311,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/children-of-fire-mountain/s/-6",
+          "status": 200,
+          "response_bytes": 202173,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/deti-z-kourove-hory-s01e10/s/-6",
+          "status": 200,
+          "response_bytes": 202082,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/deti-z-kourove-hory/s/-6",
+          "status": 200,
+          "response_bytes": 239329,
+          "boxes": 34,
+          "parsed_candidates": 34,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/children-of-fire-mountain-s01e10/s/-6",
+          "status": 200,
+          "response_bytes": 202340,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/children-of-fire-mountain/s/-6",
+          "status": 200,
+          "response_bytes": 202219,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T18:00:41.898913+00:00"
     },
     "3146:1:1": {
       "at": "2026-11-06T17:30:04.340552+00:00",
@@ -1149224,7 +1149289,7 @@
       "retry_after": "2026-11-07T17:59:00.847905+00:00"
     }
   },
-  "updated_at": "2026-11-06T17:59:51.327151+00:00",
+  "updated_at": "2026-11-06T18:01:05.689015+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1163679,12 +1163744,12 @@
     },
     "689": {
       "misses": [
-        "689:1:7",
         "689:1:8",
-        "689:1:6"
+        "689:1:6",
+        "689:1:9"
       ],
-      "updated_at": "2026-11-06T17:58:57.842320+00:00",
-      "retry_after": "2026-11-06T21:58:57.842320+00:00"
+      "updated_at": "2026-11-06T18:00:00.300195+00:00",
+      "retry_after": "2026-11-06T22:00:00.300195+00:00"
     },
     "1215": {
       "misses": [
@@ -1167505,8 +1167570,10 @@
       "updated_at": "2026-11-06T15:19:12.552082+00:00"
     },
     "7490": {
-      "misses": [],
-      "updated_at": "2026-11-06T17:52:14.518256+00:00"
+      "misses": [
+        "7490:1:10"
+      ],
+      "updated_at": "2026-11-06T18:00:41.898948+00:00"
     },
     "9074": {
       "misses": [],
