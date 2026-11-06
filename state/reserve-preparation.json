@@ -29320,11 +29320,44 @@
       "queue_rank": 10181
     },
     "1344:8:14": {
-      "at": "2026-10-03T07:40:10.282994+00:00",
+      "at": "2026-11-06T11:14:51.885196+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-04T07:40:13.648276+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 51.37,
+      "search_evidence": [
+        {
+          "path": "/seinfeld-s08e14/s/-6",
+          "status": 200,
+          "response_bytes": 201840,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld-s08e14/s/-6",
+          "status": 200,
+          "response_bytes": 201976,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld/s/-6",
+          "status": 200,
+          "response_bytes": 246394,
+          "boxes": 29,
+          "parsed_candidates": 29,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T11:15:43.256644+00:00"
     },
     "1344:8:15": {
       "at": "2026-10-03T07:40:16.143068+00:00",
@@ -961892,7 +961925,7 @@
       "retry_after": "2026-11-03T20:34:24.496276+00:00"
     },
     "1066:5:21": {
-      "at": "2026-11-02T20:34:25.298110+00:00",
+      "at": "2026-11-06T11:14:53.191158+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -961902,11 +961935,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.9948813915252686,
+      "observed_language_probability": 0.9958018660545349,
       "observed_source_id": "33562320",
-      "elapsed_seconds": 32.26,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-03T20:34:57.561957+00:00"
+      "elapsed_seconds": 77.01,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-07T11:16:10.197523+00:00"
     },
     "9782:4:3": {
       "at": "2026-11-02T20:34:58.356901+00:00",
@@ -1138479,7 +1138512,7 @@
       "retry_after": "2026-11-07T11:15:11.158242+00:00"
     }
   },
-  "updated_at": "2026-11-06T11:15:13.516938+00:00",
+  "updated_at": "2026-11-06T11:16:23.201266+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1143187,12 +1143220,9 @@
     },
     "1344": {
       "misses": [
-        "1344:8:2",
-        "1344:8:3",
-        "1344:8:4"
+        "1344:8:14"
       ],
-      "updated_at": "2026-11-06T07:12:37.854971+00:00",
-      "retry_after": "2026-11-06T11:12:37.854971+00:00"
+      "updated_at": "2026-11-06T11:15:43.256677+00:00"
     },
     "2844": {
       "misses": [
@@ -1151718,12 +1151748,9 @@
     },
     "1066": {
       "misses": [
-        "1066:5:18",
-        "1066:5:20",
-        "1066:5:19"
+        "1066:5:21"
       ],
-      "updated_at": "2026-11-06T07:12:34.508727+00:00",
-      "retry_after": "2026-11-06T11:12:34.508727+00:00"
+      "updated_at": "2026-11-06T11:16:10.197550+00:00"
     },
     "1318": {
       "misses": [
@@ -1156526,12 +1156553,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1344,
+    "last_series": 9763,
     "last_series_order": [
       false,
-      -8.8,
-      -388900,
-      1344
+      -8.7,
+      -1773,
+      9763
     ]
   }
 }
