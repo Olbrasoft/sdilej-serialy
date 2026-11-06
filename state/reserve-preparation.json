@@ -500749,14 +500749,21 @@
       "retry_after": "2026-10-24T06:31:29.373377+00:00"
     },
     "9667:4:5": {
-      "at": "2026-10-23T06:31:59.144532+00:00",
+      "at": "2026-11-06T00:12:49.562085+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 32.68,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T06:32:31.822823+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9273769855499268,
+      "observed_source_id": "31418555",
+      "elapsed_seconds": 73.36,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-07T00:14:02.922427+00:00"
     },
     "9667:4:7": {
       "at": "2026-10-23T06:32:32.408042+00:00",
@@ -1112467,9 +1112474,73 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-07T00:13:08.429543+00:00"
+    },
+    "2102:3:17": {
+      "at": "2026-11-06T00:12:34.487950+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 85.86,
+      "search_evidence": [
+        {
+          "path": "/skola-zlomenych-srdci-s03e17/s/-6",
+          "status": 200,
+          "response_bytes": 202227,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartbreak-high-s03e17/s/-6",
+          "status": 200,
+          "response_bytes": 202144,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/skola-zlomenych-srdci-s03e17/s/-6",
+          "status": 200,
+          "response_bytes": 202210,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/skola-zlomenych-srdci/s/-6",
+          "status": 200,
+          "response_bytes": 341495,
+          "boxes": 103,
+          "parsed_candidates": 102,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartbreak-high-s03e17/s/-6",
+          "status": 200,
+          "response_bytes": 202068,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/heartbreak-high/s/-6",
+          "status": 200,
+          "response_bytes": 237099,
+          "boxes": 27,
+          "parsed_candidates": 27,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T00:14:00.349307+00:00"
     }
   },
-  "updated_at": "2026-11-06T00:13:37.327954+00:00",
+  "updated_at": "2026-11-06T00:14:44.709574+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1118107,12 +1118178,9 @@
     },
     "9667": {
       "misses": [
-        "9667:1:36",
-        "9667:1:37",
-        "9667:1:38"
+        "9667:4:5"
       ],
-      "updated_at": "2026-11-05T23:41:45.798735+00:00",
-      "retry_after": "2026-11-06T00:11:45.798735+00:00"
+      "updated_at": "2026-11-06T00:14:02.922455+00:00"
     },
     "7803": {
       "misses": [
@@ -1126667,12 +1126735,9 @@
     },
     "2102": {
       "misses": [
-        "2102:3:14",
-        "2102:3:15",
-        "2102:3:16"
+        "2102:3:17"
       ],
-      "updated_at": "2026-11-05T20:07:44.300776+00:00",
-      "retry_after": "2026-11-06T00:07:44.300776+00:00"
+      "updated_at": "2026-11-06T00:14:00.349341+00:00"
     },
     "4458": {
       "misses": [
@@ -1130478,12 +1130543,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2102,
+    "last_series": 1070,
     "last_series_order": [
       false,
-      -7.8,
-      -3936,
-      2102
+      -7.7,
+      -85082,
+      1070
     ]
   }
 }
