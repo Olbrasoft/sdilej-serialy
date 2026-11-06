@@ -508273,14 +508273,21 @@
       "retry_after": "2026-10-24T09:31:41.714890+00:00"
     },
     "4176:1:25": {
-      "at": "2026-10-23T09:31:25.379787+00:00",
+      "at": "2026-11-06T15:27:39.687959+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 26.15,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T09:34:10.816134+00:00"
+      "observed_audio_language": "zh",
+      "observed_language_probability": 0.9952616691589355,
+      "observed_source_id": "35343636",
+      "elapsed_seconds": 39.61,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-07T15:30:39.818080+00:00"
     },
     "3141:2:7": {
       "at": "2026-10-23T09:34:10.821335+00:00",
@@ -514582,14 +514589,21 @@
       "retry_after": "2026-10-24T13:54:41.580747+00:00"
     },
     "4176:1:26": {
-      "at": "2026-10-23T13:53:49.104839+00:00",
+      "at": "2026-11-06T15:27:40.495036+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 67.55,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T13:54:56.656852+00:00"
+      "observed_audio_language": "zh",
+      "observed_language_probability": 0.996500035127004,
+      "observed_source_id": "35343639",
+      "elapsed_seconds": 74.65,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-07T15:30:39.818211+00:00"
     },
     "4176:1:30": {
       "at": "2026-10-23T13:54:50.972807+00:00",
@@ -1146344,9 +1146358,102 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-07T15:27:39.687870+00:00"
+    },
+    "2703:1:10": {
+      "at": "2026-11-06T15:28:14.673003+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 25.31,
+      "source_id": "29296046",
+      "queue_rank": 35039
+    },
+    "3038:1:58": {
+      "at": "2026-11-06T15:30:42.211403+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 56.7,
+      "search_evidence": [
+        {
+          "path": "/looney-tunes-animaky-s01e58/s/-6",
+          "status": 200,
+          "response_bytes": 202097,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-animaky/s/-6",
+          "status": 200,
+          "response_bytes": 210954,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-cartoons-s01e58/s/-6",
+          "status": 200,
+          "response_bytes": 202175,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-cartoons/s/-6",
+          "status": 200,
+          "response_bytes": 208941,
+          "boxes": 6,
+          "parsed_candidates": 6,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-animaky-s01e58/s/-6",
+          "status": 200,
+          "response_bytes": 202153,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-animaky/s/-6",
+          "status": 200,
+          "response_bytes": 210912,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-cartoons-s01e58/s/-6",
+          "status": 200,
+          "response_bytes": 202122,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/looney-tunes-cartoons/s/-6",
+          "status": 200,
+          "response_bytes": 208862,
+          "boxes": 6,
+          "parsed_candidates": 6,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T15:31:38.912319+00:00"
     }
   },
-  "updated_at": "2026-11-06T15:28:19.299311+00:00",
+  "updated_at": "2026-11-06T15:31:43.852357+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1153152,9 +1153259,12 @@
     },
     "4176": {
       "misses": [
-        "4176:1:1"
+        "4176:1:1",
+        "4176:1:25",
+        "4176:1:26"
       ],
-      "updated_at": "2026-11-06T15:25:45.737018+00:00"
+      "updated_at": "2026-11-06T15:30:39.818229+00:00",
+      "retry_after": "2026-11-06T19:30:39.818229+00:00"
     },
     "955": {
       "misses": [
@@ -1158325,12 +1158435,9 @@
     },
     "3038": {
       "misses": [
-        "3038:1:52",
-        "3038:1:53",
-        "3038:1:55"
+        "3038:1:58"
       ],
-      "updated_at": "2026-11-06T08:04:37.591833+00:00",
-      "retry_after": "2026-11-06T12:04:37.591833+00:00"
+      "updated_at": "2026-11-06T15:31:38.912349+00:00"
     },
     "5346": {
       "misses": [
@@ -1164642,7 +1164749,7 @@
     },
     "2703": {
       "misses": [],
-      "updated_at": "2026-11-06T15:27:39.687691+00:00"
+      "updated_at": "2026-11-06T15:30:39.818317+00:00"
     },
     "1216": {
       "misses": [],
@@ -1164650,12 +1164757,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 2815,
+    "last_series": 2493,
     "last_series_order": [
       false,
-      -8.0,
-      -3220,
-      2815
+      -8,
+      -2107,
+      2493
     ]
   }
 }
