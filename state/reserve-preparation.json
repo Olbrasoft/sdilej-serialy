@@ -294200,7 +294200,7 @@
       "queue_rank": 25975
     },
     "1296:1:4": {
-      "at": "2026-11-06T01:02:31.330544+00:00",
+      "at": "2026-11-06T01:31:54.828443+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -294208,10 +294208,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 340.2,
-      "consecutive_failures": 2,
-      "retry_after": "2026-11-06T01:17:50.819835+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9395988583564758,
+      "observed_source_id": "9284849",
+      "elapsed_seconds": 59.45,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-07T01:32:54.280806+00:00"
     },
     "4327:1:5": {
       "at": "2026-10-18T11:17:52.691023+00:00",
@@ -1115956,9 +1115959,73 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-07T01:31:54.052442+00:00"
+    },
+    "1948:9:8": {
+      "at": "2026-11-06T01:30:30.611350+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 104.32,
+      "search_evidence": [
+        {
+          "path": "/mi5-s09e08/s/-6",
+          "status": 200,
+          "response_bytes": 201824,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/spooks-s09e08/s/-6",
+          "status": 200,
+          "response_bytes": 201862,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mi5-s09e08/s/-6",
+          "status": 200,
+          "response_bytes": 201921,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mi5/s/-6",
+          "status": 200,
+          "response_bytes": 214978,
+          "boxes": 14,
+          "parsed_candidates": 14,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/spooks-s09e08/s/-6",
+          "status": 200,
+          "response_bytes": 201843,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/spooks/s/-6",
+          "status": 200,
+          "response_bytes": 441017,
+          "boxes": 309,
+          "parsed_candidates": 85,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T01:32:46.193724+00:00"
     }
   },
-  "updated_at": "2026-11-06T01:32:01.998178+00:00",
+  "updated_at": "2026-11-06T01:33:50.262127+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1123562,9 +1123629,11 @@
     "1948": {
       "misses": [
         "1948:9:5",
-        "1948:9:6"
+        "1948:9:6",
+        "1948:9:8"
       ],
-      "updated_at": "2026-11-06T00:51:40.180071+00:00"
+      "updated_at": "2026-11-06T01:32:46.193766+00:00",
+      "retry_after": "2026-11-06T05:32:46.193766+00:00"
     },
     "5746": {
       "misses": [
@@ -1128201,12 +1128270,12 @@
     },
     "1296": {
       "misses": [
-        "1296:5:2",
         "1296:5:3",
-        "1296:1:3"
+        "1296:1:3",
+        "1296:1:4"
       ],
-      "updated_at": "2026-11-06T01:29:11.235338+00:00",
-      "retry_after": "2026-11-06T05:29:11.235338+00:00"
+      "updated_at": "2026-11-06T01:32:54.280836+00:00",
+      "retry_after": "2026-11-06T05:32:54.280836+00:00"
     },
     "4327": {
       "misses": [
