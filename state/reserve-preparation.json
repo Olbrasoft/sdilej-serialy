@@ -510858,7 +510858,7 @@
       "retry_after": "2026-11-07T06:42:04.056147+00:00"
     },
     "1055:7:7": {
-      "at": "2026-11-06T06:38:18.318828+00:00",
+      "at": "2026-11-06T06:56:08.014902+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -510866,40 +510866,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 476.16,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-06T06:55:49.799088+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.993873119354248,
+      "observed_source_id": "12666293",
+      "elapsed_seconds": 646.78,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-07T07:06:54.798916+00:00"
     },
     "1055:7:9": {
       "at": "2026-10-23T11:20:52.233058+00:00",
@@ -1126626,9 +1126599,185 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-07T07:06:18.361863+00:00"
+    },
+    "2351:5:3": {
+      "at": "2026-11-06T07:04:27.071000+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 162.18,
+      "search_evidence": [
+        {
+          "path": "/advokati-s05e03/s/-6",
+          "status": 200,
+          "response_bytes": 202450,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-practice-s05e03/s/-6",
+          "status": 200,
+          "response_bytes": 202042,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/advokati-s05e03/s/-6",
+          "status": 200,
+          "response_bytes": 202378,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/advokati/s/-6",
+          "status": 200,
+          "response_bytes": 493243,
+          "boxes": 265,
+          "parsed_candidates": 230,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-practice-s05e03/s/-6",
+          "status": 200,
+          "response_bytes": 201990,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-practice/s/-6",
+          "status": 200,
+          "response_bytes": 209975,
+          "boxes": 7,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T07:07:09.247032+00:00"
+    },
+    "9681:2:22": {
+      "at": "2026-11-06T07:04:34.126557+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 162.99,
+      "search_evidence": [
+        {
+          "path": "/kacer-dodgers-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 202065,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/duck-dodgers-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 202041,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/duck-dodgers/s/-6",
+          "status": 200,
+          "response_bytes": 201835,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kacer-dodgers-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 202003,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kacer-dodgers/s/-6",
+          "status": 200,
+          "response_bytes": 210959,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/duck-dodgers-s02e22/s/-6",
+          "status": 200,
+          "response_bytes": 201963,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/duck-dodgers/s/-6",
+          "status": 200,
+          "response_bytes": 201897,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T07:07:17.115887+00:00"
+    },
+    "465:4:9": {
+      "at": "2026-11-06T07:06:19.188333+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 70.12,
+      "search_evidence": [
+        {
+          "path": "/sedm-smrtelnych-hrichu-s04e09/s/-6",
+          "status": 200,
+          "response_bytes": 202257,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sedm-smrtelnych-hrichu-s04e09/s/-6",
+          "status": 200,
+          "response_bytes": 202293,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/sedm-smrtelnych-hrichu/s/-6",
+          "status": 200,
+          "response_bytes": 227315,
+          "boxes": 19,
+          "parsed_candidates": 18,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T07:07:29.307548+00:00"
     }
   },
-  "updated_at": "2026-11-06T07:06:26.719259+00:00",
+  "updated_at": "2026-11-06T07:07:36.731068+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1138616,12 +1138765,12 @@
     },
     "1055": {
       "misses": [
-        "1055:7:3",
         "1055:5:22",
-        "1055:7:8"
+        "1055:7:8",
+        "1055:7:7"
       ],
-      "updated_at": "2026-11-06T06:42:04.056173+00:00",
-      "retry_after": "2026-11-06T10:42:04.056173+00:00"
+      "updated_at": "2026-11-06T07:06:54.798943+00:00",
+      "retry_after": "2026-11-06T11:06:54.798943+00:00"
     },
     "257": {
       "misses": [
@@ -1141457,9 +1141606,11 @@
     "2351": {
       "misses": [
         "2351:5:1",
-        "2351:5:2"
+        "2351:5:2",
+        "2351:5:3"
       ],
-      "updated_at": "2026-11-06T05:49:18.932229+00:00"
+      "updated_at": "2026-11-06T07:07:09.247057+00:00",
+      "retry_after": "2026-11-06T11:07:09.247057+00:00"
     },
     "1462": {
       "misses": [
@@ -1141587,9 +1141738,10 @@
     },
     "9681": {
       "misses": [
-        "9681:2:21"
+        "9681:2:21",
+        "9681:2:22"
       ],
-      "updated_at": "2026-11-06T05:50:13.666488+00:00"
+      "updated_at": "2026-11-06T07:07:17.115911+00:00"
     },
     "1630": {
       "misses": [
@@ -1141979,9 +1142131,10 @@
     },
     "465": {
       "misses": [
-        "465:4:8"
+        "465:4:8",
+        "465:4:9"
       ],
-      "updated_at": "2026-11-06T05:50:35.945187+00:00"
+      "updated_at": "2026-11-06T07:07:29.307579+00:00"
     },
     "686": {
       "misses": [
@@ -1144523,12 +1144676,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 465,
+    "last_series": 2329,
     "last_series_order": [
       false,
       -7.6,
-      -47832,
-      465
+      -10511,
+      2329
     ]
   }
 }
