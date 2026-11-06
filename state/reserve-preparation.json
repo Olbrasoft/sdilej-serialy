@@ -1152089,9 +1152089,111 @@
       "elapsed_seconds": 22.99,
       "source_id": "29296126",
       "queue_rank": 35137
+    },
+    "2703:5:3": {
+      "at": "2026-11-06T19:39:11.588375+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 23.67,
+      "source_id": "29296129",
+      "queue_rank": 35138
+    },
+    "2378:1:3": {
+      "at": "2026-11-06T19:34:49.824366+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 334.1,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T20:40:23.922109+00:00"
+    },
+    "9569:1:2": {
+      "at": "2026-11-06T19:39:45.641737+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 39.42,
+      "source_id": "35155603",
+      "queue_rank": 35139
+    },
+    "2378:1:5": {
+      "at": "2026-11-06T19:34:50.899352+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 343.76,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-06T20:40:34.661774+00:00"
+    },
+    "1851:7:2": {
+      "at": "2026-11-06T19:40:24.706571+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 12.49,
+      "search_evidence": [
+        {
+          "path": "/one-tree-hill-s07e02/s/-6",
+          "status": 200,
+          "response_bytes": 201968,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/one-tree-hill/s/-6",
+          "status": 200,
+          "response_bytes": 255432,
+          "boxes": 46,
+          "parsed_candidates": 44,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/one-tree-hill-s07e02/s/-6",
+          "status": 200,
+          "response_bytes": 202010,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/one-tree-hill/s/-6",
+          "status": 200,
+          "response_bytes": 255433,
+          "boxes": 46,
+          "parsed_candidates": 44,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T19:40:37.195828+00:00"
     }
   },
-  "updated_at": "2026-11-06T19:39:35.670682+00:00",
+  "updated_at": "2026-11-06T19:40:39.614844+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1165265,12 +1165367,9 @@
     },
     "1851": {
       "misses": [
-        "1851:6:23",
-        "1851:6:24",
-        "1851:7:1"
+        "1851:7:2"
       ],
-      "updated_at": "2026-11-06T08:05:36.670394+00:00",
-      "retry_after": "2026-11-06T12:05:36.670394+00:00"
+      "updated_at": "2026-11-06T19:40:37.195858+00:00"
     },
     "78": {
       "misses": [
@@ -1170394,7 +1170493,7 @@
     },
     "2703": {
       "misses": [],
-      "updated_at": "2026-11-06T19:39:11.033533+00:00"
+      "updated_at": "2026-11-06T19:39:45.085403+00:00"
     },
     "1216": {
       "misses": [],
@@ -1170610,8 +1170709,11 @@
       "updated_at": "2026-11-06T19:25:31.946178+00:00"
     },
     "2378": {
-      "misses": [],
-      "updated_at": "2026-11-06T19:38:47.506422+00:00"
+      "misses": [
+        "2378:1:3",
+        "2378:1:5"
+      ],
+      "updated_at": "2026-11-06T19:40:34.661801+00:00"
     },
     "419": {
       "misses": [
@@ -1170644,15 +1170746,19 @@
     "37": {
       "misses": [],
       "updated_at": "2026-11-06T19:36:58.130841+00:00"
+    },
+    "9569": {
+      "misses": [],
+      "updated_at": "2026-11-06T19:40:25.058513+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 37,
+    "last_series": 1851,
     "last_series_order": [
       false,
-      -7.9,
-      -29,
-      37
+      -7.8,
+      -96093,
+      1851
     ]
   }
 }
