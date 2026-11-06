@@ -28168,11 +28168,44 @@
       "queue_rank": 9636
     },
     "1344:8:2": {
-      "at": "2026-10-03T05:48:16.191936+00:00",
+      "at": "2026-11-06T04:56:05.827750+00:00",
       "status": "deferred",
-      "preparation_revision": 2,
-      "reason": "no_verified_czech_match",
-      "retry_after": "2026-10-04T05:48:19.886132+00:00"
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 62.98,
+      "search_evidence": [
+        {
+          "path": "/seinfeld-s08e02/s/-6",
+          "status": 200,
+          "response_bytes": 201886,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld-s08e02/s/-6",
+          "status": 200,
+          "response_bytes": 201997,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/seinfeld/s/-6",
+          "status": 200,
+          "response_bytes": 246319,
+          "boxes": 29,
+          "parsed_candidates": 29,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-07T04:57:08.805747+00:00"
     },
     "1344:8:3": {
       "at": "2026-10-03T05:48:25.129131+00:00",
@@ -517198,7 +517231,7 @@
       "retry_after": "2026-11-07T02:59:19.837062+00:00"
     },
     "10493:1:2": {
-      "at": "2026-11-05T04:43:19.529967+00:00",
+      "at": "2026-11-06T04:54:11.129202+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -517208,12 +517241,12 @@
       "request_probe_revision": 1,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 130.71,
+      "elapsed_seconds": 170.56,
       "search_evidence": [
         {
           "path": "/big-pharma-s01e02/s/-6",
           "status": 200,
-          "response_bytes": 201949,
+          "response_bytes": 202029,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -517221,7 +517254,7 @@
         {
           "path": "/big-pharma/s/-6",
           "status": 200,
-          "response_bytes": 201858,
+          "response_bytes": 201843,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -517229,7 +517262,7 @@
         {
           "path": "/big-pharma-s01e02/s/-6",
           "status": 200,
-          "response_bytes": 202017,
+          "response_bytes": 201919,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -517237,14 +517270,14 @@
         {
           "path": "/big-pharma/s/-6",
           "status": 200,
-          "response_bytes": 201871,
+          "response_bytes": 201795,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 2,
-      "retry_after": "2026-11-06T04:45:33.520832+00:00"
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-07T04:57:01.687583+00:00"
     },
     "10502:1:2": {
       "at": "2026-11-05T07:48:22.367382+00:00",
@@ -1120607,7 +1120640,7 @@
       "retry_after": "2026-11-06T04:50:16.148190+00:00"
     }
   },
-  "updated_at": "2026-11-06T04:56:19.067020+00:00",
+  "updated_at": "2026-11-06T04:57:30.110853+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1125315,12 +1125348,9 @@
     },
     "1344": {
       "misses": [
-        "1344:7:23",
-        "1344:7:24",
-        "1344:8:1"
+        "1344:8:2"
       ],
-      "updated_at": "2026-11-05T23:41:30.913069+00:00",
-      "retry_after": "2026-11-06T03:41:30.913069+00:00"
+      "updated_at": "2026-11-06T04:57:08.805775+00:00"
     },
     "2844": {
       "misses": [
@@ -1138281,9 +1138311,10 @@
     },
     "10493": {
       "misses": [
-        "10493:1:1"
+        "10493:1:1",
+        "10493:1:2"
       ],
-      "updated_at": "2026-11-06T04:18:28.282400+00:00"
+      "updated_at": "2026-11-06T04:57:01.687622+00:00"
     },
     "10502": {
       "misses": [
@@ -1138523,12 +1138554,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1344,
+    "last_series": 9763,
     "last_series_order": [
       false,
-      -8.8,
-      -388900,
-      1344
+      -8.7,
+      -1773,
+      9763
     ]
   }
 }
