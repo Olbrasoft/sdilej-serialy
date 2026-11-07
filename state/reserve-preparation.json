@@ -278605,14 +278605,21 @@
       "queue_rank": 26044
     },
     "1630:1:4": {
-      "at": "2026-10-18T15:59:20.890718+00:00",
+      "at": "2026-11-07T00:56:18.473440+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 111.1,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-19T16:01:11.991401+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9229026436805725,
+      "observed_source_id": "28574882",
+      "elapsed_seconds": 124.49,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-08T00:58:25.896504+00:00"
     },
     "1630:1:5": {
       "at": "2026-10-18T15:59:26.172233+00:00",
@@ -1160132,9 +1160139,96 @@
       "elapsed_seconds": 53.42,
       "source_id": "32215868",
       "queue_rank": 35408
+    },
+    "3569:2:3": {
+      "at": "2026-11-07T00:57:15.184465+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 64.11,
+      "source_id": "32947506",
+      "queue_rank": 35409
+    },
+    "3569:2:5": {
+      "at": "2026-11-07T00:57:58.632533+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 27.38,
+      "source_id": "32215913",
+      "queue_rank": 35410
+    },
+    "6966:1:1": {
+      "at": "2026-11-07T00:58:28.553535+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 32.39,
+      "search_evidence": [
+        {
+          "path": "/prime-minister-liu-luo-guo-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202329,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/prime-minister-liu-luo-guo/s/-6",
+          "status": 200,
+          "response_bytes": 202202,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/prime-minister-liu-luo-guo-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202257,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/prime-minister-liu-luo-guo/s/-6",
+          "status": 200,
+          "response_bytes": 202179,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-08T00:59:00.944416+00:00"
+    },
+    "3569:2:6": {
+      "at": "2026-11-07T00:58:25.896625+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 39.69,
+      "source_id": "32215925",
+      "queue_rank": 35411
     }
   },
-  "updated_at": "2026-11-07T00:58:12.485302+00:00",
+  "updated_at": "2026-11-07T00:59:10.466095+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1175137,9 +1175231,10 @@
     },
     "1630": {
       "misses": [
-        "1630:1:7"
+        "1630:1:7",
+        "1630:1:4"
       ],
-      "updated_at": "2026-10-23T10:41:00.939344+00:00"
+      "updated_at": "2026-11-07T00:58:25.896542+00:00"
     },
     "4477": {
       "misses": [
@@ -1178680,7 +1178775,7 @@
     },
     "3569": {
       "misses": [],
-      "updated_at": "2026-11-07T00:58:07.710090+00:00"
+      "updated_at": "2026-11-07T00:59:05.586475+00:00"
     },
     "4154": {
       "misses": [
@@ -1179031,15 +1179126,21 @@
         "180:1:1"
       ],
       "updated_at": "2026-11-07T00:57:12.718230+00:00"
+    },
+    "6966": {
+      "misses": [
+        "6966:1:1"
+      ],
+      "updated_at": "2026-11-07T00:59:00.944449+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 10283,
+    "last_series": 6966,
     "last_series_order": [
       false,
       -7.7,
-      -346,
-      10283
+      -211,
+      6966
     ]
   }
 }
