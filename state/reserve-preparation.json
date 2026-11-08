@@ -408657,7 +408657,7 @@
       "retry_after": "2026-11-09T00:50:23.761221+00:00"
     },
     "626:8:15": {
-      "at": "2026-11-08T00:52:10.406207+00:00",
+      "at": "2026-11-08T01:23:04.330532+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -408665,10 +408665,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 339.53,
-      "consecutive_failures": 2,
-      "retry_after": "2026-11-08T01:07:49.932356+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9986588954925537,
+      "observed_source_id": "34010546",
+      "elapsed_seconds": 321.24,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-09T01:28:55.155557+00:00"
     },
     "54:2:14": {
       "at": "2026-11-05T13:59:53.103201+00:00",
@@ -1147330,7 +1147333,7 @@
       "retry_after": "2026-11-08T15:31:35.379297+00:00"
     },
     "2742:3:4": {
-      "at": "2026-11-06T15:20:45.408539+00:00",
+      "at": "2026-11-08T01:28:57.745968+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -1147339,12 +1147342,12 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "no_matches",
-      "elapsed_seconds": 59.33,
+      "elapsed_seconds": 49.89,
       "search_evidence": [
         {
           "path": "/salon-eliott-s03e04/s/-6",
           "status": 200,
-          "response_bytes": 202019,
+          "response_bytes": 201998,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -1147352,7 +1147355,7 @@
         {
           "path": "/the-house-of-eliott-s03e04/s/-6",
           "status": 200,
-          "response_bytes": 202203,
+          "response_bytes": 202180,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
@@ -1147360,22 +1147363,38 @@
         {
           "path": "/salon-eliott-s03e04/s/-6",
           "status": 200,
-          "response_bytes": 202011,
+          "response_bytes": 202032,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
         },
         {
+          "path": "/salon-eliott/s/-6",
+          "status": 200,
+          "response_bytes": 203022,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
           "path": "/the-house-of-eliott-s03e04/s/-6",
           "status": 200,
-          "response_bytes": 202173,
+          "response_bytes": 202084,
           "boxes": 0,
           "parsed_candidates": 0,
           "heading_matches_query": true
+        },
+        {
+          "path": "/the-house-of-eliott/s/-6",
+          "status": 200,
+          "response_bytes": 212387,
+          "boxes": 9,
+          "parsed_candidates": 9,
+          "heading_matches_query": true
         }
       ],
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-07T15:21:45.454961+00:00"
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-09T01:29:47.635258+00:00"
     },
     "2019:2:1": {
       "at": "2026-11-06T15:21:05.558357+00:00",
@@ -1180109,9 +1180128,48 @@
       "elapsed_seconds": 57.6,
       "source_id": "32703477",
       "queue_rank": 36216
+    },
+    "3481:4:7": {
+      "at": "2026-11-08T01:26:38.253972+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 74.75,
+      "source_id": "31838789",
+      "queue_rank": 36217
+    },
+    "3481:4:8": {
+      "at": "2026-11-08T01:27:29.303534+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 33.73,
+      "source_id": "34444728",
+      "queue_rank": 36218
+    },
+    "3481:5:2": {
+      "at": "2026-11-08T01:28:55.155668+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 51.05,
+      "source_id": "32486517",
+      "queue_rank": 36219
     }
   },
-  "updated_at": "2026-11-08T01:27:38.850469+00:00",
+  "updated_at": "2026-11-08T01:29:50.901005+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1190731,9 +1190789,11 @@
     "626": {
       "misses": [
         "626:8:14",
-        "626:8:12"
+        "626:8:12",
+        "626:8:15"
       ],
-      "updated_at": "2026-11-08T00:50:57.762060+00:00"
+      "updated_at": "2026-11-08T01:28:55.155584+00:00",
+      "retry_after": "2026-11-08T05:28:55.155584+00:00"
     },
     "4677": {
       "misses": [
@@ -1198211,9 +1198271,10 @@
     },
     "2742": {
       "misses": [
-        "2742:2:4"
+        "2742:2:4",
+        "2742:3:4"
       ],
-      "updated_at": "2026-11-08T01:26:34.865018+00:00"
+      "updated_at": "2026-11-08T01:29:47.635284+00:00"
     },
     "5336": {
       "misses": [],
@@ -1199621,7 +1199682,7 @@
     },
     "3481": {
       "misses": [],
-      "updated_at": "2026-11-08T01:27:34.941565+00:00"
+      "updated_at": "2026-11-08T01:29:46.207480+00:00"
     },
     "3264": {
       "misses": [
@@ -1200248,12 +1200309,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 3360,
+    "last_series": 8083,
     "last_series_order": [
       false,
       -7.4,
-      -257,
-      3360
+      -197,
+      8083
     ]
   }
 }
