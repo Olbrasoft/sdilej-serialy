@@ -1196709,9 +1196709,71 @@
       "elapsed_seconds": 199.53,
       "source_id": "32763277",
       "queue_rank": 36721
+    },
+    "6315:1:1": {
+      "at": "2026-11-08T16:38:54.309408+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 70.81,
+      "search_evidence": [
+        {
+          "path": "/traffic-light-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202082,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/traffic-light/s/-6",
+          "status": 200,
+          "response_bytes": 202136,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/traffic-light-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202025,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/traffic-light/s/-6",
+          "status": 200,
+          "response_bytes": 202134,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-09T16:40:08.498974+00:00"
+    },
+    "4064:1:4": {
+      "at": "2026-11-08T16:37:46.000272+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 187.67,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-08T16:55:53.665476+00:00"
     }
   },
-  "updated_at": "2026-11-08T16:39:35.848274+00:00",
+  "updated_at": "2026-11-08T16:41:11.834349+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1218353,14 +1218415,22 @@
       "updated_at": "2026-11-08T16:08:25.082991+00:00"
     },
     "4064": {
-      "misses": [],
-      "updated_at": "2026-11-08T16:37:45.477537+00:00"
+      "misses": [
+        "4064:1:4"
+      ],
+      "updated_at": "2026-11-08T16:40:53.665498+00:00"
     },
     "6570": {
       "misses": [
         "6570:1:1"
       ],
       "updated_at": "2026-11-08T16:12:00.739531+00:00"
+    },
+    "6315": {
+      "misses": [
+        "6315:1:1"
+      ],
+      "updated_at": "2026-11-08T16:40:08.499015+00:00"
     }
   },
   "discovery_progress": {
