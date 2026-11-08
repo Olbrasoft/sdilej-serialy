@@ -1188494,9 +1188494,85 @@
       "elapsed_seconds": 217.81,
       "source_id": "22343314",
       "queue_rank": 36594
+    },
+    "1263:1:2": {
+      "at": "2026-11-08T11:51:42.225771+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 265.52,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-08T12:11:12.156038+00:00"
+    },
+    "2756:1:1": {
+      "at": "2026-11-08T11:55:12.862819+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 57.69,
+      "search_evidence": [
+        {
+          "path": "/combat-hospital-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202710,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/combat-hospital/s/-6",
+          "status": 200,
+          "response_bytes": 218793,
+          "boxes": 12,
+          "parsed_candidates": 12,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/combat-hospital-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202656,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/combat-hospital/s/-6",
+          "status": 200,
+          "response_bytes": 218898,
+          "boxes": 12,
+          "parsed_candidates": 12,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-09T11:56:12.156130+00:00"
+    },
+    "1263:1:4": {
+      "at": "2026-11-08T11:55:09.985650+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "transient_original",
+      "elapsed_seconds": 118.66,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-08T12:12:08.646454+00:00"
     }
   },
-  "updated_at": "2026-11-08T11:56:01.224608+00:00",
+  "updated_at": "2026-11-08T11:57:16.883624+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1208996,8 +1209072,11 @@
       "updated_at": "2026-11-08T05:50:01.389378+00:00"
     },
     "1263": {
-      "misses": [],
-      "updated_at": "2026-11-08T05:50:09.145889+00:00"
+      "misses": [
+        "1263:1:2",
+        "1263:1:4"
+      ],
+      "updated_at": "2026-11-08T11:57:08.646478+00:00"
     },
     "1039": {
       "misses": [
@@ -1209314,15 +1209393,21 @@
         "5903:1:1"
       ],
       "updated_at": "2026-11-08T11:25:22.509383+00:00"
+    },
+    "2756": {
+      "misses": [
+        "2756:1:1"
+      ],
+      "updated_at": "2026-11-08T11:56:12.156150+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 2756,
+    "last_series": 3263,
     "last_series_order": [
       false,
       -7.3,
-      -2452,
-      2756
+      -2349,
+      3263
     ]
   }
 }
