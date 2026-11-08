@@ -408657,7 +408657,7 @@
       "retry_after": "2026-11-09T00:50:23.761221+00:00"
     },
     "626:8:15": {
-      "at": "2026-11-07T00:34:33.602150+00:00",
+      "at": "2026-11-08T00:52:10.406207+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -408665,13 +408665,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "observed_audio_language": "en",
-      "observed_language_probability": 0.9986588954925537,
-      "observed_source_id": "34010546",
-      "elapsed_seconds": 297.16,
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 339.53,
       "consecutive_failures": 2,
-      "retry_after": "2026-11-08T00:39:34.512000+00:00"
+      "retry_after": "2026-11-08T01:07:49.932356+00:00"
     },
     "54:2:14": {
       "at": "2026-11-05T13:59:53.103201+00:00",
@@ -1151793,7 +1151790,7 @@
       "retry_after": "2026-11-08T19:48:01.249011+00:00"
     },
     "2742:2:4": {
-      "at": "2026-11-06T18:39:23.746796+00:00",
+      "at": "2026-11-08T00:52:11.260997+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -1151801,44 +1151798,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 74.41,
-      "search_evidence": [
-        {
-          "path": "/salon-eliott-s02e04/s/-6",
-          "status": 200,
-          "response_bytes": 202022,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/the-house-of-eliott-s02e04/s/-6",
-          "status": 200,
-          "response_bytes": 202474,
-          "boxes": 1,
-          "parsed_candidates": 1,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/salon-eliott-s02e04/s/-6",
-          "status": 200,
-          "response_bytes": 201989,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/the-house-of-eliott-s02e04/s/-6",
-          "status": 200,
-          "response_bytes": 202366,
-          "boxes": 1,
-          "parsed_candidates": 1,
-          "heading_matches_query": true
-        }
-      ],
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 338.67,
       "consecutive_failures": 1,
-      "retry_after": "2026-11-07T18:40:38.763751+00:00"
+      "retry_after": "2026-11-08T01:07:49.932354+00:00"
     },
     "1648:1:1": {
       "at": "2026-11-06T18:40:25.804994+00:00",
@@ -1179983,9 +1179946,67 @@
       "elapsed_seconds": 53.4,
       "consecutive_failures": 0,
       "retry_after": "2026-11-08T00:57:21.512563+00:00"
+    },
+    "2893:1:2": {
+      "at": "2026-11-08T00:52:22.625450+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 327.31,
+      "consecutive_failures": 0,
+      "retry_after": "2026-11-08T01:07:49.932355+00:00"
+    },
+    "1869:2:13": {
+      "at": "2026-11-08T00:51:06.313039+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "source_search_unavailable",
+      "error": {
+        "type": "SearchUnavailable",
+        "frames": [
+          {
+            "file": "episodes.py",
+            "function": "_inspect",
+            "line": 335
+          },
+          {
+            "file": "source_audit.py",
+            "function": "_get",
+            "line": 118
+          },
+          {
+            "file": "episodes.py",
+            "function": "_get",
+            "line": 227
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 202
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 84
+          }
+        ]
+      },
+      "elapsed_seconds": 420.39,
+      "consecutive_failures": 0,
+      "retry_after": "2026-11-08T01:07:49.932358+00:00"
     }
   },
-  "updated_at": "2026-11-08T00:57:35.708768+00:00",
+  "updated_at": "2026-11-08T00:58:09.982776+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
