@@ -407665,7 +407665,7 @@
       "retry_after": "2026-10-22T10:45:48.969278+00:00"
     },
     "1243:2:4": {
-      "at": "2026-11-06T10:20:00.478887+00:00",
+      "at": "2026-11-08T03:37:03.404326+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -407677,9 +407677,9 @@
       "observed_audio_language": "en",
       "observed_language_probability": 0.964368462562561,
       "observed_source_id": "34983801",
-      "elapsed_seconds": 35.54,
-      "consecutive_failures": 2,
-      "retry_after": "2026-11-07T10:20:36.030693+00:00"
+      "elapsed_seconds": 32.27,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-09T03:37:35.676802+00:00"
     },
     "1316:2:8": {
       "at": "2026-10-21T10:45:47.497973+00:00",
@@ -1182977,9 +1182977,70 @@
       "elapsed_seconds": 48.48,
       "source_id": "11081344",
       "queue_rank": 36343
+    },
+    "1797:5:18": {
+      "at": "2026-11-08T03:35:32.111923+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 52.32,
+      "source_id": "35084984",
+      "queue_rank": 36344
+    },
+    "9690:1:1": {
+      "at": "2026-11-08T03:36:43.296134+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 19.19,
+      "search_evidence": [
+        {
+          "path": "/kim-possible-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202018,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kim-possible/s/-6",
+          "status": 200,
+          "response_bytes": 296755,
+          "boxes": 77,
+          "parsed_candidates": 74,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kim-possible-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 201997,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kim-possible/s/-6",
+          "status": 200,
+          "response_bytes": 296787,
+          "boxes": 77,
+          "parsed_candidates": 74,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-09T03:37:02.491182+00:00"
     }
   },
-  "updated_at": "2026-11-08T03:36:25.247499+00:00",
+  "updated_at": "2026-11-08T03:37:47.982564+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1192851,12 +1192912,9 @@
     },
     "1243": {
       "misses": [
-        "1243:1:10",
-        "1243:2:4",
-        "1243:4:7"
+        "1243:2:4"
       ],
-      "updated_at": "2026-11-06T10:20:40.302941+00:00",
-      "retry_after": "2026-11-06T14:20:40.302941+00:00"
+      "updated_at": "2026-11-08T03:37:35.676828+00:00"
     },
     "1316": {
       "misses": [
@@ -1202668,7 +1202726,7 @@
     },
     "1797": {
       "misses": [],
-      "updated_at": "2026-11-08T03:36:19.703879+00:00"
+      "updated_at": "2026-11-08T03:36:43.290928+00:00"
     },
     "2359": {
       "misses": [],
@@ -1203321,15 +1203379,21 @@
         "2539:1:1"
       ],
       "updated_at": "2026-11-08T03:33:16.837654+00:00"
+    },
+    "9690": {
+      "misses": [
+        "9690:1:1"
+      ],
+      "updated_at": "2026-11-08T03:37:02.491208+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 939,
+    "last_series": 9690,
     "last_series_order": [
       false,
       -7.3,
-      -41256,
-      939
+      -36975,
+      9690
     ]
   }
 }
