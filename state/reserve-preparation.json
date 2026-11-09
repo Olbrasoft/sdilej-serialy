@@ -901704,7 +901704,7 @@
       "retry_after": "2026-11-02T05:28:15.099638+00:00"
     },
     "597:3:4": {
-      "at": "2026-11-09T08:56:11.563726+00:00",
+      "at": "2026-11-09T15:12:57.486418+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -901712,10 +901712,40 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_original",
-      "elapsed_seconds": 908.09,
+      "reason": "source_search_unavailable",
+      "error": {
+        "type": "SearchUnavailable",
+        "frames": [
+          {
+            "file": "episodes.py",
+            "function": "_inspect",
+            "line": 335
+          },
+          {
+            "file": "source_audit.py",
+            "function": "_get",
+            "line": 118
+          },
+          {
+            "file": "episodes.py",
+            "function": "_get",
+            "line": 227
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 202
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 84
+          }
+        ]
+      },
+      "elapsed_seconds": 585.9,
       "consecutive_failures": 15,
-      "retry_after": "2026-11-09T15:11:19.657811+00:00"
+      "retry_after": "2026-11-09T15:32:19.797923+00:00"
     },
     "597:3:5": {
       "at": "2026-11-09T13:27:43.551419+00:00",
@@ -1213914,9 +1213944,23 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-10T15:15:43.778922+00:00"
+    },
+    "1111:1:28": {
+      "at": "2026-11-09T15:22:18.973066+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 13.44,
+      "consecutive_failures": 0,
+      "retry_after": "2026-11-09T15:32:19.797924+00:00"
     }
   },
-  "updated_at": "2026-11-09T15:22:23.769439+00:00",
+  "updated_at": "2026-11-09T15:22:46.872437+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
