@@ -9864,24 +9864,38 @@
       "retry_after": "2026-10-24T06:53:25.594539+00:00"
     },
     "1265:3:1": {
-      "at": "2026-10-18T04:47:06.926974+00:00",
+      "at": "2026-11-09T17:32:50.522227+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 177.09,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-19T04:50:04.012522+00:00"
+      "observed_audio_language": "ja",
+      "observed_language_probability": 0.9863930344581604,
+      "observed_source_id": "30754817",
+      "elapsed_seconds": 191.59,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-10T17:36:02.109814+00:00"
     },
     "1265:3:2": {
-      "at": "2026-10-18T04:48:04.106263+00:00",
+      "at": "2026-11-09T17:32:51.397941+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 145.91,
-      "consecutive_failures": 3,
-      "retry_after": "2026-10-19T04:50:30.013480+00:00"
+      "observed_audio_language": "ja",
+      "observed_language_probability": 0.9739208221435547,
+      "observed_source_id": "30754820",
+      "elapsed_seconds": 187.2,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-10T17:35:58.602841+00:00"
     },
     "1265:3:3": {
       "at": "2026-10-18T04:48:04.653877+00:00",
@@ -1215087,9 +1215101,89 @@
       "elapsed_seconds": 24.03,
       "source_id": "34043243",
       "queue_rank": 37641
+    },
+    "177:1:1": {
+      "at": "2026-11-09T17:35:02.672105+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 23.02,
+      "search_evidence": [
+        {
+          "path": "/mr-bean-animovane-pribehy-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202874,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mr-bean-animovane-pribehy/s/-6",
+          "status": 200,
+          "response_bytes": 279897,
+          "boxes": 51,
+          "parsed_candidates": 51,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mr-bean-the-animated-series-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202355,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mr-bean-the-animated-series/s/-6",
+          "status": 200,
+          "response_bytes": 203852,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mr-bean-animovane-pribehy-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202916,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mr-bean-animovane-pribehy/s/-6",
+          "status": 200,
+          "response_bytes": 279784,
+          "boxes": 51,
+          "parsed_candidates": 51,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mr-bean-the-animated-series-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 186176,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/mr-bean-the-animated-series/s/-6",
+          "status": 200,
+          "response_bytes": 186029,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-10T17:35:31.004416+00:00"
     }
   },
-  "updated_at": "2026-11-09T17:35:13.848282+00:00",
+  "updated_at": "2026-11-09T17:36:35.785101+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1219758,9 +1219852,12 @@
     },
     "1265": {
       "misses": [
-        "1265:4:15"
+        "1265:4:15",
+        "1265:3:2",
+        "1265:3:1"
       ],
-      "updated_at": "2026-11-09T17:33:35.503182+00:00"
+      "updated_at": "2026-11-09T17:36:02.109842+00:00",
+      "retry_after": "2026-11-09T21:36:02.109842+00:00"
     },
     "998": {
       "misses": [
@@ -1238155,6 +1238252,12 @@
     "4321": {
       "misses": [],
       "updated_at": "2026-11-09T17:32:50.514915+00:00"
+    },
+    "177": {
+      "misses": [
+        "177:1:1"
+      ],
+      "updated_at": "2026-11-09T17:35:31.004456+00:00"
     }
   },
   "discovery_progress": {
