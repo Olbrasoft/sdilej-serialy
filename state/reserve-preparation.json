@@ -321885,7 +321885,7 @@
       "retry_after": "2026-11-10T10:06:27.234035+00:00"
     },
     "1388:4:2": {
-      "at": "2026-11-02T06:15:35.969806+00:00",
+      "at": "2026-11-09T10:09:47.249622+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -321895,11 +321895,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.9798129796981812,
+      "observed_language_probability": 0.9779024720191956,
       "observed_source_id": "33460764",
-      "elapsed_seconds": 155.94,
-      "consecutive_failures": 2,
-      "retry_after": "2026-11-03T06:18:11.913558+00:00"
+      "elapsed_seconds": 521.92,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-10T10:18:29.174069+00:00"
     },
     "1980:2:2": {
       "at": "2026-10-19T12:32:06.450528+00:00",
@@ -322410,7 +322410,7 @@
       "queue_rank": 30294
     },
     "1388:4:4": {
-      "at": "2026-11-02T06:16:27.824213+00:00",
+      "at": "2026-11-09T10:10:23.472418+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -322418,13 +322418,40 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "verified_non_czech",
-      "observed_audio_language": "en",
-      "observed_language_probability": 0.8259716480970383,
-      "observed_source_id": "33551981",
-      "elapsed_seconds": 396.07,
+      "reason": "source_search_unavailable",
+      "error": {
+        "type": "SearchUnavailable",
+        "frames": [
+          {
+            "file": "episodes.py",
+            "function": "_inspect",
+            "line": 335
+          },
+          {
+            "file": "source_audit.py",
+            "function": "_get",
+            "line": 118
+          },
+          {
+            "file": "episodes.py",
+            "function": "_get",
+            "line": 227
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 202
+          },
+          {
+            "file": "search_health.py",
+            "function": "wait",
+            "line": 84
+          }
+        ]
+      },
+      "elapsed_seconds": 384.21,
       "consecutive_failures": 2,
-      "retry_after": "2026-11-03T06:23:03.891129+00:00"
+      "retry_after": "2026-11-09T10:26:30.520352+00:00"
     },
     "3532:1:6": {
       "at": "2026-10-19T12:39:25.656816+00:00",
@@ -1210675,9 +1210702,23 @@
       "elapsed_seconds": 98.65,
       "source_id": "33855667",
       "queue_rank": 37460
+    },
+    "779:1:5": {
+      "at": "2026-11-09T10:11:06.681434+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 323.84,
+      "consecutive_failures": 0,
+      "retry_after": "2026-11-09T10:26:30.520340+00:00"
     }
   },
-  "updated_at": "2026-11-09T10:15:55.985342+00:00",
+  "updated_at": "2026-11-09T10:18:33.745633+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1225130,12 +1225171,12 @@
     },
     "1388": {
       "misses": [
-        "1388:3:5",
         "1388:3:7",
-        "1388:3:6"
+        "1388:3:6",
+        "1388:4:2"
       ],
-      "updated_at": "2026-11-09T10:09:38.548702+00:00",
-      "retry_after": "2026-11-09T14:09:38.548702+00:00"
+      "updated_at": "2026-11-09T10:18:29.174093+00:00",
+      "retry_after": "2026-11-09T14:18:29.174093+00:00"
     },
     "929": {
       "misses": [
