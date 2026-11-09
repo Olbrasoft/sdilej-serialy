@@ -257351,7 +257351,7 @@
       "retry_after": "2026-10-17T05:49:16.263302+00:00"
     },
     "1301:1:8": {
-      "at": "2026-11-06T22:44:31.076625+00:00",
+      "at": "2026-11-09T08:42:32.412993+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -257361,11 +257361,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.9095507264137268,
+      "observed_language_probability": 0.9088176488876343,
       "observed_source_id": "30963720",
-      "elapsed_seconds": 268.51,
-      "consecutive_failures": 3,
-      "retry_after": "2026-11-07T22:48:59.586801+00:00"
+      "elapsed_seconds": 304.39,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-10T08:47:36.802119+00:00"
     },
     "4192:1:3": {
       "at": "2026-10-16T05:50:24.693876+00:00",
@@ -326579,7 +326579,7 @@
       "retry_after": "2026-10-24T03:38:38.248840+00:00"
     },
     "1301:2:1": {
-      "at": "2026-11-06T22:44:32.037325+00:00",
+      "at": "2026-11-09T08:42:33.044359+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -326589,11 +326589,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.9816514253616333,
+      "observed_language_probability": 0.974312424659729,
       "observed_source_id": "32044596",
-      "elapsed_seconds": 271.04,
-      "consecutive_failures": 3,
-      "retry_after": "2026-11-07T22:49:03.081952+00:00"
+      "elapsed_seconds": 305.99,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-10T08:47:39.030933+00:00"
     },
     "1301:2:4": {
       "at": "2026-11-06T22:55:22.313530+00:00",
@@ -1209635,9 +1209635,70 @@
       "elapsed_seconds": 22.57,
       "source_id": "26919916",
       "queue_rank": 37396
+    },
+    "3813:1:4": {
+      "at": "2026-11-09T08:46:50.815968+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 21.76,
+      "source_id": "27805821",
+      "queue_rank": 37397
+    },
+    "6799:1:1": {
+      "at": "2026-11-09T08:47:11.047827+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 15.05,
+      "search_evidence": [
+        {
+          "path": "/the-nine-lives-of-chloe-king-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202318,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-nine-lives-of-chloe-king/s/-6",
+          "status": 200,
+          "response_bytes": 202249,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-nine-lives-of-chloe-king-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202369,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-nine-lives-of-chloe-king/s/-6",
+          "status": 200,
+          "response_bytes": 202180,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-10T08:47:26.095427+00:00"
     }
   },
-  "updated_at": "2026-11-09T08:46:59.148742+00:00",
+  "updated_at": "2026-11-09T08:48:15.536176+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1222288,10 +1222349,12 @@
     },
     "1301": {
       "misses": [
-        "1301:1:6",
-        "1301:1:7"
+        "1301:1:7",
+        "1301:1:8",
+        "1301:2:1"
       ],
-      "updated_at": "2026-11-09T08:42:29.860716+00:00"
+      "updated_at": "2026-11-09T08:47:39.030960+00:00",
+      "retry_after": "2026-11-09T12:47:39.030960+00:00"
     },
     "575": {
       "misses": [
@@ -1231897,7 +1231960,7 @@
     },
     "3813": {
       "misses": [],
-      "updated_at": "2026-11-09T08:46:56.384297+00:00"
+      "updated_at": "2026-11-09T08:47:12.576124+00:00"
     },
     "3906": {
       "misses": [
@@ -1232234,15 +1232297,21 @@
     "2952": {
       "misses": [],
       "updated_at": "2026-11-09T08:42:30.130078+00:00"
+    },
+    "6799": {
+      "misses": [
+        "6799:1:1"
+      ],
+      "updated_at": "2026-11-09T08:47:26.095455+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 2952,
+    "last_series": 906,
     "last_series_order": [
       false,
       -7,
-      -11215,
-      2952
+      -10757,
+      906
     ]
   }
 }
