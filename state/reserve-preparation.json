@@ -667747,27 +667747,21 @@
       "retry_after": "2026-10-24T23:49:41.490658+00:00"
     },
     "1375:5:4": {
-      "at": "2026-10-24T23:19:37.802734+00:00",
+      "at": "2026-11-09T14:20:08.308583+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_search",
-      "elapsed_seconds": 906.21,
-      "search_evidence": [
-        {
-          "path": "/malcolm-v-nesnazich-s05e04/s/-6",
-          "status": 200,
-          "response_bytes": 217193,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        }
-      ],
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T23:49:44.008806+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9945713877677917,
+      "observed_source_id": "35058910",
+      "elapsed_seconds": 52.84,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-10T14:21:01.145670+00:00"
     },
     "1375:5:5": {
       "at": "2026-10-24T23:19:38.337128+00:00",
@@ -1213270,9 +1213264,35 @@
       "elapsed_seconds": 55.2,
       "source_id": "30654981",
       "queue_rank": 37564
+    },
+    "6580:1:1": {
+      "at": "2026-11-09T14:19:30.378039+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 37.12,
+      "source_id": "32920519",
+      "queue_rank": 37565
+    },
+    "10012:1:1": {
+      "at": "2026-11-09T14:19:39.812127+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 38.63,
+      "source_id": "30907354",
+      "queue_rank": 37566
     }
   },
-  "updated_at": "2026-11-09T14:19:47.254739+00:00",
+  "updated_at": "2026-11-09T14:21:08.294971+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1221539,9 +1221559,10 @@
     },
     "1375": {
       "misses": [
-        "1375:7:9"
+        "1375:7:9",
+        "1375:5:4"
       ],
-      "updated_at": "2026-11-09T14:14:20.994823+00:00"
+      "updated_at": "2026-11-09T14:21:01.145699+00:00"
     },
     "1104": {
       "misses": [],
@@ -1236175,6 +1236196,14 @@
         "9048:1:1"
       ],
       "updated_at": "2026-11-09T14:12:44.506511+00:00"
+    },
+    "6580": {
+      "misses": [],
+      "updated_at": "2026-11-09T14:20:07.494338+00:00"
+    },
+    "10012": {
+      "misses": [],
+      "updated_at": "2026-11-09T14:20:18.443900+00:00"
     }
   },
   "discovery_progress": {
