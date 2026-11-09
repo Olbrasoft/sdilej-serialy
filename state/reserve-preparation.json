@@ -1218384,9 +1218384,119 @@
       "elapsed_seconds": 40.36,
       "source_id": "30018481",
       "queue_rank": 37780
+    },
+    "1931:2:2": {
+      "at": "2026-11-09T21:21:11.496139+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 30.95,
+      "source_id": "30018501",
+      "queue_rank": 37781
+    },
+    "2482:1:1": {
+      "at": "2026-11-09T21:21:17.976025+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 30.31,
+      "search_evidence": [
+        {
+          "path": "/kingova-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 207660,
+          "boxes": 5,
+          "parsed_candidates": 5,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kingova/s/-6",
+          "status": 200,
+          "response_bytes": 448739,
+          "boxes": 201,
+          "parsed_candidates": 154,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/king-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 354737,
+          "boxes": 116,
+          "parsed_candidates": 114,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/king/s/-6",
+          "status": 200,
+          "response_bytes": 432535,
+          "boxes": 247,
+          "parsed_candidates": 130,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kingova-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 207655,
+          "boxes": 5,
+          "parsed_candidates": 5,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kingova/s/-6",
+          "status": 200,
+          "response_bytes": 448674,
+          "boxes": 201,
+          "parsed_candidates": 154,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/king-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 354698,
+          "boxes": 116,
+          "parsed_candidates": 114,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/king/s/-6",
+          "status": 200,
+          "response_bytes": 432698,
+          "boxes": 247,
+          "parsed_candidates": 130,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-10T21:22:22.785219+00:00"
+    },
+    "6513:1:1": {
+      "at": "2026-11-09T21:22:22.790395+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9899842739105225,
+      "observed_source_id": "30607475",
+      "elapsed_seconds": 50.38,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-10T21:23:13.167532+00:00"
     }
   },
-  "updated_at": "2026-11-09T21:21:26.573123+00:00",
+  "updated_at": "2026-11-09T21:23:27.688021+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1237445,7 +1237555,7 @@
     },
     "1931": {
       "misses": [],
-      "updated_at": "2026-11-09T21:21:23.857671+00:00"
+      "updated_at": "2026-11-09T21:22:22.785142+00:00"
     },
     "2134": {
       "misses": [],
@@ -1241707,15 +1241817,27 @@
     "2530": {
       "misses": [],
       "updated_at": "2026-11-09T21:20:32.875655+00:00"
+    },
+    "2482": {
+      "misses": [
+        "2482:1:1"
+      ],
+      "updated_at": "2026-11-09T21:22:22.785230+00:00"
+    },
+    "6513": {
+      "misses": [
+        "6513:1:1"
+      ],
+      "updated_at": "2026-11-09T21:23:13.167566+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 2482,
+    "last_series": 6513,
     "last_series_order": [
       false,
       -6.9,
-      -1765,
-      2482
+      -1750,
+      6513
     ]
   }
 }
