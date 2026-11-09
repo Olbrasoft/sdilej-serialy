@@ -299453,82 +299453,18 @@
       "retry_after": "2026-10-19T13:07:40.455898+00:00"
     },
     "1282:1:4": {
-      "at": "2026-10-24T05:03:58.016864+00:00",
+      "at": "2026-11-09T16:29:20.741800+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
-      "search_recovery_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_search",
-      "elapsed_seconds": 45.32,
-      "search_evidence": [
-        {
-          "path": "/severane-s01e04/s/-6",
-          "status": 200,
-          "response_bytes": 189493,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/severane/s/-6",
-          "status": 200,
-          "response_bytes": 189346,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/norsemen-s01e04/s/-6",
-          "status": 200,
-          "response_bytes": 189493,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/norsemen/s/-6",
-          "status": 200,
-          "response_bytes": 189346,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/severane-s01e04/s/-6",
-          "status": 200,
-          "response_bytes": 189493,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/severane/s/-6",
-          "status": 200,
-          "response_bytes": 189346,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/norsemen-s01e04/s/-6",
-          "status": 200,
-          "response_bytes": 189493,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/norsemen/s/-6",
-          "status": 200,
-          "response_bytes": 189346,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        }
-      ],
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-24T05:34:43.337290+00:00"
+      "reason": "inconclusive_audio",
+      "elapsed_seconds": 213.69,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-09T20:34:33.016441+00:00"
     },
     "1163:2:1": {
       "at": "2026-11-03T08:38:56.321036+00:00",
@@ -1214697,9 +1214633,48 @@
       "elapsed_seconds": 71.76,
       "source_id": "30074412",
       "queue_rank": 37616
+    },
+    "10436:1:2": {
+      "at": "2026-11-09T16:30:34.404750+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 97.98,
+      "source_id": "34451191",
+      "queue_rank": 37617
+    },
+    "10436:1:3": {
+      "at": "2026-11-09T16:31:06.319852+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 102.73,
+      "source_id": "34453470",
+      "queue_rank": 37618
+    },
+    "10436:1:4": {
+      "at": "2026-11-09T16:31:26.475100+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 66.5,
+      "source_id": "34459157",
+      "queue_rank": 37619
     }
   },
-  "updated_at": "2026-11-09T16:31:39.027948+00:00",
+  "updated_at": "2026-11-09T16:35:37.162328+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1227298,12 +1227273,12 @@
     },
     "1282": {
       "misses": [
-        "1282:2:1",
         "1282:3:5",
-        "1282:1:3"
+        "1282:1:3",
+        "1282:1:4"
       ],
-      "updated_at": "2026-11-09T16:22:44.784244+00:00",
-      "retry_after": "2026-11-09T16:52:44.784244+00:00"
+      "updated_at": "2026-11-09T16:34:33.016478+00:00",
+      "retry_after": "2026-11-09T17:04:33.016478+00:00"
     },
     "9827": {
       "misses": [
@@ -1237390,7 +1237365,7 @@
     },
     "10436": {
       "misses": [],
-      "updated_at": "2026-11-09T09:43:31.925423+00:00"
+      "updated_at": "2026-11-09T16:34:33.016695+00:00"
     },
     "203": {
       "misses": [],
@@ -1237734,12 +1237709,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 1370,
+    "last_series": 1292,
     "last_series_order": [
       false,
       -6.9,
-      -41290,
-      1370
+      -25716,
+      1292
     ]
   }
 }
