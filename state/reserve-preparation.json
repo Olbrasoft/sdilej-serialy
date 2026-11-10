@@ -192749,14 +192749,21 @@
       "queue_rank": 19649
     },
     "7211:1:1": {
-      "at": "2026-10-20T14:33:02.458805+00:00",
+      "at": "2026-11-10T20:56:02.032101+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 53.2,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-21T14:33:59.992592+00:00"
+      "observed_audio_language": "ko",
+      "observed_language_probability": 0.9814730286598206,
+      "observed_source_id": "26147106",
+      "elapsed_seconds": 46.04,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-11T20:56:48.070539+00:00"
     },
     "1564:1:22": {
       "at": "2026-10-13T05:11:15.284346+00:00",
@@ -1238923,9 +1238930,89 @@
       "elapsed_seconds": 76.22,
       "source_id": "11689133",
       "queue_rank": 38675
+    },
+    "9463:1:1": {
+      "at": "2026-11-10T20:55:11.852352+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 43.52,
+      "search_evidence": [
+        {
+          "path": "/jeden-otec-tisic-deti-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202170,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/jeden-otec-tisic-deti/s/-6",
+          "status": 200,
+          "response_bytes": 204100,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-man-with-1000-kids-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202205,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-man-with-1000-kids/s/-6",
+          "status": 200,
+          "response_bytes": 204157,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/jeden-otec-tisic-deti-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202105,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/jeden-otec-tisic-deti/s/-6",
+          "status": 200,
+          "response_bytes": 204075,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-man-with-1000-kids-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202241,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-man-with-1000-kids/s/-6",
+          "status": 200,
+          "response_bytes": 204190,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-11T20:56:02.027016+00:00"
     }
   },
-  "updated_at": "2026-11-10T20:55:44.438323+00:00",
+  "updated_at": "2026-11-10T20:57:06.704605+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1253887,9 +1253974,11 @@
     "7211": {
       "misses": [
         "7211:1:8",
-        "7211:1:4"
+        "7211:1:4",
+        "7211:1:1"
       ],
-      "updated_at": "2026-10-21T01:45:49.295727+00:00"
+      "updated_at": "2026-11-10T20:56:48.070565+00:00",
+      "retry_after": "2026-11-11T00:56:48.070565+00:00"
     },
     "2714": {
       "misses": [
@@ -1264196,6 +1264285,12 @@
         "10003:1:7"
       ],
       "updated_at": "2026-11-10T20:52:49.523593+00:00"
+    },
+    "9463": {
+      "misses": [
+        "9463:1:1"
+      ],
+      "updated_at": "2026-11-10T20:56:02.027037+00:00"
     }
   },
   "discovery_progress": {
