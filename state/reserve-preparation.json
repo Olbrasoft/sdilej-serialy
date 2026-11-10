@@ -201082,7 +201082,7 @@
       "retry_after": "2026-11-11T09:13:33.650384+00:00"
     },
     "1020:2:6": {
-      "at": "2026-11-08T07:59:02.366445+00:00",
+      "at": "2026-11-10T09:13:35.436091+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -201092,14 +201092,14 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.9949219822883606,
+      "observed_language_probability": 0.9960915446281433,
       "observed_source_id": "32215789",
-      "elapsed_seconds": 208.61,
-      "consecutive_failures": 3,
-      "retry_after": "2026-11-09T08:02:30.980469+00:00"
+      "elapsed_seconds": 270.27,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-11T09:18:36.016499+00:00"
     },
     "1020:2:7": {
-      "at": "2026-11-08T08:06:01.478175+00:00",
+      "at": "2026-11-10T09:13:36.183131+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -201109,11 +201109,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.8281006813049316,
+      "observed_language_probability": 0.8509118556976318,
       "observed_source_id": "32276028",
-      "elapsed_seconds": 222.68,
-      "consecutive_failures": 3,
-      "retry_after": "2026-11-09T08:09:44.162338+00:00"
+      "elapsed_seconds": 295.81,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-11T09:18:36.016551+00:00"
     },
     "1133:1:1": {
       "at": "2026-10-27T12:46:23.880882+00:00",
@@ -382783,7 +382783,7 @@
       "retry_after": "2026-10-22T06:41:11.114715+00:00"
     },
     "3534:1:12": {
-      "at": "2026-11-10T08:30:16.081790+00:00",
+      "at": "2026-11-10T09:13:34.392509+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -382791,10 +382791,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 354.16,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-10T08:46:10.241442+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "ko",
+      "observed_language_probability": 0.8325347304344177,
+      "observed_source_id": "31684481",
+      "elapsed_seconds": 92.37,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-11T09:18:36.016403+00:00"
     },
     "3534:1:13": {
       "at": "2026-11-10T08:30:27.158057+00:00",
@@ -1227117,9 +1227120,70 @@
       "elapsed_seconds": 91.91,
       "source_id": "27193070",
       "queue_rank": 38161
+    },
+    "735:1:7": {
+      "at": "2026-11-10T09:13:36.911283+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 165.03,
+      "source_id": "33813443",
+      "queue_rank": 38162
+    },
+    "461:1:1": {
+      "at": "2026-11-10T09:18:38.904723+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 32.73,
+      "search_evidence": [
+        {
+          "path": "/barbie-dreamhouse-adventures-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202270,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/barbie-dreamhouse-adventures/s/-6",
+          "status": 200,
+          "response_bytes": 204248,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/barbie-dreamhouse-adventures-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202396,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/barbie-dreamhouse-adventures/s/-6",
+          "status": 200,
+          "response_bytes": 204185,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-11T09:19:11.636014+00:00"
     }
   },
-  "updated_at": "2026-11-10T09:14:37.505302+00:00",
+  "updated_at": "2026-11-10T09:19:14.999963+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1238534,9 +1238598,10 @@
     },
     "3534": {
       "misses": [
-        "3534:1:11"
+        "3534:1:11",
+        "3534:1:12"
       ],
-      "updated_at": "2026-11-10T06:46:36.839145+00:00"
+      "updated_at": "2026-11-10T09:18:36.016439+00:00"
     },
     "10041": {
       "misses": [
@@ -1242460,10 +1242525,12 @@
     },
     "1020": {
       "misses": [
-        "1020:2:4",
-        "1020:2:5"
+        "1020:2:5",
+        "1020:2:6",
+        "1020:2:7"
       ],
-      "updated_at": "2026-11-10T09:13:33.650421+00:00"
+      "updated_at": "2026-11-10T09:18:36.016557+00:00",
+      "retry_after": "2026-11-10T13:18:36.016557+00:00"
     },
     "465": {
       "misses": [
@@ -1250686,7 +1250753,7 @@
     },
     "735": {
       "misses": [],
-      "updated_at": "2026-11-10T09:13:33.650495+00:00"
+      "updated_at": "2026-11-10T09:18:36.016626+00:00"
     },
     "2256": {
       "misses": [],
@@ -1251128,15 +1251195,21 @@
     "3910": {
       "misses": [],
       "updated_at": "2026-11-10T09:13:33.650547+00:00"
+    },
+    "461": {
+      "misses": [
+        "461:1:1"
+      ],
+      "updated_at": "2026-11-10T09:19:11.636044+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 3910,
+    "last_series": 461,
     "last_series_order": [
       false,
       -6.8,
-      -1017,
-      3910
+      -984,
+      461
     ]
   }
 }
