@@ -512040,14 +512040,21 @@
       "retry_after": "2026-10-24T10:30:42.877330+00:00"
     },
     "1410:4:4": {
-      "at": "2026-10-23T10:30:24.507440+00:00",
+      "at": "2026-11-10T01:46:14.212674+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 23.58,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-24T10:30:48.092309+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9788351058959961,
+      "observed_source_id": "34451027",
+      "elapsed_seconds": 35.11,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-11T01:47:49.771421+00:00"
     },
     "1410:4:5": {
       "at": "2026-10-23T10:30:27.706902+00:00",
@@ -1221036,9 +1221043,102 @@
       "elapsed_seconds": 130.11,
       "source_id": "11733619",
       "queue_rank": 37871
+    },
+    "8133:1:1": {
+      "at": "2026-11-10T01:46:01.122475+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 42.67,
+      "search_evidence": [
+        {
+          "path": "/adolf-hitler-odhaleni-diktatora-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202443,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/adolf-hitler-odhaleni-diktatora/s/-6",
+          "status": 200,
+          "response_bytes": 212591,
+          "boxes": 11,
+          "parsed_candidates": 11,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/adolf-hitler-decoding-a-dictator-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202473,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/adolf-hitler-decoding-a-dictator/s/-6",
+          "status": 200,
+          "response_bytes": 202204,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/adolf-hitler-odhaleni-diktatora-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202447,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/adolf-hitler-odhaleni-diktatora/s/-6",
+          "status": 200,
+          "response_bytes": 212657,
+          "boxes": 11,
+          "parsed_candidates": 11,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/adolf-hitler-decoding-a-dictator-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202368,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/adolf-hitler-decoding-a-dictator/s/-6",
+          "status": 200,
+          "response_bytes": 202262,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-11T01:47:49.771337+00:00"
+    },
+    "6072:1:6": {
+      "at": "2026-11-10T01:47:50.931687+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 49.25,
+      "source_id": "26597310",
+      "queue_rank": 37872
     }
   },
-  "updated_at": "2026-11-10T01:46:40.758988+00:00",
+  "updated_at": "2026-11-10T01:48:53.287520+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1229507,12 +1229607,12 @@
     },
     "1410": {
       "misses": [
-        "1410:1:18",
         "1410:4:2",
-        "1410:4:3"
+        "1410:4:3",
+        "1410:4:4"
       ],
-      "updated_at": "2026-11-10T01:46:38.197349+00:00",
-      "retry_after": "2026-11-10T05:46:38.197349+00:00"
+      "updated_at": "2026-11-10T01:47:49.771430+00:00",
+      "retry_after": "2026-11-10T05:47:49.771430+00:00"
     },
     "2053": {
       "misses": [
@@ -1244241,7 +1244341,7 @@
     },
     "6072": {
       "misses": [],
-      "updated_at": "2026-11-09T19:08:21.381233+00:00"
+      "updated_at": "2026-11-10T01:48:40.185090+00:00"
     },
     "3582": {
       "misses": [],
@@ -1244552,6 +1244652,12 @@
         "6219:1:1"
       ],
       "updated_at": "2026-11-10T01:46:02.577922+00:00"
+    },
+    "8133": {
+      "misses": [
+        "8133:1:1"
+      ],
+      "updated_at": "2026-11-10T01:47:49.771363+00:00"
     }
   },
   "discovery_progress": {
