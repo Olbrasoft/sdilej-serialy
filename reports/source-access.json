@@ -1,6 +1,32 @@
 {
-  "checked_at": "2026-11-10T08:37:06.089823+00:00",
-  "run_id": "42781836031",
-  "status": "active",
-  "available": true
+  "checked_at": "2026-11-10T09:28:36.329103+00:00",
+  "run_id": "42789410671",
+  "status": "check_failed",
+  "error": {
+    "type": "HTTPError",
+    "http_status": 500,
+    "frames": [
+      {
+        "file": "source_access.py",
+        "function": "main",
+        "line": 38
+      },
+      {
+        "file": "auth.py",
+        "function": "login_with_retry",
+        "line": 43
+      },
+      {
+        "file": "sdilej.py",
+        "function": "login",
+        "line": 234
+      },
+      {
+        "file": "models.py",
+        "function": "raise_for_status",
+        "line": 1167
+      }
+    ]
+  },
+  "available": false
 }
