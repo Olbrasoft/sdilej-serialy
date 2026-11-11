@@ -5,9 +5,9 @@
   "prepared_this_run": 0,
   "reserve_total": 30615,
   "queue_total": 39050,
-  "updated_at": "2026-11-11T07:59:53.937942+00:00",
+  "updated_at": "2026-11-11T08:01:16.631759+00:00",
   "workers": 4,
-  "elapsed_seconds": 66.86,
+  "elapsed_seconds": 149.56,
   "prepared_per_hour": 0.0,
   "available_this_run": 0,
   "available_per_hour": 0.0,
@@ -15,39 +15,40 @@
   "target_stock": 3000,
   "stock": {
     "queue_total": 39050,
-    "ready": 39,
+    "ready": 31,
     "ready_by_account": {
-      "a": 18,
-      "b": 21
+      "a": 14,
+      "b": 17
     },
     "categories": {
       "completed": 38261,
-      "allocated": 738,
+      "allocated": 742,
       "failed": 12,
-      "ready": 39
+      "in_flight": 4,
+      "ready": 31
     },
     "completed_by_account": {
       "a": 19131,
       "b": 19130
     },
-    "uploads_last_24h": 233,
-    "uploads_per_hour_24h": 9.71,
-    "stock_hours_24h": 4.02
+    "uploads_last_24h": 232,
+    "uploads_per_hour_24h": 9.67,
+    "stock_hours_24h": 3.21
   },
   "health": {
     "status": "buffered",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 65356,
-      "b": 65321
+      "a": 65438,
+      "b": 65404
     },
     "preparation_outcomes_last_hour": {
       "transient_original": 7,
-      "verified_non_czech": 6,
+      "verified_non_czech": 4,
       "inconclusive_audio": 3,
       "source_search_unavailable": 4,
       "prepared": 37,
-      "no_acceptable_original": 2,
+      "no_acceptable_original": 1,
       "no_matches": 5
     }
   },
@@ -62,11 +63,20 @@
     ]
   },
   "cache": {
-    "search_miss": 9,
-    "search_seconds": 179.42,
-    "search_hit": 7
+    "search_miss": 12,
+    "search_seconds": 295.31,
+    "search_hit": 7,
+    "media_miss": 3,
+    "media_seconds": 9.54,
+    "audio_miss": 1,
+    "audio_seconds": 15.47
   },
-  "audio_pipeline": {},
+  "audio_pipeline": {
+    "sample_count": 1,
+    "download_seconds": 10.2,
+    "inference_wait_seconds": 0.0,
+    "inference_seconds": 4.89
+  },
   "productive_seasons": 438,
   "series_paused_this_run": 5,
   "saved_reviewed_this_run": 0,
