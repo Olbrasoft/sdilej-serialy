@@ -448381,14 +448381,21 @@
       "retry_after": "2026-10-22T06:19:37.966353+00:00"
     },
     "2615:3:2": {
-      "at": "2026-10-22T06:04:28.379656+00:00",
+      "at": "2026-11-11T23:46:14.504075+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_original",
-      "elapsed_seconds": 22.67,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-22T06:19:51.045964+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9920763969421387,
+      "observed_source_id": "23102849",
+      "elapsed_seconds": 38.05,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-12T23:46:52.551022+00:00"
     },
     "2891:1:14": {
       "at": "2026-10-22T06:04:37.034968+00:00",
@@ -1257436,9 +1257443,116 @@
       "elapsed_seconds": 43.83,
       "source_id": "6781903",
       "queue_rank": 39530
+    },
+    "2022:3:11": {
+      "at": "2026-11-11T23:45:27.785007+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 30.06,
+      "source_id": "26146470",
+      "queue_rank": 39531
+    },
+    "8022:1:1": {
+      "at": "2026-11-11T23:45:40.906984+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 32.43,
+      "search_evidence": [
+        {
+          "path": "/elon-musk-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216005,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/elon-musk/s/-6",
+          "status": 200,
+          "response_bytes": 229788,
+          "boxes": 11,
+          "parsed_candidates": 10,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-elon-musk-show-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216184,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-elon-musk-show/s/-6",
+          "status": 200,
+          "response_bytes": 215943,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/elon-musk-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216109,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/elon-musk/s/-6",
+          "status": 200,
+          "response_bytes": 229902,
+          "boxes": 11,
+          "parsed_candidates": 10,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-elon-musk-show-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216115,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/the-elon-musk-show/s/-6",
+          "status": 200,
+          "response_bytes": 215973,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-12T23:46:13.732088+00:00"
+    },
+    "383:1:1": {
+      "at": "2026-11-11T23:46:13.737300+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "source_search_unavailable",
+      "elapsed_seconds": 54.55,
+      "consecutive_failures": 0,
+      "retry_after": "2026-11-11T23:52:08.283337+00:00"
     }
   },
-  "updated_at": "2026-11-11T23:45:59.922095+00:00",
+  "updated_at": "2026-11-11T23:47:18.067437+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1270467,9 +1270581,11 @@
     "2615": {
       "misses": [
         "2615:4:8",
-        "2615:2:1"
+        "2615:2:1",
+        "2615:3:2"
       ],
-      "updated_at": "2026-10-24T04:03:37.287261+00:00"
+      "updated_at": "2026-11-11T23:46:52.551047+00:00",
+      "retry_after": "2026-11-12T03:46:52.551047+00:00"
     },
     "2075": {
       "misses": [
@@ -1277059,7 +1277175,7 @@
     },
     "2022": {
       "misses": [],
-      "updated_at": "2026-11-11T23:45:40.168066+00:00"
+      "updated_at": "2026-11-11T23:46:12.828909+00:00"
     },
     "9728": {
       "misses": [
@@ -1284149,15 +1284265,21 @@
     "2405": {
       "misses": [],
       "updated_at": "2026-11-11T23:40:21.246182+00:00"
+    },
+    "8022": {
+      "misses": [
+        "8022:1:1"
+      ],
+      "updated_at": "2026-11-11T23:46:13.732113+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 8022,
+    "last_series": 383,
     "last_series_order": [
       false,
       -6.3,
-      -826,
-      8022
+      -816,
+      383
     ]
   }
 }
