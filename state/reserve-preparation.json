@@ -177361,14 +177361,21 @@
       "retry_after": "2026-10-19T05:10:12.961001+00:00"
     },
     "1290:1:8": {
-      "at": "2026-10-22T06:01:48.929505+00:00",
+      "at": "2026-11-11T21:13:08.932370+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 67.15,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-23T06:02:56.082879+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.8228409886360168,
+      "observed_source_id": "31915562",
+      "elapsed_seconds": 62.4,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-12T21:14:11.332754+00:00"
     },
     "3111:2:5": {
       "at": "2026-10-28T19:07:09.223990+00:00",
@@ -1255135,9 +1255142,121 @@
       "elapsed_seconds": 38.9,
       "source_id": "34355872",
       "queue_rank": 39423
+    },
+    "9704:1:1": {
+      "at": "2026-11-11T21:13:06.594476+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 51.38,
+      "search_evidence": [
+        {
+          "path": "/scooby-a-scrappy-doo-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202157,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scooby-a-scrappy-doo/s/-6",
+          "status": 200,
+          "response_bytes": 291531,
+          "boxes": 68,
+          "parsed_candidates": 68,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scooby-doo-and-scrappy-doo-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202334,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scooby-doo-and-scrappy-doo/s/-6",
+          "status": 200,
+          "response_bytes": 206570,
+          "boxes": 4,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scooby-doo-scrappy-doo-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202293,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scooby-doo-scrappy-doo/s/-6",
+          "status": 200,
+          "response_bytes": 296914,
+          "boxes": 72,
+          "parsed_candidates": 72,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scooby-a-scrappy-doo-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202226,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scooby-a-scrappy-doo/s/-6",
+          "status": 200,
+          "response_bytes": 291592,
+          "boxes": 68,
+          "parsed_candidates": 68,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scooby-doo-and-scrappy-doo-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202259,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scooby-doo-and-scrappy-doo/s/-6",
+          "status": 200,
+          "response_bytes": 206619,
+          "boxes": 4,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scooby-doo-scrappy-doo-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 202275,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/scooby-doo-scrappy-doo/s/-6",
+          "status": 200,
+          "response_bytes": 296987,
+          "boxes": 72,
+          "parsed_candidates": 72,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-12T21:13:57.971438+00:00"
     }
   },
-  "updated_at": "2026-11-11T21:13:30.948549+00:00",
+  "updated_at": "2026-11-11T21:14:53.554646+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1262712,9 +1262831,10 @@
     },
     "1290": {
       "misses": [
-        "1290:5:9"
+        "1290:5:9",
+        "1290:1:8"
       ],
-      "updated_at": "2026-11-11T20:54:32.999084+00:00"
+      "updated_at": "2026-11-11T21:14:11.332781+00:00"
     },
     "1528": {
       "misses": [
@@ -1281669,6 +1281789,12 @@
     "1862": {
       "misses": [],
       "updated_at": "2026-11-11T21:13:27.230016+00:00"
+    },
+    "9704": {
+      "misses": [
+        "9704:1:1"
+      ],
+      "updated_at": "2026-11-11T21:13:57.971466+00:00"
     }
   },
   "discovery_progress": {
