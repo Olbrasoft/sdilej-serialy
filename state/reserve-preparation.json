@@ -1274425,7 +1274425,7 @@
       "retry_after": "2026-11-12T21:46:39.443501+00:00"
     },
     "1516:4:5": {
-      "at": "2026-11-12T18:38:08.426696+00:00",
+      "at": "2026-11-12T20:42:29.731686+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -1274434,12 +1274434,12 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "inconclusive_audio",
-      "elapsed_seconds": 278.25,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-12T19:42:46.674455+00:00"
+      "elapsed_seconds": 269.5,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-12T22:46:59.227841+00:00"
     },
     "1516:4:6": {
-      "at": "2026-11-12T18:38:13.372610+00:00",
+      "at": "2026-11-12T20:42:30.688389+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -1274448,9 +1274448,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "inconclusive_audio",
-      "elapsed_seconds": 277.39,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-12T19:42:50.762607+00:00"
+      "elapsed_seconds": 267.14,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-12T22:46:57.831654+00:00"
     },
     "1516:4:9": {
       "at": "2026-11-12T18:38:58.749380+00:00",
@@ -1276650,9 +1276650,70 @@
       "elapsed_seconds": 95.84,
       "source_id": "29769029",
       "queue_rank": 40262
+    },
+    "1558:1:6": {
+      "at": "2026-11-12T20:45:06.218093+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 79.77,
+      "source_id": "29769048",
+      "queue_rank": 40263
+    },
+    "4877:1:1": {
+      "at": "2026-11-12T20:46:58.774113+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 26.69,
+      "search_evidence": [
+        {
+          "path": "/made-in-jersey-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216030,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/made-in-jersey/s/-6",
+          "status": 200,
+          "response_bytes": 215902,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/made-in-jersey-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216033,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/made-in-jersey/s/-6",
+          "status": 200,
+          "response_bytes": 216017,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-13T20:47:25.465377+00:00"
     }
   },
-  "updated_at": "2026-11-12T20:46:10.908655+00:00",
+  "updated_at": "2026-11-12T20:47:35.322648+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1296158,9 +1296219,12 @@
     },
     "1516": {
       "misses": [
-        "1516:3:10"
+        "1516:3:10",
+        "1516:4:6",
+        "1516:4:5"
       ],
-      "updated_at": "2026-11-12T20:46:00.077388+00:00"
+      "updated_at": "2026-11-12T20:46:59.227866+00:00",
+      "retry_after": "2026-11-12T21:16:59.227866+00:00"
     },
     "680": {
       "misses": [
@@ -1304330,7 +1304394,7 @@
     },
     "1558": {
       "misses": [],
-      "updated_at": "2026-11-12T20:45:05.284930+00:00"
+      "updated_at": "2026-11-12T20:46:31.164334+00:00"
     },
     "904": {
       "misses": [],
@@ -1304669,15 +1304733,21 @@
     "2394": {
       "misses": [],
       "updated_at": "2026-11-12T20:42:29.731576+00:00"
+    },
+    "4877": {
+      "misses": [
+        "4877:1:1"
+      ],
+      "updated_at": "2026-11-12T20:47:25.465410+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 2394,
+    "last_series": 4877,
     "last_series_order": [
       false,
       -5.8,
-      -1425,
-      2394
+      -1149,
+      4877
     ]
   }
 }
