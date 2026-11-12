@@ -1265727,9 +1265727,97 @@
       "elapsed_seconds": 42.8,
       "source_id": "32713112",
       "queue_rank": 39866
+    },
+    "2181:1:11": {
+      "at": "2026-11-12T08:28:28.743956+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 56.88,
+      "source_id": "32713067",
+      "queue_rank": 39867
+    },
+    "2181:1:16": {
+      "at": "2026-11-12T08:29:19.635036+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 24.16,
+      "source_id": "32946352",
+      "queue_rank": 39868
+    },
+    "2181:1:14": {
+      "at": "2026-11-12T08:29:14.646751+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 37.8,
+      "reason": "source_already_assigned",
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-13T08:29:52.445693+00:00"
+    },
+    "8461:2:1": {
+      "at": "2026-11-12T08:29:41.060643+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 28.97,
+      "search_evidence": [
+        {
+          "path": "/anndroid-s02e01/s/-6",
+          "status": 200,
+          "response_bytes": 216004,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/anndroid/s/-6",
+          "status": 200,
+          "response_bytes": 278330,
+          "boxes": 76,
+          "parsed_candidates": 24,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/anndroid-s02e01/s/-6",
+          "status": 200,
+          "response_bytes": 215920,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/anndroid/s/-6",
+          "status": 200,
+          "response_bytes": 278332,
+          "boxes": 76,
+          "parsed_candidates": 24,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-13T08:30:10.033873+00:00"
     }
   },
-  "updated_at": "2026-11-12T08:29:27.046288+00:00",
+  "updated_at": "2026-11-12T08:30:46.079620+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1291699,8 +1291787,10 @@
       "updated_at": "2026-11-11T09:12:07.332273+00:00"
     },
     "2181": {
-      "misses": [],
-      "updated_at": "2026-11-12T08:29:18.817574+00:00"
+      "misses": [
+        "2181:1:14"
+      ],
+      "updated_at": "2026-11-12T08:29:52.445717+00:00"
     },
     "1430": {
       "misses": [],
@@ -1292993,15 +1293083,21 @@
     "10250": {
       "misses": [],
       "updated_at": "2026-11-12T08:25:57.756496+00:00"
+    },
+    "8461": {
+      "misses": [
+        "8461:2:1"
+      ],
+      "updated_at": "2026-11-12T08:30:10.033903+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 10250,
+    "last_series": 8461,
     "last_series_order": [
       false,
       -6.1,
-      -628,
-      10250
+      -507,
+      8461
     ]
   }
 }
