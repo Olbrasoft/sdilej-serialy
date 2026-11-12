@@ -42255,15 +42255,18 @@
       "queue_rank": 25156
     },
     "1002:1:3": {
-      "at": "2026-10-19T10:12:55.989993+00:00",
-      "status": "deferred",
-      "preparation_revision": 4,
+      "at": "2026-11-12T03:13:51.790375+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "saved_review_revision": 1,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 14.48,
-      "consecutive_failures": 6,
-      "retry_after": "2026-10-20T10:13:10.470419+00:00"
+      "elapsed_seconds": 378.91,
+      "source_id": "19464657",
+      "queue_rank": 39642
     },
     "1434:1:1": {
       "at": "2026-10-14T08:21:26.875670+00:00",
@@ -341960,14 +341963,84 @@
       "queue_rank": 29596
     },
     "1457:1:9": {
-      "at": "2026-10-19T22:37:41.255938+00:00",
+      "at": "2026-11-12T03:20:07.036933+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 62.77,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-20T22:38:44.025325+00:00"
+      "reason": "transient_search",
+      "elapsed_seconds": 34.84,
+      "search_evidence": [
+        {
+          "path": "/pomsta-s01e09/s/-6",
+          "status": 200,
+          "response_bytes": 221304,
+          "boxes": 5,
+          "parsed_candidates": 5,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pomsta/s/-6",
+          "status": 200,
+          "response_bytes": 525217,
+          "boxes": 297,
+          "parsed_candidates": 263,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/revenge-s01e09/s/-6",
+          "status": 200,
+          "response_bytes": 217391,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/revenge/s/-6",
+          "status": 200,
+          "response_bytes": 349897,
+          "boxes": 130,
+          "parsed_candidates": 97,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pomsta-s01e09/s/-6",
+          "status": 200,
+          "response_bytes": 221309,
+          "boxes": 5,
+          "parsed_candidates": 5,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/pomsta/s/-6",
+          "status": 200,
+          "response_bytes": 525288,
+          "boxes": 297,
+          "parsed_candidates": 263,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/revenge-s01e09/s/-6",
+          "status": 200,
+          "response_bytes": 217430,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/revenge/s/-6",
+          "status": 200,
+          "response_bytes": 349978,
+          "boxes": 130,
+          "parsed_candidates": 97,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-12T03:50:41.880957+00:00"
     },
     "2237:1:6": {
       "at": "2026-11-03T16:39:21.228394+00:00",
@@ -1260250,9 +1260323,35 @@
       "elapsed_seconds": 69.87,
       "source_id": "32233943",
       "queue_rank": 39639
+    },
+    "5655:1:3": {
+      "at": "2026-11-12T03:18:40.780973+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 53.24,
+      "source_id": "32167870",
+      "queue_rank": 39640
+    },
+    "5655:1:4": {
+      "at": "2026-11-12T03:18:56.425731+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 69.24,
+      "source_id": "32233954",
+      "queue_rank": 39641
     }
   },
-  "updated_at": "2026-11-12T03:19:03.339429+00:00",
+  "updated_at": "2026-11-12T03:20:59.968068+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1267516,10 +1267615,8 @@
       "updated_at": "2026-10-22T06:27:50.713369+00:00"
     },
     "1002": {
-      "misses": [
-        "1002:1:3"
-      ],
-      "updated_at": "2026-10-19T10:13:10.470442+00:00"
+      "misses": [],
+      "updated_at": "2026-11-12T03:20:10.700303+00:00"
     },
     "4819": {
       "misses": [
@@ -1273631,9 +1273728,11 @@
     "1457": {
       "misses": [
         "1457:1:16",
-        "1457:3:22"
+        "1457:3:22",
+        "1457:1:9"
       ],
-      "updated_at": "2026-11-06T22:50:55.401218+00:00"
+      "updated_at": "2026-11-12T03:20:41.880991+00:00",
+      "retry_after": "2026-11-12T03:50:41.880991+00:00"
     },
     "3918": {
       "misses": [
@@ -1286746,7 +1286845,7 @@
     },
     "5655": {
       "misses": [],
-      "updated_at": "2026-11-12T03:18:40.111421+00:00"
+      "updated_at": "2026-11-12T03:20:05.668776+00:00"
     },
     "2416": {
       "misses": [],
@@ -1287146,12 +1287245,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 4274,
+    "last_series": 337,
     "last_series_order": [
       false,
       -6.2,
-      -9512,
-      4274
+      -7629,
+      337
     ]
   }
 }
