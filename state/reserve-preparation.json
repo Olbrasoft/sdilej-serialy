@@ -720074,20 +720074,21 @@
       "queue_rank": 30654
     },
     "1375:6:8": {
-      "at": "2026-10-27T17:01:23.437541+00:00",
+      "at": "2026-11-12T02:58:29.189805+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.9924958944320679,
+      "observed_language_probability": 0.9931384921073914,
       "observed_source_id": "35058971",
-      "elapsed_seconds": 119.77,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-28T17:03:23.209021+00:00"
+      "elapsed_seconds": 67.65,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-13T02:59:36.836398+00:00"
     },
     "3226:5:3": {
       "at": "2026-10-27T17:03:23.906096+00:00",
@@ -1259775,9 +1259776,70 @@
       "elapsed_seconds": 31.78,
       "source_id": "25189916",
       "queue_rank": 39613
+    },
+    "9700:1:1": {
+      "at": "2026-11-12T02:58:12.471473+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 16.07,
+      "search_evidence": [
+        {
+          "path": "/jessie-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 228802,
+          "boxes": 11,
+          "parsed_candidates": 11,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/jessie/s/-6",
+          "status": 200,
+          "response_bytes": 494653,
+          "boxes": 314,
+          "parsed_candidates": 148,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/jessie-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 228859,
+          "boxes": 11,
+          "parsed_candidates": 11,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/jessie/s/-6",
+          "status": 200,
+          "response_bytes": 494648,
+          "boxes": 314,
+          "parsed_candidates": 148,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-13T02:58:28.545463+00:00"
+    },
+    "980:1:7": {
+      "at": "2026-11-12T02:58:07.005356+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 27.4,
+      "source_id": "25189939",
+      "queue_rank": 39614
     }
   },
-  "updated_at": "2026-11-12T02:58:16.205145+00:00",
+  "updated_at": "2026-11-12T02:59:39.690522+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1268303,9 +1268365,11 @@
     "1375": {
       "misses": [
         "1375:6:5",
-        "1375:6:7"
+        "1375:6:7",
+        "1375:6:8"
       ],
-      "updated_at": "2026-11-12T02:52:22.405848+00:00"
+      "updated_at": "2026-11-12T02:59:36.836430+00:00",
+      "retry_after": "2026-11-12T06:59:36.836430+00:00"
     },
     "1104": {
       "misses": [],
@@ -1286234,7 +1286298,7 @@
     },
     "980": {
       "misses": [],
-      "updated_at": "2026-11-12T02:58:11.106937+00:00"
+      "updated_at": "2026-11-12T02:58:34.407108+00:00"
     },
     "3024": {
       "misses": [
@@ -1286613,15 +1286677,21 @@
     "820": {
       "misses": [],
       "updated_at": "2026-11-12T02:55:44.913095+00:00"
+    },
+    "9700": {
+      "misses": [
+        "9700:1:1"
+      ],
+      "updated_at": "2026-11-12T02:58:28.545495+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 9700,
+    "last_series": 1667,
     "last_series_order": [
       false,
       -6.2,
-      -22774,
-      9700
+      -20423,
+      1667
     ]
   }
 }
