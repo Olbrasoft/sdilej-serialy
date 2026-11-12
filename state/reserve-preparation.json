@@ -105924,14 +105924,21 @@
       "retry_after": "2026-10-12T08:21:55.844082+00:00"
     },
     "308:2:12": {
-      "at": "2026-10-20T04:24:51.870791+00:00",
+      "at": "2026-11-12T09:54:09.053739+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 178.82,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-21T04:27:50.691510+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9778853058815002,
+      "observed_source_id": "34814131",
+      "elapsed_seconds": 213.78,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-13T09:57:42.838336+00:00"
     },
     "308:3:1": {
       "at": "2026-10-20T04:24:52.317759+00:00",
@@ -1267618,9 +1267625,128 @@
       "elapsed_seconds": 55.69,
       "source_id": "27672794",
       "queue_rank": 39917
+    },
+    "1101:3:4": {
+      "at": "2026-11-12T09:55:56.881754+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 37.02,
+      "source_id": "27672811",
+      "queue_rank": 39918
+    },
+    "1101:3:6": {
+      "at": "2026-11-12T09:56:29.466935+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 24.29,
+      "source_id": "27672849",
+      "queue_rank": 39919
+    },
+    "6858:1:1": {
+      "at": "2026-11-12T09:56:54.674746+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 31.22,
+      "search_evidence": [
+        {
+          "path": "/kralovska-tajemstvi-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216715,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kralovska-tajemstvi/s/-6",
+          "status": 200,
+          "response_bytes": 250152,
+          "boxes": 25,
+          "parsed_candidates": 24,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/inside-the-crown-secrets-of-the-royals-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216552,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/inside-the-crown-secrets-of-the-royals/s/-6",
+          "status": 200,
+          "response_bytes": 216396,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kralovska-tajemstvi-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216616,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/kralovska-tajemstvi/s/-6",
+          "status": 200,
+          "response_bytes": 250120,
+          "boxes": 25,
+          "parsed_candidates": 24,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/inside-the-crown-secrets-of-the-royals-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216588,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/inside-the-crown-secrets-of-the-royals/s/-6",
+          "status": 200,
+          "response_bytes": 216373,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-13T09:57:25.892486+00:00"
+    },
+    "1101:3:7": {
+      "at": "2026-11-12T09:56:53.384106+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 44.09,
+      "source_id": "6287480",
+      "queue_rank": 39920
     }
   },
-  "updated_at": "2026-11-12T09:56:37.699528+00:00",
+  "updated_at": "2026-11-12T09:57:46.556669+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1279570,9 +1279696,10 @@
     },
     "308": {
       "misses": [
-        "308:2:11"
+        "308:2:11",
+        "308:2:12"
       ],
-      "updated_at": "2026-11-12T09:55:55.438897+00:00"
+      "updated_at": "2026-11-12T09:57:42.838363+00:00"
     },
     "667": {
       "misses": [
@@ -1288122,7 +1288249,7 @@
     },
     "1101": {
       "misses": [],
-      "updated_at": "2026-11-12T09:56:28.553390+00:00"
+      "updated_at": "2026-11-12T09:57:37.478731+00:00"
     },
     "2521": {
       "misses": [],
@@ -1294997,15 +1295124,21 @@
     "6863": {
       "misses": [],
       "updated_at": "2026-11-12T09:55:31.926031+00:00"
+    },
+    "6858": {
+      "misses": [
+        "6858:1:1"
+      ],
+      "updated_at": "2026-11-12T09:57:25.892512+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 6863,
+    "last_series": 10353,
     "last_series_order": [
       false,
       -6.1,
-      -48,
-      6863
+      -23,
+      10353
     ]
   }
 }
