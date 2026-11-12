@@ -179298,7 +179298,7 @@
       "queue_rank": 18797
     },
     "574:3:3": {
-      "at": "2026-11-10T10:16:23.675321+00:00",
+      "at": "2026-11-12T11:33:27.972955+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -179306,10 +179306,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_original",
-      "elapsed_seconds": 29.48,
-      "consecutive_failures": 3,
-      "retry_after": "2026-11-10T11:16:53.158584+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.8502543568611145,
+      "observed_source_id": "6500250",
+      "elapsed_seconds": 139.99,
+      "consecutive_failures": 4,
+      "retry_after": "2026-11-13T11:35:47.959217+00:00"
     },
     "574:3:4": {
       "at": "2026-11-10T10:16:26.644615+00:00",
@@ -1269580,9 +1269583,115 @@
       "elapsed_seconds": 34.48,
       "source_id": "14704255",
       "queue_rank": 39992
+    },
+    "3197:1:2": {
+      "at": "2026-11-12T11:34:10.687334+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 65.59,
+      "source_id": "32345175",
+      "queue_rank": 39993
+    },
+    "1768:1:1": {
+      "at": "2026-11-12T11:34:21.389112+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 37.92,
+      "search_evidence": [
+        {
+          "path": "/to-je-tvoje-mama-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216134,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/to-je-tvoje-mama/s/-6",
+          "status": 200,
+          "response_bytes": 215955,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/significant-mother-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216059,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/significant-mother/s/-6",
+          "status": 200,
+          "response_bytes": 221204,
+          "boxes": 5,
+          "parsed_candidates": 5,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/to-je-tvoje-mama-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216068,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/to-je-tvoje-mama/s/-6",
+          "status": 200,
+          "response_bytes": 215909,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/significant-mother-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216194,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/significant-mother/s/-6",
+          "status": 200,
+          "response_bytes": 221292,
+          "boxes": 5,
+          "parsed_candidates": 5,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-13T11:35:18.392332+00:00"
+    },
+    "3197:1:3": {
+      "at": "2026-11-12T11:34:18.502849+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 93.44,
+      "source_id": "32345203",
+      "queue_rank": 39994
     }
   },
-  "updated_at": "2026-11-12T11:35:02.022259+00:00",
+  "updated_at": "2026-11-12T11:36:25.603586+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1277330,9 +1277439,10 @@
     },
     "574": {
       "misses": [
-        "574:3:1"
+        "574:3:1",
+        "574:3:3"
       ],
-      "updated_at": "2026-11-12T11:34:17.013500+00:00"
+      "updated_at": "2026-11-12T11:35:47.959239+00:00"
     },
     "325": {
       "misses": [
@@ -1296564,7 +1296674,7 @@
     },
     "3197": {
       "misses": [],
-      "updated_at": "2026-11-12T05:05:08.929655+00:00"
+      "updated_at": "2026-11-12T11:35:51.944519+00:00"
     },
     "4655": {
       "misses": [
@@ -1297087,15 +1297197,21 @@
         "9679:1:1"
       ],
       "updated_at": "2026-11-12T11:32:07.713897+00:00"
+    },
+    "1768": {
+      "misses": [
+        "1768:1:1"
+      ],
+      "updated_at": "2026-11-12T11:35:18.392355+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 1768,
+    "last_series": 2878,
     "last_series_order": [
       false,
       -6,
-      -1759,
-      1768
+      -1670,
+      2878
     ]
   }
 }
