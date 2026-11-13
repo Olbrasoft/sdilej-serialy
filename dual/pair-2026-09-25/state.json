@@ -1342497,7 +1342497,7 @@
     }
   },
   "initialized_at": "2026-09-25T14:05:15.686917+00:00",
-  "updated_at": "2026-11-13T13:31:04.462968+00:00",
+  "updated_at": "2026-11-13T13:35:34.279321+00:00",
   "pilot_verified_at": "2026-09-25T14:23:33.839342+00:00",
   "pilot_counts": {
     "a": 2,
@@ -1342653,14 +1342653,9 @@
     }
   ],
   "last_transient_error": {
-    "at": "2026-10-29T03:47:16.054249+00:00",
-    "type": "ConnectTimeout",
+    "at": "2026-11-13T13:35:34.278543+00:00",
+    "type": "TargetLoginUnavailable",
     "frames": [
-      {
-        "file": "prehrajto.py",
-        "function": "uploaded_video_count",
-        "line": 220
-      },
       {
         "file": "sessions.py",
         "function": "get",
@@ -1342674,12 +1342669,17 @@
       {
         "file": "sessions.py",
         "function": "send",
-        "line": 784
+        "line": 791
       },
       {
-        "file": "adapters.py",
-        "function": "send",
-        "line": 717
+        "file": "hooks.py",
+        "function": "dispatch_hook",
+        "line": 45
+      },
+      {
+        "file": "auth.py",
+        "function": "check_status",
+        "line": 21
       }
     ]
   }
