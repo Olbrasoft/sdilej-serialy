@@ -310344,14 +310344,21 @@
       "retry_after": "2026-11-09T07:35:29.323722+00:00"
     },
     "9689:1:6": {
-      "at": "2026-10-23T00:31:41.183918+00:00",
+      "at": "2026-11-13T17:19:00.087512+00:00",
       "status": "deferred",
       "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 43.54,
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-24T00:32:24.723938+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9971899390220642,
+      "observed_source_id": "33680408",
+      "elapsed_seconds": 48.99,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-14T17:20:06.148209+00:00"
     },
     "920:4:16": {
       "at": "2026-10-20T20:12:28.667787+00:00",
@@ -1294574,9 +1294581,102 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-14T17:19:33.173882+00:00"
+    },
+    "3156:1:1": {
+      "at": "2026-11-13T17:18:58.260505+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 45.27,
+      "search_evidence": [
+        {
+          "path": "/damy-nedamy-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 224426,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/damy-nedamy/s/-6",
+          "status": 200,
+          "response_bytes": 534503,
+          "boxes": 256,
+          "parsed_candidates": 230,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/work-it-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 215886,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/work-it/s/-6",
+          "status": 200,
+          "response_bytes": 224779,
+          "boxes": 11,
+          "parsed_candidates": 5,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/damy-nedamy-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 224472,
+          "boxes": 7,
+          "parsed_candidates": 7,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/damy-nedamy/s/-6",
+          "status": 200,
+          "response_bytes": 534588,
+          "boxes": 256,
+          "parsed_candidates": 230,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/work-it-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 215909,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/work-it/s/-6",
+          "status": 200,
+          "response_bytes": 224728,
+          "boxes": 11,
+          "parsed_candidates": 5,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-14T17:20:06.147853+00:00"
+    },
+    "397:1:4": {
+      "at": "2026-11-13T17:20:07.349450+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 44.99,
+      "source_id": "28478401",
+      "queue_rank": 40924
     }
   },
-  "updated_at": "2026-11-13T17:19:36.756928+00:00",
+  "updated_at": "2026-11-13T17:21:09.701686+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1307603,9 +1307703,10 @@
     },
     "9689": {
       "misses": [
-        "9689:3:16"
+        "9689:3:16",
+        "9689:1:6"
       ],
-      "updated_at": "2026-10-24T22:10:55.122169+00:00"
+      "updated_at": "2026-11-13T17:20:06.148255+00:00"
     },
     "48": {
       "misses": [],
@@ -1313945,7 +1314046,7 @@
     },
     "397": {
       "misses": [],
-      "updated_at": "2026-11-13T17:18:57.648391+00:00"
+      "updated_at": "2026-11-13T17:20:52.343330+00:00"
     },
     "149": {
       "misses": [],
@@ -1323897,6 +1323998,12 @@
         "10029:2:1"
       ],
       "updated_at": "2026-11-13T17:19:33.173919+00:00"
+    },
+    "3156": {
+      "misses": [
+        "3156:1:1"
+      ],
+      "updated_at": "2026-11-13T17:20:06.147880+00:00"
     }
   },
   "discovery_progress": {
