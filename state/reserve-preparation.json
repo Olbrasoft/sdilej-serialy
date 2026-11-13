@@ -336361,7 +336361,7 @@
       "queue_rank": 28403
     },
     "9667:3:15": {
-      "at": "2026-11-10T10:54:16.474675+00:00",
+      "at": "2026-11-13T18:39:58.731913+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -336371,11 +336371,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.6896917223930359,
+      "observed_language_probability": 0.7287315130233765,
       "observed_source_id": "31418301",
-      "elapsed_seconds": 129.43,
-      "consecutive_failures": 10,
-      "retry_after": "2026-11-11T10:56:25.905745+00:00"
+      "elapsed_seconds": 164.41,
+      "consecutive_failures": 11,
+      "retry_after": "2026-11-14T18:42:43.146134+00:00"
     },
     "1356:7:20": {
       "at": "2026-10-21T00:20:49.099168+00:00",
@@ -398097,14 +398097,21 @@
       "retry_after": "2026-10-22T05:05:47.871906+00:00"
     },
     "1239:4:5": {
-      "at": "2026-10-21T05:05:22.309176+00:00",
+      "at": "2026-11-13T18:39:10.426953+00:00",
       "status": "deferred",
-      "preparation_revision": 4,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
-      "elapsed_seconds": 144.27,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-22T05:07:46.582997+00:00"
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9691241979598999,
+      "observed_source_id": "21539379",
+      "elapsed_seconds": 221.3,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-14T18:42:51.730521+00:00"
     },
     "1239:4:8": {
       "at": "2026-11-03T17:28:23.079348+00:00",
@@ -1295439,9 +1295446,57 @@
       "elapsed_seconds": 34.13,
       "source_id": "31704743",
       "queue_rank": 40951
+    },
+    "1011:1:1": {
+      "at": "2026-11-13T18:42:53.152377+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 12.87,
+      "search_evidence": [
+        {
+          "path": "/parizski-mohykani-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216060,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/parizski-mohykani/s/-6",
+          "status": 200,
+          "response_bytes": 227925,
+          "boxes": 12,
+          "parsed_candidates": 12,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/parizski-mohykani-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216087,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/parizski-mohykani/s/-6",
+          "status": 200,
+          "response_bytes": 227967,
+          "boxes": 12,
+          "parsed_candidates": 12,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-14T18:43:06.019038+00:00"
     }
   },
-  "updated_at": "2026-11-13T18:42:18.168635+00:00",
+  "updated_at": "2026-11-13T18:43:37.027482+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1301336,9 +1301391,11 @@
     "9667": {
       "misses": [
         "9667:6:15",
-        "9667:3:13"
+        "9667:3:13",
+        "9667:3:15"
       ],
-      "updated_at": "2026-11-13T18:39:00.121543+00:00"
+      "updated_at": "2026-11-13T18:42:43.146160+00:00",
+      "retry_after": "2026-11-13T22:42:43.146160+00:00"
     },
     "7803": {
       "misses": [
@@ -1301566,9 +1301623,10 @@
     },
     "1239": {
       "misses": [
-        "1239:4:12"
+        "1239:4:12",
+        "1239:4:5"
       ],
-      "updated_at": "2026-11-13T16:50:38.564001+00:00"
+      "updated_at": "2026-11-13T18:42:51.730551+00:00"
     },
     "1951": {
       "misses": [
@@ -1324821,15 +1324879,21 @@
         "902:1:18"
       ],
       "updated_at": "2026-11-13T18:39:20.003342+00:00"
+    },
+    "1011": {
+      "misses": [
+        "1011:1:1"
+      ],
+      "updated_at": "2026-11-13T18:43:06.019064+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 902,
+    "last_series": 1011,
     "last_series_order": [
       true,
       0,
       0,
-      902
+      1011
     ]
   }
 }
