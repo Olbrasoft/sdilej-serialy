@@ -130146,7 +130146,7 @@
       "retry_after": "2026-10-12T10:21:57.812991+00:00"
     },
     "1251:3:8": {
-      "at": "2026-10-29T15:58:26.022791+00:00",
+      "at": "2026-11-13T15:28:28.347821+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -130154,60 +130154,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_search",
-      "elapsed_seconds": 12.51,
-      "search_evidence": [
-        {
-          "path": "/odbor-mestske-zelene-s03e08/s/-6",
-          "status": 200,
-          "response_bytes": 189747,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/odbor-mestske-zelene/s/-6",
-          "status": 200,
-          "response_bytes": 189600,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/parks-and-recreation-s03e08/s/-6",
-          "status": 200,
-          "response_bytes": 189747,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/parks-and-recreation/s/-6",
-          "status": 200,
-          "response_bytes": 189600,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/parks-recreation-s03e08/s/-6",
-          "status": 200,
-          "response_bytes": 189663,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        },
-        {
-          "path": "/parks-recreation/s/-6",
-          "status": 200,
-          "response_bytes": 189516,
-          "boxes": 0,
-          "parsed_candidates": 0,
-          "heading_matches_query": true
-        }
-      ],
-      "consecutive_failures": 2,
-      "retry_after": "2026-10-29T16:28:38.532191+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.996019184589386,
+      "observed_source_id": "28887433",
+      "elapsed_seconds": 102.61,
+      "consecutive_failures": 3,
+      "retry_after": "2026-11-14T15:30:16.276658+00:00"
     },
     "1251:3:9": {
       "at": "2026-10-29T16:35:39.965324+00:00",
@@ -1178508,18 +1178461,17 @@
       "queue_rank": 36015
     },
     "4384:1:1": {
-      "at": "2026-11-08T12:26:33.452695+00:00",
-      "status": "deferred",
+      "at": "2026-11-13T15:27:55.934065+00:00",
+      "status": "prepared",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "transient_original",
-      "elapsed_seconds": 62.32,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-08T12:42:35.773614+00:00"
+      "elapsed_seconds": 161.65,
+      "source_id": "28519542",
+      "queue_rank": 40841
     },
     "10104:1:27": {
       "at": "2026-11-07T19:40:39.140233+00:00",
@@ -1292224,9 +1292176,22 @@
       "elapsed_seconds": 156.11,
       "source_id": "31772712",
       "queue_rank": 40840
+    },
+    "416:1:1": {
+      "at": "2026-11-13T15:27:49.229153+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 190.22,
+      "source_id": "31485698",
+      "queue_rank": 40842
     }
   },
-  "updated_at": "2026-11-13T15:30:05.997641+00:00",
+  "updated_at": "2026-11-13T15:31:21.437777+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1297374,12 +1297339,9 @@
     },
     "1251": {
       "misses": [
-        "1251:7:5",
-        "1251:7:9",
-        "1251:7:10"
+        "1251:3:8"
       ],
-      "updated_at": "2026-11-11T11:05:58.285349+00:00",
-      "retry_after": "2026-11-11T15:05:58.285349+00:00"
+      "updated_at": "2026-11-13T15:30:16.276703+00:00"
     },
     "119": {
       "misses": [
@@ -1313393,10 +1313355,8 @@
       "updated_at": "2026-11-08T12:26:59.212570+00:00"
     },
     "4384": {
-      "misses": [
-        "4384:1:1"
-      ],
-      "updated_at": "2026-11-08T12:27:35.773639+00:00"
+      "misses": [],
+      "updated_at": "2026-11-13T15:30:37.888766+00:00"
     },
     "3822": {
       "misses": [],
@@ -1321384,6 +1321344,10 @@
         "4167:1:1"
       ],
       "updated_at": "2026-11-13T15:27:48.248780+00:00"
+    },
+    "416": {
+      "misses": [],
+      "updated_at": "2026-11-13T15:30:59.452256+00:00"
     }
   },
   "discovery_progress": {
