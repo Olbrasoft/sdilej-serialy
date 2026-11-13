@@ -996640,7 +996640,7 @@
       "retry_after": "2026-11-04T19:40:46.678106+00:00"
     },
     "1783:14:1": {
-      "at": "2026-11-03T10:55:18.408914+00:00",
+      "at": "2026-11-13T14:06:57.514528+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -996650,11 +996650,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.9118801355361938,
+      "observed_language_probability": 0.8984673023223877,
       "observed_source_id": "30607129",
-      "elapsed_seconds": 217.08,
-      "consecutive_failures": 1,
-      "retry_after": "2026-11-04T10:59:01.029954+00:00"
+      "elapsed_seconds": 57.42,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-14T14:07:54.934716+00:00"
     },
     "9671:5:9": {
       "at": "2026-11-03T11:01:35.918927+00:00",
@@ -1290977,9 +1290977,90 @@
       "elapsed_seconds": 38.74,
       "source_id": "31286875",
       "queue_rank": 40795
+    },
+    "4683:1:1": {
+      "at": "2026-11-13T14:06:22.660509+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 20.29,
+      "search_evidence": [
+        {
+          "path": "/roky-prelomu-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216458,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/roky-prelomu/s/-6",
+          "status": 200,
+          "response_bytes": 223528,
+          "boxes": 6,
+          "parsed_candidates": 6,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/roky-prelomu-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216422,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/roky-prelomu/s/-6",
+          "status": 200,
+          "response_bytes": 223494,
+          "boxes": 6,
+          "parsed_candidates": 6,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/roky-prelomu-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216455,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/roky-prelomu/s/-6",
+          "status": 200,
+          "response_bytes": 223530,
+          "boxes": 6,
+          "parsed_candidates": 6,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-14T14:06:56.699539+00:00"
+    },
+    "336:1:1": {
+      "at": "2026-11-13T14:06:56.699704+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9872598648071289,
+      "observed_source_id": "12276196",
+      "elapsed_seconds": 41.19,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-14T14:07:37.892369+00:00"
     }
   },
-  "updated_at": "2026-11-13T14:06:42.646605+00:00",
+  "updated_at": "2026-11-13T14:08:01.818668+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1304527,9 +1304608,11 @@
     "1783": {
       "misses": [
         "1783:1:8",
-        "1783:2:8"
+        "1783:2:8",
+        "1783:14:1"
       ],
-      "updated_at": "2026-11-13T14:03:49.671689+00:00"
+      "updated_at": "2026-11-13T14:07:54.934742+00:00",
+      "retry_after": "2026-11-13T18:07:54.934742+00:00"
     },
     "5376": {
       "misses": [
@@ -1320040,15 +1320123,27 @@
     "5592": {
       "misses": [],
       "updated_at": "2026-11-13T14:04:34.627526+00:00"
+    },
+    "4683": {
+      "misses": [
+        "4683:1:1"
+      ],
+      "updated_at": "2026-11-13T14:06:56.699569+00:00"
+    },
+    "336": {
+      "misses": [
+        "336:1:1"
+      ],
+      "updated_at": "2026-11-13T14:07:37.892394+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 4683,
+    "last_series": 336,
     "last_series_order": [
       false,
-      -4.8,
-      -8,
-      4683
+      -4.7,
+      -21285,
+      336
     ]
   }
 }
