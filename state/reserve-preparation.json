@@ -28281,7 +28281,7 @@
       "queue_rank": 9626
     },
     "1681:15:5": {
-      "at": "2026-11-13T09:33:27.429917+00:00",
+      "at": "2026-11-13T15:38:15.592970+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -28290,9 +28290,9 @@
       "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "transient_original",
-      "elapsed_seconds": 135.33,
-      "consecutive_failures": 20,
-      "retry_after": "2026-11-13T15:35:42.763058+00:00"
+      "elapsed_seconds": 24.86,
+      "consecutive_failures": 21,
+      "retry_after": "2026-11-13T21:38:40.452923+00:00"
     },
     "1681:16:4": {
       "at": "2026-10-03T05:34:12.353490+00:00",
@@ -1292395,9 +1292395,83 @@
       "elapsed_seconds": 102.0,
       "source_id": "28493169",
       "queue_rank": 40848
+    },
+    "4155:1:2": {
+      "at": "2026-11-13T15:37:04.697997+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 46.48,
+      "source_id": "34298904",
+      "queue_rank": 40849
+    },
+    "4155:1:3": {
+      "at": "2026-11-13T15:37:25.136837+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 45.69,
+      "source_id": "34298923",
+      "queue_rank": 40850
+    },
+    "8448:1:1": {
+      "at": "2026-11-13T15:38:03.310164+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 11.17,
+      "search_evidence": [
+        {
+          "path": "/inga-lindstrom-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216113,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/inga-lindstrom/s/-6",
+          "status": 200,
+          "response_bytes": 343951,
+          "boxes": 93,
+          "parsed_candidates": 93,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/inga-lindstrom-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216038,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/inga-lindstrom/s/-6",
+          "status": 200,
+          "response_bytes": 343849,
+          "boxes": 93,
+          "parsed_candidates": 93,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-14T15:38:14.483776+00:00"
     }
   },
-  "updated_at": "2026-11-13T15:37:46.239468+00:00",
+  "updated_at": "2026-11-13T15:39:08.120079+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1300995,9 +1301069,10 @@
     },
     "1681": {
       "misses": [
-        "1681:4:1"
+        "1681:4:1",
+        "1681:15:5"
       ],
-      "updated_at": "2026-11-13T14:08:35.065829+00:00"
+      "updated_at": "2026-11-13T15:38:40.452956+00:00"
     },
     "1650": {
       "misses": [
@@ -1321328,7 +1321403,7 @@
     },
     "4155": {
       "misses": [],
-      "updated_at": "2026-11-13T12:00:02.901944+00:00"
+      "updated_at": "2026-11-13T15:38:10.824929+00:00"
     },
     "10441": {
       "misses": [],
@@ -1321573,15 +1321648,21 @@
         "10293:1:1"
       ],
       "updated_at": "2026-11-13T15:34:13.347812+00:00"
+    },
+    "8448": {
+      "misses": [
+        "8448:1:1"
+      ],
+      "updated_at": "2026-11-13T15:38:14.483811+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 10293,
+    "last_series": 331,
     "last_series_order": [
       false,
       -4.5,
-      -688,
-      10293
+      -75,
+      331
     ]
   }
 }
