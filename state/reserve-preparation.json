@@ -663152,20 +663152,21 @@
       "retry_after": "2026-10-25T15:44:18.168780+00:00"
     },
     "1316:4:6": {
-      "at": "2026-10-24T15:42:59.165850+00:00",
+      "at": "2026-11-13T22:58:42.810739+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
       "search_recovery_revision": 2,
       "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
       "observed_language_probability": 0.9946548938751221,
       "observed_source_id": "31084351",
-      "elapsed_seconds": 142.55,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-25T15:46:26.231042+00:00"
+      "elapsed_seconds": 120.41,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-14T23:00:47.589855+00:00"
     },
     "912:10:20": {
       "at": "2026-10-24T15:46:27.549388+00:00",
@@ -1298862,9 +1298863,96 @@
       "elapsed_seconds": 45.28,
       "source_id": "33539030",
       "queue_rank": 41053
+    },
+    "373:2:4": {
+      "at": "2026-11-13T22:59:23.104117+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 67.75,
+      "source_id": "34143593",
+      "queue_rank": 41054
+    },
+    "373:2:5": {
+      "at": "2026-11-13T22:59:59.210541+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 64.25,
+      "source_id": "34143631",
+      "queue_rank": 41055
+    },
+    "373:2:6": {
+      "at": "2026-11-13T23:00:08.385563+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 75.28,
+      "source_id": "33539036",
+      "queue_rank": 41056
+    },
+    "5053:1:1": {
+      "at": "2026-11-13T23:01:04.424465+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 20.82,
+      "search_evidence": [
+        {
+          "path": "/lego-masters-korea-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216127,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/lego-masters-korea/s/-6",
+          "status": 200,
+          "response_bytes": 215950,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/lego-masters-korea-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 216124,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/lego-masters-korea/s/-6",
+          "status": 200,
+          "response_bytes": 215995,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-14T23:01:25.243649+00:00"
     }
   },
-  "updated_at": "2026-11-13T23:00:26.784076+00:00",
+  "updated_at": "2026-11-13T23:01:29.008478+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1308975,9 +1309063,10 @@
     },
     "1316": {
       "misses": [
-        "1316:2:4"
+        "1316:2:4",
+        "1316:4:6"
       ],
-      "updated_at": "2026-11-13T22:59:58.266999+00:00"
+      "updated_at": "2026-11-13T23:00:47.589894+00:00"
     },
     "2307": {
       "misses": [
@@ -1318864,7 +1318953,7 @@
     },
     "373": {
       "misses": [],
-      "updated_at": "2026-11-13T23:00:07.418222+00:00"
+      "updated_at": "2026-11-13T23:01:23.665235+00:00"
     },
     "9701": {
       "misses": [
@@ -1328518,15 +1328607,21 @@
         "5048:1:2"
       ],
       "updated_at": "2026-11-13T22:58:41.880378+00:00"
+    },
+    "5053": {
+      "misses": [
+        "5053:1:1"
+      ],
+      "updated_at": "2026-11-13T23:01:25.243679+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 5048,
+    "last_series": 5276,
     "last_series_order": [
       true,
       0,
       0,
-      5048
+      5276
     ]
   }
 }
