@@ -181888,7 +181888,7 @@
       "retry_after": "2026-10-18T06:52:19.988381+00:00"
     },
     "1282:2:1": {
-      "at": "2026-11-10T19:26:55.025904+00:00",
+      "at": "2026-11-13T15:55:17.781141+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -181898,11 +181898,11 @@
       "method": "discovery",
       "reason": "verified_non_czech",
       "observed_audio_language": "en",
-      "observed_language_probability": 0.6883729497591654,
+      "observed_language_probability": 0.6638887524604797,
       "observed_source_id": "24546361",
-      "elapsed_seconds": 147.66,
-      "consecutive_failures": 7,
-      "retry_after": "2026-11-11T19:30:39.818989+00:00"
+      "elapsed_seconds": 130.85,
+      "consecutive_failures": 8,
+      "retry_after": "2026-11-14T15:57:28.630703+00:00"
     },
     "9827:1:1": {
       "at": "2026-10-23T00:29:40.913997+00:00",
@@ -1292744,9 +1292744,70 @@
       "elapsed_seconds": 41.7,
       "source_id": "7055685",
       "queue_rank": 40865
+    },
+    "2825:1:1": {
+      "at": "2026-11-13T15:56:42.848983+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 7.9,
+      "search_evidence": [
+        {
+          "path": "/hank-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 246283,
+          "boxes": 26,
+          "parsed_candidates": 24,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/hank/s/-6",
+          "status": 200,
+          "response_bytes": 303007,
+          "boxes": 101,
+          "parsed_candidates": 44,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/hank-s01e01/s/-6",
+          "status": 200,
+          "response_bytes": 246335,
+          "boxes": 26,
+          "parsed_candidates": 24,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/hank/s/-6",
+          "status": 200,
+          "response_bytes": 302938,
+          "boxes": 101,
+          "parsed_candidates": 44,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-14T15:57:19.295574+00:00"
+    },
+    "1853:1:13": {
+      "at": "2026-11-13T15:56:16.866534+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 107.16,
+      "source_id": "7066574",
+      "queue_rank": 40866
     }
   },
-  "updated_at": "2026-11-13T15:56:55.281844+00:00",
+  "updated_at": "2026-11-13T15:58:24.540005+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1305571,12 +1305632,9 @@
     },
     "1282": {
       "misses": [
-        "1282:2:1",
-        "1282:3:5",
-        "1282:2:4"
+        "1282:2:1"
       ],
-      "updated_at": "2026-11-10T19:38:01.570097+00:00",
-      "retry_after": "2026-11-10T23:38:01.570097+00:00"
+      "updated_at": "2026-11-13T15:57:28.630730+00:00"
     },
     "9827": {
       "misses": [
@@ -1321696,7 +1321754,7 @@
     },
     "1853": {
       "misses": [],
-      "updated_at": "2026-11-13T15:56:49.048183+00:00"
+      "updated_at": "2026-11-13T15:58:04.024003+00:00"
     },
     "329": {
       "misses": [],
@@ -1321955,15 +1322013,21 @@
     "638": {
       "misses": [],
       "updated_at": "2026-11-13T15:55:27.706716+00:00"
+    },
+    "2825": {
+      "misses": [
+        "2825:1:1"
+      ],
+      "updated_at": "2026-11-13T15:57:19.295605+00:00"
     }
   },
   "discovery_progress": {
-    "last_series": 2825,
+    "last_series": 9932,
     "last_series_order": [
       false,
       -4.3,
-      -470,
-      2825
+      -239,
+      9932
     ]
   }
 }
