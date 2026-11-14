@@ -161898,7 +161898,7 @@
       "retry_after": "2026-10-12T22:30:07.796464+00:00"
     },
     "597:1:1": {
-      "at": "2026-11-14T20:24:03.868387+00:00",
+      "at": "2026-11-14T20:40:33.023146+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -161906,40 +161906,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 405.56,
-      "consecutive_failures": 46,
-      "retry_after": "2026-11-14T20:40:15.348560+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 922.67,
+      "consecutive_failures": 47,
+      "retry_after": "2026-11-15T02:55:57.434192+00:00"
     },
     "1097:1:7": {
       "at": "2026-10-24T07:37:04.204302+00:00",
@@ -903901,7 +903871,7 @@
       "retry_after": "2026-11-02T05:28:15.099638+00:00"
     },
     "597:3:4": {
-      "at": "2026-11-14T20:23:55.848366+00:00",
+      "at": "2026-11-14T20:40:36.610226+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -903909,40 +903879,10 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "error": {
-        "type": "SearchUnavailable",
-        "frames": [
-          {
-            "file": "episodes.py",
-            "function": "_inspect",
-            "line": 335
-          },
-          {
-            "file": "source_audit.py",
-            "function": "_get",
-            "line": 118
-          },
-          {
-            "file": "episodes.py",
-            "function": "_get",
-            "line": 227
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 202
-          },
-          {
-            "file": "search_health.py",
-            "function": "wait",
-            "line": 84
-          }
-        ]
-      },
-      "elapsed_seconds": 401.45,
-      "consecutive_failures": 26,
-      "retry_after": "2026-11-14T20:40:15.348549+00:00"
+      "reason": "transient_original",
+      "elapsed_seconds": 924.55,
+      "consecutive_failures": 27,
+      "retry_after": "2026-11-15T02:56:01.155930+00:00"
     },
     "597:3:5": {
       "at": "2026-11-14T19:35:09.838821+00:00",
@@ -1328058,9 +1327998,73 @@
       "elapsed_seconds": 89.39,
       "source_id": "29573941",
       "queue_rank": 41568
+    },
+    "7487:1:3": {
+      "at": "2026-11-14T20:54:55.476446+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 103.67,
+      "search_evidence": [
+        {
+          "path": "/ocima-fotografa-s01e03/s/-6",
+          "status": 200,
+          "response_bytes": 216075,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/photographer-s01e03/s/-6",
+          "status": 200,
+          "response_bytes": 216044,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ocima-fotografa-s01e03/s/-6",
+          "status": 200,
+          "response_bytes": 216060,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/ocima-fotografa/s/-6",
+          "status": 200,
+          "response_bytes": 220062,
+          "boxes": 4,
+          "parsed_candidates": 4,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/photographer-s01e03/s/-6",
+          "status": 200,
+          "response_bytes": 216026,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/photographer/s/-6",
+          "status": 200,
+          "response_bytes": 263929,
+          "boxes": 42,
+          "parsed_candidates": 16,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-15T20:56:39.151355+00:00"
     }
   },
-  "updated_at": "2026-11-14T20:55:46.465658+00:00",
+  "updated_at": "2026-11-14T20:57:01.495311+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1336492,12 +1336496,10 @@
     },
     "597": {
       "misses": [
-        "597:1:7",
-        "597:3:5",
-        "597:3:3"
+        "597:1:1",
+        "597:3:4"
       ],
-      "updated_at": "2026-11-14T19:50:42.636663+00:00",
-      "retry_after": "2026-11-14T20:20:42.636663+00:00"
+      "updated_at": "2026-11-14T20:56:01.155961+00:00"
     },
     "64": {
       "misses": [
@@ -1346924,9 +1346926,10 @@
     },
     "7487": {
       "misses": [
-        "7487:1:4"
+        "7487:1:4",
+        "7487:1:3"
       ],
-      "updated_at": "2026-11-14T20:14:43.809320+00:00"
+      "updated_at": "2026-11-14T20:56:39.151384+00:00"
     },
     "5074": {
       "misses": [
@@ -1358500,12 +1358503,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 5971,
+    "last_series": 8104,
     "last_series_order": [
       false,
       -7.8,
-      -45,
-      5971
+      -16,
+      8104
     ]
   }
 }
