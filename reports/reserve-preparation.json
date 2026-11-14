@@ -1,16 +1,16 @@
 {
   "generation": "pair-2026-09-25",
-  "run_id": "43614565122",
-  "attempted_this_run": 46,
-  "prepared_this_run": 20,
+  "run_id": "43617047056",
+  "attempted_this_run": 0,
+  "prepared_this_run": 0,
   "reserve_total": 33054,
   "queue_total": 41489,
-  "updated_at": "2026-11-14T16:58:59.818273+00:00",
+  "updated_at": "2026-11-14T17:10:18.916977+00:00",
   "workers": 4,
-  "elapsed_seconds": 2030.78,
-  "prepared_per_hour": 35.45,
-  "available_this_run": 20,
-  "available_per_hour": 35.45,
+  "elapsed_seconds": 67.47,
+  "prepared_per_hour": 0.0,
+  "available_this_run": 0,
+  "available_per_hour": 0.0,
   "low_water": 1000,
   "target_stock": 3000,
   "stock": {
@@ -23,8 +23,7 @@
     "categories": {
       "completed": 40202,
       "allocated": 837,
-      "failed": 9,
-      "in_flight": 4,
+      "failed": 13,
       "ready": 437
     },
     "completed_by_account": {
@@ -39,19 +38,19 @@
     "status": "buffered",
     "starved_accounts": [],
     "seconds_since_upload": {
-      "a": 1078,
-      "b": 372
+      "a": 1757,
+      "b": 1051
     },
     "preparation_outcomes_last_hour": {
-      "transient_original": 15,
-      "verified_non_czech": 4,
-      "source_search_unavailable": 7,
+      "transient_original": 11,
+      "verified_non_czech": 3,
+      "source_search_unavailable": 4,
       "inconclusive_audio": 2,
-      "prepared": 25,
-      "no_matches": 8
+      "prepared": 20,
+      "no_matches": 6
     }
   },
-  "indexed_candidates_in_scan": 1434,
+  "indexed_candidates_in_scan": 1286,
   "discovery_progress": {
     "last_series": 5330,
     "last_series_order": [
@@ -62,23 +61,12 @@
     ]
   },
   "cache": {
-    "search_miss": 136,
-    "search_seconds": 3104.95,
-    "search_hit": 60,
-    "media_miss": 69,
-    "media_seconds": 488.16,
-    "audio_miss": 37,
-    "audio_seconds": 874.11,
-    "media_hit": 66
+    "search_miss": 8,
+    "search_seconds": 124.28,
+    "search_hit": 5
   },
-  "audio_pipeline": {
-    "sample_count": 46,
-    "download_seconds": 771.3,
-    "inference_wait_seconds": 1.65,
-    "inference_seconds": 100.11,
-    "failures": 4
-  },
-  "productive_seasons": 265,
+  "audio_pipeline": {},
+  "productive_seasons": 260,
   "series_paused_this_run": 16,
   "saved_reviewed_this_run": 0,
   "saved_prepared_this_run": 0,
@@ -2889,48 +2877,15 @@
     }
   ],
   "search_health": {
-    "status": "paused",
+    "status": "probe_due",
     "consecutive_failures": 2,
-    "retry_seconds": 595,
-    "failed_cycles_this_run": 2,
-    "control_requests": 18,
+    "retry_seconds": 0,
+    "failed_cycles_this_run": 0,
+    "control_requests": 0,
     "request_gap_seconds": 8,
-    "restart_required": true,
+    "restart_required": false,
     "last_request_limit": null,
-    "resume_after": "2026-11-14T17:08:54.951114+00:00",
-    "controls": [
-      {
-        "path": "/teorie-velkeho-tresku/s/-6",
-        "status": 200,
-        "response_bytes": 188635,
-        "parsed_candidates": 0,
-        "body_sha256": "88b915a1b80fc1376a87e8116e8259f0a1fe689423838b5097357e2ed232b396",
-        "video_box_count": 0,
-        "heading_matches_query": true,
-        "password_field_present": false,
-        "fallback_notice_present": false,
-        "request_limit_notice_present": false,
-        "cache_age_seconds": null,
-        "response_path": "/teorie-velkeho-tresku/s/-6",
-        "unexpected_origin": false,
-        "checked_at": "2026-11-14T16:58:50.851112+00:00"
-      },
-      {
-        "path": "/doktor-martin/s/-6",
-        "status": 200,
-        "response_bytes": 188467,
-        "parsed_candidates": 0,
-        "body_sha256": "16628cbce8119912aa0dc98e0a7b981872628a1c9cd26e202644e861c1e8d49e",
-        "video_box_count": 0,
-        "heading_matches_query": true,
-        "password_field_present": false,
-        "fallback_notice_present": false,
-        "request_limit_notice_present": false,
-        "cache_age_seconds": null,
-        "response_path": "/doktor-martin/s/-6",
-        "unexpected_origin": false,
-        "checked_at": "2026-11-14T16:58:54.951039+00:00"
-      }
-    ]
+    "resume_after": null,
+    "controls": []
   }
 }
