@@ -149751,14 +149751,21 @@
       "retry_after": "2026-10-12T09:27:56.618709+00:00"
     },
     "4046:1:10": {
-      "at": "2026-10-11T09:27:08.723339+00:00",
+      "at": "2026-11-14T06:41:39.294007+00:00",
       "status": "deferred",
-      "preparation_revision": 3,
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "no_matches",
-      "elapsed_seconds": 55.89,
-      "consecutive_failures": 1,
-      "retry_after": "2026-10-12T09:28:04.610723+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9064962863922119,
+      "observed_source_id": "31278692",
+      "elapsed_seconds": 84.31,
+      "consecutive_failures": 2,
+      "retry_after": "2026-11-15T06:43:36.267238+00:00"
     },
     "4046:1:11": {
       "at": "2026-10-11T09:27:09.033059+00:00",
@@ -1307523,9 +1307530,128 @@
       ],
       "consecutive_failures": 1,
       "retry_after": "2026-11-15T06:41:38.706084+00:00"
+    },
+    "9446:1:2": {
+      "at": "2026-11-14T06:41:40.049552+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 68.69,
+      "source_id": "29046894",
+      "queue_rank": 41287
+    },
+    "8759:1:3": {
+      "at": "2026-11-14T06:41:40.642182+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 89.26,
+      "source_id": "34865297",
+      "queue_rank": 41288
+    },
+    "8759:1:4": {
+      "at": "2026-11-14T06:41:41.213777+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 99.55,
+      "source_id": "34865299",
+      "queue_rank": 41289
+    },
+    "397:1:2": {
+      "at": "2026-11-14T06:43:36.843397+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 58.68,
+      "search_evidence": [
+        {
+          "path": "/2-svetova-valka-z-vysky-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 216246,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/2-svetova-valka-z-vysky/s/-6",
+          "status": 200,
+          "response_bytes": 230108,
+          "boxes": 11,
+          "parsed_candidates": 11,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/world-war-ii-secrets-from-above-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 216398,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/world-war-ii-secrets-from-above/s/-6",
+          "status": 200,
+          "response_bytes": 216843,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/2-svetova-valka-z-vysky-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 216204,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/2-svetova-valka-z-vysky/s/-6",
+          "status": 200,
+          "response_bytes": 230064,
+          "boxes": 11,
+          "parsed_candidates": 11,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/world-war-ii-secrets-from-above-s01e02/s/-6",
+          "status": 200,
+          "response_bytes": 216438,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/world-war-ii-secrets-from-above/s/-6",
+          "status": 200,
+          "response_bytes": 216891,
+          "boxes": 1,
+          "parsed_candidates": 1,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-15T06:44:35.528385+00:00"
     }
   },
-  "updated_at": "2026-11-14T06:42:42.013893+00:00",
+  "updated_at": "2026-11-14T06:44:38.033795+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1325013,9 +1325139,11 @@
     "4046": {
       "misses": [
         "4046:1:1",
-        "4046:1:6"
+        "4046:1:6",
+        "4046:1:10"
       ],
-      "updated_at": "2026-10-17T22:06:32.742381+00:00"
+      "updated_at": "2026-11-14T06:43:36.267274+00:00",
+      "retry_after": "2026-11-14T10:43:36.267274+00:00"
     },
     "2162": {
       "misses": [],
@@ -1326880,8 +1327008,10 @@
       "updated_at": "2026-11-07T10:12:17.505992+00:00"
     },
     "397": {
-      "misses": [],
-      "updated_at": "2026-11-13T18:01:17.127908+00:00"
+      "misses": [
+        "397:1:2"
+      ],
+      "updated_at": "2026-11-14T06:44:35.528416+00:00"
     },
     "149": {
       "misses": [],
@@ -1337564,7 +1337694,7 @@
     },
     "8759": {
       "misses": [],
-      "updated_at": "2026-11-14T06:39:44.296603+00:00"
+      "updated_at": "2026-11-14T06:43:36.267411+00:00"
     },
     "8801": {
       "misses": [
@@ -1337694,7 +1337824,7 @@
     },
     "9446": {
       "misses": [],
-      "updated_at": "2026-11-14T06:41:38.706052+00:00"
+      "updated_at": "2026-11-14T06:43:36.267338+00:00"
     },
     "9458": {
       "misses": [
@@ -1337704,12 +1337834,12 @@
     }
   },
   "discovery_progress": {
-    "last_series": 9458,
+    "last_series": 9472,
     "last_series_order": [
       true,
       0,
       0,
-      9458
+      9472
     ]
   }
 }
