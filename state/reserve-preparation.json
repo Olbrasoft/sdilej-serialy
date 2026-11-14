@@ -1322404,7 +1322404,7 @@
       "queue_rank": 41469
     },
     "9941:1:7": {
-      "at": "2026-11-14T16:08:23.327501+00:00",
+      "at": "2026-11-14T16:34:50.839576+00:00",
       "status": "deferred",
       "preparation_revision": 5,
       "audio_policy_revision": 1,
@@ -1322412,10 +1322412,13 @@
       "audio_sampling_revision": 1,
       "audio_consensus_revision": 3,
       "method": "discovery",
-      "reason": "source_search_unavailable",
-      "elapsed_seconds": 64.85,
-      "consecutive_failures": 0,
-      "retry_after": "2026-11-14T16:14:28.179044+00:00"
+      "reason": "verified_non_czech",
+      "observed_audio_language": "en",
+      "observed_language_probability": 0.9766362309455872,
+      "observed_source_id": "32875180",
+      "elapsed_seconds": 178.86,
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-15T16:37:49.702896+00:00"
     },
     "9941:1:10": {
       "at": "2026-11-14T16:08:44.385978+00:00",
@@ -1322536,9 +1322539,102 @@
       "elapsed_seconds": 127.23,
       "source_id": "32357345",
       "queue_rank": 41475
+    },
+    "1159:1:6": {
+      "at": "2026-11-14T16:33:23.332489+00:00",
+      "status": "prepared",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "elapsed_seconds": 248.89,
+      "source_id": "28492499",
+      "queue_rank": 41476
+    },
+    "6448:1:4": {
+      "at": "2026-11-14T16:34:34.298223+00:00",
+      "status": "deferred",
+      "preparation_revision": 5,
+      "audio_policy_revision": 1,
+      "search_recovery_revision": 2,
+      "audio_sampling_revision": 1,
+      "audio_consensus_revision": 3,
+      "method": "discovery",
+      "reason": "no_matches",
+      "elapsed_seconds": 189.1,
+      "search_evidence": [
+        {
+          "path": "/nadherna-amerika-s01e04/s/-6",
+          "status": 200,
+          "response_bytes": 216029,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nadherna-amerika/s/-6",
+          "status": 200,
+          "response_bytes": 275088,
+          "boxes": 48,
+          "parsed_candidates": 48,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/america-the-beautiful-s01e04/s/-6",
+          "status": 200,
+          "response_bytes": 216176,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/america-the-beautiful/s/-6",
+          "status": 200,
+          "response_bytes": 217985,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nadherna-amerika-s01e04/s/-6",
+          "status": 200,
+          "response_bytes": 216054,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/nadherna-amerika/s/-6",
+          "status": 200,
+          "response_bytes": 275198,
+          "boxes": 48,
+          "parsed_candidates": 48,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/america-the-beautiful-s01e04/s/-6",
+          "status": 200,
+          "response_bytes": 216229,
+          "boxes": 0,
+          "parsed_candidates": 0,
+          "heading_matches_query": true
+        },
+        {
+          "path": "/america-the-beautiful/s/-6",
+          "status": 200,
+          "response_bytes": 217845,
+          "boxes": 2,
+          "parsed_candidates": 2,
+          "heading_matches_query": true
+        }
+      ],
+      "consecutive_failures": 1,
+      "retry_after": "2026-11-15T16:37:43.399672+00:00"
     }
   },
-  "updated_at": "2026-11-14T16:35:37.608443+00:00",
+  "updated_at": "2026-11-14T16:38:38.184752+00:00",
   "refilling": true,
   "repairs": {
     "673:6:7": {
@@ -1341202,7 +1341298,7 @@
     },
     "1159": {
       "misses": [],
-      "updated_at": "2026-11-06T19:30:17.881513+00:00"
+      "updated_at": "2026-11-14T16:37:34.374492+00:00"
     },
     "9421": {
       "misses": [
@@ -1350319,8 +1350415,10 @@
       "updated_at": "2026-11-14T16:08:43.787126+00:00"
     },
     "9941": {
-      "misses": [],
-      "updated_at": "2026-11-12T22:03:13.008367+00:00"
+      "misses": [
+        "9941:1:7"
+      ],
+      "updated_at": "2026-11-14T16:37:49.702922+00:00"
     },
     "4465": {
       "misses": [
@@ -1352922,6 +1353020,12 @@
         "3146:1:2"
       ],
       "updated_at": "2026-11-14T14:46:47.040301+00:00"
+    },
+    "6448": {
+      "misses": [
+        "6448:1:4"
+      ],
+      "updated_at": "2026-11-14T16:37:43.399722+00:00"
     }
   },
   "discovery_progress": {
